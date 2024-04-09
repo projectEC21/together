@@ -1979,8 +1979,8 @@ table.display thead th:active, table.display thead td:active {
   clear: both; }
 
 .dataTables_scrollBody {
-  *margin-top: -1px;
-  -webkit-overflow-scrolling: touch; }
+  -webkit-overflow-scrolling: touch;
+}
 
 .top .dataTables_info {
   float: none; }
