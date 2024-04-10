@@ -455,18 +455,18 @@ Version:1.0
 	border-right-color: transparent;
 }
 /* Shopping Cart */
-.header .shopping {
+.header .inquiry {
 	display: inline-block;
 	z-index: 9999;
 }
-.header .shopping .icon {
+.header .inquiry .icon {
 	position: relative;
 	cursor:pointer;
 	color:#222;
 }
-.header .shopping .shopping-item {
+.header .inquiry .inquiry-item {
 	position: absolute;
-	top: 68px;
+	top: 38px;
 	right: 0;
 	width: 300px;
 	background: #fff;
@@ -484,40 +484,60 @@ Version:1.0
 	visibility:hidden;
 	z-index:99;
 }
-.header .shopping:hover .shopping-item{
+.header .inquiry:hover .inquiry-item{
 	transform: translateY(0px);
 	opacity:1;
 	visibility:visible;
 }
-.header .shopping .dropdown-cart-header{
+.header .inquiry .dropdown-cart-header{
 	padding-bottom: 10px;
     margin-bottom: 15px;
 	border-bottom:1px solid #e6e6e6;
 }
-.header .shopping .dropdown-cart-header span {
+.header .inquiry .dropdown-cart-header span {
 	text-transform: uppercase;
 	color: #222;
 	font-size: 13px;
 	font-weight: 600;
 }
-.header .shopping .dropdown-cart-header a {
+.header .inquiry .dropdown-cart-header a {
 	float: right;
 	text-transform: uppercase;
 	color: #222;
 	font-size: 13px;
 	font-weight: 600;
 }
-.header .shopping .dropdown-cart-header a:hover{
+.header .inquiry .dropdown-cart-header a:hover{
 	color:#F7941D;
 }
-.header .shopping-list li {
+.header .inquiry-list li {
+	display: flex;
+	flex-direction: column; /* 요소들을 세로로 쌓기 */
 	overflow: hidden;
 	border-bottom: 1px solid #e6e6e6;
-	padding-bottom: 15px;
-	margin-bottom: 15px;
-	position:relative;
+	padding-bottom: 5px;
+	margin-bottom: 5px;
 }
-.header .shopping-list li .remove {
+
+.header .inquiry-list li>span{
+	display: flex;
+    align-items: center; /* 이미지와 이름/시간을 세로 중앙 정렬 */
+	flex-grow: 1; /* 내용을 가능한 너비 전체에 분포 */
+}
+
+.header .inquiry-list li .time {
+	margin-left: 10px; /* 이름과 시간 사이에 여백 추가 */
+	font-size: 10px;
+}
+
+.header .inquiry-list li .message {
+	display: block; /* 메시지를 블록 요소로 만들어 줄 바꿈 */
+	font-size: 11px;
+	margin-top: 5px;
+	width: 100%; /* 메시지가 전체 너비를 차지하게 설정 */
+}
+
+.header .inquiry-list li .remove {
 	position: absolute;
 	left: 0;
 	bottom: 16px;
@@ -532,61 +552,62 @@ Version:1.0
 	font-size: 11px;
 	border: 1px solid #ededed;
 }
-.header .shopping-list li .remove:hover{
+.header .inquiry-list li .remove:hover{
 	background:#222;
 	color:#fff !important;
 	border-color:transparent;
 }
-.header .shopping-list .cart-img {
+.header .inquiry-list .cart-img {
 	float: right;
-	border: 1px solid #ededed;
+	/* border: 1px solid #ededed; */
 	overflow:hidden;
+	margin-right: 10px; /* 이미지와 이름/시간 사이에 여백 추가 */
 }
-.header .shopping-list .cart-img img {
-	width: 70px;
-	height: 70px;
+.header .inquiry-list .cart-img img {
+	width: 30px;
+	height: 30px;
 	border-radius:0;
-	
 }
-.header .shopping-list .cart-img:hover img{
+.header .inquiry-list .cart-img:hover img{
 	transform:scale(1.09);
 }
-.header .shopping-list .quantity{
+.header .inquiry-list .quantity{
 	line-height: 22px;
     font-size: 13px;
 	padding-bottom: 30px;
 }
-.header .shopping-list h4 {
-	font-size: 14px;
+.header .inquiry-list h4 {
+	font-size: 12px;
 }
-.header .shopping-list h4 a {
+.header .inquiry-list h4 a {
 	font-weight: 600;
 	font-size: 13px;
 	color: #333;
 }
-.header .shopping-list h4 a:hover{
+.header .inquiry-list h4 a:hover{
 	color:#F7941D;
 }
-.header .shopping-item .bottom {
+
+.header .inquiry-item .bottom {
 	text-align: center;
 }
-.header .shopping-item .total {
+.header .inquiry-item .total {
 	overflow:hidden;
 	display: block;
     padding-bottom: 10px;
 }
-.header .shopping-item .total span {
+.header .inquiry-item .total span {
 	text-transform:uppercase;
 	color:#222;
 	font-size:13px;
 	font-weight:600;
 	float:left;
 }
-.header .shopping-item .total .total-amount {
+.header .inquiry-item .total .total-amount {
 	float:right;
 	font-size:14px;
 }
-.header .shopping-item .bottom .btn {
+.header .inquiry-item .bottom .btn {
 	background: #222;
 	padding: 10px 20px;
 	display: block;
@@ -597,7 +618,7 @@ Version:1.0
 	font-size: 14px;
 	font-weight: 500;
 }
-.header .shopping-item .bottom .btn:hover{
+.header .inquiry-item .bottom .btn:hover{
 	background:#F7941D;
 	color:#fff;
 }
@@ -947,7 +968,7 @@ Version:1.0
 	color: #fff;
 	text-transform: capitalize;
 	font-size: 15px;
-	padding: 20px 15px;
+	padding: 20px 20px;
 	font-weight: 500;
 	display: block;
 	position: relative;

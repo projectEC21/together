@@ -25,7 +25,7 @@ Version:1.0
 	font-size: 13px;
 }
 .shop-services.section {
-	padding: 45px 0 0px 0;
+	padding: 30px 0 30px 0;
 }
 .breadcrumbs {
 	padding: 20px 0;
@@ -45,28 +45,28 @@ Version:1.0
 .header.shop .right-bar .sinlge-bar .single-icon {
 	font-size: 18px;
 }
-.header .shopping .shopping-item {
+.header .inquiry .inquiry-item {
 	top: 62px;
 }
-.header .shopping .dropdown-cart-header a {
+.header .inquiry .dropdown-cart-header a {
 	font-size: 12px;
 }
-.header .shopping .dropdown-cart-header span {
+.header .inquiry .dropdown-cart-header span {
 	font-size: 12px;
 }
-.header .shopping-list h4 a {
+.header .inquiry-list h4 a {
 	font-weight: 500;
 	font-size: 13px;
 }
-.header .shopping-item .total span {
+.header .inquiry-item .total span {
 	font-size: 12px;
 	font-weight: 500;
 }
-.header .shopping-item .total .total-amount {
+.header .inquiry-item .total .total-amount {
 	font-size: 13px;
 	font-weight: 500;
 }
-.header .shopping-item .bottom .btn {
+.header .inquiry-item .bottom .btn {
 	padding: 8px 20px;
 }
 .header.shop .search-bar {
