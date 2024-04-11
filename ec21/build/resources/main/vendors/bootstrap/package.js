@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // package metadata file for Meteor.js
 
 Package.describe({
@@ -15,3 +16,22 @@ Package.onUse(function (api) {
     'dist/js/bootstrap.js'
   ], 'client');
 });
+=======
+// package metadata file for Meteor.js
+
+Package.describe({
+  name: 'twbs:bootstrap', // https://atmospherejs.com/twbs/bootstrap
+  summary: 'The most popular front-end framework for developing responsive, mobile first projects on the web.',
+  version: '4.3.1',
+  git: 'https://github.com/twbs/bootstrap.git'
+});
+
+Package.onUse(function (api) {
+  api.versionsFrom('METEOR@1.0');
+  api.use('jquery', 'client');
+  api.addFiles([
+    'dist/css/bootstrap.css',
+    'dist/js/bootstrap.js'
+  ], 'client');
+});
+>>>>>>> 1a1ecd553fc320897f03b38db9609eb13cd29bc3

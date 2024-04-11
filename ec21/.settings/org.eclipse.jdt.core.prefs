@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 eclipse.preferences.version=1
 org.eclipse.jdt.core.classpath.outputOverlappingAnotherSource=ignore
 org.eclipse.jdt.core.compiler.annotation.missingNonNullByDefaultAnnotation=ignore
@@ -15,3 +16,11 @@ org.eclipse.jdt.core.compiler.problem.potentialNullReference=warning
 org.eclipse.jdt.core.compiler.problem.syntacticNullAnalysisForFields=enabled
 org.eclipse.jdt.core.compiler.processAnnotations=enabled
 org.eclipse.jdt.core.compiler.source=17
+=======
+eclipse.preferences.version=1
+org.eclipse.jdt.core.classpath.outputOverlappingAnotherSource=ignore
+org.eclipse.jdt.core.compiler.codegen.targetPlatform=17
+org.eclipse.jdt.core.compiler.compliance=17
+org.eclipse.jdt.core.compiler.processAnnotations=enabled
+org.eclipse.jdt.core.compiler.source=17
+>>>>>>> 1a1ecd553fc320897f03b38db9609eb13cd29bc3

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {
   "env": {
     "browser": false,
@@ -18,3 +19,25 @@
     "spaced-comment": "off"
   }
 }
+=======
+{
+  "env": {
+    "browser": false,
+    "node": true
+  },
+  "parserOptions": {
+    "sourceType": "script"
+  },
+  "extends": "../.eslintrc.json",
+  "rules": {
+    "consistent-return": "off",
+    "func-style": "off",
+    "no-console": "off",
+    "no-magic-numbers": "off",
+    "no-process-env": "off",
+    "no-process-exit": "off",
+    "no-sync": "off",
+    "spaced-comment": "off"
+  }
+}
+>>>>>>> 1a1ecd553fc320897f03b38db9609eb13cd29bc3

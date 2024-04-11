@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {% if meta.source %}
 <div class="source-links">
 {% for filename in meta.source %}
@@ -7,3 +8,14 @@
 {% endif %}
 
 {{ content }}
+=======
+{% if meta.source %}
+<div class="source-links">
+{% for filename in meta.source %}
+    <span class="label label-primary">{{ filename }}</span>
+{% endfor %}
+</div>
+{% endif %}
+
+{{ content }}
+>>>>>>> 1a1ecd553fc320897f03b38db9609eb13cd29bc3

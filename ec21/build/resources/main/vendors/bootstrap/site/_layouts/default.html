@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!doctype html>
 <html lang="en">
   <head>
@@ -20,3 +21,27 @@
     {% include scripts.html %}
   </body>
 </html>
+=======
+<!doctype html>
+<html lang="en">
+  <head>
+    {% include header.html %}
+  </head>
+  <body>
+    {% include skippy.html %}
+
+    {% include docs-navbar.html %}
+
+    {% if page.layout == "simple" %}
+      {{ content }}
+    {% else %}
+      <main id="content" role="main">
+        {{ content }}
+      </main>
+    {% endif %}
+
+    {% include footer.html %}
+    {% include scripts.html %}
+  </body>
+</html>
+>>>>>>> 1a1ecd553fc320897f03b38db9609eb13cd29bc3

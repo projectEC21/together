@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 - name: primary
   hex: "#007bff"
 - name: secondary
@@ -14,3 +15,21 @@
   hex: "#f8f9fa"
 - name: dark
   hex: "#343a40"
+=======
+- name: primary
+  hex: "#007bff"
+- name: secondary
+  hex: "#868e96"
+- name: success
+  hex: "#28a745"
+- name: danger
+  hex: "#dc3545"
+- name: warning
+  hex: "#ffc107"
+- name: info
+  hex: "#17a2b8"
+- name: light
+  hex: "#f8f9fa"
+- name: dark
+  hex: "#343a40"
+>>>>>>> 1a1ecd553fc320897f03b38db9609eb13cd29bc3

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 - name: 100
   hex: "#f8f9fa"
 - name: 200
@@ -16,3 +17,23 @@
   hex: "#343a40"
 - name: 900
   hex: "#212529"
+=======
+- name: 100
+  hex: "#f8f9fa"
+- name: 200
+  hex: "#e9ecef"
+- name: 300
+  hex: "#dee2e6"
+- name: 400
+  hex: "#ced4da"
+- name: 500
+  hex: "#adb5bd"
+- name: 600
+  hex: "#868e96"
+- name: 700
+  hex: "#495057"
+- name: 800
+  hex: "#343a40"
+- name: 900
+  hex: "#212529"
+>>>>>>> 1a1ecd553fc320897f03b38db9609eb13cd29bc3

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 //
 // Docs color palette classes
 //
@@ -22,3 +23,29 @@
     background-color: #{$value};
   }
 }
+=======
+//
+// Docs color palette classes
+//
+
+@each $color, $value in $colors {
+  .swatch-#{$color} {
+    color: color-yiq($value);
+    background-color: #{$value};
+  }
+}
+
+@each $color, $value in $theme-colors {
+  .swatch-#{$color} {
+    color: color-yiq($value);
+    background-color: #{$value};
+  }
+}
+
+@each $color, $value in $grays {
+  .swatch-#{$color} {
+    color: color-yiq($value);
+    background-color: #{$value};
+  }
+}
+>>>>>>> 1a1ecd553fc320897f03b38db9609eb13cd29bc3

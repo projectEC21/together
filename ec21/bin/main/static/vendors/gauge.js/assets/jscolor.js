@@ -1,3 +1,4 @@
+
 /**
  * jscolor, JavaScript Color Picker
  *

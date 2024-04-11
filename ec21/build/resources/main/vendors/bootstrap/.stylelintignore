@@ -1,4 +1,11 @@
+<<<<<<< HEAD
 **/*.min.css
 **/dist/
 **/vendor/
 /_gh_pages/
+=======
+**/*.min.css
+**/dist/
+**/vendor/
+/_gh_pages/
+>>>>>>> 1a1ecd553fc320897f03b38db9609eb13cd29bc3

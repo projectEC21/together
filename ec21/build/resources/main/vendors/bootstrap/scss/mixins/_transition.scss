@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // stylelint-disable property-blacklist
 @mixin transition($transition...) {
   @if $enable-transitions {
@@ -14,3 +15,21 @@
     }
   }
 }
+=======
+// stylelint-disable property-blacklist
+@mixin transition($transition...) {
+  @if $enable-transitions {
+    @if length($transition) == 0 {
+      transition: $transition-base;
+    } @else {
+      transition: $transition;
+    }
+  }
+
+  @if $enable-prefers-reduced-motion-media-query {
+    @media (prefers-reduced-motion: reduce) {
+      transition: none;
+    }
+  }
+}
+>>>>>>> 1a1ecd553fc320897f03b38db9609eb13cd29bc3

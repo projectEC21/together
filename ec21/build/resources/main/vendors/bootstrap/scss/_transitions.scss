@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .fade {
   @include transition($transition-fade);
 
@@ -18,3 +19,25 @@
   overflow: hidden;
   @include transition($transition-collapse);
 }
+=======
+.fade {
+  @include transition($transition-fade);
+
+  &:not(.show) {
+    opacity: 0;
+  }
+}
+
+.collapse {
+  &:not(.show) {
+    display: none;
+  }
+}
+
+.collapsing {
+  position: relative;
+  height: 0;
+  overflow: hidden;
+  @include transition($transition-collapse);
+}
+>>>>>>> 1a1ecd553fc320897f03b38db9609eb13cd29bc3

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /* Custom page CSS
 -------------------------------------------------- */
 /* Not required for template or sticky footer method. */
@@ -11,3 +12,18 @@
 .footer {
   background-color: #f5f5f5;
 }
+=======
+/* Custom page CSS
+-------------------------------------------------- */
+/* Not required for template or sticky footer method. */
+
+.container {
+  width: auto;
+  max-width: 680px;
+  padding: 0 15px;
+}
+
+.footer {
+  background-color: #f5f5f5;
+}
+>>>>>>> 1a1ecd553fc320897f03b38db9609eb13cd29bc3

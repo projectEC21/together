@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // Sizing shortcuts
 
 @mixin size($width, $height: $width) {
@@ -5,3 +6,12 @@
   height: $height;
   @include deprecate("`size()`", "v4.3.0", "v5");
 }
+=======
+// Sizing shortcuts
+
+@mixin size($width, $height: $width) {
+  width: $width;
+  height: $height;
+  @include deprecate("`size()`", "v4.3.0", "v5");
+}
+>>>>>>> 1a1ecd553fc320897f03b38db9609eb13cd29bc3
