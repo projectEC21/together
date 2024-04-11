@@ -1,9 +1,0 @@
-<<<<<<< HEAD
-*.js    @twbs/js-review
-*.css   @twbs/css-review
-*.scss  @twbs/css-review
-=======
-*.js    @twbs/js-review
-*.css   @twbs/css-review
-*.scss  @twbs/css-review
->>>>>>> 1a1ecd553fc320897f03b38db9609eb13cd29bc3
