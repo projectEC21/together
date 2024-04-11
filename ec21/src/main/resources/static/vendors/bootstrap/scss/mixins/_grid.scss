@@ -25,6 +25,14 @@
   flex-wrap: wrap;
   margin-right: -$gutter / 2;
   margin-left: -$gutter / 2;
+  justify-content: center;
+}
+
+.tile_count {
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -$grid-gutter-width / 2;
+    margin-left: -$grid-gutter-width / 2;
 }
 
 @mixin make-col-ready($gutter: $grid-gutter-width) {

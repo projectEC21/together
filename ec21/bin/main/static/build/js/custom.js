@@ -5037,3 +5037,15 @@ $(document).ready(function () {
     init_autocomplete();
 
 });	
+
+// 타임리프로 변경하고 나면 위에 init_compose() 삭제하고 아래 코드로 대체 예정
+// $(document).ready(function() {
+//     // 반응형 DataTables 초기화
+//     $('#datatable-responsive').DataTable({
+//       responsive: true
+//     });
+    
+//     // 기존에 있던 init_compose 함수 호출
+//     init_compose();
+//   });
+  
