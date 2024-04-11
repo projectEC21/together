@@ -112,7 +112,7 @@ CREATE TABLE product
     , lstm_predict_proba NUMBER(5,2) NOT NULL
     , lstm_predict CHAR(1)  NOT NULL check(lstm_predict in ('0','1'))
     , judge CHAR(1) check(judge in ('N','Y'))
-    , customer_id VARCHAR2(20) NOT NULL references customer(customer_id) on delete casecade
+    , customer_id VARCHAR2(20) NOT NULL references customer(customer_id) on delete cascade
     , product_delete CHAR(1) DEFAULT 'N' check(product_delete in ('N','Y'))
 );
 select * from product;
@@ -143,8 +143,8 @@ CREATE TABLE prohibit_similar_word
     prohibit_similar_id NUMBER PRIMARY KEY
     , similar_word VARCHAR2(100) NOT NULL
     , similar_proba NUMBER(5,2) NOT NULL
-    , prohibit_word NUMBER VARCHAR2(200) prohibit_word(prohibit_word) on delete casecade
-    , product_id VARCHAR2(50) references product(product_id) on delete casecade
+    , prohibit_word NUMBER VARCHAR2(200) prohibit_word(prohibit_word) on delete cascade
+    , product_id VARCHAR2(50) references product(product_id) on delete cascade
 );
 create sequence prohibit_similar_word_seq;
 select * from prohibit_similar_word;
@@ -157,9 +157,9 @@ drop sequence inquiry_seq;
 
 create table inquiry(
     inquiry_id number primary key,
-    sender_id varchar2(20) not null references customer(customer_id) on delete casecade,
+    sender_id varchar2(20) not null references customer(customer_id) on delete cascade,
     receiver_id varchar2(20) not null,
-    product_id varchar2(30) not null references product(product_id) on delete casecade,
+    product_id varchar2(30) not null references product(product_id) on delete cascade,
     quantity number,
     inquiry_title varchar2(1000) not null,
     inquiry_content varchar2(3000) not null,
