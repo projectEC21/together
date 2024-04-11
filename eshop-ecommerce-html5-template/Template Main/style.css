@@ -3421,6 +3421,14 @@ Version:1.0
 .shop.login {
 	padding: 100px 0;
 }
+
+.shop.login .login-form .title{
+	font-size: 20px;
+	font-style: italic;
+	margin-top: 20px;
+	font-weight: 500;
+}
+
 .shop.login .login-form h2 {
 	position:relative;
 	font-size: 35px;
@@ -3449,6 +3457,13 @@ Version:1.0
 	text-align: center;
 	margin-bottom:50px;
 }
+
+.shop.login .login-form span{
+	font-size: 10px;
+	color: #6a6a6a;
+	font-weight: 300;
+}
+
 .shop.login .form {
 	margin-top: 30px;
 }
@@ -3466,10 +3481,39 @@ Version:1.0
 	border: none;
 	background:#F6F7FB;
 }
+
+.shop.login .form .form-group .short-input {
+    width: 20%; /* 또는 원하는 가로 길이 */
+    height: 25px;
+    line-height: 50px;
+    padding: 0 20px;
+    border-radius: 3px;
+	border-radius: 0px;
+    color: #333 !important;
+    border: none;
+    background: #F6F7FB;
+}
+
 .shop.login .form .form-group label {
 	color: #333;
 	position: relative;
 }
+
+
+.shop.login .form .form-group .remoteIP div {
+	display: inline-block;
+    font-size: 11px;
+    margin-bottom: 20px;
+}
+
+.shop.login .form .form-group .gubun[type="checkbox"]{
+	display: inline-block;
+    width: 10px;
+    margin: 0 10px;
+    height: 10px;
+}
+
+
 .shop.login .form .form-group label span {
 	color: #ff2c18;
 	display: inline-block;
@@ -3487,6 +3531,7 @@ Version:1.0
 }
 .shop.login .form button {
 	border: none;
+	margin-top: 20px;
 }
 .shop.login .form .btn {
 	display: inline-block;
