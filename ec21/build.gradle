@@ -35,9 +35,9 @@ dependencies {
 	testImplementation 'org.springframework.security:spring-security-test'
 
 	//오라클 클라우드에 접속하기 위한 라이브러리
-	implementation 'com.oracle.database.security:osdt_cert'
-	implementation 'com.oracle.database.security:oraclepki'
-	implementation 'com.oracle.database.security:osdt_core'
+    implementation 'com.oracle.database.security:oraclepki'
+    implementation 'com.oracle.database.security:osdt_core'
+    implementation 'com.oracle.database.security:osdt_cert'
 
 }
 
