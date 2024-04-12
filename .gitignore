@@ -23,3 +23,7 @@
 hs_err_pid*
 replay_pid*
 /.metadata/
+
+# Gradle files
+.gradle/
+!gradle/wrapper/gradle-wrapper.jar
