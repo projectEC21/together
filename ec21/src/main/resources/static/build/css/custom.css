@@ -3,8 +3,6 @@
   font-family: 'Glyphicons Halflings';
   src: url("https://netdna.bootstrapcdn.com/bootstrap/3.0.0/fonts/glyphicons-halflings-regular.eot");
   src: url("https://netdna.bootstrapcdn.com/bootstrap/3.0.0/fonts/glyphicons-halflings-regular.eot?#iefix") format("embedded-opentype"), url("https://netdna.bootstrapcdn.com/bootstrap/3.0.0/fonts/glyphicons-halflings-regular.woff") format("woff"), url("https://netdna.bootstrapcdn.com/bootstrap/3.0.0/fonts/glyphicons-halflings-regular.ttf") format("truetype"), url("https://netdna.bootstrapcdn.com/bootstrap/3.0.0/fonts/glyphicons-halflings-regular.svg#glyphicons-halflingsregular") format("svg"); }
- 
-
 
 .glyphicon {
   position: relative;
@@ -804,7 +802,7 @@
   content: "\e260"; }
 
 .left_col {
-  background: #2A3F54; }
+  background: #333; }
 
 .container {
   width: 100%;
@@ -917,6 +915,13 @@
 .menu_section > ul {
   margin-top: 10px;
   display: block; }
+
+.profile.clearfix {
+  display: flex;
+  justify-content: center; /* 수평 가운데 정렬 */
+  align-items: center; /* 수직 가운데 정렬, 필요에 따라 */
+  flex-direction: row; /* 자식 요소들을 수평으로 배치, 필요에 따라 변경 가능 */
+}
 
 .profile_pic {
   width: 35%;
@@ -1033,7 +1038,7 @@ body .container.body .right_col {
 .nav_title {
   width: 230px;
   float: left;
-  background: #2A3F54;
+  background: #333;
   border-radius: 0;
   height: 57px;
   padding: 0px; }
@@ -1154,7 +1159,7 @@ body .container.body .right_col {
 
 body {
   color: #73879C;
-  background: #2A3F54;
+  background: ##333;
   font-family: "Helvetica Neue", Roboto, Arial, "Droid Sans", sans-serif;
   font-size: 13px;
   font-weight: 400;
@@ -1181,7 +1186,7 @@ body {
   margin: 9px 0; }
 
 .page-title .title_right {
-  width: 55%;
+  width: 70%;
   float: left;
   display: block; }
 
@@ -1397,8 +1402,8 @@ a:hover, a:focus {
 
 .nav.side-menu > li.active > a {
   text-shadow: rgba(0, 0, 0, 0.25) 0 -1px 0;
-  background: -webkit-gradient(linear, left top, left bottom, from(#334556), to(#2C4257)), #2A3F54;
-  background: linear-gradient(#334556, #2C4257), #2A3F54;
+  background: -webkit-gradient(linear, left top, left bottom, from(#334556), to(#2C4257)), #333;
+  background: linear-gradient(#334556, #2C4257), #333;
   -webkit-box-shadow: rgba(0, 0, 0, 0.25) 0 1px 0, inset rgba(255, 255, 255, 0.16) 0 1px 0;
   box-shadow: rgba(0, 0, 0, 0.25) 0 1px 0, inset rgba(255, 255, 255, 0.16) 0 1px 0; }
 
@@ -1979,8 +1984,8 @@ table.display thead th:active, table.display thead td:active {
   clear: both; }
 
 .dataTables_scrollBody {
-  -webkit-overflow-scrolling: touch;
-}
+  *margin-top: -1px;
+  -webkit-overflow-scrolling: touch; }
 
 .top .dataTables_info {
   float: none; }
@@ -2250,7 +2255,7 @@ span.right {
   padding: 5px 0 0 0;
   position: fixed;
   width: 230px;
-  background: #2A3F54; }
+  background: #333; }
 
 .sidebar-footer a {
   padding: 7px 0 3px;
