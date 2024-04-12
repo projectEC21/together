@@ -143,7 +143,7 @@ CREATE TABLE prohibit_similar_word
     prohibit_similar_id NUMBER PRIMARY KEY
     , similar_word VARCHAR2(100) NOT NULL
     , similar_proba NUMBER(5,2) NOT NULL
-    , prohibit_word NUMBER VARCHAR2(200) prohibit_word(prohibit_word) on delete cascade
+    , prohibit_word  VARCHAR2(200) references prohibit_word(prohibit_word) on delete cascade 
     , product_id VARCHAR2(50) references product(product_id) on delete cascade
 );
 create sequence prohibit_similar_word_seq;
