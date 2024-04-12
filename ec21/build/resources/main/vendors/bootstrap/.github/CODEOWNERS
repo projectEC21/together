@@ -1,9 +1,0 @@
-<<<<<<< HEAD
-*.js    @twbs/js-review
-*.css   @twbs/css-review
-*.scss  @twbs/css-review
-=======
-*.js    @twbs/js-review
-*.css   @twbs/css-review
-*.scss  @twbs/css-review
->>>>>>> develop
