@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 module.exports = {
   presets: [
     [
@@ -18,3 +19,25 @@ module.exports = {
     }
   }
 };
+=======
+module.exports = {
+  presets: [
+    [
+      '@babel/env',
+      {
+        loose: true,
+        modules: false,
+        exclude: ['transform-typeof-symbol']
+      }
+    ]
+  ],
+  plugins: [
+    '@babel/plugin-proposal-object-rest-spread'
+  ],
+  env: {
+    test: {
+      plugins: [ 'istanbul' ]
+    }
+  }
+};
+>>>>>>> develop

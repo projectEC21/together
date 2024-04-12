@@ -8,7 +8,7 @@ create table customer (
     customer_department varchar2(100) not null,
     email varchar2(100) not null,
     customer_gubun char(1) not null check(customer_gubun in('B','S','A')),
-    zip_no varchar1(20) not null,
+    zip_no varchar2(20) not null,
     fax_no varchar2(20),
     busi_no varchar2(20),
     trade_no varchar2(20),
@@ -112,7 +112,7 @@ CREATE TABLE product
     , lstm_predict_proba NUMBER(5,2) NOT NULL
     , lstm_predict CHAR(1)  NOT NULL check(lstm_predict in ('0','1'))
     , judge CHAR(1) check(judge in ('N','Y'))
-    , customer_id VARCHAR2(20) NOT NULL references customer(customer_id) on delete cascade
+    , customer_id VARCHAR2(20) NOT NULL references customer(customer_id) on delete casecade
     , product_delete CHAR(1) DEFAULT 'N' check(product_delete in ('N','Y'))
 );
 select * from product;
@@ -122,15 +122,20 @@ select * from product;
 
 -- 금지어 (prohibit_word)
 DROP TABLE prohibit_word;
+drop sequence prohibit_word_seq;
 
 CREATE TABLE prohibit_word
 (
-    prohibit_word VARCHAR2(200) primary key
+    prohibit_word_id NUMBER PRIMARY KEY
     , prohibit_reason VARCHAR2(20) NOT NULL check(prohibit_reason in ('IPR','drug','prohibited_items','explicit_adult'))
+    , prohibit_word VARCHAR2(200) NOT NULL
 );
 
+create sequence prohibit_word_seq;
 
 select * from prohibit_word; 
+
+
 
 
 
@@ -139,13 +144,15 @@ DROP TABLE prohibit_similar_word;
 drop sequence prohibit_similar_word_seq;
 
 CREATE TABLE prohibit_similar_word
+
 (
     prohibit_similar_id NUMBER PRIMARY KEY
     , similar_word VARCHAR2(100) NOT NULL
     , similar_proba NUMBER(5,2) NOT NULL
-    , prohibit_word  VARCHAR2(200) references prohibit_word(prohibit_word) on delete cascade 
-    , product_id VARCHAR2(50) references product(product_id) on delete cascade
+    , prohibit_word_id NUMBER references prohibit_word(prohibit_word_id) on delete casecade
+    , product_id VARCHAR2(50) references product(product_id) on delete casecade
 );
+
 create sequence prohibit_similar_word_seq;
 select * from prohibit_similar_word;
 
@@ -157,22 +164,21 @@ drop sequence inquiry_seq;
 
 create table inquiry(
     inquiry_id number primary key,
-    sender_id varchar2(20) not null references customer(customer_id) on delete cascade,
+    sender_id varchar2(20) not null references customer(customer_id) on delete casecade,
     receiver_id varchar2(20) not null,
-    product_id varchar2(30) not null references product(product_id) on delete cascade,
+    product_id varchar2(30) not null references product(product_id) on delete casecade,
     quantity number,
     inquiry_title varchar2(1000) not null,
-    inquiry_content varchar2(3000) not null,
+    inquiry_content varchar2(5000) not null,
     send_date date default sysdate,
-    original_file_name varchar2(200),
-    saved_file_name varchar2(200),
+    file varchar2(100)
     saved char(2) default 'NN' check(saved in ('NN','NY','YN','YY')),
     trash char(2) default 'NN' check(trash in ('NN','NY','YN','YY')),
     spam char(2) default 'NN' check(spam in ('NN','NY','YN','YY'))
 );
 
+
 create sequence inquiry_seq;
 
 select * from inquiry;
-
 

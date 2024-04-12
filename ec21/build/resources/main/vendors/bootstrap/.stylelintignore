@@ -1,4 +1,11 @@
+<<<<<<< HEAD
 **/*.min.css
 **/dist/
 **/vendor/
 /_gh_pages/
+=======
+**/*.min.css
+**/dist/
+**/vendor/
+/_gh_pages/
+>>>>>>> develop
