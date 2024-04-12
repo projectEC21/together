@@ -2,7 +2,6 @@ package net.kdigital.ec21.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 
 
@@ -15,7 +14,7 @@ public class ManagerController {
 	 */
 	@GetMapping("/manager/manager_index")
 	public String manager_index() {
-		return "manager/manager_index.html";
+		return "/manager/manager_index";
 	}
 	/**
 	 * 전체 상품 리스트 화면 요청
@@ -23,7 +22,7 @@ public class ManagerController {
 	 */
 	@GetMapping("/manager/productList")
 	public String productList() {
-		return "/manager/productList.html";
+		return "/manager/productList";
 	}
 	
 	/**
@@ -32,7 +31,7 @@ public class ManagerController {
 	 */
 	@GetMapping("/manager/modelPredict")
 	public String modelPredict() {
-		return "manager/modelPredict.html";
+		return "/manager/modelPredict";
 	}
 
 	
@@ -42,7 +41,7 @@ public class ManagerController {
 	 */
 	@GetMapping("/manager/customerList")
 	public String customerList() {
-		return "manager/customerList.html";
+		return "/manager/customerList";
 	}
 
 	/**
@@ -51,7 +50,7 @@ public class ManagerController {
 	 */
 	@GetMapping("/manager/reportedCustomerList")
 	public String reportedCustomerList() {
-		return "manager/reportedCustomerList.html";
+		return "/manager/reportedCustomerList";
 	}
 
 	/**
@@ -60,8 +59,22 @@ public class ManagerController {
 	 */
 	@GetMapping("/manager/blackList")
 	public String blackList() {
-		return "manager/blackList.html";
+		return "/manager/blackList";
 	}
+
+	/**
+	 * 블랙리스트 회원 리스트 화면 요청 
+	 * @return
+	 */
+	@GetMapping("/main/login")
+	public String login() {
+		return "/main/login";
+	}
+
+
+
+
+
 	//=================================================================================
 	
 
@@ -95,10 +108,6 @@ public class ManagerController {
 	public String blacktables() {
 		return "blacktables";
 	}
-	
-	@GetMapping("/login")
-	public String login() {
-		return "login";
-	}
+
 
 }
