@@ -1,26 +1,32 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://thymeleaf.org">
+<html lang="en" xmlns:th="http://thymeleaf.org"  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <!-- Meta, title, CSS, favicons, etc. -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" type="image/png" href="../../static/production/images/ec21logo.png">
+    <!-- <link rel="icon" type="image/png" href="../../static/production/images/ec21logo.png"> -->
+    <link rel="icon" type="image/png" th:href=@{/static/production/images/ec21logo.png}>
 
     <title>ec21 관리자 페이지</title>
 
     <!-- Bootstrap -->
-    <link href="../../static/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- <link href="../../static/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"> -->
+    <link th:href=@{/vendors/bootstrap/dist/css/bootstrap.min.css} rel="stylesheet">
     <!-- Font Awesome -->
-    <link href="../../static/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <!-- <link href="../../static/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet"> -->
+    <link th:href=@{/vendors/font-awesome/css/font-awesome.min.css} rel="stylesheet">
     <!-- NProgress -->
-    <link href="../../static/vendors/nprogress/nprogress.css" rel="stylesheet">
+    <!-- <link href="../../static/vendors/nprogress/nprogress.css" rel="stylesheet"> -->
+    <link th:href=@{/vendors/nprogress/nprogress.css} rel="stylesheet">
     <!-- iCheck -->
-    <link href="../../static/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
-
+    <!-- <link href="../../static/vendors/iCheck/skins/flat/green.css" rel="stylesheet"> -->
+    <link th:href=@{/vendors/iCheck/skins/flat/green.css} rel="stylesheet">
+    
     <!-- Custom Theme Style -->
-    <link href="../../static/build/css/custom.min.css" rel="stylesheet">
+    <!-- <link href="../../static/build/css/custom.min.css" rel="stylesheet"> -->
+    <link th:href=@{/build/css/custom.min.css} rel="stylesheet">
   </head>
 
   <body class="nav-md">
@@ -31,6 +37,7 @@
             <div class="navbar nav_title" style="border: 0; text-align: center;">
               <a th:href="@{/}" class="site_title"> 
                 <img src="../../static/production/images/ec21logo.png" alt="" height="30px">
+                <img th:src=@{/production/images/ec21logo.png} alt="" height="30px">
               </a>
             </div>
 
@@ -39,7 +46,8 @@
             <!-- menu profile quick info -->
             <div class="profile clearfix">
               <div class="profile_pic">
-                <img src="../../static/production/images/user.png" alt="..." class="img-circle profile_img">
+                <!-- <img src="../../static/production/images/user.png" alt="..." class="img-circle profile_img"> -->
+                <img th:src=@{/production/images/user.png} alt="..." class="img-circle profile_img">
               </div>
               <div class="profile_info">
                 <h2>관리자</h2>
@@ -56,7 +64,8 @@
                 <ul class="nav side-menu">
                   <li><a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="../manager/manager_index.html">Dashboard</a></li>
+                      <!-- <li><a href="../manager/manager_index.html">Dashboard</a></li> -->
+                      <li><a th:href=@{/}>Dashboard</a></li>
                     </ul>
                   </li>
                   <li><a><i class="fa fa-edit"></i> 상품관리 <span class="fa fa-chevron-down"></span></a>
