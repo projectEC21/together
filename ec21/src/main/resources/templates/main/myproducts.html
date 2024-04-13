@@ -143,7 +143,7 @@
 						<!-- 검색창 옆 부분 -
 							인콰이어리 new 로만 보이게 하고 인콰이어리 페이지로 넘어가게 하기 -->
 							<div class="sinlge-bar inquiry">
-								<a th:href="@{/main/inbox}" class="single-icon"><i class="fa fa-envelope-o"></i> <span class="total-count">new</span></a>
+								<a th:href="@{/main/inbox}" class="single-icon"><i class="fa fa-envelope-o"></i> <span class="total-count">NEW</span></a>
 							</div>
 						</div>
 					</div>
@@ -209,7 +209,7 @@
 			Products 페이지가 myAccount 디폴트 화면!
 			옆 사이드 바
 		-->
-		<section class="product-area shop-sidebar shop-list shop section">
+		<section class="product-area shop-sidebar product-list shop section">
 			<div class="container">
 				<div class="row">
 					<div class="col-lg-3 col-md-4 col-12">
@@ -219,8 +219,9 @@
 									<h3 class="title">My Page</h3>
 									<ul class="categor-list">
 										<li><a href="#">info</a></li>
-										<li><a href="myProducts.html">Products</a></li>
-										<!-- th : @@/myProducts -->
+										<li><a href="myProducts.html" style="font-weight:600;">Products</a></li>
+										<!-- 해당 페이지에 들어가면 색상이 더 진하게 보이게 해놓음
+											th : @@/myProducts -->
 									</ul>
 								</div>
 								<!--/ End Single Widget -->
@@ -247,11 +248,11 @@
 											<table class="table shopping-summery">
 												<thead>
 													<tr class="main-hading">
-														<th>no</th>
+														<th class="text-center">no</th>
 														<th colspan="2">PRODUCT</th>
 														<!-- <th>PRODUCT</th> -->
-														<th class="text-center">PRICE</th>
-														<th class="text-center">QUANTITY</th>
+														<th class="text-center">PRICE</th> <!-- -->
+														<th class="text-center">QUANTITY</th> <!-- 단위-->
 														<!-- <th class="text-center">TOTAL</th>  -->
 														<th class="text-center">DATE</th>
 														<th class="text-center"><i class="ti-trash remove-icon"></i></th>
@@ -304,8 +305,8 @@
 											<!-- 페이징 -->
 											<div class="row">
 												<div class="col-12">
-													<span class="page">
-														<< < 1 2 3 4 5 > >>
+													<span class="paging">
+														<<  <  1  2  3  4  5  >  >>
 													</span>
 												</div>
 											</div>

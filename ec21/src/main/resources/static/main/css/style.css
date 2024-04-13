@@ -22,6 +22,7 @@ Version:1.0
 10. Cart CSS
 11. Checkout CSS
 12. Login & Register CSS
+* productsWrite CSS
 13. Cowndown CSS
 14. Shop Services CSS
 15. Newslatter CSS
@@ -758,7 +759,7 @@ Version:1.0
 	top: 0;
 }
 .header.shop .middle-inner {
-	padding: 20px 0;
+	padding: 10px 0 20px 0;
 	background: #fff;
 	border-top: 1px solid #eee;
 }
@@ -1044,7 +1045,7 @@ Version:1.0
 	margin: 0;
 	top: 20px;
 	float: right;
-	position: relative;
+	position: absolute;
 }
 .header.shop .right-bar .sinlge-bar.top-search a {
 	transform: translateY(3px);
@@ -1060,6 +1061,9 @@ Version:1.0
 .header.shop .right-bar .sinlge-bar .single-icon:hover{
 	color:#F7941D;
 }
+
+
+.header.shop .topbar .container .row .col-lg-8.col-md-12.col-12 .right-content .list-main .total-count,
 .header.shop .right-bar .sinlge-bar .single-icon .total-count {
 	position: absolute;
 	top: -7px;
@@ -1962,7 +1966,7 @@ Version:1.0
 .single-product:hover .button-head{
 	bottom:0;
 }
-.single-product .product-img .shop-list-quickview {
+.single-product .product-img .product-list-quickview {
   position: absolute;
   top: 50%;
   -webkit-transform: translateY(-50%);
@@ -1979,7 +1983,7 @@ Version:1.0
   -o-transition: all .35s ease 0s;
   transition: all .35s ease 0s;
 }
-.single-product .product-img .shop-list-quickview a {
+.single-product .product-img .product-list-quickview a {
   color: #000;
   background-color: #fff;
   display: inline-block;
@@ -1988,11 +1992,11 @@ Version:1.0
   border-radius: 100%;
   font-size: 18px;
 }
-.single-product .product-img .shop-list-quickview a:hover {
+.single-product .product-img .product-list-quickview a:hover {
   background-color: #222;
   color: #fff;
 }
-.single-product .product-img .shop-list-quickview a i {
+.single-product .product-img .product-list-quickview a i {
   line-height: 50px;
 }
 .single-product .product-content{
@@ -2943,6 +2947,7 @@ Version:1.0
 	background: #f6f6f6;
 	padding: 50px 0;
 }
+
 .shopping-summery thead .main-hading{
 	padding:0px 50px;
 }
@@ -3185,6 +3190,12 @@ Version:1.0
 	line-height: 18px;
 	font-size: 13px;
 	color: #fff;
+}
+
+/* 페이징 css 제작 */
+.shopping-cart span.paging{
+	display: flex;
+    justify-content: center;
 }
 /*======================================
    End Shopping Cart CSS
@@ -3622,44 +3633,65 @@ Version:1.0
 ========================================*/
 
 /*======================================
+	Start Write CSS
+========================================*/
+
+.product-list.section h2 {
+	position: relative;
+    font-size: 30px;
+    color: #333;
+    font-weight: 400;
+    line-height: 25px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    padding-bottom: 20px;
+    text-align: left;
+}
+
+/*======================================
+	End Write CSS
+========================================*/
+
+
+/*======================================
    Start Shop List CSS
 ========================================*/
-.shop-list .list-content{
+.product-list .list-content{
 	margin-top:50px;
 }
-.shop-list .list-content .product-price{}
-.shop-list .list-content .product-price span {
+.product-list .list-content .product-price{}
+.product-list .list-content .product-price span {
 	font-size: 14px;
 	font-weight: 600;
 	margin-bottom: 3px;
 	display: block;
 }
-.shop-list .list-content .title {
+.product-list .list-content .title {
 	line-height: 20px;
 }
-.shop-list .list-content .title a:hover{
+.product-list .list-content .title a:hover{
 	color:#F7941D;
 }
-.shop-list .list-content .title a {
+.product-list .list-content .title a {
 	font-size: 18px;
 	font-weight: 600;
 }
-.shop-list .list-content .rating {
+.product-list .list-content .rating {
 	margin: 5px 0 8px 0;
 }
-.shop-list .list-content .rating li{
+.product-list .list-content .rating li{
 	display:inline-block;
 }
-.shop-list .list-content .rating li i{
+.product-list .list-content .rating li i{
 	color: #F7941D;
 }
-.shop-list .list-content .rating li.total {
+.product-list .list-content .rating li.total {
 	color: #333;
 	font-size: 12px;
 	margin-left: 3px;
 }
-.shop-list .list-content .des{}
-.shop-list .list-content .btn {
+.product-list .list-content .des{}
+.product-list .list-content .btn {
 	margin-top: 22px;
 	height: 42px;
 	line-height: 15px;
@@ -3672,7 +3704,7 @@ Version:1.0
 	line-height: a;
 	padding: 13px 32px;
 }
-.shop-list .list-content .btn:hover{
+.product-list .list-content .btn:hover{
 	background:#F7941D;
 	color:#fff;
 	border-color:transparent;
