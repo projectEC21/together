@@ -6,8 +6,13 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -35,10 +40,12 @@ public class ReportCustomerEntity {
     @GeneratedValue(generator = "report_customer_seq")
     private Long reportCustomerId;
 
+    // FK
     @Column(name = "reported_id", nullable = false)
-    private String reportedId;
+    private String reported_id;
 
     @Column(name = "report_category", nullable = false)
+    @Enumerated(EnumType.STRING)
     private ReportCategory reportCategory;
 
     @Column(name = "report_reason")
@@ -49,12 +56,13 @@ public class ReportCustomerEntity {
     private LocalDateTime reportDate;
 
     @Column(name = "manager_check")
+    @Enumerated(EnumType.STRING)
     private YesOrNo managerCheck;
 
     public static ReportCustomerEntity toEntity(ReportCustomerDTO dto) {
         return ReportCustomerEntity.builder()
                 .reportCustomerId(dto.getReportCustomerId())
-                .reportedId(dto.getReportedId())
+                .reported_id(dto.getReportedId())
                 .reportCategory(dto.getReportCategory())
                 .reportReason(dto.getReportReason())
                 .reportDate(dto.getReportDate())
