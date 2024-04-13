@@ -6,6 +6,8 @@ import java.util.Map;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,6 +16,7 @@ import net.kdigital.ec21.dto.ProductDTO;
 import net.kdigital.ec21.dto.ReportedCustomerWithInfoDTO;
 import net.kdigital.ec21.service.ManagerService;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequiredArgsConstructor
@@ -91,9 +94,34 @@ public class ManagerController {
 	 */
 	@GetMapping("manager/reportedCustomerList")
 	public String reportedCustomerList(Model model) {
+		return "manager/reportedCustomerList";
+	}
+
+	/**
+	 * ajax - 신고당한 회원 리스트 반환 (미처리/처리(블랙버튼/정상버튼)에 따라 다르게 처리)
+	 * 
+	 * @param reportCustomerId
+	 * @param reportedId
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/manager/reportedCustomerList/getList", method = RequestMethod.GET)
+	public String toNormal(@RequestParam(name = "reportCustomerId") Long reportCustomerId,
+			@RequestParam(name = "reportedId") String reportedId,
+			Model model) {
+		if (reportCustomerId != -100) {
+			// 블랙버튼 : 신고당한 회원 블랙리스트에 추가
+			if (reportedId.equals("")) {
+				managerService.reportedIdToBlackList(reportCustomerId, reportedId);
+			}
+			// 정상버튼 : 관리자 처리 완료 상태로 변경
+			managerService.reportCustomerUpdateManagerCheck(reportCustomerId);
+		}
+
 		List<ReportedCustomerWithInfoDTO> dtoList = managerService.selectReportedCustomer();
 		model.addAttribute("list", dtoList);
-		return "manager/reportedCustomerList";
+
+		return "/manager/reportedCustomerList::#result";
 	}
 
 	/**
