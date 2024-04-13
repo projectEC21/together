@@ -2223,7 +2223,7 @@ Version:1.0
 .shop .shop-top {
 	clear: both;
 	background: #f6f7fb;
-	padding: 18px 20px 50px 20px;
+	/* padding: 18px 20px 50px 20px; */
 }
 .shop .shop-shorter {
 	float: left;
@@ -2337,16 +2337,16 @@ Version:1.0
 .shop.single .flex-direction-nav{
 	display:none;
 }
-.shop.single .product-des{
+.shop.single .product-desc{
 	margin-top:30px;
 }
-.shop.single .product-des .short h4 {
+.shop.single .product-desc .short h4 {
 	font-size: 22px;
 	font-weight: 600;
 	margin-top: -5px;
 	line-height: 28px;
 }
-.shop.single .product-des .short .description {
+.shop.single .product-desc .short .description {
 	font-size: 14px;
 	color: #555555;
 	margin-top: 20px;
@@ -2354,72 +2354,72 @@ Version:1.0
 	padding-bottom: 20px;
 	border-bottom: 1px solid #eee;
 }
-.shop.single .product-des {}
-.shop.single .product-des .total-review{
+.shop.single .product-desc {}
+.shop.single .product-desc .total-review{
 	font-size:14px;
 	font-weight:500;
 	margin-left:10px;
 	display:inline-block;
 }
-.shop.single .product-des .total-review:hover{
+.shop.single .product-desc .total-review:hover{
 	color:#F7941D;
 }
-.shop.single .product-des  .rating{
+.shop.single .product-desc  .rating{
 	margin-top:20px;
 	display:inline-block;
 }
-.shop.single .product-des .rating li{
+.shop.single .product-desc .rating li{
 	display:inline-block;
 }
-.shop.single .product-des .rating li i{
+.shop.single .product-desc .rating li i{
 	color:#F7941D;
 }
-.shop.single .product-des .rating li.dark i{
+.shop.single .product-desc .rating li.dark i{
 	color:#555;
 }
-.shop.single .product-des .price {
+.shop.single .product-desc .price {
 	font-size: 20px;
 	color: #333;
 	font-weight: 600;
 	margin-top: 15px;
 }
-.shop.single .product-des .price s{
+.shop.single .product-desc .price s{
 	color:#333;
 }
-.shop.single .product-des .price span{
+.shop.single .product-desc .price span{
 	display:inline-block;
 	margin-right:15px;
 	color:#F7941D;
 }
-.shop.single .product-des .product-buy {
+.shop.single .product-desc .product-buy {
 	margin-top: 40px;
 }
-.shop.single .product-des .product-buy{}
-.shop.single .product-des .color {
+.shop.single .product-desc .product-buy{}
+.shop.single .product-desc .color {
 	display: inline-block;
 	margin-right: 50px;
 }
-.shop.single .product-des .color h4 {
+.shop.single .product-desc .color h4 {
 	font-size: 18px;
 	font-weight: 600;
 }
-.shop.single .product-des .color h4 span {
+.shop.single .product-desc .color h4 span {
 	display: block;
 	font-size: 14px;
 	font-weight: 500;
 	margin-top: 4px;
 }
-.shop.single .product-des .color ul{
+.shop.single .product-desc .color ul{
 	margin-top: 10px;
 }
-.shop.single .product-des .color ul li{
+.shop.single .product-desc .color ul li{
 	display:inline-block;
 	margin-right:5px;
 }
-.shop.single .product-des .color ul li:last-child{
+.shop.single .product-desc .color ul li:last-child{
 	margin-right:0;
 }
-.shop.single .product-des .color ul li a{
+.shop.single .product-desc .color ul li a{
 	height:30px;
 	width:30px;
 	line-height:30px;
@@ -2427,7 +2427,7 @@ Version:1.0
 	display:block;
 	background:#333;
 }
-.shop.single .product-des .color ul li a i{
+.shop.single .product-desc .color ul li a i{
 	font-size:11px;
 	color:#fff;
 	opacity:0;
@@ -2436,44 +2436,44 @@ Version:1.0
 	-moz-transition:all 0.4s ease;
 	transition:all 0.4s ease;
 }
-.shop.single .product-des .color ul li a:hover i{
+.shop.single .product-desc .color ul li a:hover i{
 	opacity:1;
 	visibility:visible;
 }
-.shop.single .product-des .color ul li .one{
+.shop.single .product-desc .color ul li .one{
 	background:#3498db;
 }
-.shop.single .product-des .color ul li .two{
+.shop.single .product-desc .color ul li .two{
 	background:#F7941D;
 }
-.shop.single .product-des .color ul li .three{
+.shop.single .product-desc .color ul li .three{
 	background:#8e44ad;
 }
-.shop.single .product-des .color ul li .four{
+.shop.single .product-desc .color ul li .four{
 	background:#2ecc71;
 }
 /* Size */
-.shop.single .product-des .size{
+.shop.single .product-desc .size{
 	display:inline-block;
 }
-.shop.single .product-des .size h4{
+.shop.single .product-desc .size h4{
 	display: block;
 	font-size: 14px;
 	font-weight: 500;
 	margin-top: 0px;
 }
-.shop.single .product-des .size ul{
+.shop.single .product-desc .size ul{
 	display:inline-block;
 	margin-top: 10px;
 }
-.shop.single .product-des .size ul li {
+.shop.single .product-desc .size ul li {
 	display: inline-block;
 	margin-right: 5px;
 }
-.shop.single .product-des .size ul li:last-child{
+.shop.single .product-desc .size ul li:last-child{
 	margin-right:0;
 }
-.shop.single .product-des .size ul li a {
+.shop.single .product-desc .size ul li a {
 	display: block;
 	height: 30px;
 	width: 36px;
@@ -2482,7 +2482,7 @@ Version:1.0
 	line-height: 30px;
 	font-size: 14px;
 }
-.shop.single .product-des .size ul li a:hover{
+.shop.single .product-desc .size ul li a:hover{
 	color:#F7941D;
 }
 .shop.single .quantity {
@@ -2960,6 +2960,7 @@ Version:1.0
 	border-bottom: 1px solid #F7941D;
 	margin-top: 20px;
 }
+
 .shopping-summery tbody tr img {
 	border-radius: 0;
 	width: 80px;
@@ -2971,7 +2972,7 @@ Version:1.0
 .shopping-summery tbody .product-name a {
 	font-weight: 600;
 	color: #282828;
-	font-weight: 600;
+	font-weight: 500;
 	font-size: 17px;
 }
 .shopping-cart .table p {
@@ -3003,16 +3004,20 @@ Version:1.0
 .shopping-cart .table td {
 	vertical-align: middle;
 	border-top: 1px solid #eee;
-	padding: 30px;
+	padding: 15px;
 }
 .shopping-summery tbody .price {
 	text-align: center;
 }
+
 .shopping-summery tbody .price span{}
-.shopping-cart tbody .qty .input-group {
-	width: 175px;
-	display: inline-block;
+
+.shopping-cart tbody .qty {
+	text-align: center;
 }
+
+.shopping-summery tbody .qty span{}
+
 .shopping-cart .qty .button {
 	display: inline-block;
 	position: absolute;
@@ -3042,14 +3047,14 @@ Version:1.0
 .shopping-cart .qty .button .btn:hover{
 	color:#F7941D;
 }
-.shopping-cart .qty .input-number {
-	border: 1px solid #eceded;
+.shopping-cart .qty span {
+	/* border: 1px solid #eceded; */
 	width: 100%;
 	text-align: center;
 	height: 47px;
 	border-radius:0;
 	overflow: hidden;
-	padding: 0px 45px;
+	padding: 0px 25px;
 }
 .shopping-summery tbody .total-amount {
 	text-align: center;

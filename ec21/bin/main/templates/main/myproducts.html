@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zxx">
+<html lang="en">
 <head>
 	<!-- Meta Tag -->
     <meta charset="utf-8">
@@ -80,7 +80,6 @@
 						<!-- Top Right -->
 						<div class="right-content">
 							<ul class="list-main">
-								<li><i class="ti-user"></i> <a href="#">My account</a></li>
 								<li><i class="ti-power-off"></i><a href="login.html">Login</a></li>
 								<li><i class="ti-user"></i><a href="register.html">Sign up</a></li>
 								<li><i class="ti-power-off"></i><a href="index.html">Logout</a></li>
@@ -98,7 +97,7 @@
 					<div class="col-lg-2 col-md-2 col-12">
 						<!-- Logo -->
 						<div class="logo">
-							<a href="index.html"><img src="images/ec21logo.png" alt="logo"></a>
+							<a href="index.html"><img src="../../static/main/images/ec21logo.png" alt="logo"></a>
 						</div>
 						<!--/ End Logo -->
 						<!-- Search Form -->
@@ -141,51 +140,10 @@
 								<a href="#" class="single-icon"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a>
 							</div>
 
-							<!-- 검색창 옆 부분 -->
+						<!-- 검색창 옆 부분 -
+							인콰이어리 new 로만 보이게 하고 인콰이어리 페이지로 넘어가게 하기 -->
 							<div class="sinlge-bar inquiry">
-								<a href="#" class="single-icon"><i class="fa fa-envelope-o"></i> <span class="total-count">3</span></a>
-								<!-- inquiry start -->
-								<div class="inquiry-item">
-									<div class="dropdown-cart-header">
-										<span>3 Items</span>
-									</div>
-									<ul class="inquiry-list">
-										<li>
-											<!-- <a class="cart-img" href="#"><img src="images/user.png" alt="profile Image"></a> -->
-											<span>
-												<h4><a href="#">John Smith</a></h4>
-												<span class="time">3 mins ago</span>
-											</span>
-											<span class="message">
-												Film festivals used to be do-or-die moments for movie makers. They were where...
-											</span>
-										</li>
-										<li>
-											<!-- <a class="cart-img" href="#"><img src="images/user.png" alt="profile Image"></a> -->
-											<span>
-												<h4><a href="#">John Smith</a></h4>
-												<span class="time">3 mins ago</span>
-											</span>
-											<span class="message">
-												Film festivals used to be do-or-die moments for movie makers. They were where...
-											</span>
-										</li>
-										<li>
-											<!-- <a class="cart-img" href="#"><img src="images/user.png" alt="profile Image"></a> -->
-											<span>
-												<h4><a href="#">John Smith</a></h4>
-												<span class="time">3 mins ago</span>
-											</span>
-											<span class="message">
-												Film festivals used to be do-or-die moments for movie makers. They were where...
-											</span>
-										</li>
-									</ul>
-									<div class="bottom">
-										<a href="index.html" class="btn animate">See more inquiries</a>
-									</div>
-								</div>
-								<!--/ End inquiry Item -->
+								<a th:href="@{/main/inbox}" class="single-icon"><i class="fa fa-envelope-o"></i> <span class="total-count">new</span></a>
 							</div>
 						</div>
 					</div>
@@ -246,7 +204,11 @@
 		</div>
 		<!-- End Breadcrumbs -->
 		
-		<!-- Product Style 1 -->
+		<!-- 
+			Product Style 1 
+			Products 페이지가 myAccount 디폴트 화면!
+		-->
+
 		<section class="product-area shop-sidebar shop-list shop section">
 			<div class="container">
 				<div class="row">
@@ -276,27 +238,9 @@
 											<div class="shop-top">
 												<div class="shop-shorter">
 													<div class="single-shorter">
-														<label>Show :</label>
-														<select>
-															<option selected="selected">09</option>
-															<option>15</option>
-															<option>25</option>
-															<option>30</option>
-														</select>
-													</div>
-													<div class="single-shorter">
-														<label>Sort By :</label>
-														<select>
-															<option selected="selected">Name</option>
-															<option>Price</option>
-															<option>Size</option>
-														</select>
+														<label>Show :<span> 9</span></label>
 													</div>
 												</div>
-												<ul class="view-mode">
-													<li><a href="shop-grid.html"><i class="fa fa-th-large"></i></a></li>
-													<li class="active"><a href="shop-list.html"><i class="fa fa-th-list"></i></a></li>
-												</ul>
 											</div>
 											<!-- Shopping Summery -->
 											<table class="table shopping-summery">
@@ -421,23 +365,6 @@
 			</div>
 		</section>
 		<!--/ End Product Style 1  -->	
-
-		<!-- Start Shop Newsletter  -->
-		<section class="shop-newsletter section">
-			<div class="container">
-				<div class="inner-top">
-					<div class="row">
-						<div class="col-lg-8 offset-lg-2 col-12">
-							<!-- Start Newsletter Inner -->
-							<div class="inner">
-								<h4>Newsletter</h4>
-								<p> Subscribe to our newsletter and get <span>10%</span> off your first purchase</p>
-								<form action="mail/mail.php" method="get" target="_blank" class="newsletter-inner">
-									<input name="EMAIL" placeholder="Your email address" required="" type="email">
-									<button class="btn">Subscribe</button>
-								</form>
-							</div>
-							<!-- End Newsletter Inner -->
 
 							<!-- My products List-->
 
