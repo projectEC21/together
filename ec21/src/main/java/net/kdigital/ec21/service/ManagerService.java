@@ -9,16 +9,19 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import net.kdigital.ec21.dto.BlacklistDTO;
 import net.kdigital.ec21.dto.CustomerDTO;
 import net.kdigital.ec21.dto.ProductDTO;
 import net.kdigital.ec21.dto.ReportedCustomerWithInfoDTO;
-import net.kdigital.ec21.dto.check.ReportCategory;
 import net.kdigital.ec21.dto.check.YesOrNo;
+import net.kdigital.ec21.entity.BlacklistEntity;
 import net.kdigital.ec21.entity.CustomerEntity;
 import net.kdigital.ec21.entity.ProductEntity;
 import net.kdigital.ec21.entity.ReportCustomerEntity;
+import net.kdigital.ec21.repository.BlacklistRepository;
 import net.kdigital.ec21.repository.CustomerRepository;
 import net.kdigital.ec21.repository.ProductRepository;
 import net.kdigital.ec21.repository.ReportCustomerRepository;
@@ -30,6 +33,7 @@ public class ManagerService {
     private final ProductRepository productRepository;
     private final CustomerRepository customerRepository;
     private final ReportCustomerRepository reportCustomerRepository;
+    private final BlacklistRepository blacklistRepository;
 
     /**
      * 당일 등록된 상품 개수, 당일 이상상품 개수, 당일 등록한 고객 수, 미처리된 신고 개수 반환하는 함수
@@ -104,10 +108,8 @@ public class ManagerService {
      * @return
      */
     public List<ReportedCustomerWithInfoDTO> selectReportedCustomer() {
-        List<ReportCustomerEntity> reportCustomerEntities = reportCustomerRepository.findByManagerCheck(YesOrNo.N); // 관리자가
-                                                                                                                    // 처리하지
-                                                                                                                    // 않은
-                                                                                                                    // 데이터
+        // 관리자가 처리하지 않은 데이터만 가져오기
+        List<ReportCustomerEntity> reportCustomerEntities = reportCustomerRepository.findByManagerCheck(YesOrNo.N);
         List<ReportedCustomerWithInfoDTO> result = new ArrayList<>();
 
         reportCustomerEntities.forEach((entity) -> {
@@ -120,6 +122,43 @@ public class ManagerService {
         });
 
         return result;
+    }
+
+    /**
+     * 신고회원 관리자 처리 여부 변경 (N->Y)
+     */
+    @Transactional
+    public void reportCustomerUpdateManagerCheck(Long reportCutomerId) {
+        ReportCustomerEntity entity = reportCustomerRepository.findById(reportCutomerId).get();
+        entity.setManagerCheck(YesOrNo.Y);
+    }
+
+    /**
+     * 신고 회원을 블랙회원으로 변경하는 함수 <br>
+     * 신고회원 테이블 pk와 신고당한 회원 아이디를 입력받은 후,<br>
+     * 1. 신고당한 아이디의 blacklist_check 값 변경 <br>
+     * 2. 회원테이블의 회원id, compName, remoteIp, country, 신고회원 테이블의 신고카테고리, 신고 사유로 블랙리스트
+     * 엔티티생성해서 테이블에 저장
+     * 
+     * @param reportCustomerId
+     * @param reportedId
+     */
+    @Transactional
+    public void reportedIdToBlackList(Long reportCutomerId, String reportedId) {
+
+        // customer의 blacklistCheck값 Y로 변경
+        CustomerEntity customerEntity = customerRepository.findById(reportedId).get();
+        customerEntity.setBlacklistCheck(YesOrNo.Y);
+
+        // 블랙리스트DTO 생성
+        ReportCustomerEntity reportCustomerEntity = reportCustomerRepository.findById(reportCutomerId).get();
+        BlacklistDTO dto = new BlacklistDTO(reportedId, customerEntity.getCompName(), customerEntity.getRemoteIp(),
+                customerEntity.getCountry(), reportCustomerEntity.getReportCategory(),
+                reportCustomerEntity.getReportReason());
+
+        // 블랙리스트 DB에 저장
+        BlacklistEntity entity = blacklistRepository.save(BlacklistEntity.toEntity(dto));
+
     }
 
 }
