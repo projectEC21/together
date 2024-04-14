@@ -19,6 +19,7 @@ import net.kdigital.ec21.dto.CustomerDTO;
 import net.kdigital.ec21.dto.ModelPredictDTO;
 import net.kdigital.ec21.dto.ProductDTO;
 import net.kdigital.ec21.dto.ReportedCustomerWithInfoDTO;
+import net.kdigital.ec21.dto.check.ProductCategory;
 import net.kdigital.ec21.dto.check.YesOrNo;
 import net.kdigital.ec21.entity.BlacklistEntity;
 import net.kdigital.ec21.entity.CustomerEntity;
@@ -84,6 +85,33 @@ public class ManagerService {
         entityList.forEach((entity) -> {
             dtoList.add(ProductDTO.toDTO(entity, entity.getCustomerEntity().getCustomerId()));
         });
+        return dtoList;
+    }
+
+    /**
+     * 전달받은 카테고리와 검색어에 해당하는 상품DTO 리스트 반환 (디폴트 : total/"")
+     * @param category
+     * @param searchWord
+     * @return
+     */
+    public List<ProductDTO> selectProductBySearch(String category, String searchWord) {
+        List<ProductEntity> productEntities = new ArrayList<>();
+        List<ProductDTO> dtoList = new ArrayList<>();
+
+        if (category.equals("total")) {
+            // 회원ID, 상품ID, 상품명에 검색어가 포함된 상품들을 최신 등록일 순으로 가져오기
+            productEntities = productRepository.findByMultipleFieldsContaining(searchWord.toLowerCase(), Sort.by(Direction.DESC, "createDate"));
+        }else{
+            // 카테고리 타입 변경 : String -> Enum
+            ProductCategory targetCategory = ProductCategory.valueOf(category);
+            // 전달받은 카테고리에 해당하고 회원ID, 상품ID, 상품명에 검색어가 포함된 상품들을 최신 등록일 순으로 가져오기
+            productEntities = productRepository.findByCategoryAndMultipleFieldsContaining(targetCategory, searchWord.toLowerCase(), Sort.by(Direction.DESC, "createDate"));
+        }
+
+        productEntities.forEach((entity)->{
+            dtoList.add(ProductDTO.toDTO(entity, entity.getCustomerEntity().getCustomerId()));
+        });
+
         return dtoList;
     }
 
@@ -229,6 +257,8 @@ public class ManagerService {
 
         return result;
     }
+
+    
 
 
 

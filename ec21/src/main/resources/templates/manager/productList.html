@@ -30,9 +30,42 @@
   <!-- Custom Theme Style -->
   <link th:href="@{/build/css/custom.css}" rel="stylesheet">
 
-  <!-- 240413 dy : JQuery 파일 추가 및 count관련 ajax 처리 -->
+  <!-- 240414 dy : JQuery 파일 추가 및 list 관련 ajax 처리 -->
   <script th:src="@{/script/jquery-3.7.1.min.js}"></script>
+  <script>
+    $(function () {
+      $("#category").on("change",search);
+      $("#searchWord").on("keyup",search);
+      init();
+    })
 
+    function search() {
+      let category = $("#category").val();
+      let searchWord = $("#searchWord").val();
+
+      $.ajax({
+        url:"/manager/productList/getList",
+        data:{"category":category,"searchWord":searchWord},
+        method:"GET",
+        success : function (list) {
+          $("#result").replaceWith(list);
+        }
+      })
+
+    }
+
+    function init() {
+      $.ajax({
+        url:"/manager/productList/getList",
+        data:{"category":"total","searchWord":""},
+        method:"GET",
+        success : function (list) {
+          $("#result").replaceWith(list);
+        }
+      })
+    }
+
+  </script>
 
 
 
@@ -163,11 +196,20 @@
                 <div class="title_right">
                   <div class="col-md-5 col-sm-5 form-group pull-right top_search">
                     <div class="input-group">
-                      <select name="selectTheme" id="selectTheme">
+                      <!-- <select name="selectTheme" id="selectTheme">
                         <option value="total">전체</option>
-                        <option value="productId">상품ID</option> <!--회원 ID였는데 ProductEntity에서 찾을 수 없어서.. 상품ID로 바꿈..-->
+                        <option value="customerId">회원ID</option> 
                         <option value="category">카테고리</option>
                         <option value="productName">상품명</option>
+                      </select> -->
+                      <!-- 240414 dy : select를 카테고리로 바꾸고, 검색어는 회원ID, 상품ID, 상품명에서 모두 검색되게 함-->
+                      <select name="category" id="category">
+                        <option value="total">전체</option>
+                        <option value="FOOD_BEVERAGE">FOOD_BEVERAGE</option> 
+                        <option value="CHEMICAL">CHEMICAL</option>
+                        <option value="HEALTH_MEDICAL">HEALTH_MEDICAL</option>
+                        <option value="ELECTRONIC">ELECTRONIC</option>
+                        <option value="COSMETIC">COSMETIC</option>
                       </select>
                       <input type="text" class="form-control" id="searchWord" placeholder="Search for...">
                       <span class="input-group-btn">
@@ -178,8 +220,7 @@
                 </div>
 
                 <div class="x_content">
-                  <a href="" id="predictTotal">전체</a> | <a href="" id="predictWeird">이상</a> | <a href=""
-                    id="predictNormal"> 정상</a>
+                  <a href="" id="predictTotal">전체</a> | <a href="" id="predictWeird">이상</a> | <a href="" id="predictNormal"> 정상</a>
 
                   <div class="table-responsive">
                     <table id="datatable-responsive" class="table table-striped jambo_table bulk_action">
@@ -199,9 +240,8 @@
                           </th>
                         </tr>
                       </thead>
-
-                      <tbody>
-                        <th:block id="result">
+                      <!-- 240414 dy : 전달받은 카테고리와 검색어에 해당하는 상품 리스트 꽂아 넣음 (디폴트- 카테고리:전체/검색어:"") -->
+                      <tbody id="result">
                           <tr class="even pointer" th:each="product:${list}">
                             <td class=" " th:text="${product.customerId}">121000040</td>
                             <td class=" " th:text="${product.productId}"><a
@@ -218,112 +258,9 @@
                             <td class="a-right a-right " th:text="${product.judge}">이상</td>
                             <td class=" last"><input type="button" value="정상"><input type="button" value="이상"></a></td>
                           </tr>
-                        </th:block>
-
-                        <!-- <tr class="odd pointer">
-
-                            <td class=" ">121000039</td>
-                            <td class=" "><a href="">3248202404071536</a></td>
-                            <td class=" "><a href="">아이폰</a> </td>
-                            <td class=" ">Electronics</td>
-                            <td class=" ">이상</td>
-                            <td class="a-right a-right "></td>
-                            <td class=" last"><input type="button" value="정상"><input type="button" value="이상"></a>
-                            </td>
-                          </tr>
-                          <tr class="even pointer">
-
-                            <td class=" ">121000038</td>
-                            <td class=" "><a href="">3248202404071536</a></td>
-                            <td class=" "><a href=""> 성인용품</a></td>
-                            <td class=" ">Electronics</td>
-                            <td class=" ">정상</td>
-                            <td class="a-right a-right ">정상</td>
-                            <td class=" last"><input type="button" value="정상"><input type="button" value="이상"></a>
-                            </td>
-                          </tr>
-                          <tr class="odd pointer">
-
-                            <td class=" ">121000037</td>
-                            <td class=" "><a href="">3248202404071536</a></td>
-                            <td class=" ">121000203</td>
-                            <td class=" ">Mike Smith</td>
-                            <td class=" ">Paid</td>
-                            <td class="a-right a-right ">$333.21</td>
-                            <td class=" last"><input type="button" value="정상"><input type="button" value="이상"></a>
-                            </td>
-                          </tr>
-                          <tr class="even pointer">
-
-                            <td class=" ">121000040</td>
-                            <td class=" "><a href="">3248202404071536</a></td>
-                            <td class=" ">121000203</td>
-                            <td class=" ">John Blank L</td>
-                            <td class=" ">Paid</td>
-                            <td class="a-right a-right ">$7.45</td>
-                            <td class=" last"><input type="button" value="정상"><input type="button" value="이상"></a>
-                            </td>
-                          </tr>
-                          <tr class="odd pointer">
-
-                            <td class=" ">121000039</td>
-                            <td class=" "><a href="">3248202404071536</a></td>
-                            <td class=" ">121000203</td>
-                            <td class=" ">John Blank L</td>
-                            <td class=" ">Paid</td>
-                            <td class="a-right a-right ">$741.20</td>
-                            <td class=" last"><input type="button" value="정상"><input type="button" value="이상"></a>
-                            </td>
-                          </tr>
-                          <tr class="even pointer">
-
-                            <td class=" ">121000038</td>
-                            <td class=" "><a href="">3248202404071536</a></td>
-                            <td class=" ">121000203</td>
-                            <td class=" ">Mike Smith</td>
-                            <td class=" ">Paid</td>
-                            <td class="a-right a-right ">$432.26</td>
-                            <td class=" last"><input type="button" value="정상"><input type="button" value="이상"></a>
-                            </td>
-                          </tr>
-                          <tr class="odd pointer">
-
-                            <td class=" ">121000037</td>
-                            <td class=" "><a href="">3248202404071536</a></td>
-                            <td class=" ">121000203</td>
-                            <td class=" ">Mike Smith</td>
-                            <td class=" ">Paid</td>
-                            <td class="a-right a-right ">$333.21</td>
-                            <td class=" last"><input type="button" value="정상"><input type="button" value="이상"></a>
-                            </td>
-                          </tr>
-
-                          <tr class="even pointer">
-
-                            <td class=" ">121000040</td>
-                            <td class=" "><a href="">3248202404071536</a></td>
-                            <td class=" ">121000210</td>
-                            <td class=" ">John Blank L</td>
-                            <td class=" ">Paid</td>
-                            <td class="a-right a-right ">$7.45</td>
-                            <td class=" last"><input type="button" value="정상"><input type="button" value="이상"></a>
-                            </td>
-                          </tr>
-                          <tr class="odd pointer">
-
-                            <td class=" ">121000039</td>
-                            <td class=" "><a href="">3248202404071536</a></td>
-                            <td class=" ">121000208</td>
-                            <td class=" ">John Blank L</td>
-                            <td class=" ">Paid</td>
-                            <td class="a-right a-right ">$741.20</td>
-                            <td class=" last"><input type="button" value="정상"><input type="button" value="이상"></a>
-                            </td>
-                          </tr> -->
                       </tbody>
                     </table>
                   </div>
-
 
                 </div>
               </div>
