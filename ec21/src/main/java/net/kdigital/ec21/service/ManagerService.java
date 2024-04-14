@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
@@ -14,16 +16,19 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.kdigital.ec21.dto.BlacklistDTO;
 import net.kdigital.ec21.dto.CustomerDTO;
+import net.kdigital.ec21.dto.ModelPredictDTO;
 import net.kdigital.ec21.dto.ProductDTO;
 import net.kdigital.ec21.dto.ReportedCustomerWithInfoDTO;
 import net.kdigital.ec21.dto.check.YesOrNo;
 import net.kdigital.ec21.entity.BlacklistEntity;
 import net.kdigital.ec21.entity.CustomerEntity;
 import net.kdigital.ec21.entity.ProductEntity;
+import net.kdigital.ec21.entity.ProhibitSimilarWordEntity;
 import net.kdigital.ec21.entity.ReportCustomerEntity;
 import net.kdigital.ec21.repository.BlacklistRepository;
 import net.kdigital.ec21.repository.CustomerRepository;
 import net.kdigital.ec21.repository.ProductRepository;
+import net.kdigital.ec21.repository.ProhibitSimilarWordRepository;
 import net.kdigital.ec21.repository.ReportCustomerRepository;
 
 @Service
@@ -34,7 +39,7 @@ public class ManagerService {
     private final CustomerRepository customerRepository;
     private final ReportCustomerRepository reportCustomerRepository;
     private final BlacklistRepository blacklistRepository;
-
+    private final ProhibitSimilarWordRepository prohibitSimilarWordRepository;
     /**
      * 당일 등록된 상품 개수, 당일 이상상품 개수, 당일 등록한 고객 수, 미처리된 신고 개수 반환하는 함수
      * 
@@ -66,13 +71,15 @@ public class ManagerService {
         return result;
     }
 
+    //==================================== 상품관리 ======================================
+    
     /**
      * 모든 상품 DTO 리스트로 반환하는 함수
      * 
      * @return
      */
     public List<ProductDTO> selectAll() {
-        List<ProductEntity> entityList = productRepository.findAll();
+        List<ProductEntity> entityList = productRepository.findAll(Sort.by(Direction.DESC,"createDate"));
         List<ProductDTO> dtoList = new ArrayList<>();
         entityList.forEach((entity) -> {
             dtoList.add(ProductDTO.toDTO(entity, entity.getCustomerEntity().getCustomerId()));
@@ -80,17 +87,44 @@ public class ManagerService {
         return dtoList;
     }
 
-    /**
-     * lstm_predict 값이 0인
-     */
-    public void selectWeird() {
-    }
 
     /**
-     * 정상회원(blacklist_check==N)인 CustomerDTO 리스트 반환
+     * lstm 예측값이 0(false)이고 관리자가 미처리한 상품들을 새로운 ModelPredictDTO에 담아 리스트로 반환하는 함수
+     * @return
+     */
+    public List<ModelPredictDTO> selectAllModelPredictWeird() {
+
+        // lstm이 이상으로 판단한 데이터들 리스트로 가져오기
+        List<ProductEntity> productEntities = productRepository.findByLstmPredictAndJudgeOrderByCreateDateDesc(false,null);
+        List<ModelPredictDTO> result = new ArrayList<>();
+
+        productEntities.forEach((prodEntity)->{
+            // productId에 해당하는 금지어유사도 결과 데이터들 가져오기 (금지어 유사 확률 높은 순)
+            List<ProhibitSimilarWordEntity> entityList = prohibitSimilarWordRepository.findProbaByProductEntity_ProductIdOrderBySimilarProbaDesc(prodEntity.getProductId());
+            // 금지 유사확률이 가장 높은 데이터 가져오기
+            ProhibitSimilarWordEntity prohibitSimilarWordEntity = entityList.get(0); 
+            
+            // 화면 출력을 위한 새로운 ModelPredictDTO 생성
+            ModelPredictDTO dto = new ModelPredictDTO(prodEntity.getCustomerEntity().getCustomerId(), prodEntity.getProductId(), 
+                prodEntity.getProductName(), prodEntity.getProductDesc(), 
+                prodEntity.getLstmPredictProba(), prodEntity.isLstmPredict(), 
+                prohibitSimilarWordEntity.getSimilarWord(), prohibitSimilarWordEntity.getSimilarProba(), 
+                prohibitSimilarWordEntity.getProhibitWordEntity().getProhibitWord(), 
+                prohibitSimilarWordEntity.getProhibitWordEntity().getProhibitReason());
+            
+            result.add(dto);
+        });
+        return result;
+    }
+
+
+    //==================================== 회원관리 ======================================
+
+    /**
+     * 정상회원(blacklist_check==N)인 CustomerDTO 최신 가입 순으로 반환
      */
     public List<CustomerDTO> selectNotBlacklist() {
-        List<CustomerEntity> entityList = customerRepository.findByBlacklistCheck(YesOrNo.N);
+        List<CustomerEntity> entityList = customerRepository.findByBlacklistCheckOrderByCreateDateDesc(YesOrNo.N);
         List<CustomerDTO> dtoList = new ArrayList<>();
         entityList.forEach((entity) -> {
             dtoList.add(CustomerDTO.toDTO(entity));
@@ -108,8 +142,8 @@ public class ManagerService {
      * @return
      */
     public List<ReportedCustomerWithInfoDTO> selectReportedCustomer() {
-        // 관리자가 처리하지 않은 데이터만 가져오기
-        List<ReportCustomerEntity> reportCustomerEntities = reportCustomerRepository.findByManagerCheck(YesOrNo.N);
+        // 관리자가 처리하지 않은 데이터(최신 신고날짜 순으로) 가져오기
+        List<ReportCustomerEntity> reportCustomerEntities = reportCustomerRepository.findByManagerCheckOrderByReportDateDesc(YesOrNo.N);
         List<ReportedCustomerWithInfoDTO> result = new ArrayList<>();
 
         reportCustomerEntities.forEach((entity) -> {
@@ -195,5 +229,7 @@ public class ManagerService {
 
         return result;
     }
+
+
 
 }

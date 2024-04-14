@@ -10,7 +10,7 @@ public interface ReportCustomerRepository extends JpaRepository<ReportCustomerEn
     // 미처리된 신고 개수 반환
     long countByManagerCheck(YesOrNo yesOrNo);
 
-    // 미처리된 신고 정보 리스트로 반환
-    List<ReportCustomerEntity> findByManagerCheck(YesOrNo managerCheck);
+    // 미처리된 신고 정보 리스트 최근 신고된 날짜 순으로 반환
+    List<ReportCustomerEntity> findByManagerCheckOrderByReportDateDesc(YesOrNo managerCheck);
 
 }

@@ -12,6 +12,6 @@ public interface CustomerRepository extends JpaRepository<CustomerEntity, String
     // 당일 등록한 회원 수 반환
     long countByCreateDateBetween(LocalDateTime startDate, LocalDateTime endDate);
 
-    // 정상 회원 (blacklist_check==N)인 모든 customerEntity 리스트로 반환
-    List<CustomerEntity> findByBlacklistCheck(YesOrNo blacklistCheck);
+    // 정상 회원 (blacklist_check==N)인 모든 customerEntity 최신 등록 순으로 리스트 반환
+    List<CustomerEntity> findByBlacklistCheckOrderByCreateDateDesc(YesOrNo blacklistCheck);
 }
