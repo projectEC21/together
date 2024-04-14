@@ -104,6 +104,7 @@ public class ProductEntity {
     private CustomerEntity customerEntity;
 
     @Column(name = "product_delete")
+    @Enumerated(EnumType.STRING)
     private YesOrNo productDelete;
 
     // 자식

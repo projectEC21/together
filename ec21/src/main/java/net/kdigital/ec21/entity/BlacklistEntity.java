@@ -5,11 +5,13 @@ import java.time.LocalDateTime;
 import org.hibernate.annotations.CreationTimestamp;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -25,6 +27,8 @@ import net.kdigital.ec21.dto.check.ReportCategory;
 @Setter
 @ToString
 @Builder
+@Entity
+@Table(name = "blacklist")
 public class BlacklistEntity {
     @SequenceGenerator(name = "blacklist_seq", sequenceName = "blacklist_seq", allocationSize = 1, initialValue = 1)
     @Id
