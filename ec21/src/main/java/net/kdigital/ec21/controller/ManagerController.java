@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.kdigital.ec21.dto.CustomerDTO;
+import net.kdigital.ec21.dto.ModelPredictDTO;
 import net.kdigital.ec21.dto.ProductDTO;
 import net.kdigital.ec21.dto.ReportedCustomerWithInfoDTO;
 import net.kdigital.ec21.service.ManagerService;
@@ -69,9 +70,27 @@ public class ManagerController {
 	 */
 	@GetMapping("manager/modelPredict")
 	public String modelPredict() {
-		managerService.selectWeird();
 		return "manager/modelPredict";
 	}
+
+
+		/**
+	 * ajax - 모델이 이상으로 판별하고 관리자가 아직 처리하지 않은 이상상품 반환  (lstm_predict==0 && judge==null)
+	 * (아직 버튼 처리 안함) 
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/manager/modelPredict/getList", method = RequestMethod.GET)
+	public String getList(Model model) {
+		
+		List<ModelPredictDTO> dtoList = managerService.selectAllModelPredictWeird();
+		model.addAttribute("list", dtoList);
+
+		return "/manager/modelPredict::#result";
+	}
+
+
+
 
 	// ============================= 회원 관리 =============================
 
