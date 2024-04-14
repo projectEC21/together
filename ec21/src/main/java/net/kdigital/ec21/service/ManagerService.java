@@ -162,4 +162,38 @@ public class ManagerService {
 
     }
 
+    /**
+     *  블랙리스트 테이블에서 전달받은 ID를 삭제하는 함수 
+     * @param blacklistId
+     */
+    @Transactional
+    public void deleteFromBalcklist(Long blacklistId) {
+        blacklistRepository.deleteById(blacklistId);
+    }
+
+
+    /**
+     * 블랙리스트 회원 DTO를 반환하고자 하는데 회원의 기본적인 정보를 같이 담기 위해 새로운 DTO에 담아 리스트를 반환하는 함수 
+     * (신고당한 회원 ID, 신고회원테이블ID, 신고당한 회원의 신고당한 횟수, 구분, 이름, 회사명, 부서명, IP, 신고 카테고리, 신고 사유)
+     * @return
+     */
+    public List<ReportedCustomerWithInfoDTO> selectblackList() {
+        // 모든 블랙리스트 데이터 가져오기
+        List<BlacklistEntity> blacklistEntityList = blacklistRepository.findAll();
+        List<ReportedCustomerWithInfoDTO> result = new ArrayList<>();
+
+        blacklistEntityList.forEach((entity) -> {
+            // 회원 정보 가져오기 위한 CustomerEntity 가져오기
+            CustomerEntity customerEntity = customerRepository.findById(entity.getCustomerId()).get();
+
+            result.add(new ReportedCustomerWithInfoDTO(entity.getCustomerId(), entity.getBlacklistId(),
+                    customerEntity.getReportedCnt(), customerEntity.getCustomerGubun(),
+                    customerEntity.getCustomerName(), customerEntity.getCompName(),
+                    customerEntity.getCustomerDepartment(), customerEntity.getRemoteIp(),
+                    entity.getBlackType(), entity.getBlackReason()));
+        });
+
+        return result;
+    }
+
 }
