@@ -206,10 +206,15 @@
                             <td class=" " th:text="${product.customerId}">121000040</td>
                             <td class=" " th:text="${product.productId}"><a
                                 th:href="@{/manager/productDetail}">3248202404071536</a></td>
-                            <td class=" "><a th:href="@{/manager/productDetail}" th:text="${product.productName}"> LOWA
-                                Men’s Renegade GTX Mid Hiking Boots Review</a></td>
+                            <td class=" "><a th:href="@{/manager/productDetail}" th:text="${product.productName}"> 
+                              LOWA Men’s Renegade GTX Mid Hiking Boots Review</a></td>
                             <td class=" " th:text="${product.category}">신발</td>
-                            <td class=" " th:text="${product.lstmPredict}"> 정상</td>
+                            <th:block th:if="${product.lstmPredict==false}">
+                              <td class=" "> 이상</td>
+                            </th:block>
+                            <th:block th:unless="${product.lstmPredict==false}">
+                              <td class=" "> 정상</td>
+                            </th:block>
                             <td class="a-right a-right " th:text="${product.judge}">이상</td>
                             <td class=" last"><input type="button" value="정상"><input type="button" value="이상"></a></td>
                           </tr>
