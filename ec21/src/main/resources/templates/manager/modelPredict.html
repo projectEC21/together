@@ -36,6 +36,28 @@
 
   <!-- Custom Theme Style -->
   <link th:href="@{/build/css/custom.css}" rel="stylesheet">
+
+
+  <!-- 240414 dy : JQuery 파일 추가 및 ajax 추가 -->
+  <script th:src="@{/script/jquery-3.7.1.min.js}"></script>
+  <script>
+    $(function () {
+      init();
+    })
+
+    function init() {
+      $.ajax({
+        url:"/manager/modelPredict/getList",
+        method:"GET",
+        success:function(list){
+          $("#result").replaceWith(list);
+        }
+      })
+    }
+
+  </script>
+
+
 </head>
 
 <body class="nav-md">
@@ -189,89 +211,35 @@
                         <th style="width: 20%">#Edit</th>
                       </tr>
                     </thead>
-                    <tbody>
-                      <tr>
-                        <td>#</td>
-                        <td>
-                          121000203
-                        </td>
-                        <td>
-                          <a href="">ipone</a>
-                        </td>
-                        <td class="project_progress">
-                          아이폰 11 판매
-                        </td>
-                        <td>
-                          이상단어 검출: <br> iphone(IPR infringement)</p>
-                          이상검출도: 80%
-                          <div class="progress progress_sm">
-                            <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="80"></div>
-                          </div>
-                          이상단어유사도: 90%
-                          <div class="progress progress_sm">
-                            <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="90"></div>
-                          </div>
-                        </td>
-                        <td>
-                          <a href="#" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> 정상 </a>
-                          <a href="#" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> 이상 </a>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>#</td>
-                        <td>
-                          121000203
-                        </td>
-                        <td>
-                          <a href="">ipone</a>
-                        </td>
-                        <td class="project_progress">
-                          아이폰 11 판매
-                        </td>
-                        <td>
-                          이상단어 검출: <br> iphone(IPR infringement)</p>
-                          이상검출도: 80%
-                          <div class="progress progress_sm">
-                            <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="80"></div>
-                          </div>
-                          이상단어유사도: 90%
-                          <div class="progress progress_sm">
-                            <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="90"></div>
-                          </div>
-                        </td>
-                        <td>
-                          <a href="#" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> 정상 </a>
-                          <a href="#" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> 이상 </a>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>#</td>
-                        <td>
-                          121000203
-                        </td>
-                        <td>
-                          <a href="">ipone</a>
-                        </td>
-                        <td class="project_progress">
-                          아이폰 11 판매
-                        </td>
-                        <td>
-                          이상단어 검출: <br> iphone(IPR infringement)</p>
-                          이상검출도: 80%
-                          <div class="progress progress_sm">
-                            <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="80"></div>
-                          </div>
-                          이상단어유사도: 90%
-                          <div class="progress progress_sm">
-                            <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="90"></div>
-                          </div>
-                        </td>
-                        <td>
-                          <a href="#" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> 정상 </a>
-                          <a href="#" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> 이상 </a>
-                        </td>
-                      </tr>
 
+                    <!-- 240414 dy : ajax로 모델이상상품 정보 꽂아 넣기 -->
+                    <tbody id="result">
+                      <tr th:each="product:${list}">
+                        <td th:text="${product.customerId}">#</td>
+                        <td th:text="${product.productId}">121000203</td>
+                        <td>
+                          <a href="" th:text="${product.productName}">ipone</a>
+                        </td>
+                        <!-- 나중에 th:utext로 바꿔야 함 -->
+                        <td class="project_progress"  th:text="${product.productDesc}">
+                          아이폰 11 판매
+                        </td>
+                        <td>
+                          이상단어 검출: <br> [[${product.prohibitWord}]]([[${product.prohibitReason}]])</p>
+                          이상검출도: [[${product.lstmPredictProba}]] %
+                          <div class="progress progress_sm">
+                            <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="${product.lstmPredictProba}"></div>
+                          </div>
+                          이상단어유사도: [[${product.similarProba}]] %
+                          <div class="progress progress_sm">
+                            <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="${product.similarProba}"></div>
+                          </div>
+                        </td>
+                        <td>
+                          <a href="#" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> 정상 </a>  <!--정상 클릭시 judge 1로 변경-->
+                          <a href="#" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> 이상 </a> <!--이상 클릭 시 judge 0으로 변경-->
+                        </td>
+                      </tr>
                     </tbody>
                   </table>
                   <!-- end project list -->
