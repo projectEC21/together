@@ -62,14 +62,7 @@ public class ManagerController {
 		return "/manager/blackList";
 	}
 
-	/**
-	 * 블랙리스트 회원 리스트 화면 요청 
-	 * @return
-	 */
-	@GetMapping("/main/login")
-	public String login() {
-		return "/main/login";
-	}
+
 
 
 
