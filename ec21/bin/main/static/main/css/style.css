@@ -3636,7 +3636,11 @@ Version:1.0
 	Start Write CSS
 ========================================*/
 
-.product-list.section h2 {
+.product-list.section .write-form{
+	width: max-content;
+}
+
+.product-list.section .title h2 {
 	position: relative;
     font-size: 30px;
     color: #333;
@@ -3644,8 +3648,95 @@ Version:1.0
     line-height: 25px;
     text-transform: uppercase;
     margin-bottom: 10px;
-    padding-bottom: 20px;
     text-align: left;
+}
+
+.product-list.section .title p {
+	position: relative;
+	display: block;
+	font-size: 15px;
+	color: #4e4e4e;
+	font-weight: 300;
+    text-align: left;
+    padding-bottom: 50px;
+}
+
+/* css 는 조금 더 생각해보기 */
+.product-list.section th.form-group.title {
+	font-size: 25px;
+    border: 1px solid #efefef;
+    padding: 15px 0 15px 5px;
+    background: #efefef;
+}	
+
+
+.product-list.section th.form-group span {
+	color: #ff2c18;
+	display: contents;
+	position: absolute;
+	top: 4px;
+	font-size: 16px;
+}
+
+.product-list.section tbody{
+	padding-bottom: 40px;
+}
+
+.product-list.section th, td {
+    padding-top: 20px; /* 위쪽 패딩 */
+    padding-bottom: 20px; /* 아래쪽 패딩 */
+}
+
+.product-list.section .nice-select.category {
+    width: 320px;
+	text-align: center; /* 텍스트를 중앙 정렬 */
+}
+
+.product-list.section td.form-group input[type="text"] {
+	display: inline-flex;
+    margin-left: 20px;
+    justify-content: center;
+	width: 300px;
+}
+
+.product-list.section input[type="text"]{
+	padding-left: 10px;
+	width: 320px;
+}
+
+/* 가격 , 단위만 */
+.product-list.section input.price {
+	padding-left: 10px;
+	width: 250px;
+}
+
+.product-list.section input.unit {
+	padding-left: 10px;
+	width: 70px;
+}
+
+/* ckeditor */
+.product-list.section th.form-group.editor {
+	position: relative;
+}
+
+.ck.ck-editor {
+	max-width: 500px;
+}
+.ck-editor__editable {
+	min-height: 300px;
+}
+
+.product-list.section .ck-editor {
+	padding-left: 10px;
+}
+
+.product-list.section .form .btn {
+	display: inline-block;
+	margin-right: 10px;
+	height: 46px;
+	color: #fff;
+	line-height: 20px;
 }
 
 /*======================================

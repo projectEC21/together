@@ -9,6 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<!-- Title Tag  -->
     <title>EC21, Global B2B Marketplace</title>
+
 	<!-- Favicon -->
 	<link rel="icon" type="image/png" href="../../static/main/images/ec21logo.png">
 	<!-- Web Font -->
@@ -49,7 +50,10 @@
 	<link rel="stylesheet" href="../../static/main/css/color/color2.css">
 
 	<link rel="stylesheet" href="#" id="colors">
-	
+
+	<!-- CK Editor -->
+	<script src="https://cdn.ckeditor.com/ckeditor5/41.3.0/classic/ckeditor.js"></script>
+
 </head>
 <body class="js">
 	
@@ -144,135 +148,117 @@
 		<section class="product-area shop-sidebar product-list shop section">
 			<div class="container">
 				<div class="row">
-					<h2>Add A New Product</h2>
-					<div class="col-lg-6 offset-lg-3 col-12">
+					<div class="col-lg-3 col-md-4 col-12">
+						<div class="shop-sidebar login-form">
+								<!-- Single Widget -->
+								<div class="single-widget category">
+									<h3 class="title">My Page</h3>
+									<ul class="categor-list">
+										<li><a href="#">info</a></li>
+										<li><a href="myProducts.html" style="font-weight:600;">Products</a></li>
+										<!-- 해당 페이지에 들어가면 색상이 더 진하게 보이게 해놓음
+											th : @@/myProducts -->
+										</ul>
+									</div>
+									<!--/ End Single Widget -->
+							</div>
+						</div>
+						
+						<div class="col-lg-9 col-md-8 col-12">
 						<div class="row">
-							<!-- My products List -->
-								<div class="write-form">
-									<p>
-										Start Your Online Business with EC21.com <br>
-										Please fill out all fields in English
-									</p>
-									<!-- Form -->
-									<form class="form" method="post" action="#">
+							<div class="title">
+								<h2>Add A New Product</h2>
+								<p>Fill out each field in English ONLY.</p>
+							</div>
+							<!-- productsWrite 시작 -->
+							<div class="write-form">
+								<!-- Form -->
+								<form class="form" method="post" action="#">
+									<table>
 										<div class="row">
-											<div class="col-12">
-												<div class="form-group title">
-													<label>Your Country & Account Type</label>
-												</div>
-											</div>
-						
-											<div class="col-12">
-												<div class="form-group">
-													<label class="remoteIP">Business Location<span>*</span></label>
-													<div>
-														Your current IP address is <input type="text" name="remoteIP"
-															class="short-input" required="required" readonly> <br> <br>
-														which is accessing from <input type="text" name="country"
-															class="short-input" required="required" readonly>. <br>
-														Please select your location exactly. You cannot change your country once
-														your membership registration is completed.
-													</div>
-												</div>
-											</div>
-											<div class="col-12">
-												<div class="form-group">
-													<label class="gubun">I am a<span>*</span></label>
-													<div>
-														<input type="checkbox" class="gubun" name="buyer" value="buyer"> Buyer <l>
-															<input type="checkbox" class="gubun" name="seller" value="seller">
-															Seller
-													</div>
-												</div>
-											</div>
+										<tbody>
+
+											<tr>
+												<th class="form-group title" colspan="2">Basic Information</th>
+											</tr>
 											
-											<div class="col-12">
-												<div class="form-group title">
-													<label>Enter Your Contact Information</label>
-												</div>
-											</div>
-											<div class="col-12">
-												<div class="form-group">
-													<label>Full Name<span>*</span></label>
-													<input type="text" name="name" placeholder="" required="required">
-												</div>
-											</div>
-											<div class="col-12">
-												<div class="form-group">
-													<label>Company Name<span>*</span></label> <br>
-													<input type="text" name="companyName" placeholder="" required="required">
-													<span>Please enter your company name exactly. To modify company name after
-														registration, you need to send us a business license and further information
-														to be re-approved.</span>
-												</div>
-											</div>
-											<div class="col-12">
-												<div class="form-group">
-													<label>Phone<span>*</span></label>
-													<input type="text" name="phone" placeholder="" required="required">
-													<span>Please enter a valid phone number.<br>
-														The number you entered will be a primary contact number on EC21.com</span>
-												</div>
-											</div>
-						
-											<div class="col-12">
-												<div class="form-group title">
-													<label>Enter Your Email Address & Create Your Account</label>
-												</div>
-											</div>
-											<div class="col-12">
-												<div class="form-group">
-													<label>Email<span>*</span></label>
-													<input type="text" name="email" placeholder="" required="required">
-													<span>You may login with either your assigned username or your e-mail
-														address.</span>
-												</div>
-											</div>
-											<div class="col-12">
-												<div class="form-group">
-													<label>ID<span>*</span></label>
-													<input type="text" name="id" placeholder="" required="required">
-													<span>4-10 characters long in lowercase.</span>
-												</div>
-											</div>
-											<div class="col-12">
-												<div class="form-group">
-													<label>Password<span>*</span></label>
-													<input type="password" name="password" placeholder="" required="required">
-													<span>6-10 characters long.</span>
-												</div>
-											</div>
-											<div class="col-12">
-												<div class="form-group">
-													<label>Confirm Password<span>*</span></label>
-													<input type="password" name="password" placeholder="" required="required">
-												</div>
-											</div>
-											<div class="col-12">
-												<div class="checkbox">
-													<label class="checkbox-inline" for="2"><input name="news" id="2"
-															type="checkbox">I Agree To EC21 Terms of Services, Privacy Policy, And
-														Receive Emails From EC21 And Its Partners Related To Their Services,
-														Promotions And Business Matching.</label>
-												</div>
-											</div>
-											<br>
-											<div class="col-12">
-												<div class="form-group login-btn">
-													<button class="btn" type="submit">Create My Account</button>
-													<!-- <a href="login.html" class="btn">Login</a> -->
-												</div>
-											</div>
-										</div>
-									</form>
-									<!--/ End Form -->
+											<tr>
+												<th class="form-group">Category<span>*</span></th>
+												<td>
+													<select class="category">
+														<option selected="selected">----------------</option>
+														<option value="Food_Beverage">Food & Beverage</option>
+														<option value="Chemical">Chemical</option>
+														<option value="Health_Medical">Health & Medical</option>
+														<option value="Electronics">Electronics</option>
+														<option value="Cosmetic">Cosmetic</option>
+													</select>
+												</td>
+											</tr>
+											<tr>
+												<th class="form-group">Product Name<span>*</span></th>
+											<td><input type="text" name="productName" value=""></td>
+										</tr>
+									</tbody>
+										
+										<!-- 무역 정보 작성 -->
+									<tbody>
+										<tr>
+											<th class="form-group title" colspan="2">Trade Information</th>
+										</tr>
+										<tr>
+											<!-- 원산지 -->
+											<th class="form-group">Origin<span>*</span></th>
+											<td><input type="text" class="origin" id="origin" name="origin" value=""></td>
+										</tr>
+										
+										<tr>
+											<!-- 가격 과 단위 처리 어떻게 할지 물어보기 -->
+											<!-- 가격 & 단위 -->
+											<th class="form-group">Price<span>*</span></th>
+											<td>
+												<input type="text" class="price" id="price" name="price" value="">
+												<input type="text" class="unit" id="unit" name="unit" value="">
+											</td>
+										</tr>
+										<!-- 최소 주문 수량 -->
+										<tr>
+											<th class="form-group">Quantity<span>*</span></th>
+											<td>
+												<input type="text" class="moq" id="moq" name="moq" value="">
+											</tr>
+										</tbody>
+											<!-- / 무역 정보 작성 -->
+											
+											<!-- 상품 정보 작성 -->
+											<tbody>
+												<tr>
+													<th class="form-group title" colspan="2">Product Description</th>
+												</tr>
+												<tr>
+													<th class="form-group editor">Product Details<span>*</span></th>
+													<td>
+													<div name="editor" id="editor"></div>
+												</td>
+												</tr>
+											</tbody>
+										<!-- / 상품 정보 작성 -->
+									</div>
+								</table>
+								<div class="col-12">
+									<div class=" form-group submit-btn">
+										<button class="btn" type="submit">Submit</button>
+									</div>
+								</div>
+							</form>
+							<!--/ End Form -->
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</sesction>
-		<!--/ End Login -->
+		<!--/ End Write -->
 		
 	<!-- Start Footer Area -->
 	<footer class="footer">
@@ -411,5 +397,9 @@
 	<script src="../../static/main/js/easing.js"></script>
 	<!-- Active JS -->
 	<script src="../../static/main/js/active.js"></script>
+	<!-- CK Editor -->
+	<script>
+		ClassicEditor.create( document.querySelector( '#editor' ) );
+	</script>
 </body>
 </html>
