@@ -152,6 +152,7 @@ public class ManagerService {
 
         // 블랙리스트DTO 생성
         ReportCustomerEntity reportCustomerEntity = reportCustomerRepository.findById(reportCutomerId).get();
+
         BlacklistDTO dto = new BlacklistDTO(reportedId, customerEntity.getCompName(), customerEntity.getRemoteIp(),
                 customerEntity.getCountry(), reportCustomerEntity.getReportCategory(),
                 reportCustomerEntity.getReportReason());

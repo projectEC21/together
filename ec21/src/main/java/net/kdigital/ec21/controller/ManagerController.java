@@ -111,7 +111,7 @@ public class ManagerController {
 			Model model) {
 		if (reportCustomerId != -100) {
 			// 블랙버튼 : 신고당한 회원 블랙리스트에 추가
-			if (reportedId.equals("")) {
+			if (reportedId != "") {
 				managerService.reportedIdToBlackList(reportCustomerId, reportedId);
 			}
 			// 정상버튼 : 관리자 처리 완료 상태로 변경
