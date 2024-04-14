@@ -72,10 +72,8 @@ public class ManagerController {
 	@RequestMapping(value = "/manager/productList/getList", method = RequestMethod.GET)
 	public String getProductList(@RequestParam(name = "category" , defaultValue = "total")String category,
 		@RequestParam(name = "searchWord" , defaultValue = "") String searchWord, Model model) {
-		List<ProductDTO> dtoList = new ArrayList<>();
-		
-		dtoList = managerService.selectProductBySearch(category, searchWord);
-		
+				
+		List<ProductDTO> dtoList = managerService.selectProductBySearch(category, searchWord);
 		model.addAttribute("list", dtoList);
 
 		return "/manager/productList::#result";
@@ -93,20 +91,21 @@ public class ManagerController {
 	}
 
 	/**
-	 * ajax - 모델이 이상으로 판별하고 관리자가 아직 처리하지 않은 이상상품 반환  (lstm_predict==0 && judge==null)
-	 * (아직 버튼 처리 안함) 
+	 * ajax - 모델이 이상으로 판별하고 관리자가 아직 처리하지 않은 상품 (lstm_predict==0 && judge==null) 중
+	 * 전달 받은 카테고리와 검색어에 해당하는 상품을 최신 등록일 순으로 반환
+	 * (아직 버튼 처리 안함)
 	 * @param model
 	 * @return
 	 */
 	@RequestMapping(value = "/manager/modelPredict/getList", method = RequestMethod.GET)
-	public String getList(Model model) {
+	public String getList(@RequestParam(name = "category", defaultValue = "total") String category,
+			@RequestParam(name = "searchWord", defaultValue = "") String searchWord, Model model) {
 		
-		List<ModelPredictDTO> dtoList = managerService.selectAllModelPredictWeird();
+		List<ModelPredictDTO> dtoList = managerService.selectModelPredictWeirdBySearch(category, searchWord);
 		model.addAttribute("list", dtoList);
 
 		return "/manager/modelPredict::#result";
 	}
-
 
 
 

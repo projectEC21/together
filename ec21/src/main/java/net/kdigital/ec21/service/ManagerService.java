@@ -36,11 +36,17 @@ import net.kdigital.ec21.repository.ReportCustomerRepository;
 @RequiredArgsConstructor
 @Slf4j
 public class ManagerService {
+    // ==================================== Repository ====================================
     private final ProductRepository productRepository;
     private final CustomerRepository customerRepository;
     private final ReportCustomerRepository reportCustomerRepository;
     private final BlacklistRepository blacklistRepository;
     private final ProhibitSimilarWordRepository prohibitSimilarWordRepository;
+
+    
+    
+    //==================================== 메인 보드 ====================================
+    
     /**
      * 당일 등록된 상품 개수, 당일 이상상품 개수, 당일 등록한 고객 수, 미처리된 신고 개수 반환하는 함수
      * 
@@ -71,6 +77,8 @@ public class ManagerService {
 
         return result;
     }
+
+
 
     //==================================== 상품관리 ======================================
     
@@ -117,12 +125,13 @@ public class ManagerService {
 
 
     /**
-     * lstm 예측값이 0(false)이고 관리자가 미처리한 상품들을 새로운 ModelPredictDTO에 담아 리스트로 반환하는 함수
+     * lstm 예측값이 0(false)이고 관리자가 미처리한 상품들을 
+     * 새로운 ModelPredictDTO에 담아 리스트로 반환하는 함수
      * @return
      */
     public List<ModelPredictDTO> selectAllModelPredictWeird() {
 
-        // lstm이 이상으로 판단한 데이터들 리스트로 가져오기
+        // lstm==false && judge==null인 상품 데이터들 리스트로 가져오기
         List<ProductEntity> productEntities = productRepository.findByLstmPredictAndJudgeOrderByCreateDateDesc(false,null);
         List<ModelPredictDTO> result = new ArrayList<>();
 
@@ -142,6 +151,49 @@ public class ManagerService {
             
             result.add(dto);
         });
+        return result;
+    }
+
+    /**
+     * lstm 예측값이 0(false)이고 관리자가 미처리한 상품들 중
+     *  전달받은 카테고리와 검색어에 해당하는 상품들을 
+     *  새로운 ModelPredictDTO에 담아 리스트로 반환하는 함수
+     * @param category
+     * @param searchWord
+     * @return
+     */
+    public List<ModelPredictDTO> selectModelPredictWeirdBySearch(String category, String searchWord) {
+        List<ProductEntity> productEntities = new ArrayList<>();
+        List<ModelPredictDTO> result = new ArrayList<>();
+        if (category.equals("total")) {
+            // lstm==false && judge==null && 회원ID, 상품ID, 상품명에 검색어가 포함된 상품들을 최신 등록일 순으로 가져오기
+            productEntities = productRepository.findByMultipleFieldsContainingOrderByCreateDateDesc(searchWord.toLowerCase());
+        } else {
+            // 카테고리 타입 변경 : String -> Enum
+            ProductCategory targetCategory = ProductCategory.valueOf(category);
+            // 전달받은 카테고리에 해당하고 회원ID, 상품ID, 상품명에 검색어가 포함된 상품들을 최신 등록일 순으로 가져오기
+            productEntities = productRepository.findByCategoryAndMultipleFieldsContainingOrderByCreateDateDesc(targetCategory, searchWord.toLowerCase());
+        }
+
+        productEntities.forEach((prodEntity) -> {
+            // productId에 해당하는 금지어유사도 결과 데이터들 가져오기 (금지어 유사 확률 높은 순)
+            List<ProhibitSimilarWordEntity> entityList = prohibitSimilarWordRepository
+                    .findProbaByProductEntity_ProductIdOrderBySimilarProbaDesc(prodEntity.getProductId());
+            // 금지 유사확률이 가장 높은 데이터 가져오기
+            ProhibitSimilarWordEntity prohibitSimilarWordEntity = entityList.get(0);
+
+            // 화면 출력을 위한 새로운 ModelPredictDTO 생성
+            ModelPredictDTO dto = new ModelPredictDTO(prodEntity.getCustomerEntity().getCustomerId(),
+                    prodEntity.getProductId(),
+                    prodEntity.getProductName(), prodEntity.getProductDesc(),
+                    prodEntity.getLstmPredictProba(), prodEntity.isLstmPredict(),
+                    prohibitSimilarWordEntity.getSimilarWord(), prohibitSimilarWordEntity.getSimilarProba(),
+                    prohibitSimilarWordEntity.getProhibitWordEntity().getProhibitWord(),
+                    prohibitSimilarWordEntity.getProhibitWordEntity().getProhibitReason());
+
+            result.add(dto);
+        });
+
         return result;
     }
 
@@ -259,7 +311,4 @@ public class ManagerService {
     }
 
     
-
-
-
 }
