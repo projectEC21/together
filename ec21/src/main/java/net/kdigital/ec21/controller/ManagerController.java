@@ -1,6 +1,5 @@
 package net.kdigital.ec21.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -137,12 +136,16 @@ public class ManagerController {
 	 * 
 	 * @param reportCustomerId
 	 * @param reportedId
+	 * @param category
+	 * @param searchWord
 	 * @param model
 	 * @return
 	 */
 	@RequestMapping(value = "/manager/reportedCustomerList/getList", method = RequestMethod.GET)
-	public String getList(@RequestParam(name = "reportCustomerId") Long reportCustomerId,
-			@RequestParam(name = "reportedId") String reportedId,
+	public String getList(@RequestParam(name = "reportCustomerId", defaultValue = "-100") Long reportCustomerId,
+			@RequestParam(name = "reportedId", defaultValue = "") String reportedId,
+			@RequestParam(name = "category", defaultValue = "total") String category,
+			@RequestParam(name = "searchWord", defaultValue = "") String searchWord,
 			Model model) {
 		if (reportCustomerId != -100) {
 			// 블랙버튼 : 신고당한 회원 블랙리스트에 추가
@@ -152,10 +155,11 @@ public class ManagerController {
 			// 정상버튼 : 관리자 처리 완료 상태로 변경
 			managerService.reportCustomerUpdateManagerCheck(reportCustomerId);
 		}
-
-		List<ReportedCustomerWithInfoDTO> dtoList = managerService.selectReportedCustomer();
+		
+		List<ReportedCustomerWithInfoDTO> dtoList = managerService.selectReportedCustomerBySearch(category, searchWord);
 		model.addAttribute("list", dtoList);
-
+		log.info("list 받아왔어");
+		
 		return "/manager/reportedCustomerList::#result";
 	}
 

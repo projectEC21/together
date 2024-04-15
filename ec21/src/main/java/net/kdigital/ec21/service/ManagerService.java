@@ -20,6 +20,7 @@ import net.kdigital.ec21.dto.ModelPredictDTO;
 import net.kdigital.ec21.dto.ProductDTO;
 import net.kdigital.ec21.dto.ReportedCustomerWithInfoDTO;
 import net.kdigital.ec21.dto.check.ProductCategory;
+import net.kdigital.ec21.dto.check.ReportCategory;
 import net.kdigital.ec21.dto.check.YesOrNo;
 import net.kdigital.ec21.entity.BlacklistEntity;
 import net.kdigital.ec21.entity.CustomerEntity;
@@ -241,8 +242,8 @@ public class ManagerService {
         List<ReportedCustomerWithInfoDTO> result = new ArrayList<>();
 
         reportCustomerEntities.forEach((entity) -> {
-            CustomerEntity customerEntity = customerRepository.findById(entity.getReported_id()).get();
-            result.add(new ReportedCustomerWithInfoDTO(entity.getReported_id(), entity.getReportCustomerId(),
+            CustomerEntity customerEntity = entity.getCustomerEntity();
+            result.add(new ReportedCustomerWithInfoDTO(customerEntity.getCustomerId(), entity.getReportCustomerId(),
                     customerEntity.getReportedCnt(), customerEntity.getCustomerGubun(),
                     customerEntity.getCustomerName(), customerEntity.getCompName(),
                     customerEntity.getCustomerDepartment(), customerEntity.getRemoteIp(),
@@ -252,6 +253,42 @@ public class ManagerService {
         return result;
     }
 
+    /**
+     * 검색 기능 추가 ver -> 전달받은 카테고리 및 검색어에 해당하는 데이터 
+     * 관리자가 처리하지 않은 신고당한 회원 DTO를 반환하고자 하는데 회원의 기본적인 정보를 같이 담기 위해 새로운 DTO에 담아 리스트를
+     * 반환하는데 
+     * (신고당한 회원 ID, 신고회원테이블ID, 신고당한 회원의 신고당한 횟수, 구분, 이름, 회사명, 부서명, IP, 신고 카테고리, 신고
+     * 사유)
+     * @param category
+     * @param searchWord
+     * @return
+     */
+    public List<ReportedCustomerWithInfoDTO> selectReportedCustomerBySearch(String category, String searchWord) {
+        List<ReportCustomerEntity> reportCustomerEntities = new ArrayList<>();
+        List<ReportedCustomerWithInfoDTO> result = new ArrayList<>();
+
+        if (category.equals("total")) {
+            // 관리자가 처리하지 않은 데이터 중에 전달받은 검색어에 해당하는 신고받은 회원 (최신 신고날짜 순으로) 가져오기
+            reportCustomerEntities = reportCustomerRepository.findBySearchWordWithManagerCheckNOrderByReportDateDesc(searchWord);
+        }else{
+            // 관리자가 처리하지 않은 데이터 중에 전달받은 카테고리와 검색어에 해당하는 신고받은 회원 (최신 신고날짜 순으로) 가져오기
+            ReportCategory targetCategory = ReportCategory.valueOf(category);
+            reportCustomerEntities = reportCustomerRepository.findByReportCategoryAndMultipleFieldsContainingOrderByReportDateDesc(targetCategory,searchWord);
+        }
+
+        reportCustomerEntities.forEach((entity) -> {
+            CustomerEntity customerEntity = entity.getCustomerEntity();
+            result.add(new ReportedCustomerWithInfoDTO(customerEntity.getCustomerId(), entity.getReportCustomerId(),
+                    customerEntity.getReportedCnt(), customerEntity.getCustomerGubun(),
+                    customerEntity.getCustomerName(), customerEntity.getCompName(),
+                    customerEntity.getCustomerDepartment(), customerEntity.getRemoteIp(),
+                    entity.getReportCategory(), entity.getReportReason()));
+        });
+
+        return result;
+    }
+
+    
     /**
      * 신고회원 관리자 처리 여부 변경 (N->Y)
      */
@@ -323,6 +360,10 @@ public class ManagerService {
 
         return result;
     }
+
+
+
+    
 
     
 }

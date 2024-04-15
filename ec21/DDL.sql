@@ -52,7 +52,7 @@ drop sequence report_customer_seq;
 
 create table report_customer(
     report_customer_id number primary key,
-    reported_id varchar2(20) not null,
+    reported_id varchar2(20) references customer(customer_id) on delete cascade,
     report_category varchar2(20) not null check(report_category in ('DRUG', 'IPR','SPAM','ETC')),
     report_reason varchar2(2000),
     report_date date default sysdate,
