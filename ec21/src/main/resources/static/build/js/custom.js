@@ -434,9 +434,9 @@ function init_flot_chart() {
             borderWidth: 1,
             color: '#fff'
         },
-        colors: ["rgba(38, 185, 154, 0.38)", "rgba(3, 88, 106, 0.38)"],
+        colors: ["#3498DB", "#B3C8CF"],
         xaxis: {
-            tickColor: "rgba(51, 51, 51, 0.06)",
+            tickColor: "#EADFB4",
             mode: "time",
             tickSize: [1, "day"],
             //tickLength: 10,
@@ -448,7 +448,7 @@ function init_flot_chart() {
         },
         yaxis: {
             ticks: 8,
-            tickColor: "rgba(51, 51, 51, 0.06)",
+            tickColor: "#EADFB4",
         },
         tooltip: false
     }
@@ -493,7 +493,7 @@ function init_flot_chart() {
             width: 40,
             height: 1
         },
-        colors: ['#96CA59', '#3F97EB', '#72c380', '#6f7a8a', '#f7cb38', '#5a8022', '#2c7282'],
+        colors: ['#96CA59', '#3F97EB', '#72c380', '#6f7a8a', '#EADFB4', '#5a8022', '#2c7282'],
         shadowSize: 0,
         tooltip: true,
         tooltipOpts: {
@@ -628,7 +628,7 @@ function init_JQVmap() {
             enableZoom: true,
             showTooltip: true,
             values: sample_data,
-            scaleColors: ['#E6F2F0', '#149B7E'],
+            scaleColors: ['#E6F2F0', '#0072ab'],
             normalizeFunction: 'polynomial'
         });
 
@@ -645,7 +645,7 @@ function init_JQVmap() {
             enableZoom: true,
             showTooltip: true,
             values: sample_data,
-            scaleColors: ['#E6F2F0', '#149B7E'],
+            scaleColors: ['#E6F2F0', '#0072ab'],
             normalizeFunction: 'polynomial'
         });
 
@@ -2740,7 +2740,7 @@ function init_echarts() {
             itemGap: 8,
             textStyle: {
                 fontWeight: 'normal',
-                color: '#408829'
+                color: '#9BB0C1'
             }
         },
 
@@ -2749,7 +2749,7 @@ function init_echarts() {
         },
 
         toolbox: {
-            color: ['#408829', '#408829', '#408829', '#408829']
+            color: ['#9BB0C1', '#9BB0C1', '#9BB0C1', '#9BB0C1']
         },
 
         tooltip: {
@@ -2757,11 +2757,11 @@ function init_echarts() {
             axisPointer: {
                 type: 'line',
                 lineStyle: {
-                    color: '#408829',
+                    color: '#9BB0C1',
                     type: 'dashed'
                 },
                 crossStyle: {
-                    color: '#408829'
+                    color: '#9BB0C1'
                 },
                 shadowStyle: {
                     color: 'rgba(200,200,200,0.3)'
@@ -2772,7 +2772,7 @@ function init_echarts() {
         dataZoom: {
             dataBackgroundColor: '#eee',
             fillerColor: 'rgba(64,136,41,0.2)',
-            handleColor: '#408829'
+            handleColor: '#9BB0C1'
         },
         grid: {
             borderWidth: 0
@@ -2781,7 +2781,7 @@ function init_echarts() {
         categoryAxis: {
             axisLine: {
                 lineStyle: {
-                    color: '#408829'
+                    color: '#9BB0C1'
                 }
             },
             splitLine: {
@@ -2794,7 +2794,7 @@ function init_echarts() {
         valueAxis: {
             axisLine: {
                 lineStyle: {
-                    color: '#408829'
+                    color: '#9BB0C1'
                 }
             },
             splitArea: {
@@ -2811,11 +2811,11 @@ function init_echarts() {
         },
         timeline: {
             lineStyle: {
-                color: '#408829'
+                color: '#9BB0C1'
             },
             controlStyle: {
-                normal: { color: '#408829' },
-                emphasis: { color: '#408829' }
+                normal: { color: '#9BB0C1' },
+                emphasis: { color: '#9BB0C1' }
             }
         },
 
@@ -2826,7 +2826,7 @@ function init_echarts() {
                     color0: '#a9cba2',
                     lineStyle: {
                         width: 1,
-                        color: '#408829',
+                        color: '#9BB0C1',
                         color0: '#86b379'
                     }
                 }
@@ -2860,7 +2860,7 @@ function init_echarts() {
             itemStyle: {
                 normal: {
                     linkStyle: {
-                        strokeColor: '#408829'
+                        strokeColor: '#9BB0C1'
                     }
                 }
             }
@@ -2900,7 +2900,7 @@ function init_echarts() {
             axisLine: {
                 show: true,
                 lineStyle: {
-                    color: [[0.2, '#86b379'], [0.8, '#68a54a'], [1, '#408829']],
+                    color: [[0.2, '#86b379'], [0.8, '#68a54a'], [1, '#9BB0C1']],
                     width: 8
                 }
             },
@@ -4442,7 +4442,8 @@ function init_echarts() {
                 text: ['High', 'Low'],
                 realtime: false,
                 calculable: true,
-                color: ['#087E65', '#26B99A', '#CBEAE3']
+                // color: ['#087E65', '#26B99A', '#CBEAE3']
+                color: ['#378CE7', '#67C6E3', '#DFF5FF']
             },
             series: [{
                 name: 'World Population (2010)',
