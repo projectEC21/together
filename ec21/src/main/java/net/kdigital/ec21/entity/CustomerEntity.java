@@ -67,7 +67,7 @@ public class CustomerEntity {
     @Column(name = "address", nullable = false)
     private String address;
     @Column(name = "remote_ip", nullable = false)
-    private String rempoteIp;
+    private String remoteIp;
     @Column(name = "country")
     private String country;
     @Column(name = "create_date")
@@ -117,7 +117,7 @@ public class CustomerEntity {
                 .compDesc(customerDTO.getCompDesc())
                 .compUrl(customerDTO.getCompUrl())
                 .address(customerDTO.getAddress())
-                .rempoteIp(customerDTO.getRempoteIp())
+                .remoteIp(customerDTO.getRemoteIp())
                 .country(customerDTO.getCountry())
                 .createDate(customerDTO.getCreateDate())
                 .updateDate(customerDTO.getUpdateDate())
