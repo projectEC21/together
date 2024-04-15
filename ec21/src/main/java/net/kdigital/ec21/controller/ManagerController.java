@@ -1,6 +1,5 @@
 package net.kdigital.ec21.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -63,22 +62,22 @@ public class ManagerController {
 	}
 
 	/**
-	 * ajax - 전체 상품 화면에서 상품 리스트 반환 
+	 * ajax - 전체 상품 화면에서 상품 리스트 반환
 	 * (카테고리, 검색어 조건에 따라 다르게 반환, 기본적으로 최신 등록일자 순으로 반환)
-	 * (아직 버튼 처리 안함) 
+	 * (아직 버튼 처리 안함)
+	 * 
 	 * @param model
 	 * @return
 	 */
 	@RequestMapping(value = "/manager/productList/getList", method = RequestMethod.GET)
-	public String getProductList(@RequestParam(name = "category" , defaultValue = "total")String category,
-		@RequestParam(name = "searchWord" , defaultValue = "") String searchWord, Model model) {
-				
+	public String getProductList(@RequestParam(name = "category", defaultValue = "total") String category,
+			@RequestParam(name = "searchWord", defaultValue = "") String searchWord, Model model) {
+
 		List<ProductDTO> dtoList = managerService.selectProductBySearch(category, searchWord);
 		model.addAttribute("list", dtoList);
 
 		return "/manager/productList::#result";
 	}
-
 
 	/**
 	 * 모델로 이상상품 판별된 상품 리스트 화면 요청
@@ -94,20 +93,19 @@ public class ManagerController {
 	 * ajax - 모델이 이상으로 판별하고 관리자가 아직 처리하지 않은 상품 (lstm_predict==0 && judge==null) 중
 	 * 전달 받은 카테고리와 검색어에 해당하는 상품을 최신 등록일 순으로 반환
 	 * (아직 버튼 처리 안함)
+	 * 
 	 * @param model
 	 * @return
 	 */
 	@RequestMapping(value = "/manager/modelPredict/getList", method = RequestMethod.GET)
 	public String getList(@RequestParam(name = "category", defaultValue = "total") String category,
 			@RequestParam(name = "searchWord", defaultValue = "") String searchWord, Model model) {
-		
+
 		List<ModelPredictDTO> dtoList = managerService.selectModelPredictWeirdBySearch(category, searchWord);
 		model.addAttribute("list", dtoList);
 
 		return "/manager/modelPredict::#result";
 	}
-
-
 
 	// ============================= 회원 관리 =============================
 
@@ -138,12 +136,16 @@ public class ManagerController {
 	 * 
 	 * @param reportCustomerId
 	 * @param reportedId
+	 * @param category
+	 * @param searchWord
 	 * @param model
 	 * @return
 	 */
 	@RequestMapping(value = "/manager/reportedCustomerList/getList", method = RequestMethod.GET)
-	public String getList(@RequestParam(name = "reportCustomerId") Long reportCustomerId,
-			@RequestParam(name = "reportedId") String reportedId,
+	public String getList(@RequestParam(name = "reportCustomerId", defaultValue = "-100") Long reportCustomerId,
+			@RequestParam(name = "reportedId", defaultValue = "") String reportedId,
+			@RequestParam(name = "category", defaultValue = "total") String category,
+			@RequestParam(name = "searchWord", defaultValue = "") String searchWord,
 			Model model) {
 		if (reportCustomerId != -100) {
 			// 블랙버튼 : 신고당한 회원 블랙리스트에 추가
@@ -153,10 +155,11 @@ public class ManagerController {
 			// 정상버튼 : 관리자 처리 완료 상태로 변경
 			managerService.reportCustomerUpdateManagerCheck(reportCustomerId);
 		}
-
-		List<ReportedCustomerWithInfoDTO> dtoList = managerService.selectReportedCustomer();
+		
+		List<ReportedCustomerWithInfoDTO> dtoList = managerService.selectReportedCustomerBySearch(category, searchWord);
 		model.addAttribute("list", dtoList);
-
+		log.info("list 받아왔어");
+		
 		return "/manager/reportedCustomerList::#result";
 	}
 

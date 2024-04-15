@@ -47,4 +47,23 @@ public class MainPageController {
         return "/main/list";
     }
 
+    /**
+     * main페이지에서 내 상품 페이지 요청
+     * 
+     * @return
+     */
+    @GetMapping("/main/myproducts")
+    public String myProducts() {
+        return "/main/myproducts";
+    }
+
+    /**
+     * main페이지에서 내 인콰이어리 inbox 요청
+     * 
+     * @return
+     */
+    @GetMapping("/main/inbox")
+    public String inbox() {
+        return "/main/inbox";
+    }
 }

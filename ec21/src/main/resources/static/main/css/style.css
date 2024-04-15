@@ -2245,6 +2245,19 @@ Version:1.0
 	margin: 4px 5px 0 0;
 	font-weight:500;
 }
+
+.shop .single-slider a{
+	display: inline;
+	position:relative;
+	float: right;
+	margin: 4px 5px 0 0;
+	font-weight:500;
+}
+.shop .single-slider a:hover{
+	font-weight: 700;
+	color:#0072ab;
+}
+
 .shop .single-shorter option{}
 .shop .nice-select {
 	clear: initial;
