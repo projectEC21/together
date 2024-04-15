@@ -34,11 +34,7 @@ public class CustomerDTO {
     private String compDesc;
     private String compUrl;
     private String address;
-<<<<<<< HEAD
     private String rempoteIp;
-=======
-    private String remoteIp;
->>>>>>> 8f56eeeebe6110c2450d22e56b2a6b03836acdd6
     private String country;
     private LocalDateTime createDate;
     private LocalDateTime updateDate;
@@ -63,11 +59,7 @@ public class CustomerDTO {
                 .compDesc(customerEntity.getCompDesc())
                 .compUrl(customerEntity.getCompUrl())
                 .address(customerEntity.getAddress())
-<<<<<<< HEAD
                 .rempoteIp(customerEntity.getRempoteIp())
-=======
-                .remoteIp(customerEntity.getRemoteIp())
->>>>>>> 8f56eeeebe6110c2450d22e56b2a6b03836acdd6
                 .country(customerEntity.getCountry())
                 .createDate(customerEntity.getCreateDate())
                 .updateDate(customerEntity.getUpdateDate())

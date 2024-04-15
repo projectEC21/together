@@ -40,17 +40,4 @@ public class BlacklistDTO {
                 .build();
     }
 
-<<<<<<< HEAD
-=======
-    public BlacklistDTO(String customerId, String compName, String remoteIp, String country, ReportCategory blackType,
-            String blackReason) {
-        this.customerId = customerId;
-        this.compName = compName;
-        this.remoteIp = remoteIp;
-        this.country = country;
-        this.blackType = blackType;
-        this.blackReason = blackReason;
-    }
-
->>>>>>> 8f56eeeebe6110c2450d22e56b2a6b03836acdd6
 }

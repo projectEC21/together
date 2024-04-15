@@ -104,10 +104,6 @@ public class ProductEntity {
     private CustomerEntity customerEntity;
 
     @Column(name = "product_delete")
-<<<<<<< HEAD
-=======
-    @Enumerated(EnumType.STRING)
->>>>>>> 8f56eeeebe6110c2450d22e56b2a6b03836acdd6
     private YesOrNo productDelete;
 
     // 자식

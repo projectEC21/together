@@ -1,19 +1,15 @@
 package net.kdigital.ec21.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-<<<<<<< HEAD
-import org.springframework.web.bind.annotation.RequestParam;
-
-
-=======
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,16 +17,14 @@ import net.kdigital.ec21.dto.CustomerDTO;
 import net.kdigital.ec21.dto.ModelPredictDTO;
 import net.kdigital.ec21.dto.ProductDTO;
 import net.kdigital.ec21.dto.ReportedCustomerWithInfoDTO;
-import net.kdigital.ec21.service.ManagerService;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RequestParam;
->>>>>>> 8f56eeeebe6110c2450d22e56b2a6b03836acdd6
+
+
+
 
 @Controller
 @RequiredArgsConstructor
 @Slf4j
 public class ManagerController {
-<<<<<<< HEAD
 	//======================== manager_index.html ==========================
 	/**
 	 * 관리자 메인보드 화면 요청
@@ -100,20 +94,6 @@ public class ManagerController {
 	@GetMapping("/tables")
 	public String tables() {
 		return "tables";
-=======
-	private final ManagerService managerService;
-
-	// ============================= 메인보드 =============================
-	/**
-	 * 관리자 메인보드 화면 요청
-	 * 
-	 * @return
-	 */
-	@GetMapping("manager/manager_index")
-	public String manager_index() {
-
-		return "manager/manager_index";
->>>>>>> 8f56eeeebe6110c2450d22e56b2a6b03836acdd6
 	}
 
 	/**
