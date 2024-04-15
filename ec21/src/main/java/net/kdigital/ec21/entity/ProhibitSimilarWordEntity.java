@@ -42,7 +42,7 @@ public class ProhibitSimilarWordEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "prohibit_word")
     private ProhibitWordEntity prohibitWordEntity;
-    
+
     // FK
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id")
