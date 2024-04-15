@@ -3683,6 +3683,7 @@ Version:1.0
 }
 
 .product-list.section th, td {
+	padding-left: 10px;
     padding-top: 20px; /* 위쪽 패딩 */
     padding-bottom: 20px; /* 아래쪽 패딩 */
 }
@@ -3704,25 +3705,16 @@ Version:1.0
 	width: 320px;
 }
 
-/* 가격 , 단위만 */
+/* 가격 */
 .product-list.section input.price {
 	padding-left: 10px;
-	width: 250px;
+	width: 310px;
 }
 
-.product-list.section input.unit {
-	padding-left: 10px;
-	width: 70px;
-}
-
-/* ckeditor */
+/* ckeditor
 .product-list.section th.form-group.editor {
 	position: relative;
-}
-
-.product-list.section th.form-group.editor div{
-	display: inline-block;
-}
+} */
 
 .ck.ck-editor {
 	max-width: 500px;
@@ -3731,16 +3723,13 @@ Version:1.0
 	min-height: 300px;
 }
 
-.product-list.section .ck-editor {
-	padding-left: 10px;
-}
-
 .product-list.section .form .btn {
 	display: inline-block;
-	margin-right: 10px;
-	height: 46px;
-	color: #fff;
-	line-height: 20px;
+    margin: 0 200px;
+    height: 46px;
+    width: 170px;
+    color: #fff;
+    line-height: 20px;
 }
 
 /*======================================
