@@ -11,13 +11,14 @@
 	<!-- Title Tag  -->
 	<title>EC21, Global B2B Marketplace</title>
 	<!-- Favicon -->
-	<link rel="icon" type="image/png" href="../../static/main/images/ec21logo.png">
+	<link rel="icon" type="image/png" th:href="@{/main/images/ec21logo.png}">
 	<!-- Web Font -->
 	<link
 		href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap"
 		rel="stylesheet">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap" rel="stylesheet">
+<<<<<<< HEAD
 
 	<!-- StyleSheet -->
 	<!-- Bootstrap -->
@@ -48,6 +49,39 @@
 
 	<!-- Color CSS -->
 	<link rel="stylesheet" th:href="@{/main/css/color/color2.css}">
+=======
+	
+	<!-- Bootstrap -->
+	<link rel="stylesheet" th:href="@{/main/css/bootstrap.css}">
+	<!-- Magnific Popup -->
+    <link rel="stylesheet" th:href="@{/main/css/magnific-popup.min.css}">
+	<!-- Font Awesome -->
+    <link rel="stylesheet" th:href="@{/main/css/font-awesome.css}">
+	<!-- Fancybox -->
+	<link rel="stylesheet" th:href="@{/main/css/jquery.fancybox.min.css}">
+	<!-- Themify Icons -->
+    <link rel="stylesheet" th:href="@{/main/css/themify-icons.css}">
+	<!-- Nice Select CSS -->
+    <link rel="stylesheet" th:href="@{/main/css/niceselect.css}">
+	<!-- Animate CSS -->
+    <link rel="stylesheet" th:href="@{/main/css/animate.css}">
+	<!-- Flex Slider CSS -->
+    <link rel="stylesheet" th:href="@{/main/css/flex-slider.min.css}">
+	<!-- Owl Carousel -->
+    <link rel="stylesheet" th:href="@{/main/css/owl-carousel.css}">
+	<!-- Slicknav -->
+    <link rel="stylesheet" th:href="@{/main/css/slicknav.min.css}">
+	
+	<!-- Eshop StyleSheet -->
+	<link rel="stylesheet" th:href="@{/main/css/reset.css}">
+	<link rel="stylesheet" th:href="@{/main/css/style.css}">
+    <link rel="stylesheet" th:href="@{/main/css/responsive.css}">
+
+	<!-- Color CSS -->
+	<!-- <link rel="stylesheet" href="css/color/color1.css"> -->
+	<link rel="stylesheet" th:href="@{/main/css/color/color2.css}">
+
+>>>>>>> b0ce881166b50a61cda866e439bae5c8b9a03047
 	<link rel="stylesheet" href="#" id="colors">
 
 </head>
@@ -81,9 +115,9 @@
 						<!-- Top Right -->
 						<div class="right-content">
 							<ul class="list-main">
-								<li><i class="ti-power-off"></i><a href="login.html">Login</a></li>
-								<li><i class="ti-user"></i><a href="register.html">Sign up</a></li>
-								<li><i class="ti-power-off"></i><a href="index.html">Logout</a></li>
+								<li><i class="ti-power-off"></i><a th:href="@{/main/login}">Login</a></li>
+								<li><i class="ti-user"></i><a th:href="@{/main/register}">Sign up</a></li>
+								<li><i class="ti-power-off"></i><a th:href="@{/main/index}">Logout</a></li>
 							</ul>
 						</div>
 						<!-- End Top Right -->
@@ -98,12 +132,16 @@
 					<div class="col-lg-2 col-md-2 col-12">
 						<!-- Logo -->
 						<div class="logo">
+<<<<<<< HEAD
 							<a href="@{/}"><img src="@{/main/images/ec21logo.png}" alt="logo"></a>
+=======
+							<a th:href="@{/main/index}"><img th:src="@{/main/images/ec21logo.png}" alt="logo"></a>
+>>>>>>> b0ce881166b50a61cda866e439bae5c8b9a03047
 						</div>
 						<!--/ End Logo -->
 						<!-- Search Form -->
 						<div class="search-top">
-							<div class="top-search"><a href="#0"><i class="ti-search"></i></a></div>
+							<div class="top-search"><a href="#"><i class="ti-search"></i></a></div>
 							<!-- Search Form -->
 							<div class="search-top">
 								<form class="search-form">
@@ -129,7 +167,7 @@
 								</select>
 								<form>
 									<input name="search" placeholder="What are you searching for?" type="search">
-									<button class="btnn"><i class="ti-search"></i></button>
+									<button class="btn"><i class="ti-search"></i></button>
 								</form>
 							</div>
 						</div>
@@ -189,6 +227,7 @@
 	</header>
 	<!--/ End Header -->
 
+<<<<<<< HEAD
 
 	<!-- Breadcrumbs : 사이트 내 경로 -->
 	<div class="breadcrumbs">
@@ -225,6 +264,18 @@
 								<li><a href="myProducts.html" style="font-weight:600;">Products</a></li>
 								<!-- 해당 페이지에 들어가면 색상이 더 진하게 보이게 해놓음
 											th : @@/myProducts -->
+=======
+	
+		<!-- Breadcrumbs : 사이트 내 경로 -->
+		<div class="breadcrumbs">
+			<div class="container">
+				<div class="row">
+					<div class="col-12">
+						<div class="bread-inner">
+							<ul class="bread-list">
+								<li><a th:href="@{/main/index}">Home<i class="ti-arrow-right"></i></a></li>
+								<li class="active"><a th:href="@{/main/myproducts}">My Page</a></li>
+>>>>>>> b0ce881166b50a61cda866e439bae5c8b9a03047
 							</ul>
 						</div>
 						<!--/ End Single Widget -->
@@ -464,8 +515,135 @@
 				</div>
 			</div>
 		</div>
+<<<<<<< HEAD
 	</div>
 	<!-- Modal end -->
+=======
+		<!-- End Breadcrumbs -->
+		
+		<!-- 
+			Product Style 1 
+			Products 페이지가 myAccount 디폴트 화면!
+			옆 사이드 바
+		-->
+		<section class="product-area shop-sidebar product-list shop section">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-3 col-md-4 col-12">
+						<div class="shop-sidebar login-form">
+								<!-- Single Widget -->
+								<div class="single-widget category">
+									<h3 class="title">My Page</h3>
+									<ul class="categor-list">
+										<li><a th:href="@{/main/myinfo}">info</a></li>
+										<li><a th:href="@{/main/myproducts}" style="font-weight:600;">Products</a></li>
+										<!-- 해당 페이지에 들어가면 색상이 더 진하게 보이게 해놓음 -->
+									</ul>
+								</div>
+								<!--/ End Single Widget -->
+						</div>
+					</div>
+					
+					<div class="col-lg-9 col-md-8 col-12">
+						<div class="row">
+							<!-- My products List -->
+							<div class="shopping-cart section">
+								<div class="container">
+									<div class="row">
+										<div class="col-12">
+											<!-- Shop Top -->
+											<div class="shop-top">
+												<div class="shop-shorter">
+													<div class="single-shorter">
+														<label>Show :<span> 3</span></label>
+													</div>
+												</div>
+												<div class="single-slider">
+													<div class="single-slider">
+														<a href="productsWrite.html">상품 등록하기</a>
+													</div>
+												</div>
+											</div>
+											
+											<!-- 올린 상품 리스트 -->
+											<table class="table shopping-summery">
+												<thead>
+													<tr class="main-hading">
+														<th class="text-center">no</th>
+														<th colspan="2">PRODUCT</th>
+														<!-- <th>PRODUCT</th> -->
+														<th class="text-center">PRICE</th> <!-- -->
+														<th class="text-center">QUANTITY</th> <!-- 단위-->
+														<!-- <th class="text-center">TOTAL</th>  -->
+														<th class="text-center">DATE</th>
+														<th class="text-center"><i class="ti-trash remove-icon"></i></th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr>
+														<td>1</td>
+																								<!-- 이미지 우선 임시 링크 -->
+														<td class="image" data-title="No"><img src="https://via.placeholder.com/100x100" alt="#"></td>
+														<td class="product-desc" data-title="Description">
+															<p class="product-name"><a href="#">Women Dress</a></p>
+															<p class="product-desc">Maboriosam in a tonto nesciung eget  distingy magndapibus.</p>
+														</td>
+														<td class="price" data-title="Price"><span>$110.00 </span></td>
+														<td class="qty" data-title="Qty"><span>2,000</span></td>
+														<!-- <td class="total-amount" data-title="Total"><span>$220.88</span></td> -->
+														<td class="createDate" data-title="date"><span>2024/03/14</span></td>
+														<td class="action" data-title="Remove"><a href="#"><i class="ti-trash remove-icon"></i></a></td>
+													</tr>
+													<tr>
+														<td>2</td>
+														<td class="image" data-title="No"><img src="https://via.placeholder.com/100x100" alt="#"></td>
+														<td class="product-desc" data-title="Description">
+															<p class="product-name"><a href="#">Women Dress</a></p>
+															<p class="product-desc">Maboriosam in a tonto nesciung eget  distingy magndapibus.</p>
+														</td>
+														<td class="price" data-title="Price"><span>$110.00 </span></td>
+														<td class="qty" data-title="Qty"><span>2,000</span></td>
+														<!-- <td class="total-amount" data-title="Total"><span>$220.88</span></td> -->
+														<td class="createDate" data-title="date"><span>2024/03/14</span></td>
+														<td class="action" data-title="Remove"><a href="#"><i class="ti-trash remove-icon"></i></a></td>
+													</tr>
+													<tr>
+														<td>3</td>
+														<td class="image" data-title="No"><img src="https://via.placeholder.com/100x100" alt="#"></td>
+														<td class="product-desc" data-title="Description">
+															<p class="product-name"><a href="#">Women Dress</a></p>
+															<p class="product-desc">Maboriosam in a tonto nesciung eget  distingy magndapibus.</p>
+														</td>
+														<td class="price" data-title="Price"><span>$110.00 </span></td>
+														<td class="qty" data-title="Qty"><span>3,000</span></td>
+														<!-- <td class="total-amount" data-title="Total"><span>$220.88</span></td> -->
+														<td class="createDate" data-title="date"><span>2024/03/14</span></td>
+														<td class="action" data-title="Remove"><a href="#"><i class="ti-trash remove-icon"></i></a></td>
+													</tr>
+												</tbody>
+											</table>
+											<!--/ End Shopping Summery -->
+											
+											<!-- 페이징 -->
+											<div class="row">
+												<div class="col-12">
+													<span class="paging">
+														<<  <  1  2  3  4  5  >  >>
+													</span>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!--/ End Shopping Cart -->
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!--/ End Product Style 1  -->	
+>>>>>>> b0ce881166b50a61cda866e439bae5c8b9a03047
 
 	<!-- Start Footer Area -->
 	<footer class="footer">
@@ -558,7 +736,11 @@
 						</div>
 						<div class="col-lg-6 col-12">
 							<div class="right">
+<<<<<<< HEAD
 								<img src="@{images/payments.png}" alt="#">
+=======
+								<img th:src="@{/main/images/payments.png}" alt="#">
+>>>>>>> b0ce881166b50a61cda866e439bae5c8b9a03047
 							</div>
 						</div>
 					</div>
@@ -567,6 +749,7 @@
 		</div>
 	</footer>
 	<!-- /End Footer Area -->
+<<<<<<< HEAD
 
 
 	<!-- Jquery -->
@@ -605,6 +788,46 @@
 	<script th:src="@{/main/js/easing.js}"></script>
 	<!-- Active JS -->
 	<script th:src="@{/main/js/active.js}"></script>
+=======
+	
+	
+		<!-- Jquery -->
+		<script th:src="@{/main/js/jquery.min.js}"></script>
+		<script th:src="@{/main/js/jquery-migrate-3.0.0.js}"></script>
+		<script th:src="@{/main/js/jquery-ui.min.js}"></script>
+		<!-- Popper JS -->
+		<script th:src="@{/main/js/popper.min.js}"></script>
+		<!-- Bootstrap JS -->
+		<script th:src="@{/main/js/bootstrap.min.js}"></script>
+		<!-- Color JS -->
+		<script th:src="@{/main/js/colors.js}"></script>
+		<!-- Slicknav JS -->
+		<script th:src="@{/main/js/slicknav.min.js}"></script>
+		<!-- Owl Carousel JS -->
+		<script th:src="@{/main/js/owl-carousel.js}"></script>
+		<!-- Magnific Popup JS -->
+		<script th:src="@{/main/js/magnific-popup.js}"></script>
+		<!-- Fancybox JS -->
+		<script src="@{/main/js/facnybox.min.js}"></script>
+		<!-- Waypoints JS -->
+		<script th:src="@{/main/js/waypoints.min.js}"></script>
+		<!-- Countdown JS -->
+		<script th:src="@{/main/js/finalcountdown.min.js}"></script>
+		<!-- Nice Select JS -->
+		<script th:src="@{/main/js/nicesellect.js}"></script>
+		<!-- Ytplayer JS -->
+		<script th:src="@{/main/js/ytplayer.min.js}"></script>
+		<!-- Flex Slider JS -->
+		<script th:src="@{/main/js/flex-slider.js}"></script>
+		<!-- ScrollUp JS -->
+		<script th:src="@{/main/js/scrollup.js}"></script>
+		<!-- Onepage Nav JS -->
+		<script th:src="@{/main/js/onepage-nav.min.js}"></script>
+		<!-- Easing JS -->
+		<script th:src="@{/main/js/easing.js}"></script>
+		<!-- Active JS -->
+		<script th:src="@{/main/js/active.js}"></script>
+>>>>>>> b0ce881166b50a61cda866e439bae5c8b9a03047
 </body>
 
 </html>
