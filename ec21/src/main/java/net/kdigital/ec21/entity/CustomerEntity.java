@@ -100,6 +100,10 @@ public class CustomerEntity {
     @OneToMany(mappedBy = "customerEntity", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, orphanRemoval = true)
     @OrderBy("inquiry_id")
     private List<InquiryEntity> inquiryEntity;
+    // 4) 신고당한 회원
+    @OneToMany(mappedBy = "customerEntity", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OrderBy("report_customer_id")
+    private List<ReportCustomerEntity> reportCustomerEntity;
 
     public static CustomerEntity toEntity(CustomerDTO customerDTO) {
         return CustomerEntity.builder()

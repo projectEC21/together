@@ -1,8 +1,8 @@
 @charset "UTF-8";
-/* @font-face {
+@font-face {
   font-family: 'Glyphicons Halflings';
   src: url("https://netdna.bootstrapcdn.com/bootstrap/3.0.0/fonts/glyphicons-halflings-regular.eot");
-  src: url("https://netdna.bootstrapcdn.com/bootstrap/3.0.0/fonts/glyphicons-halflings-regular.eot?#iefix") format("embedded-opentype"), url("https://netdna.bootstrapcdn.com/bootstrap/3.0.0/fonts/glyphicons-halflings-regular.woff") format("woff"), url("https://netdna.bootstrapcdn.com/bootstrap/3.0.0/fonts/glyphicons-halflings-regular.ttf") format("truetype"), url("https://netdna.bootstrapcdn.com/bootstrap/3.0.0/fonts/glyphicons-halflings-regular.svg#glyphicons-halflingsregular") format("svg"); } */
+  src: url("https://netdna.bootstrapcdn.com/bootstrap/3.0.0/fonts/glyphicons-halflings-regular.eot?#iefix") format("embedded-opentype"), url("https://netdna.bootstrapcdn.com/bootstrap/3.0.0/fonts/glyphicons-halflings-regular.woff") format("woff"), url("https://netdna.bootstrapcdn.com/bootstrap/3.0.0/fonts/glyphicons-halflings-regular.ttf") format("truetype"), url("https://netdna.bootstrapcdn.com/bootstrap/3.0.0/fonts/glyphicons-halflings-regular.svg#glyphicons-halflingsregular") format("svg"); }
 
 .glyphicon {
   position: relative;
@@ -860,7 +860,7 @@
 
 .nav-sm .nav.child_menu li.active,
 .nav-sm .nav.side-menu li.active-sm {
-  border-right: 5px solid #0072ab; }
+  border-right: 5px solid #1ABB9C; }
 
 .nav-sm ul.nav.child_menu ul,
 .nav-sm .nav.side-menu li.active-sm ul ul {
@@ -869,7 +869,7 @@
   background: none; }
 
 .nav-sm > .nav.side-menu > li.active-sm > a {
-  color: #0072ab !important; }
+  color: #1ABB9C !important; }
 
 .nav-sm .nav.side-menu li a i.toggle-up {
   display: none !important; }
@@ -943,12 +943,12 @@
   float: left; }
 
 .profile_info span {
-  font-size: 14px;
+  font-size: 13px;
   line-height: 30px;
   color: #BAB8B8; }
 
 .profile_info h2 {
-  font-size: 15px;
+  font-size: 14px;
   color: #ECF0F1;
   margin: 0;
   font-weight: 300; }
@@ -1160,8 +1160,8 @@ body .container.body .right_col {
 body {
   color: #73879C;
   background: ##333;
-  font-family: "Fontawesome";
-  font-size: 14px;
+  font-family: "Helvetica Neue", Roboto, Arial, "Droid Sans", sans-serif;
+  font-size: 13px;
   font-weight: 400;
   line-height: 1.471; }
 
@@ -1389,7 +1389,7 @@ a:hover, a:focus {
   padding: 13px 15px 12px; }
 
 .nav.side-menu > li.current-page, .nav.side-menu > li.active {
-  border-right: 5px solid #0072ab; }
+  border-right: 5px solid #1ABB9C; }
 
 .nav li.current-page {
   background: rgba(255, 255, 255, 0.05); }
@@ -1484,7 +1484,7 @@ a:hover, a:focus {
 
 .nav.child_menu > li > a {
   color: rgba(255, 255, 255, 0.75);
-  font-size: 13px;
+  font-size: 12px;
   padding: 9px; }
 
 .panel_toolbox {
@@ -1498,7 +1498,7 @@ a:hover, a:focus {
 .panel_toolbox > li > a {
   padding: 5px;
   color: #C5C7CB;
-  font-size: 15px; }
+  font-size: 14px; }
 
 .panel_toolbox > li > a:hover {
   background: #F5F7FA; }
@@ -1857,7 +1857,7 @@ h3.degrees {
   font-weight: 300; }
 
 .daily-weather .day {
-  font-size: 15px;
+  font-size: 14px;
   border-top: 2px solid rgba(115, 135, 156, 0.36);
   text-align: center;
   border-bottom: 2px solid rgba(115, 135, 156, 0.36);
@@ -1936,7 +1936,7 @@ table.jambo_table tbody tr.selected td {
   border: 1px solid #ddd;
   text-align: center;
   color: #999;
-  font-size: 15px;
+  font-size: 14px;
   background-color: white; }
 
 .dataTables_info {
@@ -1949,7 +1949,7 @@ table.jambo_table tbody tr.selected td {
 
 table.dataTable th.focus,
 table.dataTable td.focus {
-  outline: 2px solid #0072ab !important;
+  outline: 2px solid #1ABB9C !important;
   outline-offset: -1px; }
 
 table.display {
@@ -2104,7 +2104,7 @@ ul.msg_list li a .message {
           box-shadow: none;
   display: none;
   float: left;
-  font-size: 13px;
+  font-size: 12px;
   left: 0;
   list-style: none outside none;
   padding: 0;
@@ -2243,7 +2243,7 @@ h5.graph_title i {
 
 span.right {
   float: right;
-  font-size: 15px !important; }
+  font-size: 14px !important; }
 
 .tile_info a {
   text-overflow: ellipsis; }
@@ -2273,16 +2273,6 @@ span.right {
 .tile_count {
   margin-bottom: 20px;
   margin-top: 20px; }
-
-.tile_stats_count {
-  display: flex; /* flexbox 레이아웃 사용 */
-  flex-direction: column; /* 자식 요소들을 수직으로 쌓기 */
-  align-items: center; /* 수평 가운데 정렬 */
-  justify-content: center; /* 수직 가운데 정렬 */
-  height: 100%; /* 부모 요소에 맞게 높이 조정 */
-  text-align: center; /* 텍스트 가운데 정렬 */
-}
-
 
 .tile_count .tile_stats_count {
   border-bottom: 1px solid #D9DEE4;
@@ -2328,11 +2318,11 @@ span.right {
     font-size: 30px; } }
 
 .tile_count .tile_stats_count span {
-  font-size: 13px; }
+  font-size: 12px; }
 
 @media (min-width: 768px) {
   .tile_count .tile_stats_count span {
-    font-size: 15px; } }
+    font-size: 13px; } }
 
 .tile_count .tile_stats_count .count_bottom i {
   width: 12px; }
@@ -2511,7 +2501,7 @@ h4.graph_title {
 
 .tile-stats p {
   margin-top: 5px;
-  font-size: 13px; }
+  font-size: 12px; }
 
 .tile-stats > .dash-box-footer {
   position: relative;
@@ -2919,7 +2909,7 @@ input.parsley-error, textarea.parsley-error, select.parsley-error {
   position: absolute;
   top: 15px;
   left: 15px;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: bold;
   color: #bbb;
   text-transform: uppercase;
@@ -2987,7 +2977,7 @@ a.btn-success, a.btn-primary, a.btn-warning, a.btn-danger {
   color: #666;
   border: 1px solid #ddd;
   background-color: #fafafa;
-  font-size: 13px; }
+  font-size: 12px; }
 
 .btn.btn-app > .fa, .btn.btn-app > .glyphicon, .btn.btn-app > .ion {
   font-size: 20px;
@@ -3025,7 +3015,7 @@ textarea:focus {
   display: inline-block;
   padding: 3px 9px;
   margin-bottom: 0;
-  font-size: 15px;
+  font-size: 14px;
   line-height: 20px;
   text-align: center;
   vertical-align: middle;
@@ -3079,7 +3069,7 @@ textarea:focus {
 
 .bs-glyphicons li:hover {
   color: #fff;
-  background-color: #0072ab; }
+  background-color: #1ABB9C; }
 
 @media (min-width: 768px) {
   .bs-glyphicons {
@@ -3087,7 +3077,7 @@ textarea:focus {
     margin-left: 0; }
   .bs-glyphicons li {
     width: 12.5%;
-    font-size: 13px; } }
+    font-size: 12px; } }
 
 /* *********  /glyphicons  **************************** */
 /* *********  form tags input  **************************** */
@@ -3105,12 +3095,12 @@ span.tag {
   float: left;
   padding: 5px 9px;
   text-decoration: none;
-  background: #0072ab;
+  background: #1ABB9C;
   color: #F1F6F7;
   margin-right: 5px;
   font-weight: 500;
   margin-bottom: 5px;
-  font-family: "Fontawesome"; }
+  font-family: helvetica; }
 
 span.tag a {
   color: #F1F6F7 !important; }
@@ -3124,7 +3114,7 @@ span.tag a {
 .tagsinput input {
   width: 80px;
   margin: 0px;
-  font-family: "Fontawesome";
+  font-family: helvetica;
   font-size: 13px;
   border: 1px solid transparent;
   padding: 3px;
@@ -3235,7 +3225,7 @@ ul.timeline li {
 
 .tag {
   line-height: 1;
-  background: #0072ab;
+  background: #1ABB9C;
   color: #fff !important; }
 
 .tag:after {
@@ -3249,7 +3239,7 @@ ul.timeline li {
   pointer-events: none;
   border-top: 14px solid transparent;
   border-bottom: 14px solid transparent;
-  border-left: 11px solid #0072ab; }
+  border-left: 11px solid #1ABB9C; }
 
 .timeline h2.title {
   position: relative;
@@ -3307,7 +3297,7 @@ ul.social li {
 .chat .status {
   float: left;
   margin: 16px 0 0 -16px;
-  font-size: 15px;
+  font-size: 14px;
   font-weight: bold;
   width: 12px;
   height: 12px;
@@ -3317,7 +3307,7 @@ ul.social li {
   border-radius: 50%; }
 
 .chat .status.online {
-  background: #0072ab; }
+  background: #1ABB9C; }
 
 .chat .status.away {
   background: #F39C12; }
@@ -3446,8 +3436,8 @@ ul.widget_profile_box li a {
   padding: 0px; }
 
 ul.widget_profile_box li a:hover {
-  color: #0072ab !important;
-  border: 1px solid #0072ab; }
+  color: #1ABB9C !important;
+  border: 1px solid #26b99a; }
 
 ul.widget_profile_box li .profile_img {
   width: 85px;
@@ -3478,7 +3468,7 @@ ul.widget_profile_box li .profile_img {
   width: 14px; }
 
 .widget_tally_box ul.legend li .name {
-  font-size: 15px;
+  font-size: 14px;
   margin: 5px 0 0 14px;
   text-overflow: ellipsis;
   float: left; }
@@ -3597,17 +3587,17 @@ ul.stats-overview li {
   text-align: center;
   padding: 0 15px;
   width: 30%;
-  font-size: 15px;
+  font-size: 14px;
   border-right: 1px solid #e8e8e8; }
 
 ul.stats-overview li:last-child {
   border-right: 0; }
 
 ul.stats-overview li .name {
-  font-size: 13px; }
+  font-size: 12px; }
 
 ul.stats-overview li .value {
-  font-size: 15px;
+  font-size: 14px;
   font-weight: bold;
   display: block; }
 
@@ -3636,7 +3626,7 @@ ul.project_files li a i {
   background: #fff; }
 
 .pricing .title {
-  background: #0072ab;
+  background: #1ABB9C;
   height: 110px;
   color: #fff;
   padding: 15px 0 0;
@@ -3786,9 +3776,9 @@ ul.project_files li a i {
   padding: 0 4px; }
 
 .view p {
-  font-family: "Fontawesome";
+  font-family: Georgia, serif;
   font-style: italic;
-  font-size: 13px;
+  font-size: 12px;
   position: relative;
   color: #fff;
   padding: 10px 20px 20px;
@@ -3942,8 +3932,8 @@ ul.project_files li a i {
   color: #666;
   background: rgba(243, 242, 243, 0.8);
   border: solid 2px rgba(195, 194, 196, 0.8);
-  font-family: "Fontawesome";
-  font-size: 13px;
+  font-family: sans-serif;
+  font-size: 12px;
   text-align: center; }
 
 .morris-hover.morris-default-style .morris-hover-row-label {
@@ -4191,7 +4181,7 @@ a.hiddenanchor {
   background-position: 10px -53px !important; }
 
 .login_content form div a {
-  font-size: 13px;
+  font-size: 12px;
   margin: 10px 15px 0 0; }
 
 .reset_pass {
@@ -4243,15 +4233,15 @@ header {
 /** signup **/
 /** NProgress **/
 #nprogress .bar {
-  background: #0072ab; }
+  background: #1ABB9C; }
 
 #nprogress .peg {
-  -webkit-box-shadow: 0 0 10px #0072ab, 0 0 5px #0072ab;
-          box-shadow: 0 0 10px #0072ab, 0 0 5px #0072ab; }
+  -webkit-box-shadow: 0 0 10px #1ABB9C, 0 0 5px #1ABB9C;
+          box-shadow: 0 0 10px #1ABB9C, 0 0 5px #1ABB9C; }
 
 #nprogress .spinner-icon {
-  border-top-color: #0072ab;
-  border-left-color: #0072ab; }
+  border-top-color: #1ABB9C;
+  border-left-color: #1ABB9C; }
 
 /** /NProgress **/
 /** bootstrap-wysiwyg **/
@@ -4540,7 +4530,7 @@ fieldset {
   color: #fff; }
 
 .wizard_horizontal ul.wizard_steps li a.done:before, .wizard_horizontal ul.wizard_steps li a.done .step_no {
-  background: #0072ab;
+  background: #1ABB9C;
   color: #fff; }
 
 .wizard_horizontal ul.wizard_steps li:first-child a:before {
@@ -4635,7 +4625,7 @@ fieldset {
   color: #fff; }
 
 .wizard_verticle ul.wizard_steps li a.done:before, .wizard_verticle ul.wizard_steps li a.done .step_no {
-  background: #0072ab;
+  background: #1ABB9C;
   color: #fff; }
 
 .wizard_verticle ul.wizard_steps li:first-child a:before {
@@ -4813,12 +4803,12 @@ ul.notifications {
 .input-group-sm > .input-group-addon {
   height: 30px;
   padding: 5px 10px;
-  font-size: 13px;
+  font-size: 12px;
   line-height: 1.5; }
 
 .input-group-addon {
   padding: 6px 12px;
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 400;
   line-height: 1;
   color: #555;
@@ -4897,7 +4887,7 @@ ul.notifications {
     border: 1px solid #ccc; }
 
 .daterangepicker select.monthselect, .daterangepicker select.yearselect, .daterangepicker select.hourselect, .daterangepicker select.minuteselect, .daterangepicker select.secondselect, .daterangepicker select.ampmselect {
-  font-size: 13px;
+  font-size: 12px;
   padding: 1px;
   height: auto;
   margin: 0;
@@ -4943,7 +4933,7 @@ ul.notifications {
     .daterangepicker.picker_1 .calendar-table thead tr {
       background: #213345; }
     .daterangepicker.picker_1 .calendar-table thead tr:first-child {
-      background: #0072ab; }
+      background: #1ABB9C; }
     .daterangepicker.picker_1 .calendar-table td.off {
       background: #34495E;
       color: #999; }
@@ -4951,14 +4941,14 @@ ul.notifications {
       color: #34495E; }
 
 .daterangepicker.picker_2 .calendar-table thead tr {
-  color: #0072ab; }
+  color: #1ABB9C; }
 
 .daterangepicker.picker_2 .calendar-table thead tr:first-child {
   color: #73879C; }
 
 .daterangepicker.picker_3 .calendar-table thead tr:first-child {
   color: #fff;
-  background: #0072ab; }
+  background: #1ABB9C; }
 
 .daterangepicker.picker_4 .calendar-table thead tr:first-child {
   color: #fff;
