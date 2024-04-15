@@ -179,19 +179,33 @@ public class ManagerService {
             // productId에 해당하는 금지어유사도 결과 데이터들 가져오기 (금지어 유사 확률 높은 순)
             List<ProhibitSimilarWordEntity> entityList = prohibitSimilarWordRepository
                     .findProbaByProductEntity_ProductIdOrderBySimilarProbaDesc(prodEntity.getProductId());
-            // 금지 유사확률이 가장 높은 데이터 가져오기
-            ProhibitSimilarWordEntity prohibitSimilarWordEntity = entityList.get(0);
-
-            // 화면 출력을 위한 새로운 ModelPredictDTO 생성
-            ModelPredictDTO dto = new ModelPredictDTO(prodEntity.getCustomerEntity().getCustomerId(),
-                    prodEntity.getProductId(),
-                    prodEntity.getProductName(), prodEntity.getProductDesc(),
-                    prodEntity.getLstmPredictProba(), prodEntity.isLstmPredict(),
-                    prohibitSimilarWordEntity.getSimilarWord(), prohibitSimilarWordEntity.getSimilarProba(),
-                    prohibitSimilarWordEntity.getProhibitWordEntity().getProhibitWord(),
-                    prohibitSimilarWordEntity.getProhibitWordEntity().getProhibitReason());
-
-            result.add(dto);
+                    
+            // 1) lstmPredict==false && 금지어 유사도 결과 존재 O
+            if (entityList != null && !entityList.isEmpty()) {
+                // 금지 유사확률이 가장 높은 데이터 가져오기
+                ProhibitSimilarWordEntity prohibitSimilarWordEntity = entityList.get(0);
+    
+                // 화면 출력을 위한 새로운 ModelPredictDTO 생성
+                ModelPredictDTO dto = new ModelPredictDTO(prodEntity.getCustomerEntity().getCustomerId(),
+                        prodEntity.getProductId(),
+                        prodEntity.getProductName(), prodEntity.getProductDesc(),
+                        prodEntity.getLstmPredictProba(), prodEntity.isLstmPredict(),
+                        prohibitSimilarWordEntity.getSimilarWord(), prohibitSimilarWordEntity.getSimilarProba(),
+                        prohibitSimilarWordEntity.getProhibitWordEntity().getProhibitWord(),
+                        prohibitSimilarWordEntity.getProhibitWordEntity().getProhibitReason());
+                result.add(dto);
+                        
+            }
+            // 2) lstmPredict==false && 금지어 유사도 결과 존재 X
+            else{
+                // 화면 출력을 위한 새로운 ModelPredictDTO 생성
+                ModelPredictDTO dto = new ModelPredictDTO(prodEntity.getCustomerEntity().getCustomerId(),
+                        prodEntity.getProductId(),
+                        prodEntity.getProductName(), prodEntity.getProductDesc(),
+                        prodEntity.getLstmPredictProba(), prodEntity.isLstmPredict(),
+                        null, 0.0,null,null);
+                result.add(dto);
+            }
         });
 
         return result;
