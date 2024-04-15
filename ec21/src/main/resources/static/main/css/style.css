@@ -2360,7 +2360,7 @@ Version:1.0
 .shop.single .product-desc .short h4 {
 	font-size: 22px;
 	font-weight: 600;
-	margin-top: -5px;
+	margin: -5px 0 20px 0;
 	line-height: 28px;
 }
 .shop.single .product-desc .short .description {
@@ -2394,24 +2394,29 @@ Version:1.0
 .shop.single .product-desc .rating li.dark i{
 	color:#555;
 }
-.shop.single .product-desc .price {
+
+/* .shop.single .product-desc .price {
 	font-size: 20px;
 	color: #333;
 	font-weight: 600;
 	margin-top: 15px;
-}
+} */
+
 .shop.single .product-desc .price s{
 	color:#333;
 }
-.shop.single .product-desc .price span{
+
+/* .shop.single .product-desc .price span{
 	display:inline-block;
 	margin-right:15px;
 	color:#F7941D;
-}
+} */
+
 .shop.single .product-desc .product-buy {
 	margin-top: 40px;
 }
 .shop.single .product-desc .product-buy{}
+
 .shop.single .product-desc .color {
 	display: inline-block;
 	margin-right: 50px;
@@ -2506,12 +2511,16 @@ Version:1.0
 	display: inline-block;
 	margin-right: 10px;
 }
-.shop.single .quantity h6 {
+.shop.single .price h6
+, .shop.single .origin h6
+, .shop.single .quantity h6 {
 	display: inline-block;
-	margin-right: 10px;
-	font-size: 15px;
-	font-weight: 500;
+    margin-right: 10px;
+    font-size: 20px;
+    font-weight: 500;
+    padding-bottom: 10px;
 }
+
 .shop.single .quantity .input-group {
 	width: 151px;
 	display: inline-block;
