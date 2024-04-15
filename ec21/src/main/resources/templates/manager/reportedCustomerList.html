@@ -107,7 +107,6 @@
         data: { "reportCustomerId": -100, "reportedId": "" , "category": "total", "searchWord": "" },
         method: "GET",
         success: function (list) {
-          console.log("ajax 돾어");
           $("#result").replaceWith(list);
           $("#blackBtn").on("click", toBlacklist);
           $("#normalBtn").on("click", toNormal);
@@ -126,7 +125,7 @@
       <div class="col-md-3 left_col">
         <div class="left_col scroll-view">
           <div class="navbar nav_title" style="border: 0; text-align: center;">
-            <a th:href="@{/manager_index}" class="site_title">
+            <a th:href="@{/manager/manager_index}" class="site_title">
               <img th:src="@{/production/images/ec21logo.png}" alt="" height="30px">
             </a>
           </div>
