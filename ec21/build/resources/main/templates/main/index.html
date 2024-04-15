@@ -1,6 +1,6 @@
 
 <!DOCTYPE html>
-<html lang="zxx">
+<html lang="en" xmlns:th="http://thymeleaf.org">
 <head>
 	<!-- Meta Tag -->
     <meta charset="utf-8">
@@ -12,7 +12,7 @@
     <title>EC21, Global B2B Marketplace</title>
 
 	<!-- Favicon -->
-	<link rel="icon" type="image/png" href="../../static/main/images/ec21logo.png">
+	<link rel="icon" type="image/png" th:href="@{/main/images/ec21logo.png}">
 	<!-- Web Font -->
 	<link href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap" rel="stylesheet">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -21,34 +21,34 @@
 	<!-- StyleSheet -->
 	
 	<!-- Bootstrap -->
-	<link rel="stylesheet" href="../../static/main/css/bootstrap.css">
+	<link rel="stylesheet" th:href="@{/main/css/bootstrap.css}">
 	<!-- Magnific Popup -->
-    <link rel="stylesheet" href="../../static/main/css/magnific-popup.min.css">
+    <link rel="stylesheet" th:href="@{/main/css/magnific-popup.min.css}">
 	<!-- Font Awesome -->
-    <link rel="stylesheet" href="../../static/main/css/font-awesome.css">
+    <link rel="stylesheet" th:href="@{/main/css/font-awesome.css}">
 	<!-- Fancybox -->
-	<link rel="stylesheet" href="../../static/main/css/jquery.fancybox.min.css">
+	<link rel="stylesheet" th:href="@{/main/css/jquery.fancybox.min.css}">
 	<!-- Themify Icons -->
-    <link rel="stylesheet" href="../../static/main/css/themify-icons.css">
+    <link rel="stylesheet" th:href="@{/main/css/themify-icons.css}">
 	<!-- Nice Select CSS -->
-    <link rel="stylesheet" href="../../static/main/css/niceselect.css">
+    <link rel="stylesheet" th:href="@{/main/css/niceselect.css}">
 	<!-- Animate CSS -->
-    <link rel="stylesheet" href="../../static/main/css/animate.css">
+    <link rel="stylesheet" th:href="@{/main/css/animate.css}">
 	<!-- Flex Slider CSS -->
-    <link rel="stylesheet" href="../../static/main/css/flex-slider.min.css">
+    <link rel="stylesheet" th:href="@{/main/css/flex-slider.min.css}">
 	<!-- Owl Carousel -->
-    <link rel="stylesheet" href="../../static/main/css/owl-carousel.css">
+    <link rel="stylesheet" th:href="@{/main/css/owl-carousel.css}">
 	<!-- Slicknav -->
-    <link rel="stylesheet" href="../../static/main/css/slicknav.min.css">
+    <link rel="stylesheet" th:href="@{/main/css/slicknav.min.css}">
 	
 	<!-- Eshop StyleSheet -->
-	<link rel="stylesheet" href="../../static/main/css/reset.css">
-	<link rel="stylesheet" href="../../static/main/css/style.css">
-    <link rel="stylesheet" href="../../static/main/css/responsive.css">
+	<link rel="stylesheet" th:href="@{/main/css/reset.css}">
+	<link rel="stylesheet" th:href="@{/main/css/style.css}">
+    <link rel="stylesheet" th:href="@{/main/css/responsive.css}">
 
 	<!-- Color CSS -->
 	<!-- <link rel="stylesheet" href="css/color/color1.css"> -->
-	<link rel="stylesheet" href="../../static/main/css/color/color2.css">
+	<link rel="stylesheet" th:href="@{/main/css/color/color2.css}">
 
 	<link rel="stylesheet" href="#" id="colors">
 	
@@ -82,10 +82,10 @@
 						<!-- Top Right -->
 						<div class="right-content">
 							<ul class="list-main">
-								<li><i class="ti-user"></i> <a href="#">My account</a></li>
-								<li><i class="ti-power-off"></i><a href="login.html">Login</a></li>
-								<li><i class="ti-user"></i><a href="register.html">Sign up</a></li>
-								<li><i class="ti-power-off"></i><a href="index.html">Logout</a></li>
+								<li><i class="ti-power-off"></i><a th:href="@{/main/login}">Login</a></li>
+								<li><i class="ti-user"></i><a th:href="@{/main/register}">Sign up</a></li>
+								<li><i class="ti-power-off"></i><a th:href="@{/main/index}">Logout</a></li>
+								<li><a th:href="@{../manager/manager_index}" style="font-weight: bolder;">manager</a></li>
 							</ul>
 						</div>
 						<!-- End Top Right -->
@@ -100,12 +100,12 @@
 					<div class="col-lg-2 col-md-2 col-12">
 						<!-- Logo -->
 						<div class="logo">
-							<a href="index.html"><img src="../../static/main/images/ec21logo.png" alt="logo"></a>
+							<a th:href="@{/main/index}"><img th:src="@{/main/images/ec21logo.png}" alt="logo"></a>
 						</div>
 						<!--/ End Logo -->
 						<!-- Search Form -->
 						<div class="search-top">
-							<div class="top-search"><a href="#0"><i class="ti-search"></i></a></div>
+							<div class="top-search"><a href="#"><i class="ti-search"></i></a></div>
 							<!-- Search Form -->
 							<div class="search-top">
 								<form class="search-form">
@@ -140,54 +140,13 @@
 						<div class="right-bar">
 							<!-- Search Form -->
 							<div class="sinlge-bar">
-								<a href="mypage.html" class="single-icon"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a>
+								<a th:href="@{/main/myProducts}" class="single-icon"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a>
 							</div>
 
-							<!-- 검색창 옆 부분 -->
+							<!-- 검색창 옆 부분 -
+								인콰이어리 new 로만 보이게 하고 인콰이어리 페이지로 넘어가게 하기 -->
 							<div class="sinlge-bar inquiry">
-								<a href="#" class="single-icon"><i class="fa fa-envelope-o"></i> <span class="total-count">3</span></a>
-								<!-- inquiry start -->
-								<div class="inquiry-item">
-									<div class="dropdown-cart-header">
-										<span>3 Items</span>
-									</div>
-									<ul class="inquiry-list">
-										<li>
-											<!-- <a class="cart-img" href="#"><img src="images/user.png" alt="profile Image"></a> -->
-											<span>
-												<h4><a href="#">John Smith</a></h4>
-												<span class="time">3 mins ago</span>
-											</span>
-											<span class="message">
-												Film festivals used to be do-or-die moments for movie makers. They were where...
-											</span>
-										</li>
-										<li>
-											<!-- <a class="cart-img" href="#"><img src="images/user.png" alt="profile Image"></a> -->
-											<span>
-												<h4><a href="#">John Smith</a></h4>
-												<span class="time">3 mins ago</span>
-											</span>
-											<span class="message">
-												Film festivals used to be do-or-die moments for movie makers. They were where...
-											</span>
-										</li>
-										<li>
-											<!-- <a class="cart-img" href="#"><img src="images/user.png" alt="profile Image"></a> -->
-											<span>
-												<h4><a href="#">John Smith</a></h4>
-												<span class="time">3 mins ago</span>
-											</span>
-											<span class="message">
-												Film festivals used to be do-or-die moments for movie makers. They were where...
-											</span>
-										</li>
-									</ul>
-									<div class="bottom">
-										<a href="index.html" class="btn animate">See more inquiries</a>
-									</div>
-								</div>
-								<!--/ End inquiry Item -->
+								<a th:href="@{/main/inbox}" class="single-icon"><i class="fa fa-envelope-o"></i> <span class="total-count">new</span></a>
 							</div>
 						</div>
 					</div>
@@ -209,12 +168,12 @@
 									<div class="navbar-collapse">	
 										<div class="nav-inner">	
 											<ul class="nav main-menu menu navbar-nav">
-												<li><a href="list.html">All</a></li>												
-												<li><a href="#">Food & Beverage</a></li>
-												<li><a href="#">Chemical</a></li>
-												<li><a href="#">Health & Medical</a></li>									
-												<li><a href="#">Electronics</a></li>
-												<li><a href="#">Cosmetic</a></li>
+												<li><a th:href="@{/main/list}">All</a></li>												
+												<li><a th:href="@{/main/list}">Food & Beverage</a></li>
+												<li><a th:href="@{/main/list}">Chemical</a></li>
+												<li><a th:href="@{/main/list}">Health & Medical</a></li>									
+												<li><a th:href="@{/main/list}">Electronics</a></li>
+												<li><a th:href="@{/main/list}">Cosmetic</a></li>
 											</ul>
 										</div>
 									</div>
@@ -245,7 +204,7 @@
 										<h1><span>UP TO 50% OFF </span>Shirt For Man</h1>
 										<p>Maboriosam in a nesciung eget magnae <br> dapibus disting tloctio in the find it pereri <br> odiy maboriosm.</p>
 										<div class="button">
-											<a href="#" class="btn">Shop Now!</a>
+											<a th:href="@{/main/index}" class="btn">Shop Now!</a>
 										</div>
 									</div>
 								</div>
@@ -261,7 +220,7 @@
 	
 	
 	<!-- End Small Banner -->
-	<!-- Start Product Area -->
+	<!-- Start Product Area : 상품리스트 -->
     <div class="product-area section">
             <div class="container">
 				<div class="row">
@@ -282,7 +241,7 @@
 											<div class="col-xl-3 col-lg-4 col-md-4 col-12">
 												<div class="single-product">
 													<div class="product-img">
-														<a href="product-details.html">
+														<a th:href="@{main/product-details}">
 															<img class="default-img" src="https://via.placeholder.com/550x750" alt="#">
 															<img class="hover-img" src="https://via.placeholder.com/550x750" alt="#">
 														</a>
@@ -657,12 +616,12 @@
 					<div class="row">
 						<div class="col-lg-6 col-12">
 							<div class="left">
-								<p>Copyright © 1997-2024 <a href="https://www.ec21.com/" target="_blank">EC21 Inc.</a> All Rights Reserved. EC21 in Korean | Chinese Business Registry Number: 120-86-03931</p>
+								<p>Copyright © 1997-2024 <a href="#" target="_blank">EC21 Inc.</a> All Rights Reserved. EC21 in Korean | Chinese Business Registry Number: 120-86-03931</p>
 							</div>
 						</div>
 						<div class="col-lg-6 col-12">
 							<div class="right">
-								<img src="main/images/payments.png" alt="#">
+								<img th:src="@{main/images/payments.png}" alt="#">
 							</div>
 						</div>
 					</div>
@@ -673,40 +632,40 @@
 	<!-- /End Footer Area -->
 
 	<!-- Jquery -->
-    <script src="../../static/main/js/jquery.min.js"></script>
-    <script src="../../static/main/js/jquery-migrate-3.0.0.js"></script>
-	<script src="../../static/main/js/jquery-ui.min.js"></script>
+    <script th:src="@{/main/js/jquery.min.js}"></script>
+    <script th:src="@{/main/js/jquery-migrate-3.0.0.js}"></script>
+	<script th:src="@{/main/js/jquery-ui.min.js}"></script>
 	<!-- Popper JS -->
-	<script src="../../static/main/js/popper.min.js"></script>
+	<script th:src="@{/main/js/popper.min.js}"></script>
 	<!-- Bootstrap JS -->
-	<script src="../../static/main/js/bootstrap.min.js"></script>
+	<script th:src="@{/main/js/bootstrap.min.js}"></script>
 	<!-- Color JS -->
-	<script src="../../static/main/js/colors.js"></script>
+	<script th:src="@{/main/js/colors.js}"></script>
 	<!-- Slicknav JS -->
-	<script src="../../static/main/js/slicknav.min.js"></script>
+	<script th:src="@{/main/js/slicknav.min.js}"></script>
 	<!-- Owl Carousel JS -->
-	<script src="../../static/main/js/owl-carousel.js"></script>
+	<script th:src="@{/main/js/owl-carousel.js}"></script>
 	<!-- Magnific Popup JS -->
-	<script src="../../static/main/js/magnific-popup.js"></script>
+	<script th:src="@{/main/js/magnific-popup.js}"></script>
 	<!-- Fancybox JS -->
-	<script src="../../static/main/js/facnybox.min.js"></script>
+	<script src="@{/main/js/facnybox.min.js}"></script>
 	<!-- Waypoints JS -->
-	<script src="../../static/main/js/waypoints.min.js"></script>
+	<script th:src="@{/main/js/waypoints.min.js}"></script>
 	<!-- Countdown JS -->
-	<script src="../../static/main/js/finalcountdown.min.js"></script>
+	<script th:src="@{/main/js/finalcountdown.min.js}"></script>
 	<!-- Nice Select JS -->
-	<script src="../../static/main/js/nicesellect.js"></script>
+	<script th:src="@{/main/js/nicesellect.js}"></script>
 	<!-- Ytplayer JS -->
-	<script src="../../static/main/js/ytplayer.min.js"></script>
+	<script th:src="@{/main/js/ytplayer.min.js}"></script>
 	<!-- Flex Slider JS -->
-	<script src="../../static/main/js/flex-slider.js"></script>
+	<script th:src="@{/main/js/flex-slider.js}"></script>
 	<!-- ScrollUp JS -->
-	<script src="../../static/main/js/scrollup.js"></script>
+	<script th:src="@{/main/js/scrollup.js}"></script>
 	<!-- Onepage Nav JS -->
-	<script src="../../static/main/js/onepage-nav.min.js"></script>
+	<script th:src="@{/main/js/onepage-nav.min.js}"></script>
 	<!-- Easing JS -->
-	<script src="../../static/main/js/easing.js"></script>
+	<script th:src="@{/main/js/easing.js}"></script>
 	<!-- Active JS -->
-	<script src="../../static/main/js/active.js"></script>
+	<script th:src="@{/main/js/active.js}"></script>
 </body>
 </html>

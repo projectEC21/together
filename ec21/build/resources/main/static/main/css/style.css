@@ -22,6 +22,7 @@ Version:1.0
 10. Cart CSS
 11. Checkout CSS
 12. Login & Register CSS
+* productsWrite CSS
 13. Cowndown CSS
 14. Shop Services CSS
 15. Newslatter CSS
@@ -758,7 +759,7 @@ Version:1.0
 	top: 0;
 }
 .header.shop .middle-inner {
-	padding: 20px 0;
+	padding: 10px 0 20px 0;
 	background: #fff;
 	border-top: 1px solid #eee;
 }
@@ -1044,7 +1045,7 @@ Version:1.0
 	margin: 0;
 	top: 20px;
 	float: right;
-	position: relative;
+	position: absolute;
 }
 .header.shop .right-bar .sinlge-bar.top-search a {
 	transform: translateY(3px);
@@ -1060,14 +1061,17 @@ Version:1.0
 .header.shop .right-bar .sinlge-bar .single-icon:hover{
 	color:#F7941D;
 }
+
+
+.header.shop .topbar .container .row .col-lg-8.col-md-12.col-12 .right-content .list-main .total-count,
 .header.shop .right-bar .sinlge-bar .single-icon .total-count {
 	position: absolute;
 	top: -7px;
 	right: -8px;
 	background: #f6931d;
-	width: 18px;
-	height: 18px;
-	line-height: 18px;
+	width: 25px;
+	height: 20px;
+	line-height: 20px;
 	text-align: center;
 	color: #fff;
 	border-radius: 100%;
@@ -1962,7 +1966,7 @@ Version:1.0
 .single-product:hover .button-head{
 	bottom:0;
 }
-.single-product .product-img .shop-list-quickview {
+.single-product .product-img .product-list-quickview {
   position: absolute;
   top: 50%;
   -webkit-transform: translateY(-50%);
@@ -1979,7 +1983,7 @@ Version:1.0
   -o-transition: all .35s ease 0s;
   transition: all .35s ease 0s;
 }
-.single-product .product-img .shop-list-quickview a {
+.single-product .product-img .product-list-quickview a {
   color: #000;
   background-color: #fff;
   display: inline-block;
@@ -1988,11 +1992,11 @@ Version:1.0
   border-radius: 100%;
   font-size: 18px;
 }
-.single-product .product-img .shop-list-quickview a:hover {
+.single-product .product-img .product-list-quickview a:hover {
   background-color: #222;
   color: #fff;
 }
-.single-product .product-img .shop-list-quickview a i {
+.single-product .product-img .product-list-quickview a i {
   line-height: 50px;
 }
 .single-product .product-content{
@@ -2223,7 +2227,7 @@ Version:1.0
 .shop .shop-top {
 	clear: both;
 	background: #f6f7fb;
-	padding: 18px 20px 50px 20px;
+	/* padding: 18px 20px 50px 20px; */
 }
 .shop .shop-shorter {
 	float: left;
@@ -2241,6 +2245,19 @@ Version:1.0
 	margin: 4px 5px 0 0;
 	font-weight:500;
 }
+
+.shop .single-slider a{
+	display: inline;
+	position:relative;
+	float: right;
+	margin: 4px 5px 0 0;
+	font-weight:500;
+}
+.shop .single-slider a:hover{
+	font-weight: 700;
+	color:#0072ab;
+}
+
 .shop .single-shorter option{}
 .shop .nice-select {
 	clear: initial;
@@ -2337,16 +2354,16 @@ Version:1.0
 .shop.single .flex-direction-nav{
 	display:none;
 }
-.shop.single .product-des{
+.shop.single .product-desc{
 	margin-top:30px;
 }
-.shop.single .product-des .short h4 {
+.shop.single .product-desc .short h4 {
 	font-size: 22px;
 	font-weight: 600;
 	margin-top: -5px;
 	line-height: 28px;
 }
-.shop.single .product-des .short .description {
+.shop.single .product-desc .short .description {
 	font-size: 14px;
 	color: #555555;
 	margin-top: 20px;
@@ -2354,72 +2371,72 @@ Version:1.0
 	padding-bottom: 20px;
 	border-bottom: 1px solid #eee;
 }
-.shop.single .product-des {}
-.shop.single .product-des .total-review{
+.shop.single .product-desc {}
+.shop.single .product-desc .total-review{
 	font-size:14px;
 	font-weight:500;
 	margin-left:10px;
 	display:inline-block;
 }
-.shop.single .product-des .total-review:hover{
+.shop.single .product-desc .total-review:hover{
 	color:#F7941D;
 }
-.shop.single .product-des  .rating{
+.shop.single .product-desc  .rating{
 	margin-top:20px;
 	display:inline-block;
 }
-.shop.single .product-des .rating li{
+.shop.single .product-desc .rating li{
 	display:inline-block;
 }
-.shop.single .product-des .rating li i{
+.shop.single .product-desc .rating li i{
 	color:#F7941D;
 }
-.shop.single .product-des .rating li.dark i{
+.shop.single .product-desc .rating li.dark i{
 	color:#555;
 }
-.shop.single .product-des .price {
+.shop.single .product-desc .price {
 	font-size: 20px;
 	color: #333;
 	font-weight: 600;
 	margin-top: 15px;
 }
-.shop.single .product-des .price s{
+.shop.single .product-desc .price s{
 	color:#333;
 }
-.shop.single .product-des .price span{
+.shop.single .product-desc .price span{
 	display:inline-block;
 	margin-right:15px;
 	color:#F7941D;
 }
-.shop.single .product-des .product-buy {
+.shop.single .product-desc .product-buy {
 	margin-top: 40px;
 }
-.shop.single .product-des .product-buy{}
-.shop.single .product-des .color {
+.shop.single .product-desc .product-buy{}
+.shop.single .product-desc .color {
 	display: inline-block;
 	margin-right: 50px;
 }
-.shop.single .product-des .color h4 {
+.shop.single .product-desc .color h4 {
 	font-size: 18px;
 	font-weight: 600;
 }
-.shop.single .product-des .color h4 span {
+.shop.single .product-desc .color h4 span {
 	display: block;
 	font-size: 14px;
 	font-weight: 500;
 	margin-top: 4px;
 }
-.shop.single .product-des .color ul{
+.shop.single .product-desc .color ul{
 	margin-top: 10px;
 }
-.shop.single .product-des .color ul li{
+.shop.single .product-desc .color ul li{
 	display:inline-block;
 	margin-right:5px;
 }
-.shop.single .product-des .color ul li:last-child{
+.shop.single .product-desc .color ul li:last-child{
 	margin-right:0;
 }
-.shop.single .product-des .color ul li a{
+.shop.single .product-desc .color ul li a{
 	height:30px;
 	width:30px;
 	line-height:30px;
@@ -2427,7 +2444,7 @@ Version:1.0
 	display:block;
 	background:#333;
 }
-.shop.single .product-des .color ul li a i{
+.shop.single .product-desc .color ul li a i{
 	font-size:11px;
 	color:#fff;
 	opacity:0;
@@ -2436,44 +2453,44 @@ Version:1.0
 	-moz-transition:all 0.4s ease;
 	transition:all 0.4s ease;
 }
-.shop.single .product-des .color ul li a:hover i{
+.shop.single .product-desc .color ul li a:hover i{
 	opacity:1;
 	visibility:visible;
 }
-.shop.single .product-des .color ul li .one{
+.shop.single .product-desc .color ul li .one{
 	background:#3498db;
 }
-.shop.single .product-des .color ul li .two{
+.shop.single .product-desc .color ul li .two{
 	background:#F7941D;
 }
-.shop.single .product-des .color ul li .three{
+.shop.single .product-desc .color ul li .three{
 	background:#8e44ad;
 }
-.shop.single .product-des .color ul li .four{
+.shop.single .product-desc .color ul li .four{
 	background:#2ecc71;
 }
 /* Size */
-.shop.single .product-des .size{
+.shop.single .product-desc .size{
 	display:inline-block;
 }
-.shop.single .product-des .size h4{
+.shop.single .product-desc .size h4{
 	display: block;
 	font-size: 14px;
 	font-weight: 500;
 	margin-top: 0px;
 }
-.shop.single .product-des .size ul{
+.shop.single .product-desc .size ul{
 	display:inline-block;
 	margin-top: 10px;
 }
-.shop.single .product-des .size ul li {
+.shop.single .product-desc .size ul li {
 	display: inline-block;
 	margin-right: 5px;
 }
-.shop.single .product-des .size ul li:last-child{
+.shop.single .product-desc .size ul li:last-child{
 	margin-right:0;
 }
-.shop.single .product-des .size ul li a {
+.shop.single .product-desc .size ul li a {
 	display: block;
 	height: 30px;
 	width: 36px;
@@ -2482,7 +2499,7 @@ Version:1.0
 	line-height: 30px;
 	font-size: 14px;
 }
-.shop.single .product-des .size ul li a:hover{
+.shop.single .product-desc .size ul li a:hover{
 	color:#F7941D;
 }
 .shop.single .quantity {
@@ -2943,6 +2960,7 @@ Version:1.0
 	background: #f6f6f6;
 	padding: 50px 0;
 }
+
 .shopping-summery thead .main-hading{
 	padding:0px 50px;
 }
@@ -2960,6 +2978,7 @@ Version:1.0
 	border-bottom: 1px solid #F7941D;
 	margin-top: 20px;
 }
+
 .shopping-summery tbody tr img {
 	border-radius: 0;
 	width: 80px;
@@ -2971,7 +2990,7 @@ Version:1.0
 .shopping-summery tbody .product-name a {
 	font-weight: 600;
 	color: #282828;
-	font-weight: 600;
+	font-weight: 500;
 	font-size: 17px;
 }
 .shopping-cart .table p {
@@ -3003,16 +3022,20 @@ Version:1.0
 .shopping-cart .table td {
 	vertical-align: middle;
 	border-top: 1px solid #eee;
-	padding: 30px;
+	padding: 15px;
 }
 .shopping-summery tbody .price {
 	text-align: center;
 }
+
 .shopping-summery tbody .price span{}
-.shopping-cart tbody .qty .input-group {
-	width: 175px;
-	display: inline-block;
+
+.shopping-cart tbody .qty {
+	text-align: center;
 }
+
+.shopping-summery tbody .qty span{}
+
 .shopping-cart .qty .button {
 	display: inline-block;
 	position: absolute;
@@ -3042,14 +3065,14 @@ Version:1.0
 .shopping-cart .qty .button .btn:hover{
 	color:#F7941D;
 }
-.shopping-cart .qty .input-number {
-	border: 1px solid #eceded;
+.shopping-cart .qty span {
+	/* border: 1px solid #eceded; */
 	width: 100%;
 	text-align: center;
 	height: 47px;
 	border-radius:0;
 	overflow: hidden;
-	padding: 0px 45px;
+	padding: 0px 25px;
 }
 .shopping-summery tbody .total-amount {
 	text-align: center;
@@ -3180,6 +3203,12 @@ Version:1.0
 	line-height: 18px;
 	font-size: 13px;
 	color: #fff;
+}
+
+/* 페이징 css 제작 */
+.shopping-cart span.paging{
+	display: flex;
+    justify-content: center;
 }
 /*======================================
    End Shopping Cart CSS
@@ -3617,44 +3646,149 @@ Version:1.0
 ========================================*/
 
 /*======================================
+	Start Write CSS
+========================================*/
+
+.product-list.section .write-form{
+	width: max-content;
+}
+
+.product-list.section .title h2 {
+	position: relative;
+    font-size: 30px;
+    color: #333;
+    font-weight: 400;
+    line-height: 25px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    text-align: left;
+}
+
+.product-list.section .title p {
+	position: relative;
+	display: block;
+	font-size: 15px;
+	color: #4e4e4e;
+	font-weight: 300;
+    text-align: left;
+    padding-bottom: 50px;
+}
+
+/* css 는 조금 더 생각해보기 */
+.product-list.section th.form-group.title {
+	font-size: 25px;
+    border: 1px solid #efefef;
+    padding: 15px 0 15px 5px;
+    background: #efefef;
+}	
+
+
+.product-list.section th.form-group span {
+	color: #ff2c18;
+	display: contents;
+	position: absolute;
+	top: 4px;
+	font-size: 16px;
+}
+
+.product-list.section tbody{
+	padding-bottom: 40px;
+}
+
+.product-list.section th, td {
+	padding-left: 10px;
+    padding-top: 20px; /* 위쪽 패딩 */
+    padding-bottom: 20px; /* 아래쪽 패딩 */
+}
+
+.product-list.section .nice-select.category {
+    width: 320px;
+	text-align: center; /* 텍스트를 중앙 정렬 */
+}
+
+.product-list.section td.form-group input[type="text"] {
+	display: inline-flex;
+    margin-left: 20px;
+    justify-content: center;
+	width: 300px;
+}
+
+.product-list.section input[type="text"]{
+	padding-left: 10px;
+	width: 320px;
+}
+
+/* 가격 */
+.product-list.section input.price {
+	padding-left: 10px;
+	width: 310px;
+}
+
+/* ckeditor
+.product-list.section th.form-group.editor {
+	position: relative;
+} */
+
+.ck.ck-editor {
+	max-width: 500px;
+}
+.ck-editor__editable {
+	min-height: 300px;
+}
+
+.product-list.section .form .btn {
+	display: inline-block;
+    margin: 0 200px;
+    height: 46px;
+    width: 170px;
+    color: #fff;
+    line-height: 20px;
+}
+
+/*======================================
+	End Write CSS
+========================================*/
+
+
+/*======================================
    Start Shop List CSS
 ========================================*/
-.shop-list .list-content{
+.product-list .list-content{
 	margin-top:50px;
 }
-.shop-list .list-content .product-price{}
-.shop-list .list-content .product-price span {
+.product-list .list-content .product-price{}
+.product-list .list-content .product-price span {
 	font-size: 14px;
 	font-weight: 600;
 	margin-bottom: 3px;
 	display: block;
 }
-.shop-list .list-content .title {
+.product-list .list-content .title {
 	line-height: 20px;
 }
-.shop-list .list-content .title a:hover{
+.product-list .list-content .title a:hover{
 	color:#F7941D;
 }
-.shop-list .list-content .title a {
+.product-list .list-content .title a {
 	font-size: 18px;
 	font-weight: 600;
 }
-.shop-list .list-content .rating {
+.product-list .list-content .rating {
 	margin: 5px 0 8px 0;
 }
-.shop-list .list-content .rating li{
+.product-list .list-content .rating li{
 	display:inline-block;
 }
-.shop-list .list-content .rating li i{
+.product-list .list-content .rating li i{
 	color: #F7941D;
 }
-.shop-list .list-content .rating li.total {
+.product-list .list-content .rating li.total {
 	color: #333;
 	font-size: 12px;
 	margin-left: 3px;
 }
-.shop-list .list-content .des{}
-.shop-list .list-content .btn {
+.product-list .list-content .des{}
+.product-list .list-content .btn {
 	margin-top: 22px;
 	height: 42px;
 	line-height: 15px;
@@ -3667,7 +3801,7 @@ Version:1.0
 	line-height: a;
 	padding: 13px 32px;
 }
-.shop-list .list-content .btn:hover{
+.product-list .list-content .btn:hover{
 	background:#F7941D;
 	color:#fff;
 	border-color:transparent;
