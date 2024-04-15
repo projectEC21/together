@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zxx">
+<html lang="en">
 <head>
 	<!-- Meta Tag -->
     <meta charset="utf-8">
@@ -80,7 +80,6 @@
 						<!-- Top Right -->
 						<div class="right-content">
 							<ul class="list-main">
-								<li><i class="ti-user"></i> <a href="#">My account</a></li>
 								<li><i class="ti-power-off"></i><a href="login.html">Login</a></li>
 								<li><i class="ti-user"></i><a href="register.html">Sign up</a></li>
 								<li><i class="ti-power-off"></i><a href="index.html">Logout</a></li>
@@ -98,7 +97,7 @@
 					<div class="col-lg-2 col-md-2 col-12">
 						<!-- Logo -->
 						<div class="logo">
-							<a href="index.html"><img src="images/ec21logo.png" alt="logo"></a>
+							<a href="index.html"><img src="../../static/main/images/ec21logo.png" alt="logo"></a>
 						</div>
 						<!--/ End Logo -->
 						<!-- Search Form -->
@@ -141,51 +140,10 @@
 								<a href="#" class="single-icon"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a>
 							</div>
 
-							<!-- 검색창 옆 부분 -->
+						<!-- 검색창 옆 부분 -
+							인콰이어리 new 로만 보이게 하고 인콰이어리 페이지로 넘어가게 하기 -->
 							<div class="sinlge-bar inquiry">
-								<a href="#" class="single-icon"><i class="fa fa-envelope-o"></i> <span class="total-count">3</span></a>
-								<!-- inquiry start -->
-								<div class="inquiry-item">
-									<div class="dropdown-cart-header">
-										<span>3 Items</span>
-									</div>
-									<ul class="inquiry-list">
-										<li>
-											<!-- <a class="cart-img" href="#"><img src="images/user.png" alt="profile Image"></a> -->
-											<span>
-												<h4><a href="#">John Smith</a></h4>
-												<span class="time">3 mins ago</span>
-											</span>
-											<span class="message">
-												Film festivals used to be do-or-die moments for movie makers. They were where...
-											</span>
-										</li>
-										<li>
-											<!-- <a class="cart-img" href="#"><img src="images/user.png" alt="profile Image"></a> -->
-											<span>
-												<h4><a href="#">John Smith</a></h4>
-												<span class="time">3 mins ago</span>
-											</span>
-											<span class="message">
-												Film festivals used to be do-or-die moments for movie makers. They were where...
-											</span>
-										</li>
-										<li>
-											<!-- <a class="cart-img" href="#"><img src="images/user.png" alt="profile Image"></a> -->
-											<span>
-												<h4><a href="#">John Smith</a></h4>
-												<span class="time">3 mins ago</span>
-											</span>
-											<span class="message">
-												Film festivals used to be do-or-die moments for movie makers. They were where...
-											</span>
-										</li>
-									</ul>
-									<div class="bottom">
-										<a href="index.html" class="btn animate">See more inquiries</a>
-									</div>
-								</div>
-								<!--/ End inquiry Item -->
+								<a th:href="@{/main/inbox}" class="single-icon"><i class="fa fa-envelope-o"></i> <span class="total-count">NEW</span></a>
 							</div>
 						</div>
 					</div>
@@ -246,8 +204,12 @@
 		</div>
 		<!-- End Breadcrumbs -->
 		
-		<!-- Product Style 1 -->
-		<section class="product-area shop-sidebar shop-list shop section">
+		<!-- 
+			Product Style 1 
+			Products 페이지가 myAccount 디폴트 화면!
+			옆 사이드 바
+		-->
+		<section class="product-area shop-sidebar product-list shop section">
 			<div class="container">
 				<div class="row">
 					<div class="col-lg-3 col-md-4 col-12">
@@ -257,8 +219,9 @@
 									<h3 class="title">My Page</h3>
 									<ul class="categor-list">
 										<li><a href="#">info</a></li>
-										<li><a href="#">Products</a></li>
-
+										<li><a href="myProducts.html" style="font-weight:600;">Products</a></li>
+										<!-- 해당 페이지에 들어가면 색상이 더 진하게 보이게 해놓음
+											th : @@/myProducts -->
 									</ul>
 								</div>
 								<!--/ End Single Widget -->
@@ -276,140 +239,77 @@
 											<div class="shop-top">
 												<div class="shop-shorter">
 													<div class="single-shorter">
-														<label>Show :</label>
-														<select>
-															<option selected="selected">09</option>
-															<option>15</option>
-															<option>25</option>
-															<option>30</option>
-														</select>
-													</div>
-													<div class="single-shorter">
-														<label>Sort By :</label>
-														<select>
-															<option selected="selected">Name</option>
-															<option>Price</option>
-															<option>Size</option>
-														</select>
+														<label>Show :<span> 3</span></label>
 													</div>
 												</div>
-												<ul class="view-mode">
-													<li><a href="shop-grid.html"><i class="fa fa-th-large"></i></a></li>
-													<li class="active"><a href="shop-list.html"><i class="fa fa-th-list"></i></a></li>
-												</ul>
 											</div>
-											<!-- Shopping Summery -->
+											
+											<!-- 올린 상품 리스트 -->
 											<table class="table shopping-summery">
 												<thead>
 													<tr class="main-hading">
-														<th>PRODUCT</th>
-														<th>NAME</th>
-														<th class="text-center">UNIT PRICE</th>
-														<th class="text-center">QUANTITY</th>
-														<th class="text-center">TOTAL</th> 
+														<th class="text-center">no</th>
+														<th colspan="2">PRODUCT</th>
+														<!-- <th>PRODUCT</th> -->
+														<th class="text-center">PRICE</th> <!-- -->
+														<th class="text-center">QUANTITY</th> <!-- 단위-->
+														<!-- <th class="text-center">TOTAL</th>  -->
+														<th class="text-center">DATE</th>
 														<th class="text-center"><i class="ti-trash remove-icon"></i></th>
 													</tr>
 												</thead>
 												<tbody>
 													<tr>
+														<td>1</td>
 														<td class="image" data-title="No"><img src="https://via.placeholder.com/100x100" alt="#"></td>
-														<td class="product-des" data-title="Description">
+														<td class="product-desc" data-title="Description">
 															<p class="product-name"><a href="#">Women Dress</a></p>
-															<p class="product-des">Maboriosam in a tonto nesciung eget  distingy magndapibus.</p>
+															<p class="product-desc">Maboriosam in a tonto nesciung eget  distingy magndapibus.</p>
 														</td>
 														<td class="price" data-title="Price"><span>$110.00 </span></td>
-														<td class="qty" data-title="Qty"><!-- Input Order -->
-															<div class="input-group">
-																<div class="button minus">
-																	<button type="button" class="btn btn-primary btn-number" disabled="disabled" data-type="minus" data-field="quant[1]">
-																		<i class="ti-minus"></i>
-																	</button>
-																</div>
-																<input type="text" name="quant[1]" class="input-number"  data-min="1" data-max="100" value="1">
-																<div class="button plus">
-																	<button type="button" class="btn btn-primary btn-number" data-type="plus" data-field="quant[1]">
-																		<i class="ti-plus"></i>
-																	</button>
-																</div>
-															</div>
-															<!--/ End Input Order -->
-														</td>
-														<td class="total-amount" data-title="Total"><span>$220.88</span></td>
+														<td class="qty" data-title="Qty"><span>2,000</span></td>
+														<!-- <td class="total-amount" data-title="Total"><span>$220.88</span></td> -->
+														<td class="createDate" data-title="date"><span>2024/03/14</span></td>
 														<td class="action" data-title="Remove"><a href="#"><i class="ti-trash remove-icon"></i></a></td>
 													</tr>
 													<tr>
+														<td>2</td>
 														<td class="image" data-title="No"><img src="https://via.placeholder.com/100x100" alt="#"></td>
-														<td class="product-des" data-title="Description">
+														<td class="product-desc" data-title="Description">
 															<p class="product-name"><a href="#">Women Dress</a></p>
-															<p class="product-des">Maboriosam in a tonto nesciung eget  distingy magndapibus.</p>
+															<p class="product-desc">Maboriosam in a tonto nesciung eget  distingy magndapibus.</p>
 														</td>
 														<td class="price" data-title="Price"><span>$110.00 </span></td>
-														<td class="qty" data-title="Qty"><!-- Input Order -->
-															<div class="input-group">
-																<div class="button minus">
-																	<button type="button" class="btn btn-primary btn-number" disabled="disabled" data-type="minus" data-field="quant[2]">
-																		<i class="ti-minus"></i>
-																	</button>
-																</div>
-																<input type="text" name="quant[2]" class="input-number"  data-min="1" data-max="100" value="2">
-																<div class="button plus">
-																	<button type="button" class="btn btn-primary btn-number" data-type="plus" data-field="quant[2]">
-																		<i class="ti-plus"></i>
-																	</button>
-																</div>
-															</div>
-															<!--/ End Input Order -->
-														</td>
-														<td class="total-amount" data-title="Total"><span>$220.88</span></td>
+														<td class="qty" data-title="Qty"><span>2,000</span></td>
+														<!-- <td class="total-amount" data-title="Total"><span>$220.88</span></td> -->
+														<td class="createDate" data-title="date"><span>2024/03/14</span></td>
 														<td class="action" data-title="Remove"><a href="#"><i class="ti-trash remove-icon"></i></a></td>
 													</tr>
 													<tr>
+														<td>3</td>
 														<td class="image" data-title="No"><img src="https://via.placeholder.com/100x100" alt="#"></td>
-														<td class="product-des" data-title="Description">
+														<td class="product-desc" data-title="Description">
 															<p class="product-name"><a href="#">Women Dress</a></p>
-															<p class="product-des">Maboriosam in a tonto nesciung eget  distingy magndapibus.</p>
+															<p class="product-desc">Maboriosam in a tonto nesciung eget  distingy magndapibus.</p>
 														</td>
 														<td class="price" data-title="Price"><span>$110.00 </span></td>
-														<td class="qty" data-title="Qty"><!-- Input Order -->
-															<div class="input-group">
-																<div class="button minus">
-																	<button type="button" class="btn btn-primary btn-number" disabled="disabled" data-type="minus" data-field="quant[3]">
-																		<i class="ti-minus"></i>
-																	</button>
-																</div>
-																<input type="text" name="quant[3]" class="input-number"  data-min="1" data-max="100" value="3">
-																<div class="button plus">
-																	<button type="button" class="btn btn-primary btn-number" data-type="plus" data-field="quant[3]">
-																		<i class="ti-plus"></i>
-																	</button>
-																</div>
-															</div>
-															<!--/ End Input Order -->
-														</td>
-														<td class="total-amount" data-title="Total"><span>$220.88</span></td>
+														<td class="qty" data-title="Qty"><span>3,000</span></td>
+														<!-- <td class="total-amount" data-title="Total"><span>$220.88</span></td> -->
+														<td class="createDate" data-title="date"><span>2024/03/14</span></td>
 														<td class="action" data-title="Remove"><a href="#"><i class="ti-trash remove-icon"></i></a></td>
 													</tr>
 												</tbody>
 											</table>
 											<!--/ End Shopping Summery -->
-										</div>
-									</div>
-									<div class="row">
-										<div class="col-12">
-											<!-- Total Amount -->
-											<div class="total-amount">
-												<div class="row">
-													<div class="col-lg-4 col-md-7 col-12">
-														<div class="right">
-															<div class="button5">
-																<a href="#" class="btn">Checkout</a>
-																<a href="#" class="btn">Continue shopping</a>
-															</div>
-														</div>
-													</div>
+											
+											<!-- 페이징 -->
+											<div class="row">
+												<div class="col-12">
+													<span class="paging">
+														<<  <  1  2  3  4  5  >  >>
+													</span>
 												</div>
 											</div>
-											<!--/ End Total Amount -->
 										</div>
 									</div>
 								</div>
@@ -421,23 +321,6 @@
 			</div>
 		</section>
 		<!--/ End Product Style 1  -->	
-
-		<!-- Start Shop Newsletter  -->
-		<section class="shop-newsletter section">
-			<div class="container">
-				<div class="inner-top">
-					<div class="row">
-						<div class="col-lg-8 offset-lg-2 col-12">
-							<!-- Start Newsletter Inner -->
-							<div class="inner">
-								<h4>Newsletter</h4>
-								<p> Subscribe to our newsletter and get <span>10%</span> off your first purchase</p>
-								<form action="mail/mail.php" method="get" target="_blank" class="newsletter-inner">
-									<input name="EMAIL" placeholder="Your email address" required="" type="email">
-									<button class="btn">Subscribe</button>
-								</form>
-							</div>
-							<!-- End Newsletter Inner -->
 
 							<!-- My products List-->
 
@@ -563,98 +446,105 @@
 			</div>
 			<!-- Modal end -->
 		
-		<!-- Start Footer Area -->
-		<footer class="footer">
-			<!-- Footer Top -->
-			<div class="footer-top section">
-				<div class="container">
+	<!-- Start Footer Area -->
+	<footer class="footer">
+		<!-- Footer Top -->
+		<div class="footer-top section">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-2 col-md-6 col-12">
+						<!-- Single Widget -->
+						<div class="single-footer links">
+							<h4>About Us</h4>
+							<ul>
+								<li><a href="#">Company Overview</a></li>
+								<li><a href="#">Agent Program</a></li>
+								<li><a href="#">Advertise with us</a></li>
+							</ul>
+						</div>
+						<!-- End Single Widget -->
+					</div>
+					<div class="col-lg-2 col-md-6 col-12">
+						<!-- Single Widget -->
+						<div class="single-footer links">
+							<h4>Buying on EC21</h4>
+							<ul>
+								<li><a href="#">Post Buying Leads</a></li>
+								<li><a href="#">Browse Category</a></li>
+								<li><a href="#">Products by Keywords</a></li>
+								<li><a href="#">Products by Country</a></li>
+								<li><a href="#">Idea Products</a></li>
+							</ul>
+						</div>
+						<!-- End Single Widget -->
+					</div>
+
+					<!-- Single Widget -->
+					<div class="col-lg-2 col-md-6 col-12">
+						<!-- Single Widget -->
+						<div class="single-footer links">
+							<h4>Selling on EC21</h4>
+							<ul>
+								<li><a href="#">Post Products</a></li>
+								<li><a href="#">Manage Products</a></li>
+								<li><a href="#">Post Selling Leads</a></li>
+								<li><a href="#">Search Buying Leads</a></li>
+								<li><a href="#">Search Buyer Data</a></li>
+							</ul>
+						</div>
+						<!-- End Single Widget -->
+					</div>
+					<div class="col-lg-2 col-md-6 col-12">
+						<!-- Single Widget -->
+						<div class="single-footer links">
+							<h4>Services</h4>
+							<ul>
+								<li><a href="#">Basic Services</a></li>
+								<li><a href="#">Trade PRO</a></li>
+								<li><a href="#">Trade OK</a></li>
+								<li><a href="#">Credit Reports</a></li>
+								<li><a href="#">TradeVerify</a></li>
+							</ul>
+						</div>
+					</div>
+					<!-- End Single Widget -->
+					<div class="col-lg-3 col-md-6 col-12">
+						<!-- Single Widget -->
+						<div class="single-footer social">
+							<h4>Share this page</h4>
+							<ul>
+								<li><a href="#"><i class="ti-facebook"></i></a></li>
+								<li><a href="#"><i class="ti-twitter"></i></a></li>
+								<li><a href="#"><i class="ti-flickr"></i></a></li>
+								<li><a href="#"><i class="ti-instagram"></i></a></li>
+							</ul>
+						</div>
+						<!-- End Single Widget -->
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- End Footer Top -->
+		<div class="copyright">
+			<div class="container">
+				<div class="inner">
 					<div class="row">
-						<div class="col-lg-5 col-md-6 col-12">
-							<!-- Single Widget -->
-							<div class="single-footer about">
-								<div class="logo">
-									<a href="index.html"><img src="images/logo2.png" alt="#"></a>
-								</div>
-								<p class="text">Praesent dapibus, neque id cursus ucibus, tortor neque egestas augue,  magna eros eu erat. Aliquam erat volutpat. Nam dui mi, tincidunt quis, accumsan porttitor, facilisis luctus, metus.</p>
-								<p class="call">Got Question? Call us 24/7<span><a href="tel:123456789">+0123 456 789</a></span></p>
+						<div class="col-lg-6 col-12">
+							<div class="left">
+								<p>Copyright © 1997-2024 <a href="#" target="_blank">EC21 Inc.</a> All Rights Reserved. EC21 in Korean | Chinese Business Registry Number: 120-86-03931</p>
 							</div>
-							<!-- End Single Widget -->
 						</div>
-						<div class="col-lg-2 col-md-6 col-12">
-							<!-- Single Widget -->
-							<div class="single-footer links">
-								<h4>Information</h4>
-								<ul>
-									<li><a href="#">About Us</a></li>
-									<li><a href="#">Faq</a></li>
-									<li><a href="#">Terms & Conditions</a></li>
-									<li><a href="#">Contact Us</a></li>
-									<li><a href="#">Help</a></li>
-								</ul>
-							</div>
-							<!-- End Single Widget -->
-						</div>
-						<div class="col-lg-2 col-md-6 col-12">
-							<!-- Single Widget -->
-							<div class="single-footer links">
-								<h4>Customer Service</h4>
-								<ul>
-									<li><a href="#">Payment Methods</a></li>
-									<li><a href="#">Money-back</a></li>
-									<li><a href="#">Returns</a></li>
-									<li><a href="#">Shipping</a></li>
-									<li><a href="#">Privacy Policy</a></li>
-								</ul>
-							</div>
-							<!-- End Single Widget -->
-						</div>
-						<div class="col-lg-3 col-md-6 col-12">
-							<!-- Single Widget -->
-							<div class="single-footer social">
-								<h4>Get In Tuch</h4>
-								<!-- Single Widget -->
-								<div class="contact">
-									<ul>
-										<li>NO. 342 - London Oxford Street.</li>
-										<li>012 United Kingdom.</li>
-										<li>info@eshop.com</li>
-										<li>+032 3456 7890</li>
-									</ul>
-								</div>
-								<!-- End Single Widget -->
-								<ul>
-									<li><a href="#"><i class="ti-facebook"></i></a></li>
-									<li><a href="#"><i class="ti-twitter"></i></a></li>
-									<li><a href="#"><i class="ti-flickr"></i></a></li>
-									<li><a href="#"><i class="ti-instagram"></i></a></li>
-								</ul>
-							</div>
-							<!-- End Single Widget -->
-						</div>
-					</div>
-				</div>
-			</div>
-			<!-- End Footer Top -->
-			<div class="copyright">
-				<div class="container">
-					<div class="inner">
-						<div class="row">
-							<div class="col-lg-6 col-12">
-								<div class="left">
-									<p>Copyright © 2020 <a href="http://www.wpthemesgrid.com" target="_blank">Wpthemesgrid</a>  -  All Rights Reserved.</p>
-								</div>
-							</div>
-							<div class="col-lg-6 col-12">
-								<div class="right">
-									<img src="images/payments.png" alt="#">
-								</div>
+						<div class="col-lg-6 col-12">
+							<div class="right">
+								<img src="../../static/main/images/payments.png" alt="#">
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		</footer>
-		<!-- /End Footer Area -->
+		</div>
+	</footer>
+	<!-- /End Footer Area -->
 	
 	
 	<!-- Jquery -->
