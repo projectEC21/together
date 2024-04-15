@@ -6,6 +6,11 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+<<<<<<< HEAD
+=======
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+>>>>>>> 8f56eeeebe6110c2450d22e56b2a6b03836acdd6
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.SequenceGenerator;
@@ -35,10 +40,19 @@ public class ReportCustomerEntity {
     @GeneratedValue(generator = "report_customer_seq")
     private Long reportCustomerId;
 
+<<<<<<< HEAD
     @Column(name = "reported_id", nullable = false)
     private String reportedId;
 
     @Column(name = "report_category", nullable = false)
+=======
+    // FK
+    @Column(name = "reported_id", nullable = false)
+    private String reported_id;
+
+    @Column(name = "report_category", nullable = false)
+    @Enumerated(EnumType.STRING)
+>>>>>>> 8f56eeeebe6110c2450d22e56b2a6b03836acdd6
     private ReportCategory reportCategory;
 
     @Column(name = "report_reason")
@@ -49,12 +63,20 @@ public class ReportCustomerEntity {
     private LocalDateTime reportDate;
 
     @Column(name = "manager_check")
+<<<<<<< HEAD
+=======
+    @Enumerated(EnumType.STRING)
+>>>>>>> 8f56eeeebe6110c2450d22e56b2a6b03836acdd6
     private YesOrNo managerCheck;
 
     public static ReportCustomerEntity toEntity(ReportCustomerDTO dto) {
         return ReportCustomerEntity.builder()
                 .reportCustomerId(dto.getReportCustomerId())
+<<<<<<< HEAD
                 .reportedId(dto.getReportedId())
+=======
+                .reported_id(dto.getReportedId())
+>>>>>>> 8f56eeeebe6110c2450d22e56b2a6b03836acdd6
                 .reportCategory(dto.getReportCategory())
                 .reportReason(dto.getReportReason())
                 .reportDate(dto.getReportDate())

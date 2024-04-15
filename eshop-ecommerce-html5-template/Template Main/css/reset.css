@@ -698,6 +698,7 @@ a:hover, a:active {
     max-width: 100%;
     display: flex;
     justify-content: center;
+	padding-right: 100px;
 }
 
 .main-navigation {

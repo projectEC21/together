@@ -29,7 +29,11 @@ public class ReportCustomerDTO {
     public static ReportCustomerDTO toDTO(ReportCustomerEntity entity) {
         return ReportCustomerDTO.builder()
                 .reportCustomerId(entity.getReportCustomerId())
+<<<<<<< HEAD
                 .reportedId(entity.getReportedId())
+=======
+                .reportedId(entity.getReported_id())
+>>>>>>> 8f56eeeebe6110c2450d22e56b2a6b03836acdd6
                 .reportCategory(entity.getReportCategory())
                 .reportReason(entity.getReportReason())
                 .reportDate(entity.getReportDate())
