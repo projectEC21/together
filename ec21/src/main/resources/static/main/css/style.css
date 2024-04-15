@@ -3720,6 +3720,10 @@ Version:1.0
 	position: relative;
 }
 
+.product-list.section th.form-group.editor div{
+	display: inline-block;
+}
+
 .ck.ck-editor {
 	max-width: 500px;
 }
