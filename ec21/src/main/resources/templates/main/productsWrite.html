@@ -177,7 +177,6 @@
 									<table>
 										<div class="row">
 										<tbody>
-
 											<tr>
 												<th class="form-group title" colspan="2">Basic Information</th>
 											</tr>
@@ -226,6 +225,7 @@
 											<th class="form-group">Quantity<span>*</span></th>
 											<td>
 												<input type="text" class="moq" id="moq" name="moq" value="">
+												<p>Minimum Order</p>
 											</tr>
 										</tbody>
 											<!-- / 무역 정보 작성 -->
@@ -239,7 +239,7 @@
 													<th class="form-group editor">Product Details<span>*</span></th>
 													<td>
 													<div name="editor" id="editor"></div>
-												</td>
+													</td>
 												</tr>
 											</tbody>
 										<!-- / 상품 정보 작성 -->
@@ -249,6 +249,7 @@
 									<div class=" form-group submit-btn">
 										<button class="btn" type="submit">Submit</button>
 									</div>
+									
 								</div>
 							</form>
 							<!--/ End Form -->
@@ -398,8 +399,6 @@
 	<!-- Active JS -->
 	<script src="../../static/main/js/active.js"></script>
 	<!-- CK Editor -->
-	<script>
-		ClassicEditor.create( document.querySelector( '#editor' ) );
-	</script>
+	<script src="../../static/main/js/ckEditor.js"></script>
 </body>
 </html>
