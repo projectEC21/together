@@ -42,18 +42,20 @@
 
   <script>
     $(function () {
+      $("#category").on("change",search);
+      $("#searchWord").on("keyup",search);
       init();
     })
 
+    // 블랙 버튼 클릭 시
     function toBlacklist() {
-      let reportCutomerId = $("#reportCustomerId").val();
-      let reportedId = $("#reportedId").val();
-
-      console.log("reportedId : " + reportedId);
-
+      let category = $("#category").val();
+      let searchWord = $("#searchWord").val();
+      let reportCutomerId = $("#reportCustomerId").val();  // ReportCustomer 테이블의 managerCheck 값 변경을 위해 (모든 버튼에 해당) 
+      let reportedId = $("#reportedId").val();             // Customer 테이블의 blackListCheck 값 변경을 위해 (블랙버튼에 해당)
       $.ajax({
         url: "/manager/reportedCustomerList/getList",
-        data: { "reportCustomerId": reportCutomerId, "reportedId": reportedId },
+        data: { "reportCustomerId": reportCutomerId, "reportedId": reportedId , "category": category, "searchWord": searchWord },
         method: "GET",
         success: function (list) {
           $("#result").replaceWith(list);
@@ -63,11 +65,14 @@
       });
     }
 
+    // 정상 버튼 클릭 시
     function toNormal() {
+      let category = $("#category").val();
+      let searchWord = $("#searchWord").val();
       let reportCutomerId = $("#reportCustomerId").val();
       $.ajax({
         url: "/manager/reportedCustomerList/getList",
-        data: { "reportCustomerId": reportCutomerId, "reportedId": "" },
+        data: { "reportCustomerId": reportCutomerId, "reportedId": "", "category": category, "searchWord": searchWord },
         method: "GET",
         success: function (list) {
           $("#result").replaceWith(list);
@@ -75,14 +80,34 @@
           $("#normalBtn").on("click", toNormal);
         }
       });
+    }
+
+    // 카테고리 및 검색어 상태 변경 시 
+    function search() {
+      let category = $("#category").val();
+      let searchWord = $("#searchWord").val();
+      console.log(category);
+      console.log(searchWord);
+      $.ajax({
+        url:"/manager/reportedCustomerList/getList",
+        data: {"category": category, "searchWord": searchWord },
+        method: "GET",
+        success: function (list) {
+          $("#result").replaceWith(list);
+          $("#blackBtn").on("click", toBlacklist);
+          $("#normalBtn").on("click", toNormal);
+        }
+      })
+
     }
 
     function init() {
       $.ajax({
         url: "/manager/reportedCustomerList/getList",
-        data: { "reportCustomerId": -100, "reportedId": "" },
+        data: { "reportCustomerId": -100, "reportedId": "" , "category": "total", "searchWord": "" },
         method: "GET",
         success: function (list) {
+          console.log("ajax 돾어");
           $("#result").replaceWith(list);
           $("#blackBtn").on("click", toBlacklist);
           $("#normalBtn").on("click", toNormal);
@@ -219,13 +244,21 @@
                 <div class="title_right">
                   <div class="col-md-5 col-sm-5   form-group pull-right top_search">
                     <div class="input-group">
-                      <select name="" id="">
+                      <!-- <select name="" id="">
                         <option value="전체">전체</option>
                         <option value="회원ID">회원ID</option>
                         <option value="카테고리">카테고리</option>
                         <option value="상품명">상품명</option>
+                      </select> -->
+                      <!-- 240415 dy : select를 신고카테고리로 바꾸고, 검색어는 신고당한 회원ID, 담당자명, 회사명에서 검색되게 함 -->
+                      <select name="category" id="category">
+                        <option value="total">전체</option>
+                        <option value="DRUG">DRUG</option>
+                        <option value="IPR">IPR</option>
+                        <option value="SPAM">SPAM</option>
+                        <option value="ETC">ETC</option>
                       </select>
-                      <input type="text" class="form-control" placeholder="Search for...">
+                      <input type="text" class="form-control" id="searchWord" placeholder="Search for...">
                       <span class="input-group-btn">
                         <button class="btn btn-default" type="button">찾기</button>
                       </span>
