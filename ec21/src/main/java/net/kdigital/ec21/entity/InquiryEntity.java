@@ -2,6 +2,8 @@ package net.kdigital.ec21.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -69,8 +71,11 @@ public class InquiryEntity {
     @Column(name = "saved_file_name")
     private String savedFileName;
 
+    @Enumerated(EnumType.STRING)
     private InquiryEnum saved;
+    @Enumerated(EnumType.STRING)
     private InquiryEnum trash;
+    @Enumerated(EnumType.STRING)
     private InquiryEnum spam;
 
     public static InquiryEntity toEntity(InquiryDTO dto, CustomerEntity customerEntity, ProductEntity productEntity) {
