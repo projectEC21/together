@@ -26,10 +26,10 @@ public class ReportCustomerDTO {
     private LocalDateTime reportDate;
     private YesOrNo managerCheck;
 
-    public static ReportCustomerDTO toDTO(ReportCustomerEntity entity) {
+    public static ReportCustomerDTO toDTO(ReportCustomerEntity entity, String reportedId) {
         return ReportCustomerDTO.builder()
                 .reportCustomerId(entity.getReportCustomerId())
-                .reportedId(entity.getReported_id())
+                .reportedId(reportedId)
                 .reportCategory(entity.getReportCategory())
                 .reportReason(entity.getReportReason())
                 .reportDate(entity.getReportDate())
