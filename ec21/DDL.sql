@@ -76,11 +76,7 @@ create table blacklist(
     comp_name varchar2(100) not null,
     remote_ip varchar2(30) not null,
     country varchar2(30),
-<<<<<<< HEAD
-    black_type varchar2(20) not null check(black_type in ('drug', 'IPR','spam','etc')),
-=======
     black_type varchar2(20) not null check(black_type in ('DRUG', 'IPR','SPAM','ETC')),
->>>>>>> 8f56eeeebe6110c2450d22e56b2a6b03836acdd6
     black_reason varchar2(2000),
     input_date date default sysdate
 );

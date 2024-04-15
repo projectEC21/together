@@ -241,11 +241,11 @@ public class ManagerService {
         List<ReportedCustomerWithInfoDTO> result = new ArrayList<>();
 
         reportCustomerEntities.forEach((entity) -> {
-            CustomerEntity customerEntity = customerRepository.findById(entity.getReportedId()).get();
-            result.add(new ReportedCustomerWithInfoDTO(entity.getReportedId(), entity.getReportCustomerId(),
+            CustomerEntity customerEntity = customerRepository.findById(entity.getReported_id()).get();
+            result.add(new ReportedCustomerWithInfoDTO(entity.getReported_id(), entity.getReportCustomerId(),
                     customerEntity.getReportedCnt(), customerEntity.getCustomerGubun(),
                     customerEntity.getCustomerName(), customerEntity.getCompName(),
-                    customerEntity.getCustomerDepartment(), customerEntity.getRempoteIp(),
+                    customerEntity.getCustomerDepartment(), customerEntity.getRemoteIp(),
                     entity.getReportCategory(), entity.getReportReason()));
         });
 

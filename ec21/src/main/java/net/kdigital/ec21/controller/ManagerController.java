@@ -1,5 +1,6 @@
 package net.kdigital.ec21.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -8,8 +9,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,83 +16,26 @@ import net.kdigital.ec21.dto.CustomerDTO;
 import net.kdigital.ec21.dto.ModelPredictDTO;
 import net.kdigital.ec21.dto.ProductDTO;
 import net.kdigital.ec21.dto.ReportedCustomerWithInfoDTO;
-
-
-
+import net.kdigital.ec21.service.ManagerService;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequiredArgsConstructor
 @Slf4j
 public class ManagerController {
-	//======================== manager_index.html ==========================
+	private final ManagerService managerService;
+
+	// ============================= 메인보드 =============================
 	/**
 	 * 관리자 메인보드 화면 요청
+	 * 
 	 * @return
 	 */
-	@GetMapping("/manager/manager_index")
+	@GetMapping("manager/manager_index")
 	public String manager_index() {
-		return "manager/manager_index.html";
-	}
-	/**
-	 * 전체 상품 리스트 화면 요청
-	 * @return
-	 */
-	@GetMapping("/manager/productList")
-	public String productList() {
-		return "/manager/productList.html";
-	}
-	
-	/**
-	 * 모델로 이상상품 판별된 상품 리스트 화면 요청
-	 * @return
-	 */
-	@GetMapping("/manager/modelPredict")
-	public String modelPredict() {
-		return "manager/modelPredict.html";
-	}
 
-	
-	/**
-	 * 정상회원 리스트 화면 요청
-	 * @return
-	 */
-	@GetMapping("/manager/customerList")
-	public String customerList() {
-		return "manager/customerList.html";
-	}
-
-	/**
-	 * 신고당한 회원 리스트 화면 요청
-	 * @return
-	 */
-	@GetMapping("/manager/reportedCustomerList")
-	public String reportedCustomerList() {
-		return "manager/reportedCustomerList.html";
-	}
-
-	/**
-	 * 블랙리스트 회원 리스트 화면 요청 
-	 * @return
-	 */
-	@GetMapping("/manager/blackList")
-	public String blackList() {
-		return "manager/blackList.html";
-	}
-	//=================================================================================
-	
-
-
-
-	//============================= modelPredict.html ====================================================
-	
-	
-
-
-
-
-	@GetMapping("/tables")
-	public String tables() {
-		return "tables";
+		return "manager/manager_index";
 	}
 
 	/**
