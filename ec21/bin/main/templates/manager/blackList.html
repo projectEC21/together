@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<<<<<<< HEAD
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <!-- Meta, title, CSS, favicons, etc. -->
@@ -8,8 +7,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/png" th:href="@{/static/production/images/ec21logo.png}">
-=======
->>>>>>> 8f56eeeebe6110c2450d22e56b2a6b03836acdd6
 
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -19,7 +16,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/png" th:href="@{/production/images/ec21logo.png}">
 
-<<<<<<< HEAD
     <!-- Web Font -->
     <link href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -55,25 +51,6 @@
                 <img th:src="@{/static/production/images/ec21logo.png}" alt="" height="30px">
               </a>
             </div>
-=======
-  <title>ec21 관리자 페이지</title>
-
-  <!-- Web Font -->
-  <link
-    href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap"
-    rel="stylesheet">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap" rel="stylesheet">
-
-  <!-- Bootstrap -->
-  <link th:href="@{/vendors/bootstrap/dist/css/bootstrap.min.css}" rel="stylesheet">
-  <!-- Font Awesome -->
-  <link th:href="@{/vendors/font-awesome/css/font-awesome.min.css}" rel="stylesheet">
-  <!-- NProgress -->
-  <link th:href="@{/vendors/nprogress/nprogress.css}" rel="stylesheet">
-  <!-- iCheck -->
-  <link th:href="@{/vendors/iCheck/skins/flat/green.css}" rel="stylesheet">
->>>>>>> 8f56eeeebe6110c2450d22e56b2a6b03836acdd6
 
   <!-- bootstrap-progressbar -->
   <link th:href="@{/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css}" rel="stylesheet">
@@ -82,7 +59,6 @@
   <!-- bootstrap-daterangepicker -->
   <link th:href="@{/vendors/bootstrap-daterangepicker/daterangepicker.css}" rel="stylesheet">
 
-<<<<<<< HEAD
             <!-- menu profile quick info -->
             <div class="profile clearfix">
               <div class="profile_pic">
@@ -93,15 +69,10 @@
               </div>
             </div>
             <!-- /menu profile quick info -->
-=======
-  <!-- Custom Theme Style -->
-  <link th:href="@{/build/css/custom.css}" rel="stylesheet">
->>>>>>> 8f56eeeebe6110c2450d22e56b2a6b03836acdd6
 
   <!-- 240414 dy : JQuery 파일 추가 및 ajax 추가 -->
   <script th:src="@{/script/jquery-3.7.1.min.js}"></script>
 
-<<<<<<< HEAD
             <!-- sidebar menu -->
             <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
               <div class="menu_section">
@@ -146,55 +117,8 @@
               </a>
             </div>
             <!-- /menu footer buttons -->
-=======
-  <script>
-    $(function () {
-      init();
-    })
-
-    function toNormal() {
-      let blacklistId = $("#blacklistId").val();
-      $.ajax({
-        url: "/manager/blackList/getList",
-        data: { "blacklistId": blacklistId},
-        method: "GET",
-        success: function (list) {
-          $("#result").replaceWith(list);
-          $("#normalBtn").on("click", toNormal);
-        }
-      });
-    }
-
-    function init() {
-      $.ajax({
-        url: "/manager/blackList/getList",
-        data: { "blacklistId": -100},
-        method: "GET",
-        success: function (list) {
-          $("#result").replaceWith(list);
-          $("#normalBtn").on("click", toNormal);
-        }
-      });
-    }
-
-  </script>
-
-
-</head>
-
-<body class="nav-md">
-  <div class="container body">
-    <div class="main_container">
-      <div class="col-md-3 left_col">
-        <div class="left_col scroll-view">
-          <div class="navbar nav_title" style="border: 0; text-align: center;">
-            <a th:href="@{/manager/manager_index}" class="site_title">
-              <img th:src="@{/production/images/ec21logo.png}" alt="" height="30px">
-            </a>
->>>>>>> 8f56eeeebe6110c2450d22e56b2a6b03836acdd6
           </div>
 
-<<<<<<< HEAD
         <!-- top navigation -->
         <div class="top_nav">
           <div class="nav_menu">
@@ -210,45 +134,6 @@
                   <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item"  th:href="@{main/login}"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
                   </div>
-=======
-          <div class="clearfix"></div>
-
-          <!-- menu profile quick info -->
-          <div class="profile clearfix">
-            <div class="profile_pic">
-              <img th:src="@{/production/images/user.png}" alt="..." class="img-circle profile_img">
-            </div>
-            <div class="profile_info">
-              <h2>관리자</h2>
-            </div>
-          </div>
-          <!-- /menu profile quick info -->
-
-          <br />
-
-          <!-- sidebar menu -->
-          <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
-            <div class="menu_section">
-              <h3>General</h3>
-              <ul class="nav side-menu">
-                <li><a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
-                  <ul class="nav child_menu">
-                    <li><a th:href="@{/manager/manager_index}">Dashboard</a></li>
-                  </ul>
-                </li>
-                <li><a><i class="fa fa-edit"></i> 상품관리 <span class="fa fa-chevron-down"></span></a>
-                  <ul class="nav child_menu">
-                    <li><a th:href="@{/manager/productList}">전체 상품 조회</a></li>
-                    <li><a th:href="@{/manager/modelPredict}">모델로 이상상품 판별</a></li>
-                  </ul>
-                </li>
-                <li><a><i class="fa fa-desktop"></i> 회원관리 <span class="fa fa-chevron-down"></span></a>
-                  <ul class="nav child_menu">
-                    <li><a th:href="@{/manager/customerList}">정상회원</a></li>
-                    <li><a th:href="@{/manager/reportedCustomerList}">신고당한회원</a></li>
-                    <li><a th:href="@{/manager/blackList}">블랙리스트회원</a></li>
-                  </ul>
->>>>>>> 8f56eeeebe6110c2450d22e56b2a6b03836acdd6
                 </li>
               </ul>
             </div>
@@ -272,12 +157,8 @@
           </div>
           <!-- /menu footer buttons -->
         </div>
-<<<<<<< HEAD
 
         <!-- /top navigation -->
-=======
-      </div>
->>>>>>> 8f56eeeebe6110c2450d22e56b2a6b03836acdd6
 
       <!-- top navigation -->
       <div class="top_nav">
@@ -414,7 +295,6 @@
     </div>
   </div>
 
-<<<<<<< HEAD
     <!-- jQuery -->
     <script th:src="@{/static/vendors/jquery/dist/jquery.min.js}"></script>
     <!-- Bootstrap -->
@@ -432,23 +312,3 @@
     <script th:src="@{/static/build/js/custom.min.js}"></script>
   </body>
 </html>
-=======
-  <!-- jQuery -->
-  <script th:src="@{/vendors/jquery/dist/jquery.min.js}"></script>
-  <!-- Bootstrap -->
-  <script th:src="@{/vendors/bootstrap/dist/js/bootstrap.bundle.min.js}"></script>
-  <!-- FastClick -->
-  <script th:src="@{/vendors/fastclick/lib/fastclick.js}"></script>
-  <!-- NProgress -->
-  <script th:src="@{/vendors/nprogress/nprogress.js}"></script>
-  <!-- iCheck -->
-  <script th:src="@{/vendors/iCheck/icheck.min.js}"></script>
-  <!-- Datatables -->
-  <script th:src="@{/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js}"></script>
-
-  <!-- Custom Theme Scripts -->
-  <script th:src="@{/build/js/custom.min.js}"></script>
-</body>
-
-</html>
->>>>>>> 8f56eeeebe6110c2450d22e56b2a6b03836acdd6
