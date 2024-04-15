@@ -8,8 +8,11 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -37,9 +40,9 @@ public class ReportCustomerEntity {
     @GeneratedValue(generator = "report_customer_seq")
     private Long reportCustomerId;
 
-    // FK
-    @Column(name = "reported_id", nullable = false)
-    private String reported_id;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "reported_id")
+    private CustomerEntity customerEntity;
 
     @Column(name = "report_category", nullable = false)
     @Enumerated(EnumType.STRING)
@@ -56,10 +59,10 @@ public class ReportCustomerEntity {
     @Enumerated(EnumType.STRING)
     private YesOrNo managerCheck;
 
-    public static ReportCustomerEntity toEntity(ReportCustomerDTO dto) {
+    public static ReportCustomerEntity toEntity(ReportCustomerDTO dto, CustomerEntity customerEntity) {
         return ReportCustomerEntity.builder()
                 .reportCustomerId(dto.getReportCustomerId())
-                .reported_id(dto.getReportedId())
+                .customerEntity(customerEntity)
                 .reportCategory(dto.getReportCategory())
                 .reportReason(dto.getReportReason())
                 .reportDate(dto.getReportDate())
