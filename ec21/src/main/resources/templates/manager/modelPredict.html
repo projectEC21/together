@@ -92,7 +92,31 @@
     });
 });
 
+    //  =========== 240416 iy: modalBtn 클릭시 모달창 생성 ===========
+    // HTML 문서의 로딩이 완료되었을 때, 해당 함수를 실행
+    document.addEventListener("DOMContentLoaded", function () {
+      // elements
+      var modalBtn = document.getElementById("modalBtn");
+      var modal = document.getElementById("myModal");
+      var closeBtn = document.getElementById("closeBtn");
 
+      // functions
+      function toggleModal() {
+        modal.classList.toggle("show");
+      }
+
+      // events
+      modalBtn.addEventListener("click", toggleModal);
+      closeBtn.addEventListener("click", toggleModal);
+
+      window.addEventListener("click", function (event) {
+        // 모달의 검은색 배경 부분이 클릭된 경우 닫히도록 하는 코드
+        if (event.target === modal) {
+          toggleModal();
+        }
+      });
+    });
+    //  ==========================================================
   </script>
 
 
@@ -356,31 +380,7 @@
   <!-- Custom Theme Scripts -->
   <script th:src="@{/build/js/custom.min.js}"></script>
 
-  <script>
-    // HTML 문서의 로딩이 완료되었을 때, 해당 함수를 실행
-    document.addEventListener("DOMContentLoaded", function () {
-      // elements
-      var modalBtn = document.getElementById("modalBtn");
-      var modal = document.getElementById("myModal");
-      var closeBtn = document.getElementById("closeBtn");
-
-      // functions
-      function toggleModal() {
-        modal.classList.toggle("show");
-      }
-
-      // events
-      modalBtn.addEventListener("click", toggleModal);
-      closeBtn.addEventListener("click", toggleModal);
-
-      window.addEventListener("click", function (event) {
-        // 모달의 검은색 배경 부분이 클릭된 경우 닫히도록 하는 코드
-        if (event.target === modal) {
-          toggleModal();
-        }
-      });
-    });
-  </script>
+  
 </body>
 
 </html>
