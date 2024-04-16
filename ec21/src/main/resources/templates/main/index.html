@@ -122,6 +122,7 @@
 						<!--/ End Search Form -->
 						<div class="mobile-nav"></div>
 					</div>
+					<!-- 240416 dy : 카테고리 선택 & 검색어 입력 후 버튼 누르면, 해당 카테고리의 목록이 보이도록 -->
 					<div class="col-lg-8 col-md-7 col-12">
 						<div class="search-bar-top">
 							<div class="search-bar">
@@ -135,7 +136,7 @@
 								</select>
 								<form>
 									<input name="search" placeholder="What are you searching for?" type="search">
-									<button class="btnn"><i class="ti-search"></i></button>
+									<button class="btnn" id="searchBtn"><i class="ti-search"></i></button>
 								</form>
 							</div>
 						</div>
@@ -172,13 +173,14 @@
 							<nav class="navbar navbar-expand-lg">
 								<div class="navbar-collapse">
 									<div class="nav-inner">
+										<!-- 240416 dy : 카테고리 별 상품 목록 요청(검색어X) -->
 										<ul class="nav main-menu menu navbar-nav">
-											<li><a th:href="@{/main/list}">All</a></li>
-											<li><a th:href="@{/main/list}">Food & Beverage</a></li>
-											<li><a th:href="@{/main/list}">Chemical</a></li>
-											<li><a th:href="@{/main/list}">Health & Medical</a></li>
-											<li><a th:href="@{/main/list}">Electronics</a></li>
-											<li><a th:href="@{/main/list}">Cosmetic</a></li>
+											<li><a th:href="@{/main/list(category=total)}">All</a></li>
+											<li><a th:href="@{/main/list(category=FOOD_BEVERAGE)}">Food & Beverage</a></li>
+											<li><a th:href="@{/main/list(category=CHEMICAL)}">Chemical</a></li>
+											<li><a th:href="@{/main/list(category=HEALTH_MEDICAL)}">Health & Medical</a></li>
+											<li><a th:href="@{/main/list(category=ELECTRONIC)}">Electronics</a></li>
+											<li><a th:href="@{/main/list(category=COSMETIC)}">Cosmetic</a></li>
 										</ul>
 									</div>
 								</div>

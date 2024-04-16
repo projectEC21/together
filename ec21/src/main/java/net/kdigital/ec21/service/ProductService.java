@@ -63,7 +63,8 @@ public class ProductService {
 
     
     /**
-     * 전달받은 카테고리에 해당하는 상품을 DTO로 변환해 최신 등록일 순으로 리스트 반환 (for list.html)
+     * 전달받은 카테고리에 해당하고 입력받은 검색어가 포함된(회원ID, 상품ID, 상품명, 상품설명 대상) 상품을 
+     * DTO로 변환해 최신 등록일 순으로 리스트 반환 (for list.html)
      * @param category
      * @param searchWord 
      * @return

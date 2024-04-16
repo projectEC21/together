@@ -68,7 +68,7 @@ public class ProductController {
      * 
      * @param category
      * @param model
-     * @return
+     * @return 
      */
     @GetMapping("/main/list")
     public String list(@RequestParam(name = "category", defaultValue = "total") String category,
