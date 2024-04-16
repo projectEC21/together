@@ -248,12 +248,15 @@
 											</div>
 											<!--/ End Description -->
 
-											<!-- inquiry 내가아닌 사용자에게만 보이도록 한다.-->
+											<!-- inquiry 
+													: 내가아닌 사용자에게만 보이도록 한다.-->
 											<div class="add-to-cart">
 												<button class="btn" data-toggle="modal" data-target="#myModal">
 													Inquire Now  <i class="fa fa-envelope-o"></i>
 												</button>
 											</div>
+
+											<!-- inquiry 보내는 창 -->
 											<form action="productsDetail.html" method="post">
 												<div class="modal" id="myModal">
 													<div class="modal-dialog">
@@ -270,13 +273,13 @@
 															
 															<!-- Modal Body -->
 															<div class="modal-body">
-																<div class="col-12">
-																	<!-- 받을 사람 : 상품을 올린사람 이름으로 바로 설정 되도록 -->
-																	<div class="form-group">
-																		<label>To :</label>
-																		<p name="name" id=""readonly>jooojojoo</p>
-																	</div>
-																</div>
+																<table>
+																	<tr>
+																		<th class="text-center">To : </th>
+																		<td id="receivedId">joojoo</td>
+																	</tr>
+																	
+																</table>
 																<div class="col-12">
 																	<div class="form-group">
 																		<label>To :<span>*</span></label>

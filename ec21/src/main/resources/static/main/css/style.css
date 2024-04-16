@@ -2327,6 +2327,12 @@ Version:1.0
     background-color: #333;
 }
 
+.shop.single .modal-body .col-12 .form-group {
+	width: 200px;
+}
+
+/* /modal 과 관련된 css */
+
 .shop.single{
 	padding:70px 0 100px;
 }
