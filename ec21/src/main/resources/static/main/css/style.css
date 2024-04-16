@@ -2355,7 +2355,8 @@ Version:1.0
 	display:none;
 }
 .shop.single .product-desc{
-	margin-top:30px;
+	margin-top: 32px;
+    margin-left: 70px;
 }
 .shop.single .product-desc .short h4 {
 	font-size: 22px;
@@ -2593,18 +2594,21 @@ Version:1.0
 	line-height: 45px;
 }
 
-.shop.single .btn-edit .user-custom li{
+.shop.single .btn-edit .user-custom li {
 	display: inline-block;
-	margin-bottom: 5px;
-}
-.shop.single .btn-edit .user-custom li>a{
-	border-radius: 25px;
-	width: 100px;
-	text-align: center;
-	align-content: center
+    line-height: 1px;
 }
 
-.shop.single .cat{
+.shop.single .btn-edit .user-custom a {
+	border-radius: 25px;
+    border: 1px solid #333;
+	height: min-content;
+    width: 120px;
+    text-align: center;
+    background-color: #fff;
+}
+
+.shop.single .cat {
 	font-size: 14px;
 	font-weight: 500;
 	color:#333;

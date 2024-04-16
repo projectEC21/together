@@ -82,7 +82,6 @@
 						<!-- Top Right -->
 						<div class="right-content">
 							<ul class="list-main">
-								<li><i class="ti-user"></i> <a href="#">My account</a></li>
 								<li><i class="ti-power-off"></i><a href="login.html">Login</a></li>
 								<li><i class="ti-user"></i><a href="register.html">Sign up</a></li>
 								<li><i class="ti-power-off"></i><a href="index.html">Logout</a></li>
@@ -213,6 +212,7 @@
 							<div class="col-12">
 								<div class="btn-edit">
 									<ul>
+										<!-- 상품처리하고 나면 다음  -->
 										<div class="user-custom">
 											<li><a href="#" class="btn min user">Edit</a></li>
 											<li><a href="#" class="btn min user">Delete</a></li>
@@ -241,7 +241,7 @@
 										<div class="product-desc">
 											<!-- 상단 부분 -->
 											<div class="short">
-												<h4>Nonstick Dishwasher PFOA</h4>
+												<h4>Automotive Micro Relay JTKW</h4>
 												<div class="price"><h6>Price : <span>$70.00</span></h6></div>
 												<div class="origin"><h6>Origin : <span>China</span></h6></div>
 												<div class="quantity"><h6>Minimum Order Quantity : <span>2,000kg</span></h6></div>
@@ -249,7 +249,31 @@
 											<!--/ End Description -->
 											<!-- inquiry -->
 											<div class="add-to-cart">
-												<a href="#" class="btn">Inquire Now</a> <br>
+												<button class="btn" data-bs-toggle="modal" data-bs-target="#myModal"><i class="fa fa-envelope-o"></i> Inquire Now</button>
+												<!-- The Modal -->
+											<div class="modal" id="myModal">
+												<div class="modal-dialog">
+												<div class="modal-content">
+											
+													<!-- Modal Header -->
+													<div class="modal-header">
+													<h4 class="modal-title">Modal Heading</h4>
+													<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+													</div>
+											
+													<!-- Modal body -->
+													<div class="modal-body">
+													Modal body..
+													</div>
+											
+													<!-- Modal footer -->
+													<div class="modal-footer">
+													<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+													</div>
+											
+												</div>
+												</div>
+												</div>
 											</div>
 											<!-- /inquiury -->
 											</div>
@@ -258,12 +282,12 @@
 									</div>
 								</div>
 								<div class="row">
-									<div class="col-12">
+									<div class="col-11">
 										<div class="product-info">
 											<div class="nav-main">
 												<!-- Tab Nav -->
 												<div class="nav nav-tabs" id="myTab" role="tablist">
-													<a class="nav-link active" data-toggle="tab" role="tab">Description</a>
+													<a class="nav-link active" data-toggle="tab" role="tab">Description by Manufacturer</a>
 												</div>
 												<!--/ End Tab Nav -->
 											</div>
@@ -310,7 +334,7 @@
             <div class="row">
 				<div class="col-12">
 					<div class="section-title">
-						<h2>Latest Products</h2>
+						<h2>Same Category Products</h2>
 					</div>
 				</div>
             </div>
