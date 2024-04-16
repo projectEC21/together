@@ -20,7 +20,7 @@ import net.kdigital.ec21.repository.ProductRepository;
 
 @Service
 @RequiredArgsConstructor
-public class MainPageServiceDy {
+public class ProductServiceDY {
     private final ProductRepository productRepository;
 
     //===================================== main/index.html ======================================

@@ -7,7 +7,7 @@ import org.springframework.ui.Model;
 
 import lombok.RequiredArgsConstructor;
 import net.kdigital.ec21.dto.ProductDTO;
-import net.kdigital.ec21.service.MainPageServiceDy;
+import net.kdigital.ec21.service.ProductServiceDY;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 @RequiredArgsConstructor
 public class MainPageControllerDY {
-    private final MainPageServiceDy mainService;
+    private final ProductServiceDY mainService;
 
     //================= main/index.html =====================
     

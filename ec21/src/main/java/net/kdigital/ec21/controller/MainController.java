@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import net.kdigital.ec21.service.MainPageServiceDy;
+import net.kdigital.ec21.service.ProductServiceDY;
 import org.springframework.web.bind.annotation.RequestParam;
 
 
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequiredArgsConstructor
 @Slf4j
 public class MainController {
-	private final MainPageServiceDy mainPageService;
+	private final ProductServiceDY mainPageService;
 
 	//================= main/index.html =====================
 	/**
