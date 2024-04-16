@@ -247,38 +247,82 @@
 												<div class="quantity"><h6>Minimum Order Quantity : <span>2,000kg</span></h6></div>
 											</div>
 											<!--/ End Description -->
-											<!-- inquiry -->
+
+											<!-- inquiry 내가아닌 사용자에게만 보이도록 한다.-->
 											<div class="add-to-cart">
-												<button class="btn" data-bs-toggle="modal" data-bs-target="#myModal"><i class="fa fa-envelope-o"></i> Inquire Now</button>
-												<!-- The Modal -->
-											<div class="modal" id="myModal">
-												<div class="modal-dialog">
-												<div class="modal-content">
-											
-													<!-- Modal Header -->
-													<div class="modal-header">
-													<h4 class="modal-title">Modal Heading</h4>
-													<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-													</div>
-											
-													<!-- Modal body -->
-													<div class="modal-body">
-													Modal body..
-													</div>
-											
-													<!-- Modal footer -->
-													<div class="modal-footer">
-													<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-													</div>
-											
-												</div>
-												</div>
-												</div>
+												<button class="btn" data-toggle="modal" data-target="#myModal">
+													Inquire Now  <i class="fa fa-envelope-o"></i>
+												</button>
 											</div>
+											<form action="productsDetail.html" method="post">
+												<div class="modal" id="myModal">
+													<div class="modal-dialog">
+														<div class="modal-content">
+															
+															<!-- Modal Header -->
+															<div class="modal-header">
+																<h4 class="modal-title">Send Message</h4>
+																<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+																	<span aria-hidden="true">&times;</span>
+																</button>
+															</div> 
+															<!-- /Modal Header -->
+															
+															<!-- Modal Body -->
+															<div class="modal-body">
+																<div class="col-12">
+																	<!-- 받을 사람 : 상품을 올린사람 이름으로 바로 설정 되도록 -->
+																	<div class="form-group">
+																		<label>To :</label>
+																		<p name="name" id=""readonly>jooojojoo</p>
+																	</div>
+																</div>
+																<div class="col-12">
+																	<div class="form-group">
+																		<label>To :<span>*</span></label>
+																		<input type="text" name="name" placeholder="" required="required">
+																	</div>
+																</div>
+																<div class="col-12">
+																	<div class="form-group">
+																		<label>To :<span>*</span></label>
+																		<input type="text" name="name" placeholder="" required="required">
+																	</div>
+																</div>
+																<div class="col-12">
+																	<div class="form-group">
+																		<label>To :<span>*</span></label>
+																		<input type="text" name="name" placeholder="" required="required">
+																	</div>
+																</div>
+																<div class="col-12">
+																	<div class="form-group">
+																		<label>To :<span>*</span></label>
+																		<input type="text" name="name" placeholder="" required="required">
+																	</div>
+																</div>
+																<div class="col-12">
+																	<div class="form-group">
+																		<label>To :<span>*</span></label>
+																		<input type="text" name="name" placeholder="" required="required">
+																	</div>
+																</div>
+															</div>
+															<!-- /Modal Body -->
+															
+															<!-- Modal Footer -->
+															<div class="modal-footer">
+																<button type="submit" class="btn" data-dismiss="modal">Send</button>
+																<button type="button" class="btn" data-dismiss="modal">Close</button>
+															</div>
+															<!-- /Modal Footer -->
+														</div>
+													</div>
+												</div>
+											</form>
 											<!-- /inquiury -->
-											</div>
-											<!--/ End Product Buy -->
 										</div>
+										<!--/ End Product Buy -->
 									</div>
 								</div>
 								<div class="row">

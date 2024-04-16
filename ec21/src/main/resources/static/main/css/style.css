@@ -2320,6 +2320,13 @@ Version:1.0
 /*======================================
    Start Shop Single CSS
 ========================================*/
+
+/* modal 과 관련된 css */
+.shop.single .modal-header {
+	color: #fff;
+    background-color: #333;
+}
+
 .shop.single{
 	padding:70px 0 100px;
 }

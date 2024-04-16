@@ -1072,7 +1072,7 @@ object {
 
 @media only screen and (min-width: 1366px) and (max-width: 1600px) {
   .modal-dialog {
-    width: 1145px;
+    width: 1000px;
     max-width: 1145px;
   }
 }
@@ -1111,12 +1111,14 @@ object {
 }
 
 .modal-dialog .modal-content .modal-header {
-	border: none;
-	padding: 0;
-	right: 10px;
-	top: 10px;
-	position: absolute;
-	z-index: 9999;
+	display: flex;
+    border: none;
+    padding: 15px;
+    right: 10px;
+    top: 10px;
+    z-index: 9999;
+    align-content: center;
+    align-items: flex-start;
 }
 
 @media only screen and (max-width: 767px) {
@@ -1159,10 +1161,11 @@ object {
   background:#F7941D;
 }
 .modal-dialog .modal-content .modal-body {
-	padding: 0px;
+	padding: 0;
 	overflow-y: auto;
 	max-height: 510px;
 	height: 700px;
+	margin: 20px;
 }
 .quickview-content {
 	padding: 40px 40px;
