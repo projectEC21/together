@@ -38,16 +38,6 @@ public class MainPageControllerhj {
     }
 
     /**
-     * main페이지에서 전체상품 페이지 요청
-     * 
-     * @return
-     */
-    @GetMapping("/main/list")
-    public String list() {
-        return "/main/list";
-    }
-
-    /**
      * main페이지에서 내 상품 페이지 요청
      * 
      * @return
