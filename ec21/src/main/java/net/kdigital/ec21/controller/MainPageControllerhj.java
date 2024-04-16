@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-public class MainPageController {
+public class MainPageControllerhj {
     // ==================register.html=====================
     /**
      * login 페이지 요청
@@ -66,4 +66,15 @@ public class MainPageController {
     public String inbox() {
         return "/main/inbox";
     }
+
+    /**
+     * main페이지에서 상품등록하기 요청
+     * 
+     * @return
+     */
+    @GetMapping("/main/productsWrite")
+    public String productsWrite() {
+        return "/main/productsWrite";
+    }
+
 }
