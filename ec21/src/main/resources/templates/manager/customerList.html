@@ -10,13 +10,13 @@
   <link rel="icon" type="image/png" th:href="@{/production/images/ec21logo.png}">
 
   <title>ec21 관리자 페이지</title>
-
-  <!-- Web Font -->
-  <link
-    href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap"
-    rel="stylesheet">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap" rel="stylesheet">
+  	<!-- Web Font -->
+		<!-- Web Font -->
+    <link
+		href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap"
+		rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap" rel="stylesheet">
 
   <!-- Bootstrap -->
   <link th:href="@{/vendors/bootstrap/dist/css/bootstrap.min.css}" rel="stylesheet">
@@ -30,12 +30,49 @@
   <!-- bootstrap-progressbar -->
   <link th:href="@{/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css}" rel="stylesheet">
   <!-- JQVMap -->
-  <link th:href="@{/vendors/jqvmap/dist/jqvmap.min.css}" rel="stylesheet" />
+  <link th:href="@{/vendors/jqvmap/dist/jqvmap.min.css}" rel="stylesheet">
   <!-- bootstrap-daterangepicker -->
   <link th:href="@{/vendors/bootstrap-daterangepicker/daterangepicker.css}" rel="stylesheet">
 
   <!-- Custom Theme Style -->
   <link th:href="@{/build/css/custom.css}" rel="stylesheet">
+
+  <!-- 240414 dy : JQuery 파일 추가 및 list 관련 ajax 처리 -->
+  <script th:src="@{/script/jquery-3.7.1.min.js}"></script>
+  <script>
+    $(function () {
+      $("#category").on("change",search);
+      $("#searchWord").on("keyup",search);
+      init();
+    })
+
+    function search() {
+      let category = $("#category").val();
+      let searchWord = $("#searchWord").val();
+
+      $.ajax({
+        url:"/manager/productList/getList",
+        data:{"category":category,"searchWord":searchWord},
+        method:"GET",
+        success : function (list) {
+          $("#result").replaceWith(list);
+        }
+      })
+
+    }
+
+    function init() {
+      $.ajax({
+        url:"/manager/productList/getList",
+        data:{"category":"total","searchWord":""},
+        method:"GET",
+        success : function (list) {
+          $("#result").replaceWith(list);
+        }
+      })
+    }
+
+  </script>
 </head>
 
 <body class="nav-md">
@@ -106,10 +143,11 @@
               <li class="nav-item dropdown open" style="padding-left: 15px;">
                 <a href="javascript:;" class="user-profile dropdown-toggle" aria-haspopup="true" id="navbarDropdown"
                   data-toggle="dropdown" aria-expanded="false">
-                  <img th:src="@{/production/images/user.png}" alt="">관리자
+                  <img th:src=@{/production/images/user.png} alt="">관리자
                 </a>
                 <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
-                  <a class="dropdown-item" th:href="@{main/login}"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
+                  <a class="dropdown-item" th:href="@{/main/login}"><i class="fa fa-sign-out pull-right"></i> Log
+                    Out</a>
                 </div>
               </li>
 
@@ -122,74 +160,79 @@
 
       <!-- page content -->
       <div class="right_col" role="main">
-        <div class="title_left">
-          <h3>Member <small>회원관리</small></h3>
-        </div>
-        <div class="col-md-12 col-sm-12 ">
-          <div class="x_panel">
-            <div class="x_title">
-              <h2>전체 회원 관리</h2>
-
-              <div class="clearfix"></div>
-
+        <div class="">
+          <div class="page-title">
+            <div class="title_left">
+              <h3>Member <small>회원관리</small></h3>
             </div>
+          </div>
+
+          <div class="clearfix"></div>
+
+          <div class="row" >
+            <div class="col-md-12 col-sm-12 ">
+              <div class="x_panel">
+                <div class="x_title">
+                  <h2>전체 회원 관리</h2>
+
+                  <div class="clearfix"></div>
+
+                </div>
 
 
+                <div class="x_content">
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <div class="card-box table-responsive">
+
+                        <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap"
+                          cellspacing="0" width="100%">
+                          <thead>
+                            <tr>
+                              <th style="width: 10%">구분</th>
+                              <th style="width: 20%">회원ID</th>
+                              <th style="width: 20%">담당자명</th>
+                              <th style="width: 4cm">회사명</th>
+                              <th style="width: 10%">부서명</th>
+                              <th style="width: 10%">국가IP</th>
+                              <th>회사URL</th>
+                              <th>회사 연락처</th>
+                              <th>E-mail</th>
+                              <td>회사주소</td>
+                              <td>상품목록</td>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr th:each="customer: ${list}">
+                              <td th:text="${customer.customerGubun}">셀러</td>
+                              <td th:text="${customer.customerId}">System Architect</td>
+                              <td th:text="${customer.customerName}">sales Assistant</td>
+                              <td th:text="${customer.compName}">Edinburghasdfsadfsf</td>
+                              <td th:text="${customer.customerDepartment}">abcdefghtmldkasjf</td>
+                              <td th:text="${customer.remoteIp}">121.172.252.00</td>
+                              <td th:text="${customer.compUrl}">www.naver.com</td>
+                              <td th:text="${customer.faxNo}">5421</td>
+                              <td th:text="${customer.email}">t.nixon@datatables.net</td>
+                              <td th:text="${customer.address}"> South Africa </td>
+                              <td><a href="#">보기</a></td>
+                            </tr>
+                          </tbody>
+                        </table>
 
 
-            <div class="x_content">
-              <div class="row">
-                <div class="col-sm-12">
-                  <div class="card-box table-responsive">
-
-                    <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap"
-                      cellspacing="0" width="100%">
-                      <thead>
-                        <tr>
-                          <th style="width: 10%">구분</th>
-                          <th style="width: 20%">회원ID</th>
-                          <th style="width: 20%">담당자명</th>
-                          <th style="width: 4cm">회사명</th>
-                          <th style="width: 10%">부서명</th>
-                          <th style="width: 10%">국가IP</th>
-                          <th>회사URL</th>
-                          <th>회사 연락처</th>
-                          <th>E-mail</th>
-                          <td>회사주소</td>
-                          <td>상품목록</td>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr th:each="customer: ${list}">
-                          <td th:text="${customer.customerGubun}">셀러</td>
-                          <td th:text="${customer.customerId}">System Architect</td>
-                          <td th:text="${customer.customerName}">sales Assistant</td>
-                          <td th:text="${customer.compName}">Edinburghasdfsadfsf</td>
-                          <td th:text="${customer.customerDepartment}">abcdefghtmldkasjf</td>
-                          <td th:text="${customer.remoteIp}">121.172.252.00</td>
-                          <td th:text="${customer.compUrl}">www.naver.com</td>
-                          <td th:text="${customer.faxNo}">5421</td>
-                          <td th:text="${customer.email}">t.nixon@datatables.net</td>
-                          <td th:text="${customer.address}"> South Africa </td>
-                          <td><a href="#">보기</a></td>
-                        </tr>
-                      </tbody>
-                    </table>
-
-
+                      </div>
+                    </div>
+                  </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
       </div>
+      <!-- /page content -->
     </div>
   </div>
-  <!-- /page content -->
 
-  </div>
-  </div>
 
   <!-- jQuery -->
   <script th:src="@{/vendors/jquery/dist/jquery.min.js}"></script>
