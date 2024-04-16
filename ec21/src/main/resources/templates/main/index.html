@@ -54,6 +54,19 @@
 
 	<link rel="stylesheet" href="#" id="colors">
 
+	<!-- 240417 dy : JQuery 파일 추가 및 ajax 작업 -->
+	<script th:src="@{/script/jquery-3.7.1.min.js}"></script>
+	<!-- 240417 dy : 검색어 입력 후 돋보기 클릭 시 /main/list 요청-->
+	<script>
+		$(function () {
+			$("#searchBtn").on("click",function () {
+				alert("검색 버튼 누름");
+			})
+		})
+
+	</script>
+	
+
 </head>
 
 <body class="js">

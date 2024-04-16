@@ -64,7 +64,7 @@ public class ProductController {
     }
 
     /**
-     * 전달받은 상품 카테고리에 해당하는 상품 리스트를 model에 담아 상품 목록 페이지로 보냄
+     * 전달받은 상품 카테고리와 검색어에  해당하는 상품 리스트를 model에 담아 상품 목록 페이지로 보냄
      * 
      * @param category
      * @param model
