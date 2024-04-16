@@ -519,7 +519,7 @@ body {
 }
 .header .inquiry-list li {
 	display: flex;
-	flex-direction: column; /* 요소들을 세로로 쌓기 */
+	flex-direction: column; /* ìš”ì†Œë“¤ì„ ì„¸ë¡œë¡œ ìŒ“ê¸° */
 	overflow: hidden;
 	border-bottom: 1px solid #e6e6e6;
 	padding-bottom: 5px;
@@ -528,20 +528,20 @@ body {
 
 .header .inquiry-list li>span{
 	display: flex;
-    align-items: center; /* 이미지와 이름/시간을 세로 중앙 정렬 */
-	flex-grow: 1; /* 내용을 가능한 너비 전체에 분포 */
+    align-items: center; /* ì´ë¯¸ì§€ì™€ ì´ë¦„/ì‹œê°„ì„ ì„¸ë¡œ ì¤‘ì•™ ì •ë ¬ */
+	flex-grow: 1; /* ë‚´ìš©ì„ ê°€ëŠ¥í•œ ë„ˆë¹„ ì „ì²´ì— ë¶„í¬ */
 }
 
 .header .inquiry-list li .time {
-	margin-left: 10px; /* 이름과 시간 사이에 여백 추가 */
+	margin-left: 10px; /* ì´ë¦„ê³¼ ì‹œê°„ ì‚¬ì´ì— ì—¬ë°± ì¶”ê°€ */
 	font-size: 10px;
 }
 
 .header .inquiry-list li .message {
-	display: block; /* 메시지를 블록 요소로 만들어 줄 바꿈 */
+	display: block; /* ë©”ì‹œì§€ë¥¼ ë¸”ë¡ ìš”ì†Œë¡œ ë§Œë“¤ì–´ ì¤„ ë°”ê¿ˆ */
 	font-size: 11px;
 	margin-top: 5px;
-	width: 100%; /* 메시지가 전체 너비를 차지하게 설정 */
+	width: 100%; /* ë©”ì‹œì§€ê°€ ì „ì²´ ë„ˆë¹„ë¥¼ ì°¨ì§€í•˜ê²Œ ì„¤ì • */
 }
 
 .header .inquiry-list li .remove {
@@ -568,7 +568,7 @@ body {
 	float: right;
 	/* border: 1px solid #ededed; */
 	overflow:hidden;
-	margin-right: 10px; /* 이미지와 이름/시간 사이에 여백 추가 */
+	margin-right: 10px; /* ì´ë¯¸ì§€ì™€ ì´ë¦„/ì‹œê°„ ì‚¬ì´ì— ì—¬ë°± ì¶”ê°€ */
 }
 .header .inquiry-list .cart-img img {
 	width: 30px;
@@ -2326,7 +2326,6 @@ body {
 /*======================================
    Start Shop Single CSS
 ========================================*/
-
 /* modal 과 관련된 css */
 .shop.single .modal-header {
 	color: #fff;
@@ -2364,7 +2363,6 @@ body {
 }
 
 /* /modal 과 관련된 css */
-
 .shop.single{
 	padding:70px 0 100px;
 }
@@ -3170,7 +3168,7 @@ body {
 	color: #fff;
 }
 
-/* 페이징 css 제작 */
+/* íŽ˜ì´ì§• css ì œìž‘ */
 .shopping-cart span.paging{
 	display: flex;
     justify-content: center;
@@ -3483,7 +3481,7 @@ body {
 }
 
 .shop.login .form .form-group .short-input {
-    width: 20%; /* 또는 원하는 가로 길이 */
+    width: 20%; /* ë˜ëŠ” ì›í•˜ëŠ” ê°€ë¡œ ê¸¸ì´ */
     height: 25px;
     line-height: 50px;
     padding: 0 20px;
@@ -3639,7 +3637,7 @@ body {
     padding-bottom: 50px;
 }
 
-/* css 는 조금 더 생각해보기 */
+/* css ëŠ” ì¡°ê¸ˆ ë” ìƒê°í•´ë³´ê¸° */
 .product-list.section th.form-group.title {
 	font-size: 25px;
     border: 1px solid #efefef;
@@ -3662,13 +3660,13 @@ body {
 
 .product-list.section th, td {
 	padding-left: 10px;
-    padding-top: 20px; /* 위쪽 패딩 */
-    padding-bottom: 20px; /* 아래쪽 패딩 */
+    padding-top: 20px; /* ìœ„ìª½ íŒ¨ë”© */
+    padding-bottom: 20px; /* ì•„ëž˜ìª½ íŒ¨ë”© */
 }
 
 .product-list.section .nice-select.category {
     width: 320px;
-	text-align: center; /* 텍스트를 중앙 정렬 */
+	text-align: center; /* í…ìŠ¤íŠ¸ë¥¼ ì¤‘ì•™ ì •ë ¬ */
 }
 
 .product-list.section td.form-group input[type="text"] {
@@ -3683,7 +3681,7 @@ body {
 	width: 320px;
 }
 
-/* 가격 */
+/* ê°€ê²© */
 .product-list.section input.price {
 	padding-left: 10px;
 	width: 310px;
