@@ -66,4 +66,9 @@ public class MainPageController {
     public String inbox() {
         return "/main/inbox";
     }
+
+    @GetMapping("/main/productsDetail")
+    public String productsDetail() {
+        return "/main/productsDetail";
+    }
 }

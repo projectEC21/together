@@ -74,10 +74,84 @@
       })
     }
 
+    $(document).ready(function() {
+    $('#example').DataTable({
+        responsive: {
+            details: {
+                display: $.fn.dataTable.Responsive.display.modal({
+                    header: function (row) {
+                        var data = row.data();
+                        return 'Details for ' + data[0];
+                    }
+                }),
+                renderer: $.fn.dataTable.Responsive.renderer.tableAll({
+                    tableClass: 'table'
+                })
+            }
+        }
+    });
+});
+
+
   </script>
 
 
 </head>
+<!-- 모달창 -->
+<!-- 모달 컨테이너 -->
+<div class="modal" id="myModal">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+    <!-- 모달창의 헤더부분의 시작 -->
+      <div class="modal-header">
+        <h4 class="modal-title">상세 페이지</h4>
+      </div>
+      <!-- 모달창의 헤더부분의 끝 -->
+      <!-- 모달창의 바디부분의 시작 바디부분이 모달창에서 표시하고자하는 컨텐츠를 입력한다.-->
+      
+
+      <div class="modal-body">
+        <div class="info">
+          <div class="car-header">상품명</div>
+          <p>Laptop for Gamming</p>
+          <div class="car-header">상품설명</div>
+          <p>Apple mackbook pro 7th generation in sealed pack box and warranty with free delivery to your home address. product comes with complete pack box</p>
+        </div>
+        
+        <div class="card">
+          <div class="card-body">
+            
+            <table class="table table-striped jambo_table bulk_action">
+              <thead>
+                <tr>
+                  <th>유사단어</th>
+                  <th>금지어리스트 단어 (카테고리)</th>
+                  <th>금지어 사전 추가</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr>
+                  <td>macbook</td>
+                  <td>macbook (IPR)</td>
+                  <td><input type="button" value="단어추가"> </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+        <!-- 모달창의 바디부분의 끝 -->
+        <!-- 모달창의 푸터부분의 시작 -->
+        <!-- 푸터부에는 닫기부분이 위치하게 된다.  -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger btn-xs" id="closeBtn" data-bs-dismiss="modal">닫기</button>
+        </div>
+        <!-- 모달창의 푸터부분의 끝 -->
+    </div>
+  </div>
+</div>
+<!-- 모달 끝 -->
 
 <body class="nav-md">
   <div class="container body">
@@ -121,7 +195,7 @@
                     <li><a th:href="@{/manager/modelPredict}">모델로 이상상품 판별</a></li>
                   </ul>
                 </li>
-                <li><a><i class="fa fa-desktop"></i> 회원관리 <span class="fa fa-chevron-down"></span></a>
+                <li><a><i class="fa fa-users"></i> 회원관리 <span class="fa fa-chevron-down"></span></a>
                   <ul class="nav child_menu">
                     <li><a th:href="@{/manager/customerList}">정상회원</a></li>
                     <li><a th:href="@{/manager/reportedCustomerList}">신고당한회원</a></li>
@@ -133,22 +207,6 @@
           </div>
           <!-- /sidebar menu -->
 
-          <!-- /menu footer buttons -->
-          <div class="sidebar-footer hidden-small">
-            <a data-toggle="tooltip" data-placement="top" title="Settings">
-              <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
-            </a>
-            <a data-toggle="tooltip" data-placement="top" title="FullScreen">
-              <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
-            </a>
-            <a data-toggle="tooltip" data-placement="top" title="Lock">
-              <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
-            </a>
-            <a data-toggle="tooltip" data-placement="top" title="Logout" th:href="@{/main/login}">
-              <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
-            </a>
-          </div>
-          <!-- /menu footer buttons -->
         </div>
       </div>
 
@@ -226,10 +284,11 @@
                 </div>
 
                 <div class="x_content">
-
+                  
                   <!-- start project list -->
-                  <table class="table table-striped projects">
+                  <table id="datatable" class="table table-striped table-bordered dataTable no-footer">
                     <thead>
+                      <button id="modalBtn">모달 열기</button>
                       <tr>
                         <th style="width: 10%">회원 ID</th>
                         <th style="width: 10%">상품 ID</th>
@@ -242,12 +301,12 @@
 
                     <!-- 240414 dy : ajax로 모델이상상품 정보 꽂아 넣기 -->
                     <tbody id="result">
-                      <tr th:each="product:${list}">
+                      <tr class="view" th:each="product:${list}">
                         <td th:text="${product.customerId}">#</td>
                         <td th:text="${product.productId}">121000203</td>
                         <td>
-                          <a href="" th:text="${product.productName}">ipone</a>
-                        </td>
+                          <a href="#myModal" id="modal" th:text="${product.productName}">ipone</a>
+                        </td> 
                         <!-- 나중에 th:utext로 바꿔야 함 -->
                         <td class="project_progress"  th:text="${product.productDesc}">
                           아이폰 11 판매
@@ -280,14 +339,6 @@
       </div>
       <!-- /page content -->
 
-      <!-- footer content -->
-      <footer>
-        <div class="pull-right">
-          Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
-        </div>
-        <div class="clearfix"></div>
-      </footer>
-      <!-- /footer content -->
     </div>
   </div>
 
@@ -304,6 +355,32 @@
 
   <!-- Custom Theme Scripts -->
   <script th:src="@{/build/js/custom.min.js}"></script>
+
+  <script>
+    // HTML 문서의 로딩이 완료되었을 때, 해당 함수를 실행
+    document.addEventListener("DOMContentLoaded", function () {
+      // elements
+      var modalBtn = document.getElementById("modalBtn");
+      var modal = document.getElementById("myModal");
+      var closeBtn = document.getElementById("closeBtn");
+
+      // functions
+      function toggleModal() {
+        modal.classList.toggle("show");
+      }
+
+      // events
+      modalBtn.addEventListener("click", toggleModal);
+      closeBtn.addEventListener("click", toggleModal);
+
+      window.addEventListener("click", function (event) {
+        // 모달의 검은색 배경 부분이 클릭된 경우 닫히도록 하는 코드
+        if (event.target === modal) {
+          toggleModal();
+        }
+      });
+    });
+  </script>
 </body>
 
 </html>
