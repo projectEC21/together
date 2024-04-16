@@ -173,18 +173,42 @@
               <div class="x_panel">
                 <div class="x_title">
                   <h2>전체 상품 조회</h2>
-
                   <div class="clearfix"></div>
+                </div>
 
+                <div class="title_right">
+                  <div class="col-md-5 col-sm-5   form-group pull-right top_search">
+                    <div class="input-group">
+                      <!-- <select name="" id="">
+                        <option value="전체">전체</option>
+                        <option value="회원ID">회원ID</option>
+                        <option value="카테고리">카테고리</option>
+                        <option value="상품명">상품명</option>
+                      </select> -->
+                      <!-- 240415 dy : select를 신고카테고리로 바꾸고, 검색어는 신고당한 회원ID, 담당자명, 회사명에서 검색되게 함 -->
+                      <select name="category" id="category">
+                        <option value="total">전체</option>
+                        <option value="FOOD_BEVERAGE">FOOD_BEVERAGE</option>
+                        <option value="CHEMICAL">CHEMICAL</option>
+                        <option value="HEALTH_MEDICAL">HEALTH_MEDICAL</option>
+                        <option value="ELECTRONIC">ELECTRONIC</option>
+                        <option value="COSMETIC">COSMETIC</option>
+                      </select>
+                      <input type="text" class="form-control" id="searchWord" placeholder="Search for...">
+                      <span class="input-group-btn">
+                        <button class="btn btn-default" type="button">찾기</button>
+                      </span>
+                    </div>
+                  </div>
                 </div>
 
                 <div class="x_content">
-                  <a href="" id="predictTotal">전체</a> | <a href="" id="predictWeird">이상</a> | <a href="" id="predictNormal"> 정상</a>
-
+                  <!-- <a href="" id="predictTotal">전체</a> | <a href="" id="predictWeird">이상</a> | <a href="" id="predictNormal"> 정상</a> -->
                   <div class="row">
                     <div class="col-sm-12">
                       <div class="card-box table-responsive">
-                        <table id="datatable" class="table table-striped table-bordered dataTable no-footer">
+                        <table id="datatable" class="table table-striped  jambo_table dt-responsive nowrap" cellspacing="0" width="100%"> 
+                          <!-- table-bordered dataTable no-footer -->
                           <thead>
                             <tr class="headings">
                               <th class="column-title">회원 ID </th>
@@ -221,6 +245,7 @@
                               </tr>
                           </tbody>
                         </table>
+
                       </div>
                     </div>
                   </div>
