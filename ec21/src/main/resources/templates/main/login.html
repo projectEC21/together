@@ -84,6 +84,10 @@
 						<!-- Top Right -->
 						<div class="right-content">
 							<ul class="list-main">
+<<<<<<< HEAD
+=======
+								<li><i class="ti-user"></i> <a th:href="@{/main/myinfo}">My account</a></li>
+>>>>>>> develop
 								<li><i class="ti-power-off"></i><a th:href="@{/main/login}">Login</a></li>
 								<li><i class="ti-user"></i><a th:href="@{/main/register}">Sign up</a></li>
 								<li><i class="ti-power-off"></i><a th:href="@{/}">Logout</a></li>
@@ -147,7 +151,7 @@
 
 							<!-- 검색창 옆 부분 -->
 							<div class="sinlge-bar inquiry">
-								<a href="#" class="single-icon"><i class="fa fa-envelope-o"></i> <span
+								<a th:href="@{/main/inbox}" class="single-icon"><i class="fa fa-envelope-o"></i> <span
 										class="total-count">3</span></a>
 								<!-- inquiry start -->
 								<div class="inquiry-item">
@@ -245,7 +249,7 @@
 					<div class="bread-inner">
 						<ul class="bread-list">
 							<li><a th:href="@{/}">Home<i class="ti-arrow-right"></i></a></li>
-							<li class="active"><a href="#">Login</a></li>
+							<li class="active"><a th:href="@{main/login}">Login</a></li>
 						</ul>
 					</div>
 				</div>

@@ -12,7 +12,7 @@
 	<!-- Title Tag  -->
 	<title>EC21, Global B2B Marketplace</title>
 	<!-- Favicon -->
-	<link rel="icon" type="image/png" href="@{/main/images/ec21logo.png}">
+	<link rel="icon" type="image/png" th:href="@{/main/images/ec21logo.png}">
 	<!-- Web Font -->
 	<link
 		href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap"
@@ -86,9 +86,16 @@
 						<!-- Top Right -->
 						<div class="right-content">
 							<ul class="list-main">
+<<<<<<< HEAD
 								<li><i class="ti-power-off"></i><a href="login.html">Login</a></li>
 								<li><i class="ti-user"></i><a href="register.html">Sign up</a></li>
 								<li><i class="ti-power-off"></i><a href="index.html">Logout</a></li>
+=======
+								<li><i class="ti-user"></i> <a th:href="@{/main/myinfo}">My account</a></li>
+								<li><i class="ti-power-off"></i><a th:href="@{/main/login}">Login</a></li>
+								<li><i class="ti-user"></i><a th:href="@{/main/register}">Sign up</a></li>
+								<li><i class="ti-power-off"></i><a th:href="@{/}">Logout</a></li>
+>>>>>>> develop
 							</ul>
 						</div>
 						<!-- End Top Right -->
@@ -103,7 +110,7 @@
 					<div class="col-lg-2 col-md-2 col-12">
 						<!-- Logo -->
 						<div class="logo">
-							<a href="@{/main/index}"><img src="@{/main/images/ec21logo.png}" alt="logo"></a>
+							<a th:href="@{/main/index}"><img th:src="@{/main/images/ec21logo.png}" alt="logo"></a>
 						</div>
 						<!--/ End Logo -->
 						<!-- Search Form -->
@@ -192,7 +199,7 @@
 										</li>
 									</ul>
 									<div class="bottom">
-										<a href="@{/main/index}" class="btn animate">See more inquiries</a>
+										<a th:href="@{/main/index}" class="btn animate">See more inquiries</a>
 									</div>
 								</div>
 								<!--/ End inquiry Item -->
@@ -247,7 +254,11 @@
 					<div class="bread-inner">
 						<ul class="bread-list">
 							<li><a th:href="@{/main/index}">Home<i class="ti-arrow-right"></i></a></li>
+<<<<<<< HEAD
 							<li class="active"><a th:href="@{/main/myproducts}">My Page</a></li>
+=======
+							<li class="active"><a th:href="@{/main/myinfo}">My Page</a></li>
+>>>>>>> develop
 						</ul>
 					</div>
 				</div>
@@ -265,8 +276,13 @@
 						<div class="single-widget category">
 							<h3 class="title">My Page</h3>
 							<ul class="categor-list">
+<<<<<<< HEAD
 								<li><a th:href="@{/main/myinfo}">info</a></li>
 								<li><a th:href="@{/main/myproducts}">Products</a></li>
+=======
+								<li><a th:href="@{main/myinfo}">info</a></li>
+								<li><a th:href="@{main/myproducts}">Products</a></li>
+>>>>>>> develop
 
 							</ul>
 						</div>

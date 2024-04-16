@@ -58,7 +58,11 @@ public class MainPageControllerhj {
     }
 
     /**
+<<<<<<< HEAD:ec21/src/main/java/net/kdigital/ec21/controller/MainPageControllerhj.java
      * main페이지에서 상품등록하기 요청
+=======
+     * main페이지에서 상품등록 페이지 productsWrite 요청
+>>>>>>> develop:ec21/src/main/java/net/kdigital/ec21/controller/MainPageController.java
      * 
      * @return
      */
@@ -66,5 +70,8 @@ public class MainPageControllerhj {
     public String productsWrite() {
         return "/main/productsWrite";
     }
+<<<<<<< HEAD:ec21/src/main/java/net/kdigital/ec21/controller/MainPageControllerhj.java
 
+=======
+>>>>>>> develop:ec21/src/main/java/net/kdigital/ec21/controller/MainPageController.java
 }
