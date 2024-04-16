@@ -86,7 +86,6 @@
 						<!-- Top Right -->
 						<div class="right-content">
 							<ul class="list-main">
-								<li><i class="ti-user"></i> <a href="#">My account</a></li>
 								<li><i class="ti-power-off"></i><a href="login.html">Login</a></li>
 								<li><i class="ti-user"></i><a href="register.html">Sign up</a></li>
 								<li><i class="ti-power-off"></i><a href="index.html">Logout</a></li>
@@ -218,12 +217,12 @@
 								<div class="navbar-collapse">
 									<div class="nav-inner">
 										<ul class="nav main-menu menu navbar-nav">
-											<li><a href="list">All</a></li>
-											<li><a href="#">Food & Beverage</a></li>
-											<li><a href="#">Chemical</a></li>
-											<li><a href="#">Health & Medical</a></li>
-											<li><a href="#">Electronics</a></li>
-											<li><a href="#">Cosmetic</a></li>
+											<li><a th:href="@{/main/list}">All</a></li>
+											<li><a th:href="@{/main/list}">Food & Beverage</a></li>
+											<li><a th:href="@{/main/list}">Chemical</a></li>
+											<li><a th:href="@{/main/list}">Health & Medical</a></li>
+											<li><a th:href="@{/main/list}">Electronics</a></li>
+											<li><a th:href="@{/main/list}">Cosmetic</a></li>
 										</ul>
 									</div>
 								</div>
@@ -247,8 +246,8 @@
 				<div class="col-12">
 					<div class="bread-inner">
 						<ul class="bread-list">
-							<li><a href="@{/main/index}">Home<i class="ti-arrow-right"></i></a></li>
-							<li class="active"><a href="#">My Page</a></li>
+							<li><a th:href="@{/main/index}">Home<i class="ti-arrow-right"></i></a></li>
+							<li class="active"><a th:href="@{/main/myproducts}">My Page</a></li>
 						</ul>
 					</div>
 				</div>
@@ -266,8 +265,8 @@
 						<div class="single-widget category">
 							<h3 class="title">My Page</h3>
 							<ul class="categor-list">
-								<li><a href="./myInfo.html">info</a></li>
-								<li><a href="./myproducts.html">Products</a></li>
+								<li><a th:href="@{/main/myinfo}">info</a></li>
+								<li><a th:href="@{/main/myproducts}">Products</a></li>
 
 							</ul>
 						</div>
@@ -518,7 +517,7 @@
 	<!-- Magnific Popup JS -->
 	<script th:src="@{/main/js/magnific-popup.js}"></script>
 	<!-- Fancybox JS -->
-	<script src="@{/main/js/facnybox.min.js}"></script>
+	<script th:src="@{/main/js/facnybox.min.js}"></script>
 	<!-- Waypoints JS -->
 	<script th:src="@{/main/js/waypoints.min.js}"></script>
 	<!-- Countdown JS -->

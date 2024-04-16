@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 package net.kdigital.ec21.controller;
 
 import java.util.List;
@@ -36,3 +37,21 @@ public class MainController {
 
 }
 
+=======
+package net.kdigital.ec21.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+
+@Controller
+public class MainController {
+	// @GetMapping({ "", "/" })
+	// public String index() {
+	// return "manager/manager_index";
+	// }
+	@GetMapping({ "", "/" })
+	public String index() {
+		return "main/index";
+	}
+}
+>>>>>>> 358ed0d93fad9ebcedd617ce8d6dc87f810d1a0f

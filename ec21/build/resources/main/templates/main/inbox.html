@@ -83,7 +83,6 @@
             <!-- Top Right -->
             <div class="right-content">
               <ul class="list-main">
-                <li><i class="ti-user"></i> <a href="#">My account</a></li>
                 <li><i class="ti-power-off"></i><a href="@{/main/login}">Login</a></li>
                 <li><i class="ti-user"></i><a href="@{/main/register}">Sign up</a></li>
                 <li><i class="ti-power-off"></i><a href="@{/}">Logout</a></li>
@@ -101,7 +100,7 @@
           <div class="col-lg-2 col-md-2 col-12">
             <!-- Logo -->
             <div class="logo">
-              <a href="index.html"><img src="@{/main/images/ec21logo.png}" alt="logo"></a>
+              <a th:href="@{/}"><img src="@{/main/images/ec21logo.png}" alt="logo"></a>
             </div>
             <!--/ End Logo -->
             <!-- Search Form -->
@@ -210,12 +209,12 @@
                 <div class="navbar-collapse">
                   <div class="nav-inner">
                     <ul class="nav main-menu menu navbar-nav">
-                      <li><a href="@{/main/list}">All</a></li>
-                      <li><a href="#">Food & Beverage</a></li>
-                      <li><a href="#">Chemical</a></li>
-                      <li><a href="#">Health & Medical</a></li>
-                      <li><a href="#">Electronics</a></li>
-                      <li><a href="#">Cosmetic</a></li>
+                      <li><a th:href="@{/main/list}">All</a></li>
+                      <li><a th:href="@{/main/list}">Food & Beverage</a></li>
+                      <li><a th:href="@{/main/list}">Chemical</a></li>
+                      <li><a th:href="@{/main/list}">Health & Medical</a></li>
+                      <li><a th:href="@{/main/list}">Electronics</a></li>
+                      <li><a th:href="@{/main/list}">Cosmetic</a></li>
                     </ul>
                   </div>
                 </div>
@@ -404,7 +403,7 @@
             <ul>
               <li>
                 <a href="#" class="atch-thumb">
-                  <img src="@{images/inbox.png}" alt="img" />
+                  <img th:src="@{images/inbox.png}" alt="img" />
                 </a>
 
                 <div class="file-name">
@@ -421,7 +420,7 @@
 
               <li>
                 <a href="#" class="atch-thumb">
-                  <img src="@{images/inbox.png}" alt="img" />
+                  <img th:src="@{images/inbox.png}" alt="img" />
                 </a>
 
                 <div class="file-name">
@@ -436,7 +435,7 @@
               </li>
               <li>
                 <a href="#" class="atch-thumb">
-                  <img src="@{images/inbox.png}" alt="img" />
+                  <img th:src="@{images/inbox.png}" alt="img" />
                 </a>
 
                 <div class="file-name">
