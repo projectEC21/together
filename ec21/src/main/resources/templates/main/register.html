@@ -102,7 +102,7 @@
 					<div class="col-lg-2 col-md-2 col-12">
 						<!-- Logo -->
 						<div class="logo">
-							<a th:href=@{/}><img th:src="@{/main/images/ec21logo.png}" alt="logo"></a>
+							<a th:href="@{/}"><img th:src="@{/main/images/ec21logo.png}" alt="logo"></a>
 						</div>
 						<!--/ End Logo -->
 						<!-- Search Form -->
@@ -217,11 +217,11 @@
 									<div class="nav-inner">
 										<ul class="nav main-menu menu navbar-nav">
 											<li><a th:href="@{/main/list}">All</a></li>
-											<li><a href="#">Food & Beverage</a></li>
-											<li><a href="#">Chemical</a></li>
-											<li><a href="#">Health & Medical</a></li>
-											<li><a href="#">Electronics</a></li>
-											<li><a href="#">Cosmetic</a></li>
+											<li><a th:href="@{/main/list}">Food & Beverage</a></li>
+											<li><a th:href="@{/main/list}">Chemical</a></li>
+											<li><a th:href="@{/main/list}">Health & Medical</a></li>
+											<li><a th:href="@{/main/list}">Electronics</a></li>
+											<li><a th:href="@{/main/list}">Cosmetic</a></li>
 										</ul>
 									</div>
 								</div>
@@ -478,7 +478,7 @@
 						</div>
 						<div class="col-lg-6 col-12">
 							<div class="right">
-								<img th:src="@{images/payments.png}" alt="#">
+								<img th:src="@{/images/payments.png}" alt="#">
 							</div>
 						</div>
 					</div>
@@ -495,7 +495,7 @@
 	<!-- Popper JS -->
 	<script th:src="@{/main/js/popper.min.js}"></script>
 	<!-- Bootstrap JS -->
-	<script th:src="@{static/main/js/bootstrap.min.js}"></script>
+	<script th:src="@{/static/main/js/bootstrap.min.js}"></script>
 	<!-- Color JS -->
 	<script th:src="@{/main/js/colors.js}"></script>
 	<!-- Slicknav JS -->
