@@ -12,7 +12,7 @@
   <title>EC21, Global B2B Marketplace</title>
 
   <!-- Favicon -->
-  <link rel="icon" type="image/png" href="@{/main/images/ec21logo.png}">
+  <link rel="icon" type="image/png" th:href="@{/main/images/ec21logo.png}">
   <!-- Web Font -->
   <link
     href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap"
@@ -83,9 +83,10 @@
             <!-- Top Right -->
             <div class="right-content">
               <ul class="list-main">
-                <li><i class="ti-power-off"></i><a href="@{/main/login}">Login</a></li>
-                <li><i class="ti-user"></i><a href="@{/main/register}">Sign up</a></li>
-                <li><i class="ti-power-off"></i><a href="@{/}">Logout</a></li>
+                <li><i class="ti-user"></i> <a th:href="@{/main/myinfo}">My account</a></li>
+                <li><i class="ti-power-off"></i><a th:href="@{/main/login}">Login</a></li>
+                <li><i class="ti-user"></i><a th:href="@{/main/register}">Sign up</a></li>
+                <li><i class="ti-power-off"></i><a th:href="@{/}">Logout</a></li>
               </ul>
             </div>
             <!-- End Top Right -->
@@ -140,12 +141,13 @@
             <div class="right-bar">
               <!-- Search Form -->
               <div class="sinlge-bar">
-                <a href="@{/main/myinfo}" class="single-icon"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a>
+                <a th:href="@{/main/myproducts}" class="single-icon"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a>
               </div>
 
               <!-- 검색창 옆 부분 -->
               <div class="sinlge-bar inquiry">
-                <a href="#" class="single-icon"><i class="fa fa-envelope-o"></i> <span class="total-count">3</span></a>
+                <a th:href="@{/main/inbox}" class="single-icon"><i class="fa fa-envelope-o"></i> <span
+                    class="total-count">3</span></a>
                 <!-- inquiry start -->
                 <div class="inquiry-item">
                   <div class="dropdown-cart-header">
@@ -403,7 +405,7 @@
             <ul>
               <li>
                 <a href="#" class="atch-thumb">
-                  <img th:src="@{images/inbox.png}" alt="img" />
+                  <img th:src="@{/images/inbox.png}" alt="img" />
                 </a>
 
                 <div class="file-name">
@@ -420,7 +422,7 @@
 
               <li>
                 <a href="#" class="atch-thumb">
-                  <img th:src="@{images/inbox.png}" alt="img" />
+                  <img th:src="@{/images/inbox.png}" alt="img" />
                 </a>
 
                 <div class="file-name">
@@ -435,7 +437,7 @@
               </li>
               <li>
                 <a href="#" class="atch-thumb">
-                  <img th:src="@{images/inbox.png}" alt="img" />
+                  <img th:src="@{/images/inbox.png}" alt="img" />
                 </a>
 
                 <div class="file-name">
