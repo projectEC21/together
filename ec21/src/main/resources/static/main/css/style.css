@@ -3415,9 +3415,9 @@ body {
 }
 
 .shop.login .login-form .title{
-	font-size: 20px;
+	font-size: 25px;
 	font-style: italic;
-	margin-top: 20px;
+	margin-top: 30px;
 	font-weight: 500;
 }
 
@@ -3450,16 +3450,10 @@ body {
 	margin-bottom:50px;
 }
 
-.shop.login .login-form span{
-	font-size: 10px;
-	color: #6a6a6a;
-	font-weight: 300;
-}
-
 .form-group span{
-	font-size: 10px;
+	font-size: 12px;
 	color: #6a6a6a;
-	font-weight: 300;
+	font-weight: 400;
 }
 
 .shop.login .form {
@@ -3467,6 +3461,7 @@ body {
 }
 .shop.login .form .form-group {
 	margin-bottom: 22px;
+	font-size: 15px;
 }
 .shop.login .form .form-group input {
 	width: 100%;
@@ -3481,7 +3476,7 @@ body {
 }
 
 .shop.login .form .form-group .short-input {
-    width: 20%; /* ë˜ëŠ” ì›í•˜ëŠ” ê°€ë¡œ ê¸¸ì´ */
+    width: 20%; 
     height: 25px;
     line-height: 50px;
     padding: 0 20px;
@@ -3492,9 +3487,18 @@ body {
     background: #F6F7FB;
 }
 
+.shop.login .form .form-group.title label {
+    color: #222;
+    position: relative;
+    font-size: 28px;
+    margin-top: 20px;
+}
+
 .shop.login .form .form-group label {
 	color: #333;
-	position: relative;
+    position: relative;
+    font-size: 20px;
+    padding-top: 15px;
 }
 
 
@@ -3551,8 +3555,10 @@ body {
 .shop.login .login-form .checkbox label {
 	font-size: 14px;
 	font-weight: 400;
+	font-style: italic;
 	color: #333;
 	position: relative;
+	margin-top: 30px;
 	padding-left: 20px;
 }
 .shop.login .login-form .checkbox label:hover{
@@ -3596,7 +3602,7 @@ body {
 }
 .shop.login .login-form .lost-pass{
 	display:inline-block;
-	margin-left:25px;
+	margin-left:45px;
 	color:#333;
 	font-size:14px;
 	font-weight:400;
@@ -3908,6 +3914,7 @@ body {
 .shop-services.home{
 	padding:60px 0;
 	background:#F6F7FB;
+	margin-bottom: 60px;
 }
 .shop-services .single-service {
 	position: relative;
