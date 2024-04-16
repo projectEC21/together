@@ -36,6 +36,12 @@ Version:1.0
 20. 404 Error CSS
 21. Footer CSS
 ========================================*/
+body {
+	font-family: "IBM Plex Sans KR", sans-serif;
+  	font-weight: 400;
+  	font-style: normal;
+}
+
 .color-plate {
 	position: fixed;
 	display: block;
@@ -968,8 +974,8 @@ Version:1.0
 .header.shop .nav li a {
 	color: #fff;
 	text-transform: capitalize;
-	font-size: 15px;
-	padding: 20px 20px;
+	font-size: 18px;
+	padding: 20px 27px;
 	font-weight: 500;
 	display: block;
 	position: relative;
@@ -2027,9 +2033,9 @@ Version:1.0
     line-height: 22px;
 }
 .single-product .product-content h3 a {
-	font-size: 14px;
-	font-weight: 500;
-	margin: 0;
+	font-size: 15px;
+    font-weight: 700;
+    margin: 0;
 }
 .single-product .product-content h3 a:hover{
 	color:#F7941D;
@@ -2327,8 +2333,34 @@ Version:1.0
     background-color: #333;
 }
 
-.shop.single .modal-body .col-12 .form-group {
-	width: 200px;
+.shop.single .modal-body tr {
+	margin: 15px;
+	text-align: start
+}
+
+.shop.single .modal-body th>span {
+	color: #ff2c18;
+	display: inline-block;
+	position: sticky;
+	right: -12px;
+	top: 4px;
+	font-size: 16px;
+}
+
+.shop.single .modal-body .message-field {
+	resize: none;
+	width: 400px;
+    height: 300px;
+}
+
+.shop.single .modal-body td.col-12 input{
+	width: 400px;
+}
+
+.shop.single .modal-body .agree-check {
+    margin: 50px;
+    font-style: italic;
+    font-size: 13px;
 }
 
 /* /modal 과 관련된 css */
@@ -2594,6 +2626,7 @@ Version:1.0
     color: #fff;
     display: inline-block;
     font-weight: 500;
+	font-size: 21px;
 }
 .shop.single .add-to-cart .btn:hover{
 	color:#fff;
@@ -2713,117 +2746,11 @@ Version:1.0
 	padding: 10px;
 }
 .shop.single .item-info tbody strong{}
-.shop.single .ratting-main{}
-.shop.single .avg-ratting {
-	margin-bottom: 20px;
+
+.shop.single .tab-content .productDesc {
+	font-size: 16px;
 }
-.shop.single .avg-ratting h4 {
-	font-size: 18px;
-	margin: 0;
-}
-.shop.single .avg-ratting h4 span{
-	font-size:14px;
-}
-.shop.single .single-rating {
-	margin-bottom: 20px;
-}
-.shop.single .single-rating:last-child{
-	margin:0;
-	border:none;
-	padding:0;
-}
-.shop.single .rating-author {
-	float: left;
-	margin-right: 10px;
-	padding: 20px;
-	padding-right: 10px;
-}
-.shop.single .rating-author img {
-	width: 60px;
-	border-radius: 100%;
-	height: 60px;
-}
-.shop.single .rating-des {
-	padding-left: 72px;
-	background: #f9f8f8;
-	padding: 17px 20px 17px 107px;
-}
-.shop.single .rating-des .ratings {
-	margin: 0;
-}
-.shop.single .rating-des h6 {
-	font-size: 14px;
-	font-weight: 600;
-	line-height: 18px;
-}
-.shop.single .ratting-main .single-rating ul{}
-.shop.single .ratting-main .single-rating ul li{
-	display:inline-block;
-}
-.shop.single .ratting-main .single-rating ul li i{
-	color:#F7941D;
-	font-size:14px;
-}
-.shop.single .review-inner label {
-	display: inline-block;
-	margin: 0 5px 0 0;
-}
-.shop.single .review-inner .ratings {
-	overflow: visible;
-	display: inline-block;
-	margin: 0;
-}
-.shop.single .review-inner .ratings ul{
-	display:inline-block;
-}
-.shop.single .ratting-main .single-rating ul {
-	display: inline-block;
-	margin-right: 5px;
-}
-.shop.single .ratings .rate-count {
-	display: inline-block;
-	color: #666;
-	font-size: 13px;
-}
-.shop.single .comment-review {
-	margin-bottom: 30px;
-}
-.shop.single .comment-review .add-review{
-	margin-top:30px;
-}
-.shop.single .comment-review .add-review h5{
-	font-size: 18px;
-	font-weight: 600;
-	margin-bottom: 7px;
-}
-.shop.single .comment-review .add-review p{
-	color:#333;
-}
-.shop.single .comment-review h4 {
-	font-size: 15px;
-	font-weight: 600;
-	margin-bottom: 7px;
-	margin-top:20px;
-}
-.shop.single .comment-review .review-inner{
-	margin-bottom:15px;
-	display:block;
-}
-.shop.single .comment-review .rating li {
-	display:inline-block;
-}
-.shop.single .comment-review .rating li i{
-	color:#F7941D;
-	font-size: 14px;
-}
-.shop.single .rating-des p{
-	margin-top:5px;
-}
-.shop.single .avg-ratting h4 {
-	font-size: 20px;
-	color: #333;
-}
-.shop.single .avg-ratting{}
+
 .shop.single .form .form-group input {
 	width: 100%;
 	height: 45px;
