@@ -927,14 +927,14 @@ Version:1.0
 .pagination .pagination-list li a {
 	padding: 4px 12px;
 }
-.product-list .pagination{
+.shop-list .pagination{
 	float:none;
 	text-align:center;
 }
-.product-list .list-content {
+.shop-list .list-content {
 	margin-top: 30px;
 }
-.product-list .list-content .btn {
+.shop-list .list-content .btn {
 	height: auto;
 	line-height: auto;
 	padding: 12px 32px;
