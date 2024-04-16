@@ -9,12 +9,16 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import net.kdigital.ec21.service.MainPageServiceDy;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @Controller
 @RequiredArgsConstructor
+@Slf4j
 public class MainController {
-	private final MainPageServiceDy mainService;
+	private final MainPageServiceDy mainPageService;
 
 	//================= main/index.html =====================
 	/**
@@ -23,18 +27,12 @@ public class MainController {
 	 */
 	@GetMapping({ "", "/" })
 	public String index(Model model) {
-		List<ProductDTO> dtoList = mainService.getTopProductList();
+		// hitCount기준 DESC, createDate 기준 DESC 순으로 상위 8개를 가져옴
+		// (judge=='Y' && customerId에 해당하는 Customer의 blacklistCheck=='N'인 데이터들 중에서) 
+		List<ProductDTO> dtoList = mainPageService.getTopProductList();
+		model.addAttribute("list", dtoList);
 		return "main/index";
-
 	}
-
-	private void getTopProductList() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'getTopProductList'");
-	}
-	// hitCount기준 DESC, createDate 기준 DESC 순으로 8개를 가져옴
-	// (lstmPredict==1 && judge=='N' 인 데이터들 중에서) 
-	
 
 }
 
