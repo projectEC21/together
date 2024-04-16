@@ -86,10 +86,16 @@
 						<!-- Top Right -->
 						<div class="right-content">
 							<ul class="list-main">
+<<<<<<< HEAD
+								<li><i class="ti-power-off"></i><a href="login.html">Login</a></li>
+								<li><i class="ti-user"></i><a href="register.html">Sign up</a></li>
+								<li><i class="ti-power-off"></i><a href="index.html">Logout</a></li>
+=======
 								<li><i class="ti-user"></i> <a th:href="@{/main/myinfo}">My account</a></li>
 								<li><i class="ti-power-off"></i><a th:href="@{/main/login}">Login</a></li>
 								<li><i class="ti-user"></i><a th:href="@{/main/register}">Sign up</a></li>
 								<li><i class="ti-power-off"></i><a th:href="@{/}">Logout</a></li>
+>>>>>>> develop
 							</ul>
 						</div>
 						<!-- End Top Right -->
@@ -248,7 +254,11 @@
 					<div class="bread-inner">
 						<ul class="bread-list">
 							<li><a th:href="@{/main/index}">Home<i class="ti-arrow-right"></i></a></li>
+<<<<<<< HEAD
+							<li class="active"><a th:href="@{/main/myproducts}">My Page</a></li>
+=======
 							<li class="active"><a th:href="@{/main/myinfo}">My Page</a></li>
+>>>>>>> develop
 						</ul>
 					</div>
 				</div>
@@ -266,8 +276,13 @@
 						<div class="single-widget category">
 							<h3 class="title">My Page</h3>
 							<ul class="categor-list">
+<<<<<<< HEAD
+								<li><a th:href="@{/main/myinfo}">info</a></li>
+								<li><a th:href="@{/main/myproducts}">Products</a></li>
+=======
 								<li><a th:href="@{main/myinfo}">info</a></li>
 								<li><a th:href="@{main/myproducts}">Products</a></li>
+>>>>>>> develop
 
 							</ul>
 						</div>
@@ -518,7 +533,7 @@
 	<!-- Magnific Popup JS -->
 	<script th:src="@{/main/js/magnific-popup.js}"></script>
 	<!-- Fancybox JS -->
-	<script src="@{/main/js/facnybox.min.js}"></script>
+	<script th:src="@{/main/js/facnybox.min.js}"></script>
 	<!-- Waypoints JS -->
 	<script th:src="@{/main/js/waypoints.min.js}"></script>
 	<!-- Countdown JS -->

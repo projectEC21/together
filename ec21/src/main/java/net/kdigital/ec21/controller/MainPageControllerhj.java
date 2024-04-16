@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-public class MainPageController {
+public class MainPageControllerhj {
     // ==================register.html=====================
     /**
      * login 페이지 요청
@@ -38,16 +38,6 @@ public class MainPageController {
     }
 
     /**
-     * main페이지에서 전체상품 페이지 요청
-     * 
-     * @return
-     */
-    @GetMapping("/main/list")
-    public String list() {
-        return "/main/list";
-    }
-
-    /**
      * main페이지에서 내 상품 페이지 요청
      * 
      * @return
@@ -68,7 +58,11 @@ public class MainPageController {
     }
 
     /**
+<<<<<<< HEAD:ec21/src/main/java/net/kdigital/ec21/controller/MainPageControllerhj.java
+     * main페이지에서 상품등록하기 요청
+=======
      * main페이지에서 상품등록 페이지 productsWrite 요청
+>>>>>>> develop:ec21/src/main/java/net/kdigital/ec21/controller/MainPageController.java
      * 
      * @return
      */
@@ -76,4 +70,8 @@ public class MainPageController {
     public String productsWrite() {
         return "/main/productsWrite";
     }
+<<<<<<< HEAD:ec21/src/main/java/net/kdigital/ec21/controller/MainPageControllerhj.java
+
+=======
+>>>>>>> develop:ec21/src/main/java/net/kdigital/ec21/controller/MainPageController.java
 }
