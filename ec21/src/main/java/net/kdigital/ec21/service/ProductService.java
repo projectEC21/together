@@ -20,10 +20,10 @@ import net.kdigital.ec21.repository.ProductRepository;
 
 @Service
 @RequiredArgsConstructor
-public class ProductServiceDY {
+public class ProductService {
     private final ProductRepository productRepository;
 
-    //===================================== main/index.html ======================================
+    //===================================== main/index ======================================
     /**
      * hitCount기준 DESC, createDate 기준 DESC 순으로 8개를 가져옴
      * judge=='Y' && customer_id에 해당하는 Customer의 blacklist_check=='N'
@@ -47,6 +47,8 @@ public class ProductServiceDY {
         return dtoList;
     }
 
+
+
     /**
      * 전달받은 상품 아이디에 해당하는 상품을 DTO로 변환해 반환 (for productsDetail.html)
      * @param productId
@@ -58,6 +60,8 @@ public class ProductServiceDY {
         return ProductDTO.toDTO(entity, entity.getCustomerEntity().getCustomerId());
     }
 
+
+    
     /**
      * 전달받은 카테고리에 해당하는 상품을 DTO로 변환해 최신 등록일 순으로 리스트 반환 (for list.html)
      * @param category

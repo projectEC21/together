@@ -102,10 +102,9 @@
 						<!-- Top Right -->
 						<div class="right-content">
 							<ul class="list-main">
-								<li><i class="ti-user"></i> <a href="#">My account</a></li>
-								<li><i class="ti-power-off"></i><a href="login.html">Login</a></li>
-								<li><i class="ti-user"></i><a href="register.html">Sign up</a></li>
-								<li><i class="ti-power-off"></i><a href="index.html">Logout</a></li>
+								<li><i class="ti-power-off"></i><a th:href="@{/main/login}">Login</a></li>
+								<li><i class="ti-user"></i><a th:href="@{/main/register}">Sign up</a></li>
+								<li><i class="ti-power-off"></i><a th:href="@{/}">Logout</a></li>
 							</ul>
 						</div>
 						<!-- End Top Right -->
@@ -120,7 +119,7 @@
 					<div class="col-lg-2 col-md-2 col-12">
 						<!-- Logo -->
 						<div class="logo">
-							<a href="@{/main/index}"><img src="../../static/main/images/ec21logo.png" alt="logo"></a>
+							<a th:href="@{/}"><img th:src="@{/main/images/ec21logo.png}" alt="logo"></a>
 						</div>
 						<!--/ End Logo -->
 						<!-- Search Form -->
@@ -141,13 +140,13 @@
 					<div class="col-lg-8 col-md-7 col-12">
 						<div class="search-bar-top">
 							<div class="search-bar">
-								<select>
-									<option selected="selected">All Category</option>
-									<option>Food & Beverage</option>
-									<option>Chemical</option>
-									<option>Health & Medical</option>
-									<option>Electronics</option>
-									<option>Cosmetic</option>
+								<select id="category" name="category">
+									<option selected="selected" value="total">All Category</option>
+									<option value="FOOD_BEVERAGE">Food & Beverage</option>
+									<option value="CHEMICAL">Chemical</option>
+									<option value="HEALTH_MEDICAL">Health & Medical</option>
+									<option value="ELECTRONIC">Electronic</option>
+									<option value="COSMETIC">Cosmetic</option>
 								</select>
 								<form>
 									<input name="search" placeholder="What are you searching for?" type="search">
@@ -160,7 +159,7 @@
 						<div class="right-bar">
 							<!-- Search Form -->
 							<div class="sinlge-bar">
-								<a href="@{/main/myProducts}" class="single-icon"><i class="fa fa-user-circle-o"
+								<a th:href="@{/main/myProducts}" class="single-icon"><i class="fa fa-user-circle-o"
 										aria-hidden="true"></i></a>
 							</div>
 
@@ -209,7 +208,7 @@
 										</li>
 									</ul>
 									<div class="bottom">
-										<a href="@{/main/index}" class="btn animate">See more inquiries</a>
+										<a th:href="@{/}" class="btn animate">See more inquiries</a>
 									</div>
 								</div>
 								<!--/ End inquiry Item -->
@@ -234,12 +233,12 @@
 								<div class="navbar-collapse">
 									<div class="nav-inner">
 										<ul class="nav main-menu menu navbar-nav">
-											<li><a href="@{/main/list}">All</a></li>
-											<li><a href="@{/main/list}">Food & Beverage</a></li>
-											<li><a href="@{/main/list}">Chemical</a></li>
-											<li><a href="@{/main/list}">Health & Medical</a></li>
-											<li><a href="@{/main/list}">Electronics</a></li>
-											<li><a href="@{/main/list}">Cosmetic</a></li>
+											<li><a th:href="@{/main/list}">All</a></li>
+											<li><a th:href="@{/main/list}">Food & Beverage</a></li>
+											<li><a th:href="@{/main/list}">Chemical</a></li>
+											<li><a th:href="@{/main/list}">Health & Medical</a></li>
+											<li><a th:href="@{/main/list}">Electronics</a></li>
+											<li><a th:href="@{/main/list}">Cosmetic</a></li>
 										</ul>
 									</div>
 								</div>
@@ -263,7 +262,7 @@
 				<div class="col-12">
 					<div class="bread-inner">
 						<ul class="bread-list">
-							<li><a href="index1.html">Home<i class="ti-arrow-right"></i></a></li>
+							<li><a th:href="@{/}">Home<i class="ti-arrow-right"></i></a></li>
 							<li class="active"><a href="blog-single.html">Shop Grid</a></li>
 						</ul>
 					</div>
@@ -283,12 +282,12 @@
 						<div class="single-widget category">
 							<h3 class="title">Categories</h3>
 							<ul class="categor-list">
-								<li><a href="@{/main/list}">All</a></li>
-								<li><a href="@{/main/list}">Food & Beverage</a></li>
-								<li><a href="@{/main/list}">Chemical</a></li>
-								<li><a href="@{/main/list}">Health & Medical</a></li>
-								<li><a href="@{/main/list}">Electronics</a></li>
-								<li><a href="@{/main/list}">Cosmetic</a></li>
+								<li><a th:href="@{/main/list}">All</a></li>
+								<li><a th:href="@{/main/list}">Food & Beverage</a></li>
+								<li><a th:href="@{/main/list}">Chemical</a></li>
+								<li><a th:href="@{/main/list}">Health & Medical</a></li>
+								<li><a th:href="@{/main/list}">Electronics</a></li>
+								<li><a th:href="@{/main/list}">Cosmetic</a></li>
 							</ul>
 						</div>
 						<!--/ End Single Widget -->
@@ -381,15 +380,7 @@
 											<option>30</option>
 										</select>
 									</div>
-									<div class="single-shorter">
-										<label>Sort By :</label>
-										<select>
-											<option selected="selected">Name</option>
-											<option>Size</option>
-										</select>
-									</div>
 								</div>
-
 							</div>
 							<!--/ End Shop Top -->
 						</div>
@@ -398,7 +389,7 @@
 						<div class="col-lg-3 col-md-6 col-12">
 							<div class="single-product">
 								<div class="product-img">
-									<a href="product-details.html">
+									<a th:href="@{/main/productsDetail}">
 										<img class="default-img" src="https://via.placeholder.com/550x750" alt="#">
 										<img class="hover-img" src="https://via.placeholder.com/550x750" alt="#">
 									</a>
@@ -417,7 +408,7 @@
 									</div>
 								</div>
 								<div class="product-content">
-									<h3><a href="product-details.html">Women Hot Collection</a></h3>
+									<h3><a th:href="@{/main/productsDetail}">Women Hot Collection</a></h3>
 									<div class="product-price">
 										<span>$29.00</span>
 									</div>
@@ -427,7 +418,7 @@
 						<div class="col-lg-3 col-md-6 col-12">
 							<div class="single-product">
 								<div class="product-img">
-									<a href="product-details.html">
+									<a th:href="@{/main/productsDetail}">
 										<img class="default-img" src="https://via.placeholder.com/550x750" alt="#">
 										<img class="hover-img" src="https://via.placeholder.com/550x750" alt="#">
 									</a>
@@ -446,7 +437,7 @@
 									</div>
 								</div>
 								<div class="product-content">
-									<h3><a href="product-details.html">Awesome Pink Show</a></h3>
+									<h3><a th:href="@{/main/productsDetail}">Awesome Pink Show</a></h3>
 									<div class="product-price">
 										<span>$29.00</span>
 									</div>
@@ -456,7 +447,7 @@
 						<div class="col-lg-3 col-md-6 col-12">
 							<div class="single-product">
 								<div class="product-img">
-									<a href="product-details.html">
+									<a th:href="@{/main/productsDetail}">
 										<img class="default-img" src="https://via.placeholder.com/550x750" alt="#">
 										<img class="hover-img" src="https://via.placeholder.com/550x750" alt="#">
 									</a>
@@ -475,7 +466,7 @@
 									</div>
 								</div>
 								<div class="product-content">
-									<h3><a href="product-details.html">Awesome Bags Collection</a></h3>
+									<h3><a th:href="@{/main/productsDetail}">Awesome Bags Collection</a></h3>
 									<div class="product-price">
 										<span>$29.00</span>
 									</div>
@@ -485,7 +476,7 @@
 						<div class="col-lg-3 col-md-6 col-12">
 							<div class="single-product">
 								<div class="product-img">
-									<a href="product-details.html">
+									<a th:href="@{/main/productsDetail}">
 										<img class="default-img" src="https://via.placeholder.com/550x750" alt="#">
 										<img class="hover-img" src="https://via.placeholder.com/550x750" alt="#">
 										<span class="new">New</span>
@@ -505,7 +496,7 @@
 									</div>
 								</div>
 								<div class="product-content">
-									<h3><a href="product-details.html">Women Pant Collectons</a></h3>
+									<h3><a th:href="@{/main/productsDetail}">Women Pant Collectons</a></h3>
 									<div class="product-price">
 										<span>$29.00</span>
 									</div>
@@ -515,7 +506,7 @@
 						<div class="col-lg-3 col-md-6 col-12">
 							<div class="single-product">
 								<div class="product-img">
-									<a href="product-details.html">
+									<a th:href="@{/main/productsDetail}">
 										<img class="default-img" src="https://via.placeholder.com/550x750" alt="#">
 										<img class="hover-img" src="https://via.placeholder.com/550x750" alt="#">
 									</a>
@@ -534,7 +525,7 @@
 									</div>
 								</div>
 								<div class="product-content">
-									<h3><a href="product-details.html">Awesome Bags Collection</a></h3>
+									<h3><a th:href="@{/main/productsDetail}">Awesome Bags Collection</a></h3>
 									<div class="product-price">
 										<span>$29.00</span>
 									</div>
@@ -544,7 +535,7 @@
 						<div class="col-lg-3 col-md-6 col-12">
 							<div class="single-product">
 								<div class="product-img">
-									<a href="product-details.html">
+									<a th:href="@{/main/productsDetail}">
 										<img class="default-img" src="https://via.placeholder.com/550x750" alt="#">
 										<img class="hover-img" src="https://via.placeholder.com/550x750" alt="#">
 										<span class="price-dec">30% Off</span>
@@ -564,7 +555,7 @@
 									</div>
 								</div>
 								<div class="product-content">
-									<h3><a href="product-details.html">Awesome Cap For Women</a></h3>
+									<h3><a th:href="@{/main/productsDetail}">Awesome Cap For Women</a></h3>
 									<div class="product-price">
 										<span>$29.00</span>
 									</div>
@@ -574,7 +565,7 @@
 						<div class="col-lg-3 col-md-6 col-12">
 							<div class="single-product">
 								<div class="product-img">
-									<a href="product-details.html">
+									<a th:href="@{/main/productsDetail}">
 										<img class="default-img" src="https://via.placeholder.com/550x750" alt="#">
 										<img class="hover-img" src="https://via.placeholder.com/550x750" alt="#">
 									</a>
@@ -593,7 +584,7 @@
 									</div>
 								</div>
 								<div class="product-content">
-									<h3><a href="product-details.html">Polo Dress For Women</a></h3>
+									<h3><a th:href="@{/main/productsDetail}">Polo Dress For Women</a></h3>
 									<div class="product-price">
 										<span>$29.00</span>
 									</div>
@@ -603,7 +594,7 @@
 						<div class="col-lg-3 col-md-6 col-12">
 							<div class="single-product">
 								<div class="product-img">
-									<a href="product-details.html">
+									<a th:href="@{/main/productsDetail}">
 										<img class="default-img" src="https://via.placeholder.com/550x750" alt="#">
 										<img class="hover-img" src="https://via.placeholder.com/550x750" alt="#">
 										<span class="out-of-stock">Hot</span>
@@ -623,7 +614,7 @@
 									</div>
 								</div>
 								<div class="product-content">
-									<h3><a href="product-details.html">Black Sunglass For Women</a></h3>
+									<h3><a th:href="@{/main/productsDetail}">Black Sunglass For Women</a></h3>
 									<div class="product-price">
 										<span class="old">$60.00</span>
 										<span>$50.00</span>
@@ -634,7 +625,7 @@
 						<div class="col-lg-3 col-md-6 col-12">
 							<div class="single-product">
 								<div class="product-img">
-									<a href="product-details.html">
+									<a th:href="@{/main/productsDetail}">
 										<img class="default-img" src="https://via.placeholder.com/550x750" alt="#">
 										<img class="hover-img" src="https://via.placeholder.com/550x750" alt="#">
 										<span class="new">New</span>
@@ -654,7 +645,7 @@
 									</div>
 								</div>
 								<div class="product-content">
-									<h3><a href="product-details.html">Women Pant Collectons</a></h3>
+									<h3><a th:href="@{/main/productsDetail}">Women Pant Collectons</a></h3>
 									<div class="product-price">
 										<span>$29.00</span>
 									</div>
@@ -822,7 +813,7 @@
 						<!-- Single Widget -->
 						<div class="single-footer about">
 							<div class="logo">
-								<a href="index.html"><img src="images/logo2.png" alt="#"></a>
+								<a th:href="@{/}"><img th:src="@{/images/logo2.png}" alt="#"></a>
 							</div>
 							<p class="text">Praesent dapibus, neque id cursus ucibus, tortor neque egestas augue, magna
 								eros eu erat. Aliquam erat volutpat. Nam dui mi, tincidunt quis, accumsan porttitor,
@@ -899,7 +890,7 @@
 						</div>
 						<div class="col-lg-6 col-12">
 							<div class="right">
-								<img src="@{main/images/payments.png}" alt="#">
+								<img th:src="@{/main/images/payments.png}" alt="#">
 							</div>
 						</div>
 					</div>
