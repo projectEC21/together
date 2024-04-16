@@ -66,4 +66,14 @@ public class MainPageController {
     public String inbox() {
         return "/main/inbox";
     }
+
+    /**
+     * main페이지에서 상품등록 페이지 productsWrite 요청
+     * 
+     * @return
+     */
+    @GetMapping("/main/productsWrite")
+    public String productsWrite() {
+        return "/main/productsWrite";
+    }
 }
