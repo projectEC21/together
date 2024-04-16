@@ -103,7 +103,7 @@
 					<div class="col-lg-2 col-md-2 col-12">
 						<!-- Logo -->
 						<div class="logo">
-							<a th:href="@{/main/index}"><img th:src="@{/main/images/ec21logo.png}" alt="logo"></a>
+							<a th:href="@{/}"><img th:src="@{/main/images/ec21logo.png}" alt="logo"></a>
 						</div>
 						<!--/ End Logo -->
 						<!-- Search Form -->
@@ -192,7 +192,7 @@
 										</li>
 									</ul>
 									<div class="bottom">
-										<a th:href="@{/main/index}" class="btn animate">See more inquiries</a>
+										<a th:href="@{/}" class="btn animate">See more inquiries</a>
 									</div>
 								</div>
 								<!--/ End inquiry Item -->
@@ -246,7 +246,7 @@
 				<div class="col-12">
 					<div class="bread-inner">
 						<ul class="bread-list">
-							<li><a th:href="@{/main/index}">Home<i class="ti-arrow-right"></i></a></li>
+							<li><a th:href="@{/}">Home<i class="ti-arrow-right"></i></a></li>
 							<li class="active"><a th:href="@{/main/myinfo}">My Page</a></li>
 						</ul>
 					</div>
@@ -490,7 +490,7 @@
 						</div>
 						<div class="col-lg-6 col-12">
 							<div class="right">
-								<img src="images/payments.png" alt="#">
+								<img th:src="@{/images/payments.png}" alt="#">
 							</div>
 						</div>
 					</div>
@@ -538,9 +538,9 @@
 	<script th:src="@{/main/js/active.js}"></script>
 
 	<!-- FastClick -->
-	<script src="@{/vendors/fastclick/lib/fastclick.js}"></script>
+	<script th:src="@{/vendors/fastclick/lib/fastclick.js}"></script>
 	<!-- NProgress -->
-	<script src="@{/vendors/nprogress/nprogress.js}"></script>
+	<script th:src="@{/vendors/nprogress/nprogress.js}"></script>
 </body>
 
 </html>
