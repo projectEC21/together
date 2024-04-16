@@ -2326,8 +2326,7 @@ body {
 /*======================================
    Start Shop Single CSS
 ========================================*/
-
-/* modal ê³¼ ê´€ë ¨ëœ css */
+/* modal 과 관련된 css */
 .shop.single .modal-header {
 	color: #fff;
     background-color: #333;
@@ -2363,8 +2362,7 @@ body {
     font-size: 13px;
 }
 
-/* /modal ê³¼ ê´€ë ¨ëœ css */
-
+/* /modal 과 관련된 css */
 .shop.single{
 	padding:70px 0 100px;
 }
