@@ -170,20 +170,21 @@
 
 							<!-- Main Menu -->
 							<nav class="navbar navbar-expand-lg">
-								<div class="navbar-collapse">
-									<div class="nav-inner">
+								<div class="navbar-collapse">	
+									<div class="nav-inner">	
+										<!-- 240417 dy : 카테고리 별 상품 목록 요청(검색어X) -->
 										<ul class="nav main-menu menu navbar-nav">
-											<li><a th:href="@{/main/list}">All</a></li>
-											<li><a th:href="@{/main/list}">Food & Beverage</a></li>
-											<li><a th:href="@{/main/list}">Chemical</a></li>
-											<li><a th:href="@{/main/list}">Health & Medical</a></li>
-											<li><a th:href="@{/main/list}">Electronics</a></li>
-											<li><a th:href="@{/main/list}">Cosmetic</a></li>
+											<li><a th:href="@{/main/list(category=total)}">All</a></li>
+											<li><a th:href="@{/main/list(category=FOOD_BEVERAGE)}">Food & Beverage</a></li>
+											<li><a th:href="@{/main/list(category=CHEMICAL)}">Chemical</a></li>
+											<li><a th:href="@{/main/list(category=HEALTH_MEDICAL)}">Health & Medical</a></li>
+											<li><a th:href="@{/main/list(category=ELECTRONIC)}">Electronics</a></li>
+											<li><a th:href="@{/main/list(category=COSMETIC)}">Cosmetic</a></li>
 										</ul>
 									</div>
 								</div>
 							</nav>
-							<!--/ End Main Menu -->
+							<!--/ End Main Menu -->	
 						</div>
 					</div>
 				</div>
@@ -216,7 +217,7 @@
 	<section class="shop login section">
 		<div class="container">
 			<div class="row">
-				<div class="col-lg-6 offset-lg-3 col-12">
+				<div class="col-lg-8 offset-lg-3 col-12">
 					<div class="login-form">
 						<h2>Login</h2>
 						<p>Welcome to the World's Leading B2B Marketplace for Buyers and Suppliers!
