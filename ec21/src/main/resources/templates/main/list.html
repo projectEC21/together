@@ -71,6 +71,28 @@
 		});
 	</script>
 
+	<!-- 240417 dy : JQuery 파일 추가 및 ajax 작업 -->
+	<script th:src="@{/script/jquery-3.7.1.min.js}"></script>
+	<!-- 240417 dy : 검색어 입력 후 돋보기 클릭 시 /main/list 요청-->
+	<script>
+		$(function () {
+			$("#searchBtn").on("click",search);
+			init();
+		})
+
+		function search() {
+			let category = $("#category").val();
+			let searchWord = $("#searchWord").val();
+
+			$.ajax({
+				url:"/main/list",
+				data : {"category":category, "searchWord":searchWord},
+				method : "GET"
+			})
+		}
+
+	</script>
+
 </head>
 
 <body class="js">
@@ -138,20 +160,26 @@
 						<!--/ End Search Form -->
 						<div class="mobile-nav"></div>
 					</div>
+					<!-- 240417 dy : 카테고리 선택 & 검색어 입력 후 버튼 누르면, 해당 카테고리의 목록이 보이도록 -->
 					<div class="col-lg-8 col-md-7 col-12">
 						<div class="search-bar-top">
 							<div class="search-bar">
-								<select>
-									<option selected="selected">All Category</option>
-									<option>Food & Beverage</option>
-									<option>Chemical</option>
-									<option>Health & Medical</option>
-									<option>Electronics</option>
-									<option>Cosmetic</option>
+								<select id="category" name="category">
+									<option value="total" selected="selected">All Category</option>
+									<option value="FOOD_BEVERAGE">Food & Beverage</option>
+									<option value="CHEMICAL">Chemical</option>
+									<option value="HEALTH_MEDICAL">Health & Medical</option>
+									<option value="ELECTRONIC">Electronics</option>
+									<option value="COSMETIC">Cosmetic</option>
 								</select>
 								<form>
-									<input name="search" placeholder="What are you searching for?" type="search">
-									<button class="btnn"><i class="ti-search"></i></button>
+									<th:block th:if="${searchWord eq ''}">
+										<input name="search" id="searchWord" placeholder="What are you searching for?" type="search">
+									</th:block>
+									<th:block th:if="${searchWord ne ''}">
+										<input name="search" id="searchWord" th:value="${searchWord}" type="search">
+									</th:block>
+									<button class="btnn" id="searchBtn"><i class="ti-search"></i></button>
 								</form>
 							</div>
 						</div>
@@ -187,13 +215,14 @@
 							<nav class="navbar navbar-expand-lg">
 								<div class="navbar-collapse">
 									<div class="nav-inner">
+										<!-- 240417 dy : 카테고리 별 상품 목록 요청(검색어X) -->
 										<ul class="nav main-menu menu navbar-nav">
-											<li><a th:href="@{/main/list}">All</a></li>
-											<li><a th:href="@{/main/list}">Food & Beverage</a></li>
-											<li><a th:href="@{/main/list}">Chemical</a></li>
-											<li><a th:href="@{/main/list}">Health & Medical</a></li>
-											<li><a th:href="@{/main/list}">Electronics</a></li>
-											<li><a th:href="@{/main/list}">Cosmetic</a></li>
+											<li><a th:href="@{/main/list(category=total)}">All</a></li>
+											<li><a th:href="@{/main/list(category=FOOD_BEVERAGE)}">Food & Beverage</a></li>
+											<li><a th:href="@{/main/list(category=CHEMICAL)}">Chemical</a></li>
+											<li><a th:href="@{/main/list(category=HEALTH_MEDICAL)}">Health & Medical</a></li>
+											<li><a th:href="@{/main/list(category=ELECTRONIC)}">Electronics</a></li>
+											<li><a th:href="@{/main/list(category=COSMETIC)}">Cosmetic</a></li>
 										</ul>
 									</div>
 								</div>
@@ -218,7 +247,7 @@
 					<div class="bread-inner">
 						<ul class="bread-list">
 							<li><a th:href="@{/}">Home<i class="ti-arrow-right"></i></a></li>
-							<li class="active"><a href="../main/list.html">카테고리명</a></li>
+							<li class="active"><a th:href="@{/main/list(category=${category})}">[[${category}]]</a></li>
 							<!-- 카테고리 -->
 						</ul>
 					</div>
@@ -237,13 +266,14 @@
 						<!-- Single Widget -->
 						<div class="single-widget category">
 							<h3 class="title">Categories</h3>
+							<!-- 240417 dy : 카테고리 별 상품 목록 요청(검색어X) -->
 							<ul class="categor-list">
-								<li><a th:href="@{/main/list}">All</a></li>
-								<li><a th:href="@{/main/list}">Food & Beverage</a></li>
-								<li><a th:href="@{/main/list}">Chemical</a></li>
-								<li><a th:href="@{/main/list}">Health & Medical</a></li>
-								<li><a th:href="@{/main/list}">Electronics</a></li>
-								<li><a th:href="@{/main/list}">Cosmetic</a></li>
+								<li><a th:href="@{/main/list(category=total)}">All</a></li>
+									<li><a th:href="@{/main/list(category=FOOD_BEVERAGE)}">Food & Beverage</a></li>
+									<li><a th:href="@{/main/list(category=CHEMICAL)}">Chemical</a></li>
+									<li><a th:href="@{/main/list(category=HEALTH_MEDICAL)}">Health & Medical</a></li>
+									<li><a th:href="@{/main/list(category=ELECTRONIC)}">Electronics</a></li>
+									<li><a th:href="@{/main/list(category=COSMETIC)}">Cosmetic</a></li>
 							</ul>
 						</div>
 						<!--/ End Single Widget -->
@@ -257,7 +287,7 @@
 							<div class="shop-top">
 								<div class="shop-shorter">
 									<div class="single-shorter">
-										<label>Show : <span>9</span></label>
+										<label>Show : <span>[[${#lists.size(list)}]]</span></label>
 									</div>
 								</div>
 							</div>
@@ -265,151 +295,25 @@
 						</div>
 					</div>
 					<div class="row">
-						<div class="col-lg-3 col-md-6 col-12">
-							<div class="single-product">
+						<!-- 240417 dy : ajax, thymeleaf로 상품 꽂아 넣기 -->
+						<th:block id="result">
+							<div class="col-lg-3 col-md-6 col-12" th:each="product:${list}">
+								<div class="single-product">
 								<div class="product-img">
-									<a th:href="@{/main/productsDetail}">
+									<a th:href="@{/main/productsDetail(productId=${product.productId})}">
 										<img class="default-img" src="https://via.placeholder.com/550x750" alt="#">
 										<img class="hover-img" src="https://via.placeholder.com/550x750" alt="#">
 									</a>
 								</div>
 								<div class="product-content">
-									<h3><a th:href="@{/main/productsDetail}">Women Hot Collection</a></h3>
+									<h3><a th:href="@{/main/productsDetail(productId=${product.productId})}">[[${product.productName}]]</a></h3>
 									<div class="product-price">
-										<span>$29.00</span>
+										<span>$[[${product.price}]]</span>
 									</div>
 								</div>
-							</div>
-						</div>
-						<div class="col-lg-3 col-md-6 col-12">
-							<div class="single-product">
-								<div class="product-img">
-									<a th:href="@{/main/productsDetail}">
-										<img class="default-img" src="https://via.placeholder.com/550x750" alt="#">
-										<img class="hover-img" src="https://via.placeholder.com/550x750" alt="#">
-									</a>
-								</div>
-								<div class="product-content">
-									<h3><a th:href="@{/main/productsDetail}">Awesome Pink Show</a></h3>
-									<div class="product-price">
-										<span>$29.00</span>
-									</div>
 								</div>
 							</div>
-						</div>
-						<div class="col-lg-3 col-md-6 col-12">
-							<div class="single-product">
-								<div class="product-img">
-									<a th:href="@{/main/productsDetail}">
-										<img class="default-img" src="https://via.placeholder.com/550x750" alt="#">
-										<img class="hover-img" src="https://via.placeholder.com/550x750" alt="#">
-									</a>
-								</div>
-								<div class="product-content">
-									<h3><a th:href="@{/main/productsDetail}">Awesome Bags Collection</a></h3>
-									<div class="product-price">
-										<span>$29.00</span>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-3 col-md-6 col-12">
-							<div class="single-product">
-								<div class="product-img">
-									<a th:href="@{/main/productsDetail}">
-										<img class="default-img" src="https://via.placeholder.com/550x750" alt="#">
-										<img class="hover-img" src="https://via.placeholder.com/550x750" alt="#">
-									</a>
-								</div>
-								<div class="product-content">
-									<h3><a th:href="@{/main/productsDetail}">Women Pant Collectons</a></h3>
-									<div class="product-price">
-										<span>$29.00</span>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-3 col-md-6 col-12">
-							<div class="single-product">
-								<div class="product-img">
-									<a th:href="@{/main/productsDetail}">
-										<img class="default-img" src="https://via.placeholder.com/550x750" alt="#">
-										<img class="hover-img" src="https://via.placeholder.com/550x750" alt="#">
-									</a>
-								</div>
-								<div class="product-content">
-									<h3><a th:href="@{/main/productsDetail}">Awesome Bags Collection</a></h3>
-									<div class="product-price">
-										<span>$29.00</span>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-3 col-md-6 col-12">
-							<div class="single-product">
-								<div class="product-img">
-									<a th:href="@{/main/productsDetail}">
-										<img class="default-img" src="https://via.placeholder.com/550x750" alt="#">
-										<img class="hover-img" src="https://via.placeholder.com/550x750" alt="#">
-									</a>
-								</div>
-								<div class="product-content">
-									<h3><a th:href="@{/main/productsDetail}">Awesome Cap For Women</a></h3>
-									<div class="product-price">
-										<span>$29.00</span>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-3 col-md-6 col-12">
-							<div class="single-product">
-								<div class="product-img">
-									<a th:href="@{/main/productsDetail}">
-										<img class="default-img" src="https://via.placeholder.com/550x750" alt="#">
-										<img class="hover-img" src="https://via.placeholder.com/550x750" alt="#">
-									</a>
-								</div>
-								<div class="product-content">
-									<h3><a th:href="@{/main/productsDetail}">Polo Dress For Women</a></h3>
-									<div class="product-price">
-										<span>$29.00</span>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-3 col-md-6 col-12">
-							<div class="single-product">
-								<div class="product-img">
-									<a th:href="@{/main/productsDetail}">
-										<img class="default-img" src="https://via.placeholder.com/550x750" alt="#">
-										<img class="hover-img" src="https://via.placeholder.com/550x750" alt="#">
-									</a>
-								</div>
-								<div class="product-content">
-									<h3><a th:href="@{/main/productsDetail}">Black Sunglass For Women</a></h3>
-									<div class="product-price">
-										<span>$50.00</span>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-3 col-md-6 col-12">
-							<div class="single-product">
-								<div class="product-img">
-									<a th:href="@{/main/productsDetail}">
-										<img class="default-img" src="https://via.placeholder.com/550x750" alt="#">
-										<img class="hover-img" src="https://via.placeholder.com/550x750" alt="#">
-									</a>
-								</div>
-								<div class="product-content">
-									<h3><a th:href="@{/main/productsDetail}">Women Pant Collectons</a></h3>
-									<div class="product-price">
-										<span>$29.00</span>
-									</div>
-								</div>
-							</div>
-						</div>
-
+						</th:block>
 					</div>
 					<span class="paging"> << <  1  2  3  4  5 > >> </span>
 				</div>
