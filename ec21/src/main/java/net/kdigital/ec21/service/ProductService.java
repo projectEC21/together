@@ -36,7 +36,7 @@ public class ProductService {
                 Sort.Order.desc("hitCount"),
                 Sort.Order.desc("lstmPredictProba"),
                 Sort.Order.desc("createDate")));
-        Page<ProductEntity> productPage = productRepository.findTopProductsByJudgeAndBlacklistCheck(YesOrNo.Y,
+        Page<ProductEntity> productPage = productRepository.findTopProductsByJudgeAndBlacklistCheckAndNotDeleted(YesOrNo.Y,
                 YesOrNo.N, topEight);
         List<ProductEntity> entityList = productPage.getContent();
 
@@ -63,8 +63,9 @@ public class ProductService {
 
     
     /**
-     * 전달받은 카테고리에 해당하고 입력받은 검색어가 포함된(회원ID, 상품ID, 상품명, 상품설명 대상) 상품을 
+     * 전달받은 카테고리에 해당하고 상품명에 입력받은 검색어가 포함된 상품을 
      * DTO로 변환해 최신 등록일 순으로 리스트 반환 (for list.html)
+     *  + 추가 조건 : (judge==Y & deleteCheck==N & customerId의 blacklistCheck==N)
      * @param category
      * @param searchWord 
      * @return
@@ -73,15 +74,15 @@ public class ProductService {
         List<ProductEntity> entityList = new ArrayList<>();
         List<ProductDTO> dtoList = new ArrayList<>();
 
-        // 전체를 대상으로 조회
+        // 전체를 대상으로 조회 (judge==Y & deleteCheck==N & customerId의 blacklistCheck==N)
         if (category.equals("total")) {
-            entityList = productRepository.findProductsByMultipleFieldsContaining(searchWord.toLowerCase(),Sort.by(Direction.DESC, "createDate"));
+            entityList = productRepository.findProductsByProductNameContainingAndAdditionalConditions(searchWord.toLowerCase());
         } 
-        // 전달받은 카테고리를 대상으로 조회
+        // 전달받은 카테고리를 대상으로 조회 (judge==Y & deleteCheck==N & customerId의 blacklistCheck==N)
         else{
             // String -> Enum 타입으로 변경
             ProductCategory targetCategory = ProductCategory.valueOf(category);
-            entityList = productRepository.findByCategoryAndMultipleFieldsContaining(targetCategory,searchWord,Sort.by(Direction.DESC, "createDate"));
+            entityList = productRepository.findProductsByProductNameContainingAndAdditionalConditionsAndCategory(searchWord,targetCategory);
         }
 
         entityList.forEach((entity)->{
