@@ -3,12 +3,15 @@ package net.kdigital.ec21.repository;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import net.kdigital.ec21.dto.check.ProductCategory;
+import net.kdigital.ec21.dto.check.YesOrNo;
 import net.kdigital.ec21.entity.ProductEntity;
 
 public interface ProductRepository extends JpaRepository<ProductEntity, String> {
@@ -20,12 +23,20 @@ public interface ProductRepository extends JpaRepository<ProductEntity, String> 
         Long countByCreateDateBetweenAndLstmPredict(LocalDateTime startDate, LocalDateTime endDate, boolean lstmPredict);
         
         // ============================ 전체 상품 화면 =================================
-        // 회원ID, 상품ID, 상품명에 전달받은 검색어가 포함된 상품들을 정렬 조건순으로 반환
+        // 회원ID, 상품ID, 상품명 (3개지 필드 비교)에 전달받은 검색어가 포함된 상품들을 정렬 조건순으로 반환
         @Query("SELECT p FROM ProductEntity p WHERE " +
         "LOWER(p.customerEntity.customerId) LIKE %:searchWord% OR " +  
         "LOWER(p.productId) LIKE %:searchWord% OR " +                 
         "LOWER(p.productName) LIKE %:searchWord%")                    
         List<ProductEntity> findByMultipleFieldsContaining(@Param("searchWord") String searchWord, Sort sort);
+
+        // 회원ID, 상품ID, 상품명, 상품설명 (4가지 필드 비교)에 전달받은 검색어가 포함된 상품들을 정렬 조건순으로 반환
+        @Query("SELECT p FROM ProductEntity p WHERE " +
+        "LOWER(p.customerEntity.customerId) LIKE %:searchWord% OR " +  
+        "LOWER(p.productId) LIKE %:searchWord% OR " +                 
+        "LOWER(p.productDesc) LIKE %:searchWord% OR " +                 
+        "LOWER(p.productName) LIKE %:searchWord%")                    
+        List<ProductEntity> findProductsByMultipleFieldsContaining(@Param("searchWord") String searchWord, Sort sort);
         
         // 전달받은 카테고리에 해당하는 상품 중 회원ID, 상품ID, 상품명에 전달받은 검색어가 포함된 상품들을 정렬 조건순으로 반환
         @Query("SELECT p FROM ProductEntity p WHERE " +
@@ -37,6 +48,7 @@ public interface ProductRepository extends JpaRepository<ProductEntity, String> 
                 @Param("category") ProductCategory category,   // 카테고리 파라미터 추가
                 @Param("searchWord") String searchWord, 
                 Sort sort);
+                
                 
         // ============================ 모델로 이상 상품 판별 화면 =================================
         // lstmPredict 값이 이상, 즉 false(0)인 모든 ProductEntity 리스트로 반환
@@ -68,4 +80,16 @@ public interface ProductRepository extends JpaRepository<ProductEntity, String> 
                         "ORDER BY p.createDate DESC")
         List<ProductEntity> findByCategoryAndMultipleFieldsContainingOrderByCreateDateDesc(
                         @Param("category") ProductCategory category, @Param("searchWord") String searchWord);
+
+        // ============================== 메인페이지 ==================================
+
+        // 상위(조회수, lstmPredictProba, 등록일) 8개 상품 데이터 조회를 위해 Pageable 사용 ( pageable :정렬 조건과 조회 개수 조건 넘김)
+        @Query("SELECT p FROM ProductEntity p JOIN p.customerEntity c " +
+                        "WHERE p.judge = :judge AND c.blacklistCheck = :blacklistCheck")
+        Page<ProductEntity> findTopProductsByJudgeAndBlacklistCheck(
+                        @Param("judge") YesOrNo judge,
+                        @Param("blacklistCheck") YesOrNo blacklistCheck,
+                        Pageable pageable);
+
+
 }

@@ -60,6 +60,8 @@ local.properties
 .target
 .springBeans
 .recommenders/
+.metadata/.plugins/org.eclipse.core.runtime/.settings/org.springframework.ide.eclipse.boot.dash\:Docker.prefs
+
 
 #=> 개발때 사용한 운영체제별 시스템 파일
 .Trashes
@@ -80,4 +82,4 @@ local.properties
 *.tar
 *.zip
 *.gz
->>>>>>> 8f56eeeebe6110c2450d22e56b2a6b03836acdd6
+

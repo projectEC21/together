@@ -84,7 +84,7 @@
 						<!-- Top Right -->
 						<div class="right-content">
 							<ul class="list-main">
-								<li><i class="ti-user"></i> <a href="#">My account</a></li>
+								<li><i class="ti-user"></i> <a th:href="@{/main/myinfo}">My account</a></li>
 								<li><i class="ti-power-off"></i><a th:href="@{/main/login}">Login</a></li>
 								<li><i class="ti-user"></i><a th:href="@{/main/register}">Sign up</a></li>
 								<li><i class="ti-power-off"></i><a th:href="@{/}">Logout</a></li>
@@ -148,7 +148,7 @@
 
 							<!-- 검색창 옆 부분 -->
 							<div class="sinlge-bar inquiry">
-								<a href="#" class="single-icon"><i class="fa fa-envelope-o"></i> <span
+								<a th:href="@{/main/inbox}" class="single-icon"><i class="fa fa-envelope-o"></i> <span
 										class="total-count">3</span></a>
 								<!-- inquiry start -->
 								<div class="inquiry-item">
@@ -217,11 +217,11 @@
 									<div class="nav-inner">
 										<ul class="nav main-menu menu navbar-nav">
 											<li><a th:href="@{/main/list}">All</a></li>
-											<li><a href="#">Food & Beverage</a></li>
-											<li><a href="#">Chemical</a></li>
-											<li><a href="#">Health & Medical</a></li>
-											<li><a href="#">Electronics</a></li>
-											<li><a href="#">Cosmetic</a></li>
+											<li><a th:href="@{/main/list}">Food & Beverage</a></li>
+											<li><a th:href="@{/main/list}">Chemical</a></li>
+											<li><a th:href="@{/main/list}">Health & Medical</a></li>
+											<li><a th:href="@{/main/list}">Electronics</a></li>
+											<li><a th:href="@{/main/list}">Cosmetic</a></li>
 										</ul>
 									</div>
 								</div>
@@ -246,7 +246,7 @@
 					<div class="bread-inner">
 						<ul class="bread-list">
 							<li><a th:href="@{/}">Home<i class="ti-arrow-right"></i></a></li>
-							<li class="active"><a href="#">Login</a></li>
+							<li class="active"><a th:href="@{main/login}">Login</a></li>
 						</ul>
 					</div>
 				</div>

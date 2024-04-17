@@ -1,4 +1,3 @@
-˜∫
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
@@ -12,7 +11,7 @@
 	<!-- Title Tag  -->
 	<title>EC21, Global B2B Marketplace</title>
 	<!-- Favicon -->
-	<link rel="icon" type="image/png" href="@{/main/images/ec21logo.png}">
+	<link rel="icon" type="image/png" th:href="@{/main/images/ec21logo.png}">
 	<!-- Web Font -->
 	<link
 		href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap"
@@ -86,10 +85,10 @@
 						<!-- Top Right -->
 						<div class="right-content">
 							<ul class="list-main">
-								<li><i class="ti-user"></i> <a href="#">My account</a></li>
-								<li><i class="ti-power-off"></i><a href="login.html">Login</a></li>
-								<li><i class="ti-user"></i><a href="register.html">Sign up</a></li>
-								<li><i class="ti-power-off"></i><a href="index.html">Logout</a></li>
+								<li><i class="ti-user"></i> <a th:href="@{/main/myinfo}">My account</a></li>
+								<li><i class="ti-power-off"></i><a th:href="@{/main/login}">Login</a></li>
+								<li><i class="ti-user"></i><a th:href="@{/main/register}">Sign up</a></li>
+								<li><i class="ti-power-off"></i><a th:href="@{/}">Logout</a></li>
 							</ul>
 						</div>
 						<!-- End Top Right -->
@@ -104,7 +103,7 @@
 					<div class="col-lg-2 col-md-2 col-12">
 						<!-- Logo -->
 						<div class="logo">
-							<a href="@{/main/index}"><img src="@{/main/images/ec21logo.png}" alt="logo"></a>
+							<a th:href="@{/}"><img th:src="@{/main/images/ec21logo.png}" alt="logo"></a>
 						</div>
 						<!--/ End Logo -->
 						<!-- Search Form -->
@@ -193,7 +192,7 @@
 										</li>
 									</ul>
 									<div class="bottom">
-										<a href="@{/main/index}" class="btn animate">See more inquiries</a>
+										<a th:href="@{/}" class="btn animate">See more inquiries</a>
 									</div>
 								</div>
 								<!--/ End inquiry Item -->
@@ -218,12 +217,12 @@
 								<div class="navbar-collapse">
 									<div class="nav-inner">
 										<ul class="nav main-menu menu navbar-nav">
-											<li><a href="list">All</a></li>
-											<li><a href="#">Food & Beverage</a></li>
-											<li><a href="#">Chemical</a></li>
-											<li><a href="#">Health & Medical</a></li>
-											<li><a href="#">Electronics</a></li>
-											<li><a href="#">Cosmetic</a></li>
+											<li><a th:href="@{/main/list}">All</a></li>
+											<li><a th:href="@{/main/list}">Food & Beverage</a></li>
+											<li><a th:href="@{/main/list}">Chemical</a></li>
+											<li><a th:href="@{/main/list}">Health & Medical</a></li>
+											<li><a th:href="@{/main/list}">Electronics</a></li>
+											<li><a th:href="@{/main/list}">Cosmetic</a></li>
 										</ul>
 									</div>
 								</div>
@@ -247,8 +246,8 @@
 				<div class="col-12">
 					<div class="bread-inner">
 						<ul class="bread-list">
-							<li><a href="@{/main/index}">Home<i class="ti-arrow-right"></i></a></li>
-							<li class="active"><a href="#">My Page</a></li>
+							<li><a th:href="@{/}">Home<i class="ti-arrow-right"></i></a></li>
+							<li class="active"><a th:href="@{/main/myinfo}">My Page</a></li>
 						</ul>
 					</div>
 				</div>
@@ -266,8 +265,8 @@
 						<div class="single-widget category">
 							<h3 class="title">My Page</h3>
 							<ul class="categor-list">
-								<li><a href="./myInfo.html">info</a></li>
-								<li><a href="./myproducts.html">Products</a></li>
+								<li><a th:href="@{/main/myinfo}">info</a></li>
+								<li><a th:href="@{/main/myproducts}">Products</a></li>
 
 							</ul>
 						</div>
@@ -491,7 +490,7 @@
 						</div>
 						<div class="col-lg-6 col-12">
 							<div class="right">
-								<img src="images/payments.png" alt="#">
+								<img th:src="@{/images/payments.png}" alt="#">
 							</div>
 						</div>
 					</div>
@@ -518,7 +517,7 @@
 	<!-- Magnific Popup JS -->
 	<script th:src="@{/main/js/magnific-popup.js}"></script>
 	<!-- Fancybox JS -->
-	<script src="@{/main/js/facnybox.min.js}"></script>
+	<script th:src="@{/main/js/facnybox.min.js}"></script>
 	<!-- Waypoints JS -->
 	<script th:src="@{/main/js/waypoints.min.js}"></script>
 	<!-- Countdown JS -->
@@ -539,9 +538,9 @@
 	<script th:src="@{/main/js/active.js}"></script>
 
 	<!-- FastClick -->
-	<script src="@{/vendors/fastclick/lib/fastclick.js}"></script>
+	<script th:src="@{/vendors/fastclick/lib/fastclick.js}"></script>
 	<!-- NProgress -->
-	<script src="@{/vendors/nprogress/nprogress.js}"></script>
+	<script th:src="@{/vendors/nprogress/nprogress.js}"></script>
 </body>
 
 </html>
