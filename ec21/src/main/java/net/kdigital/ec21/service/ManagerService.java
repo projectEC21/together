@@ -256,7 +256,7 @@ public class ManagerService {
     /**
      * 검색 기능 추가 ver -> 전달받은 카테고리 및 검색어에 해당하는 데이터 
      * 관리자가 처리하지 않은 신고당한 회원 DTO를 반환하고자 하는데 회원의 기본적인 정보를 같이 담기 위해 새로운 DTO에 담아 리스트를
-     * 반환하는데 
+     * 반환
      * (신고당한 회원 ID, 신고회원테이블ID, 신고당한 회원의 신고당한 횟수, 구분, 이름, 회사명, 부서명, IP, 신고 카테고리, 신고
      * 사유)
      * @param category
@@ -328,7 +328,7 @@ public class ManagerService {
     }
 
     /**
-     *  블랙리스트 테이블에서 전달받은 ID를 삭제하는 함수 
+     *  블랙리스트 테이블에서 전달받은 ID에 해당하는 데이터 삭제하는 함수 
      * @param blacklistId
      */
     @Transactional
@@ -346,6 +346,42 @@ public class ManagerService {
         // 모든 블랙리스트 데이터 가져오기
         List<BlacklistEntity> blacklistEntityList = blacklistRepository.findAll();
         List<ReportedCustomerWithInfoDTO> result = new ArrayList<>();
+
+        blacklistEntityList.forEach((entity) -> {
+            // 회원 정보 가져오기 위한 CustomerEntity 가져오기
+            CustomerEntity customerEntity = customerRepository.findById(entity.getCustomerId()).get();
+
+            result.add(new ReportedCustomerWithInfoDTO(entity.getCustomerId(), entity.getBlacklistId(),
+                    customerEntity.getReportedCnt(), customerEntity.getCustomerGubun(),
+                    customerEntity.getCustomerName(), customerEntity.getCompName(),
+                    customerEntity.getCustomerDepartment(), customerEntity.getRemoteIp(),
+                    entity.getBlackType(), entity.getBlackReason()));
+        });
+
+        return result;
+    }
+
+    /**
+     * 검색 기능 추가 ver -> 전달받은 카테고리 및 검색어에 해당하는 데이터 
+     * 블랙리스트 회원 DTO를 반환하고자 하는데 회원의 기본적인 정보를 같이 담기 위해 새로운 DTO에 담아 리스트를 반환
+     * (신고당한 회원 ID, 신고회원테이블ID, 신고당한 회원의 신고당한 횟수, 구분, 이름, 회사명, 부서명, IP, 신고 카테고리, 신고
+     * 사유)
+     * @param category
+     * @param searchWord
+     * @return
+     */
+    public List<ReportedCustomerWithInfoDTO> selectblackListBySearch(String category, String searchWord) {
+        List<BlacklistEntity> blacklistEntityList = new ArrayList<>();
+        List<ReportedCustomerWithInfoDTO> result = new ArrayList<>();
+        
+        if (category.equals("total")) {
+            // 블랙리스트 중 회원ID, 담당자명, 회사명에 검색어가 포함된 데이터를 inputDate 최신순으로 가져오기
+            blacklistEntityList = blacklistRepository.findByCustomerIdOrCompNameContainingAndOrderByInputDateDesc(searchWord.toLowerCase());
+        }else{
+            // 관리자가 처리하지 않은 데이터 중에 전달받은 카테고리와 검색어에 해당하는 신고받은 회원 (최신 신고날짜 순으로) 가져오기
+            ReportCategory targetCategory = ReportCategory.valueOf(category);
+            blacklistEntityList = blacklistRepository.findBySearchWordAndBlackTypeOrderByInputDateDesc(searchWord,targetCategory);
+        }
 
         blacklistEntityList.forEach((entity) -> {
             // 회원 정보 가져오기 위한 CustomerEntity 가져오기

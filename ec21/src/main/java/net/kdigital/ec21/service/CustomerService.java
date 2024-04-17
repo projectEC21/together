@@ -21,5 +21,14 @@ public class CustomerService {
         CustomerEntity customerEntity = customerRepository.findById(customerId).get();
         return CustomerDTO.toDTO(customerEntity);
     }
+
+    /**
+     * 회원 등록 - 전달 받은 회원DTO를 Entity로 변환하여 DB에 저장하는 함수
+     * @param customerDTO
+     */
+    public void insertCustomer(CustomerDTO customerDTO) {
+        CustomerEntity entity = CustomerEntity.toEntity(customerDTO);
+        customerRepository.save(entity);
+    }
     
 }
