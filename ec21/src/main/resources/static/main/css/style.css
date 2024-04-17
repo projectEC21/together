@@ -2643,6 +2643,7 @@ body {
     line-height: 1px;
 }
 
+/* 사용자 또는 관리자가 조작하는 버튼 */
 .shop.single .btn-edit .user-custom a {
 	border-radius: 25px;
     border: 1px solid #333;
@@ -2650,6 +2651,10 @@ body {
     width: 120px;
     text-align: center;
     background-color: #fff;
+}
+
+.shop.single .btn-edit .user-custom a:hover {
+    color: #fff;
 }
 
 .shop.single .cat {
