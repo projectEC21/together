@@ -51,8 +51,8 @@ public class CustomerController {
         return "/main/inbox";
     }
 
-    @GetMapping("/main/productsDetail")
-    public String productsDetail() {
-        return "/main/productsDetail";
-    }
+//    @GetMapping("/main/productsDetail")
+//    public String productsDetail() {
+//        return "/main/productsDetail";
+//    }
 }
