@@ -10,7 +10,7 @@
   <link rel="icon" type="image/png" th:href="@{/production/images/ec21logo.png}">
 
   <title>ec21 관리자 페이지</title>
-  	<!-- Web Font -->
+  <!-- Web Font -->
 	<link
   href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap"
   rel="stylesheet">
@@ -130,6 +130,7 @@
                   <img th:src="@{/production/images/user.png}" alt="">관리자
                 </a>
                 <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
+                  <a class="dropdown-item" th:href=@{/}><i class="fa fa-home pull-right"></i> Home</a>
                   <a class="dropdown-item" th:href=@{/main/login}><i class="fa fa-sign-out pull-right"></i> Log Out</a>
                 </div>
               </li>
