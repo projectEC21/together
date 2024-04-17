@@ -72,7 +72,7 @@
 				method : "GET"
 			})
 		}
-
+		
 	</script>
 	
 </head>
@@ -107,7 +107,9 @@
 							<ul class="list-main">
 								<li><i class="ti-power-off"></i><a th:href="@{/main/login}">Login</a></li>
 								<li><i class="ti-user"></i><a th:href="@{/main/register}">Sign up</a></li>
-								<li><i class="ti-power-off"></i><a th:href="@{/}">Logout</a></li>
+								<form class="search-form">
+								<li><i class="ti-power-off"></i><a th:href="@{/main/index}">Logout</a></li>
+								</li>
 							</ul>
 						</div>
 						<!-- End Top Right -->
@@ -122,15 +124,15 @@
 					<div class="col-lg-2 col-md-2 col-12">
 						<!-- Logo -->
 						<div class="logo">
-							<a th:href=@{/}><img th:src="@{/main/images/ec21logo.png}" alt="logo"></a>
+							<a th:href="@{/}"><img th:src="@{/main/images/ec21logo.png}" alt="logo"></a>
 						</div>
 						<!--/ End Logo -->
 						<!-- Search Form -->
 						<div class="search-top">
-							<div class="top-search"><a href="#"><i class="ti-search"></i></a></div>
+							<!-- 클릭하면 자바스크립트 함수로 해서 검색어 설정하게 하기 -->
+							<div class="top-search"><a href="javascript:funct()"><i class="ti-search"></i></a></div>
 							<!-- Search Form -->
 							<div class="search-top">
-								<form class="search-form">
 									<input type="text" placeholder="Search here..." name="search">
 									<button value="search" type="submit"><i class="ti-search"></i></button>
 								</form>
@@ -140,7 +142,7 @@
 						<!--/ End Search Form -->
 						<div class="mobile-nav"></div>
 					</div>
-					<!-- 240417 dy : 카테고리 선택 & 검색어 입력 후 버튼 누르면, 해당 카테고리의 목록이 보이도록 -->
+					<!-- 240416 dy : 카테고리 선택 & 검색어 입력 후 버튼 누르면, 해당 카테고리의 목록이 보이도록 -->
 					<div class="col-lg-8 col-md-7 col-12">
 						<div class="search-bar-top">
 							<div class="search-bar">
@@ -153,13 +155,8 @@
 									<option value="COSMETIC">Cosmetic</option>
 								</select>
 								<form>
-									<th:block th:if="${searchWord eq ''}">
-										<input name="search" id="searchWord" placeholder="What are you searching for?" type="search">
-									</th:block>
-									<th:block th:if="${searchWord ne ''}">
-										<input name="search" id="searchWord" th:value="${searchWord}" type="search">
-									</th:block>
-									<button class="btn" id="searchBtn"><i class="ti-search"></i></button>
+									<input name="search" id="searchWord" placeholder="What are you searching for?" type="search">
+									<button class="btnn" id="searchBtn"><i class="ti-search"></i></button>
 								</form>
 							</div>
 						</div>
@@ -168,56 +165,14 @@
 						<div class="right-bar">
 							<!-- Search Form -->
 							<div class="sinlge-bar">
-								<a th:href="@{/main/myproducts}" class="single-icon"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a>
-								</div>
-								<!-- 검색창 옆 부분 -->
-								<div class="sinlge-bar inquiry">
-									<a th:href="@{/main/inbox}" class="single-icon"><i class="fa fa-envelope-o"></i><span class="total-count">NEW</span></a>
-								<!-- inquiry start -->
-								<div class="inquiry-item">
-									<div class="dropdown-cart-header">
-										<span>3 Items</span>
-									</div>
-									<ul class="inquiry-list">
-										<li>
-											<!-- <a class="cart-img" href="#"><img src="images/user.png" alt="profile Image"></a> -->
-											<span>
-												<h4><a href="#">John Smith</a></h4>
-												<span class="time">3 mins ago</span>
-											</span>
-											<span class="message">
-												Film festivals used to be do-or-die moments for movie makers. They were
-												where...
-											</span>
-										</li>
-										<li>
-											<!-- <a class="cart-img" href="#"><img src="images/user.png" alt="profile Image"></a> -->
-											<span>
-												<h4><a href="#">John Smith</a></h4>
-												<span class="time">3 mins ago</span>
-											</span>
-											<span class="message">
-												Film festivals used to be do-or-die moments for movie makers. They were
-												where...
-											</span>
-										</li>
-										<li>
-											<!-- <a class="cart-img" href="#"><img src="images/user.png" alt="profile Image"></a> -->
-											<span>
-												<h4><a href="#">John Smith</a></h4>
-												<span class="time">3 mins ago</span>
-											</span>
-											<span class="message">
-												Film festivals used to be do-or-die moments for movie makers. They were
-												where...
-											</span>
-										</li>
-									</ul>
-									<div class="bottom">
-										<a href="@{/}" class="btn animate">See more inquiries</a>
-									</div>
-								</div>
-								<!--/ End inquiry Item -->
+								<a th:href="@{/main/myproducts}" class="single-icon"><i class="fa fa-user-circle-o"
+										aria-hidden="true"></i></a>
+							</div>
+
+							<!-- 검색창 옆 부분 인콰이어리 new 로만 보이게 하고 인콰이어리 페이지로 넘어가게 하기 -->
+							<div class="sinlge-bar inquiry">
+								<a th:href="@{/main/inbox}" class="single-icon"><i class="fa fa-envelope-o"></i> <span
+										class="total-count">new</span></a>
 							</div>
 						</div>
 					</div>
@@ -634,6 +589,9 @@
 	<script th:src="@{/main/js/easing.js}"></script>
 	<!-- Active JS -->
 	<script th:src="@{/main/js/active.js}"></script>
+	<!-- myFunction JS : 필요한 자바 스크립트 이리로 넣어서 사용하면 됩니다 -->
+	<script th:src="@{/main/js/myFunction.js}"></script>
+
 </body>
 
 </html>

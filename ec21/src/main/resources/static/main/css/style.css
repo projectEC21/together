@@ -3422,37 +3422,38 @@ body {
 	font-weight: 500;
 }
 
-.shop.login .login-form h2 {
-	position:relative;
-	font-size: 35px;
-	color: #333;
-	font-weight: 400;
-	line-height: 27px;
-	text-transform: uppercase;
-	margin-bottom: 12px;
-	padding-bottom: 20px;
-	text-align: center;
+.shop.login h2 {
+	position: relative;
+    font-size: 40px;
+    color: #333;
+    font-weight: 400;
+    text-transform: uppercase;
+    margin: 12px 0 0 -100px;
+    padding-bottom: 20px;
+    text-align: center;
 }
-.shop.login .login-form h2:before{
+.shop.login h2:before{
 	position:absolute;
 	content:"";
 	left:50%;
 	bottom:0;
 	height:2px;
 	width:50px;
-	background:#F7941D;
+	background:#0072ab;
 	margin-left:-25px;
 }
-.shop.login .login-form p {
+
+.shop.login p {
 	font-size: 14px;
 	color: #333;
 	font-weight: 400;
 	text-align: center;
-	margin-bottom:50px;
+	margin: 12px 0 50px -100px;
 }
 
 .form-group span{
-	font-size: 12px;
+	display: inline-block;
+	font-size: 14px;
 	color: #6a6a6a;
 	font-weight: 400;
 }
@@ -3465,24 +3466,24 @@ body {
 	font-size: 15px;
 }
 .shop.login .form .form-group input {
-	width: 100%;
+	width: 90%;
 	height: 45px;
 	line-height: 50px;
 	padding: 0 20px;
 	border-radius: 3px;
-	border-radius: 0px;
+	/* border-radius: 0px; */
 	color:#333 !important;
 	border: none;
 	background:#F6F7FB;
+	display: block;
 }
 
 .shop.login .form .form-group .short-input {
-    width: 20%; 
-    height: 25px;
+	display: inline-block;
+    width: 30%;
+    height: 45px;
     line-height: 50px;
     padding: 0 20px;
-    border-radius: 3px;
-	border-radius: 0px;
     color: #333 !important;
     border: none;
     background: #F6F7FB;
@@ -3533,13 +3534,13 @@ body {
 	margin: 0;
 }
 .shop.login .form button {
-	border: none;
-	margin-top: 20px;
+	
 }
 .shop.login .form .btn {
 	display: inline-block;
-	margin-right: 10px;
+	margin:40px 0;
 	height: 46px;
+	border: none;
 	color: #fff;
 	line-height: 20px;
 }
