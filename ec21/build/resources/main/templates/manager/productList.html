@@ -18,18 +18,18 @@
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap" rel="stylesheet">
 
   <!-- Bootstrap -->
-  <link th:href="@{/vendors/bootstrap/dist/css/bootstrap.min.css}" rel="stylesheet">
+  <link th:href="@{/vendors/bootstrap/dist/css/bootstrap.css}" rel="stylesheet">
   <!-- Font Awesome -->
-  <link th:href="@{/vendors/font-awesome/css/font-awesome.min.css}" rel="stylesheet">
+  <link th:href="@{/vendors/font-awesome/css/font-awesome.css}" rel="stylesheet">
   <!-- NProgress -->
   <link th:href="@{/vendors/nprogress/nprogress.css}" rel="stylesheet">
   <!-- iCheck -->
   <link th:href="@{/vendors/iCheck/skins/flat/green.css}" rel="stylesheet">
 
   <!-- bootstrap-progressbar -->
-  <link th:href="@{/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css}" rel="stylesheet">
+  <link th:href="@{/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.css}" rel="stylesheet">
   <!-- JQVMap -->
-  <link th:href="@{/vendors/jqvmap/dist/jqvmap.min.css}" rel="stylesheet">
+  <link th:href="@{/vendors/jqvmap/dist/jqvmap.css}" rel="stylesheet">
   <!-- bootstrap-daterangepicker -->
   <link th:href="@{/vendors/bootstrap-daterangepicker/daterangepicker.css}" rel="stylesheet">
 
@@ -145,7 +145,6 @@
                   <img th:src=@{/production/images/user.png} alt="">관리자
                 </a>
                 <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
-                  <a class="dropdown-item" th:href=@{/}><i class="fa fa-home pull-right"></i> Home</a>
                   <a class="dropdown-item" th:href="@{/main/login}"><i class="fa fa-sign-out pull-right"></i> Log
                     Out</a>
                 </div>
@@ -208,7 +207,7 @@
                   <div class="row">
                     <div class="col-sm-12">
                       <div class="card-box table-responsive">
-                        <table id="datatable" class="table table-striped  jambo_table dt-responsive nowrap" cellspacing="0" width="100%"> 
+                        <table id="datatable-responsive" class="table table-striped  jambo_table dt-responsive nowrap" cellspacing="0" width="100%"> 
                           <!-- table-bordered dataTable no-footer -->
                           <thead>
                             <tr class="headings">
@@ -231,8 +230,8 @@
                               <tr class="even pointer" th:each="product:${list}">
                                 <td class=" " th:text="${product.customerId}">121000040</td>
                                 <td class=" " th:text="${product.productId}"><a
-                                    th:href="@{/manager/productDetail}">3248202404071536</a></td>
-                                <td class=" "><a th:href="@{/manager/productDetail}" th:text="${product.productName}"> 
+                                    th:href="@{/main/productDetail}">3248202404071536</a></td>
+                                <td class=" "><a th:href="@{/main/productDetail}" th:text="${product.productName}"> 
                                   LOWA Men’s Renegade GTX Mid Hiking Boots Review</a></td>
                                 <td class=" " th:text="${product.category}">신발</td>
                                 <th:block th:if="${product.lstmPredict==false}">
@@ -242,7 +241,7 @@
                                   <td class=" "> 정상</td>
                                 </th:block>
                                 <td class="a-right a-right " th:text="${product.judge}">이상</td>
-                                <td class=" last"><input type="button" class="btn btn-info btn-xs" value="정상"><input type="button" class="btn btn-danger btn-xs" value="이상"></a></td>
+                                <td class=" last"><input type="button" class="btn-hover color-9" value="정상"><input type="button" class="btn-hover color-11" value="이상"></a></td>
                               </tr>
                           </tbody>
                         </table>
@@ -261,7 +260,7 @@
   </div>
 
   <!-- jQuery -->
-  <script th:src="@{/vendors/jquery/dist/jquery.min.js}"></script>
+  <script th:src="@{/vendors/jquery/dist/jquery.js}"></script>
   <!-- Bootstrap -->
   <script th:src="@{/vendors/bootstrap/dist/js/bootstrap.bundle.min.js}"></script>
   <!-- FastClick -->
@@ -269,12 +268,12 @@
   <!-- NProgress -->
   <script th:src="@{/vendors/nprogress/nprogress.js}"></script>
   <!-- iCheck -->
-  <script th:src="@{/vendors/iCheck/icheck.min.js}"></script>
+  <script th:src="@{/vendors/iCheck/icheck.js}"></script>
   <!-- Datatables -->
-  <script th:src="@{/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js}"></script>
+  <script th:src="@{/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.js}"></script>
 
   <!-- Custom Theme Scripts -->
-  <script th:src="@{/build/js/custom.min.js}"></script>
+  <script th:src="@{/build/js/custom.js}"></script>
 </body>
 
 </html>
