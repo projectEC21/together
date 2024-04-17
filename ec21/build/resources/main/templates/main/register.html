@@ -49,6 +49,7 @@
 	<link rel="stylesheet" th:href="@{/main/css/responsive.css}">
 
 	<!-- Color CSS -->
+	<!-- <link rel="stylesheet" href="css/color/color1.css"> -->
 	<link rel="stylesheet" th:href="@{/main/css/color/color2.css}">
 
 	<link rel="stylesheet" href="#" id="colors">
@@ -84,10 +85,10 @@
 						<!-- Top Right -->
 						<div class="right-content">
 							<ul class="list-main">
-								<li><i class="ti-user"></i> <a href="#">My account</a></li>
 								<li><i class="ti-power-off"></i><a th:href="@{/main/login}">Login</a></li>
 								<li><i class="ti-user"></i><a th:href="@{/main/register}">Sign up</a></li>
-								<li><i class="ti-power-off"></i><a th:href="@{/}">Logout</a></li>
+								<li><i class="ti-power-off"></i><a th:href="@{/main/index}">Logout</a></li>
+								</li>
 							</ul>
 						</div>
 						<!-- End Top Right -->
@@ -107,7 +108,7 @@
 						<!--/ End Logo -->
 						<!-- Search Form -->
 						<div class="search-top">
-							<div class="top-search"><a href="#0"><i class="ti-search"></i></a></div>
+							<div class="top-search"><a href="#"><i class="ti-search"></i></a></div>
 							<!-- Search Form -->
 							<div class="search-top">
 								<form class="search-form">
@@ -142,59 +143,14 @@
 						<div class="right-bar">
 							<!-- Search Form -->
 							<div class="sinlge-bar">
-								<a th:href="@{/main/myinfo}" class="single-icon"><i class="fa fa-user-circle-o"
+								<a th:href="@{/main/myproducts}" class="single-icon"><i class="fa fa-user-circle-o"
 										aria-hidden="true"></i></a>
 							</div>
 
-							<!-- 검색창 옆 부분 -->
+							<!-- 검색창 옆 부분 인콰이어리 new 로만 보이게 하고 인콰이어리 페이지로 넘어가게 하기 -->
 							<div class="sinlge-bar inquiry">
-								<a href="#" class="single-icon"><i class="fa fa-envelope-o"></i> <span
-										class="total-count">3</span></a>
-								<!-- inquiry start -->
-								<div class="inquiry-item">
-									<div class="dropdown-cart-header">
-										<span>3 Items</span>
-									</div>
-									<ul class="inquiry-list">
-										<li>
-											<!-- <a class="cart-img" href="#"><img src="images/user.png" alt="profile Image"></a> -->
-											<span>
-												<h4><a href="#">John Smith</a></h4>
-												<span class="time">3 mins ago</span>
-											</span>
-											<span class="message">
-												Film festivals used to be do-or-die moments for movie makers. They were
-												where...
-											</span>
-										</li>
-										<li>
-											<!-- <a class="cart-img" href="#"><img src="images/user.png" alt="profile Image"></a> -->
-											<span>
-												<h4><a href="#">John Smith</a></h4>
-												<span class="time">3 mins ago</span>
-											</span>
-											<span class="message">
-												Film festivals used to be do-or-die moments for movie makers. They were
-												where...
-											</span>
-										</li>
-										<li>
-											<!-- <a class="cart-img" href="#"><img src="images/user.png" alt="profile Image"></a> -->
-											<span>
-												<h4><a href="#">John Smith</a></h4>
-												<span class="time">3 mins ago</span>
-											</span>
-											<span class="message">
-												Film festivals used to be do-or-die moments for movie makers. They were
-												where...
-											</span>
-										</li>
-									</ul>
-									<div class="bottom">
-										<a th:href="@{/}" class="btn animate">See more inquiries</a>
-									</div>
-								</div>
-								<!--/ End inquiry Item -->
+								<a th:href="@{/main/inbox}" class="single-icon"><i class="fa fa-envelope-o"></i> <span
+										class="total-count">new</span></a>
 							</div>
 						</div>
 					</div>
@@ -259,7 +215,7 @@
 	<section class="shop login section">
 		<div class="container">
 			<div class="row">
-				<div class="col-lg-6 offset-lg-3 col-12">
+				<div class="col-lg-9 offset-lg-2 col-12">
 					<div class="login-form">
 						<h2>Register</h2>
 						<p>
@@ -280,7 +236,7 @@
 										<label class="remoteIP">Business Location<span>*</span></label>
 										<div>
 											Your current IP address is <input type="text" name="remoteIP"
-												class="short-input" required="required" readonly> <br> <br>
+												class="short-input" required="required" readonly>
 											which is accessing from <input type="text" name="country"
 												class="short-input" required="required" readonly>. <br>
 											Please select your location exactly. You cannot change your country once
@@ -323,8 +279,10 @@
 									<div class="form-group">
 										<label>Phone<span>*</span></label>
 										<input type="text" name="phone" placeholder="" required="required">
-										<span>Please enter a valid phone number.<br>
-											The number you entered will be a primary contact number on EC21.com</span>
+										<span>
+											Please enter a valid phone number.
+											The number you entered will be a primary contact number on EC21.com
+										</span>
 									</div>
 								</div>
 
@@ -364,7 +322,7 @@
 								<div class="col-12">
 									<div class="checkbox">
 										<label class="checkbox-inline" for="2"><input name="news" id="2"
-												type="checkbox">I Agree To EC21 Terms of Services, Privacy Policy, And
+												type="checkbox" required>I Agree To EC21 Terms of Services, Privacy Policy, And
 											Receive Emails From EC21 And Its Partners Related To Their Services,
 											Promotions And Business Matching.</label>
 									</div>
@@ -373,7 +331,6 @@
 								<div class="col-12">
 									<div class="form-group login-btn">
 										<button class="btn" type="submit">Create My Account</button>
-										<!-- <a href="login.html" class="btn">Login</a> -->
 									</div>
 								</div>
 							</div>
