@@ -52,7 +52,28 @@
 	<!-- Color CSS -->
 	<link rel="stylesheet" th:href="@{/main/css/color/color2.css}">
 
-	<link rel="stylesheet" href="#" id="colors">
+	<link rel="stylesheet" href="" id="colors">
+
+	<!-- 240417 dy : JQuery 파일 추가 및 ajax 작업 -->
+	<script th:src="@{/script/jquery-3.7.1.min.js}"></script>
+	<!-- 240417 dy : 검색어 입력 후 돋보기 클릭 시 /main/list 요청-->
+	<script>
+		$(function () {
+			$("#searchBtn").on("click",search);
+		})
+
+		function search() {
+			let category = $("#category").val();
+			let searchWord = $("#searchWord").val();
+
+			$.ajax({
+				url:"/main/list",
+				data : {"category":category, "searchWord":searchWord},
+				method : "GET"
+			})
+		}
+
+	</script>
 	
 </head>
 <body class="js">
@@ -119,20 +140,26 @@
 						<!--/ End Search Form -->
 						<div class="mobile-nav"></div>
 					</div>
+					<!-- 240417 dy : 카테고리 선택 & 검색어 입력 후 버튼 누르면, 해당 카테고리의 목록이 보이도록 -->
 					<div class="col-lg-8 col-md-7 col-12">
 						<div class="search-bar-top">
 							<div class="search-bar">
-								<select>
-									<option selected="selected">All Category</option>
-									<option>Food & Beverage</option>
-									<option>Chemical</option>
-									<option>Health & Medical</option>
-									<option>Electronics</option>
-									<option>Cosmetic</option>
+								<select id="category" name="category">
+									<option value="total" selected="selected">All Category</option>
+									<option value="FOOD_BEVERAGE">Food & Beverage</option>
+									<option value="CHEMICAL">Chemical</option>
+									<option value="HEALTH_MEDICAL">Health & Medical</option>
+									<option value="ELECTRONIC">Electronics</option>
+									<option value="COSMETIC">Cosmetic</option>
 								</select>
 								<form>
-									<input name="search" placeholder="What are you searching for?" type="search">
-									<button class="btn"><i class="ti-search"></i></button>
+									<th:block th:if="${searchWord eq ''}">
+										<input name="search" id="searchWord" placeholder="What are you searching for?" type="search">
+									</th:block>
+									<th:block th:if="${searchWord ne ''}">
+										<input name="search" id="searchWord" th:value="${searchWord}" type="search">
+									</th:block>
+									<button class="btn" id="searchBtn"><i class="ti-search"></i></button>
 								</form>
 							</div>
 						</div>
@@ -142,10 +169,55 @@
 							<!-- Search Form -->
 							<div class="sinlge-bar">
 								<a th:href="@{/main/myproducts}" class="single-icon"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a>
-							</div>
-							<!-- 검색창 옆 부분 -->
-							<div class="sinlge-bar inquiry">
-								<a th:href="@{/main/inbox}" class="single-icon"><i class="fa fa-envelope-o"></i><span class="total-count">NEW</span></a>
+								</div>
+								<!-- 검색창 옆 부분 -->
+								<div class="sinlge-bar inquiry">
+									<a th:href="@{/main/inbox}" class="single-icon"><i class="fa fa-envelope-o"></i><span class="total-count">NEW</span></a>
+								<!-- inquiry start -->
+								<div class="inquiry-item">
+									<div class="dropdown-cart-header">
+										<span>3 Items</span>
+									</div>
+									<ul class="inquiry-list">
+										<li>
+											<!-- <a class="cart-img" href="#"><img src="images/user.png" alt="profile Image"></a> -->
+											<span>
+												<h4><a href="#">John Smith</a></h4>
+												<span class="time">3 mins ago</span>
+											</span>
+											<span class="message">
+												Film festivals used to be do-or-die moments for movie makers. They were
+												where...
+											</span>
+										</li>
+										<li>
+											<!-- <a class="cart-img" href="#"><img src="images/user.png" alt="profile Image"></a> -->
+											<span>
+												<h4><a href="#">John Smith</a></h4>
+												<span class="time">3 mins ago</span>
+											</span>
+											<span class="message">
+												Film festivals used to be do-or-die moments for movie makers. They were
+												where...
+											</span>
+										</li>
+										<li>
+											<!-- <a class="cart-img" href="#"><img src="images/user.png" alt="profile Image"></a> -->
+											<span>
+												<h4><a href="#">John Smith</a></h4>
+												<span class="time">3 mins ago</span>
+											</span>
+											<span class="message">
+												Film festivals used to be do-or-die moments for movie makers. They were
+												where...
+											</span>
+										</li>
+									</ul>
+									<div class="bottom">
+										<a href="@{/}" class="btn animate">See more inquiries</a>
+									</div>
+								</div>
+								<!--/ End inquiry Item -->
 							</div>
 						</div>
 					</div>
@@ -166,13 +238,14 @@
 								<nav class="navbar navbar-expand-lg">
 									<div class="navbar-collapse">	
 										<div class="nav-inner">	
+											<!-- 240417 dy : 카테고리 별 상품 목록 요청(검색어X) -->
 											<ul class="nav main-menu menu navbar-nav">
-												<li><a href="./list.html?title=All">All</a></li>												
-												<li><a href="#">Food & Beverage</a></li>
-												<li><a href="#">Chemical</a></li>
-												<li><a href="#">Health & Medical</a></li>									
-												<li><a href="#">Electronics</a></li>
-												<li><a href="#">Cosmetic</a></li>
+												<li><a th:href="@{/main/list(category=total)}">All</a></li>
+												<li><a th:href="@{/main/list(category=FOOD_BEVERAGE)}">Food & Beverage</a></li>
+												<li><a th:href="@{/main/list(category=CHEMICAL)}">Chemical</a></li>
+												<li><a th:href="@{/main/list(category=HEALTH_MEDICAL)}">Health & Medical</a></li>
+												<li><a th:href="@{/main/list(category=ELECTRONIC)}">Electronics</a></li>
+												<li><a th:href="@{/main/list(category=COSMETIC)}">Cosmetic</a></li>
 											</ul>
 										</div>
 									</div>
@@ -197,7 +270,7 @@
 							<ul class="bread-list">
 								<li><a th:href="@{/main/index}">Home<i class="ti-arrow-right"></i></a></li>
 								<li class="active"><a th:href="@{/main/list}">Products<i class="ti-arrow-right"></i></a></li>
-								<li class="active"><a th:href="@{/main/productsDetail}">상품명</a></li> 
+								<li class="active"><a th:href="@{/main/productsDetail(productId=${product.productId})}">[[${product.productName}]]</a></li> 
 								<!-- 상품명은 th로 넣기 -->
 							</ul>
 						</div>
@@ -227,7 +300,7 @@
 									<div class="col-lg-6 col-12">
 										<!-- Product Slider -->
 										<div class="product-gallery">
-											<!-- Images slider -->
+											<!-- Images slider : 대표이미지 넣는 곳인규? -->
 											<div class="flexslider-thumbnails">
 												<ul class="slides">
 													<li data-thumb="https://via.placeholder.com/450x320" rel="adjustX:10, adjustY:">
@@ -241,17 +314,18 @@
 									</div>
 									<div class="col-lg-6 col-12">
 										<div class="product-desc">
+											<!-- 240417 dy : model에 담아온 productDTO 타임리프로 뿌려줌! -->
 											<!-- 상단 부분 -->
 											<div class="short">
-												<h4>Automotive Micro Relay JTKW</h4>
-												<div><h6 class="price">Price : <span>$70.00</span></h6></div>
-												<div><h6 class="origin">Origin : <span>China</span></h6></div>
-												<div><h6 class="quantity">Minimum Order Quantity : <span>2,000kg</span></h6></div>
+												<h4 th:text="${product.productName}">Automotive Micro Relay JTKW</h4>
+												<div><h6 class="price">Price : <span>$[[${product.price}]]</span></h6></div>
+												<div><h6 class="origin">Origin : <span>[[${product.origin}]]</span></h6></div>
+												<div><h6 class="quantity">Minimum Order Quantity : <span>[[${product.moq}]] [[${product.unit}]]</span></h6></div>
 											</div>
 											<!--/ End Description -->
 
-											<!-- inquiry 
-													: 내가아닌 사용자에게만 보이도록 한다.-->
+											<!-- inquiry : 내가아닌 사용자에게만 보이도록 한다. (아래처럼 로그인 id와 상품을 작성한 회원id 비교하면 될듯?)-->
+											<!-- <th:block th:if="${product.customerId}!=${#authentication.name}"></th:block> -->
 											<div class="add-to-cart">
 												<button class="btn" data-toggle="modal" data-target="#myModal">
 													Inquire Now  <i class="fa fa-envelope-o"></i>
@@ -349,7 +423,7 @@
 															<div class="col-12">
 																<div class="single-des">
 																	<!-- 상품설명 적은 곳 넣는 부분 -->
-																	<span class="productDesc">
+																	<span class="productDesc" th:text="${product.productDesc}">
 																		simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
 																		when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, 
 																		but also the leap into electronic typesetting, remaining essentially unchanged. 
@@ -372,7 +446,7 @@
 		<!--/ End Shop Single -->
 		
 		<!-- Start Most Popular -->
-	<div class="product-area most-popular related-product section">
+	<div class="product-area most-popular related-product section" >
         <div class="container">
             <div class="row">
 				<div class="col-12">
@@ -381,77 +455,39 @@
 					</div>
 				</div>
             </div>
-			<!-- 이 부분은 비어 보이길래 해당 카테 고리 안에 최근순으로 넣으면 됩니다 -->
+			<!-- 이 부분은 비어 보이길래 해당 카테 고리 안에 최근순으로 넣으면 됩니다 : 네엡!-->
+			<!-- 240417 dy : 해당 상품과 동일한 카테고리에 해당하는 상품 top5 꽂아넣기!-->
             <div class="row">
                 <div class="col-12">
-                    <div class="owl-carousel popular-slider">
+                    <div class="owl-carousel popular-slider" id="result">
 						<!-- Start Single Product -->
-						<div class="single-product">
+						<div class="single-product" th:each="dto:${list}">
 							<div class="product-img">
-								<a th:href="@{/main/productsDetail}">
+								<a th:href="@{/main/productsDetail(productId=${dto.productId})}">
 									<img class="default-img" src="https://via.placeholder.com/550x750" alt="#">
 									<img class="hover-img" src="https://via.placeholder.com/550x750" alt="#">
 								</a>
+								<div class="button-head">
+									<div class="product-action">
+										<a data-toggle="modal" data-target="#exampleModal" title="Quick View"
+											href="#"><i class=" ti-eye"></i><span>Quick Shop</span></a>
+										<a title="Wishlist" href="#"><i class=" ti-heart "></i><span>Add to
+												Wishlist</span></a>
+										<a title="Compare" href="#"><i class="ti-bar-chart-alt"></i><span>Add to
+												Compare</span></a>
+									</div>
+									<div class="product-action-2">
+										<a title="Add to cart" href="#">Add to cart</a>
+									</div>
+								</div>
 							</div>
 							<div class="product-content">
-								<h3><a th:href="@{/main/productsDetail}">Black Sunglass For Women</a></h3>
-								<div class="productName"><span>검정 선글라스</span></div>
+								<h3><a th:href="@{/main/productsDetail(productId=${dto.productId})}">[[${dto.productName}]]</a></h3>
 								<div class="product-price">
-									<span>$60.00</span>
+									<span>$[[${dto.price}]]</span>
 								</div>
 							</div>
 						</div>
-						<!-- End Single Product -->
-						<!-- Start Single Product -->
-						<div class="single-product">
-                            <div class="product-img">
-                                <a th:href="@{/main/productsDetail}">
-                                    <img class="default-img" src="https://via.placeholder.com/550x750" alt="#">
-                                    <img class="hover-img" src="https://via.placeholder.com/550x750" alt="#">
-                                </a>
-                            </div>
-                            <div class="product-content">
-                                <h3><a th:href="@{/main/productsDetail}">Women Hot Collection</a></h3>
-								<div class="productName"><span>따뜻 컬렉션</span></div>
-                                <div class="product-price">
-                                    <span>$50.00</span>
-                                </div>
-                            </div>
-                        </div>
-						<!-- End Single Product -->
-						<!-- Start Single Product -->
-						<div class="single-product">
-                            <div class="product-img">
-                                <a th:href="@{/main/productsDetail}">
-                                    <img class="default-img" src="https://via.placeholder.com/550x750" alt="#">
-                                    <img class="hover-img" src="https://via.placeholder.com/550x750" alt="#">
-                                </a>
-                            </div>
-                            <div class="product-content">
-                                <h3><a th:href="@{/main/productsDetail}">Awesome Pink Show</a></h3>
-								<div class="productName"><span>놀라운 핑크핑크 쇼</span></div>
-                                <div class="product-price">
-                                    <span>$50.00</span>
-                                </div>
-                            </div>
-                        </div>
-						<!-- End Single Product -->
-						<!-- Start Single Product -->
-						<div class="single-product">
-                            <div class="product-img">
-                                <a th:href="@{/main/productsDetail}">
-                                    <img class="default-img" src="https://via.placeholder.com/550x750" alt="#">
-                                    <img class="hover-img" src="https://via.placeholder.com/550x750" alt="#">
-                                </a>
-							</div>
-							<div class="product-content">
-                                <h3><a th:href="@{/main/productsDetail}">Awesome Pink Show</a></h3>
-								<div class="productName"><span>멋진 핑크핑크 쇼</span></div>
-                                <div class="product-price">
-                                    <span>$50.00</span>
-                                </div>
-                            </div>
-                        </div>
 						<!-- End Single Product -->
                     </div>
                 </div>
@@ -552,7 +588,7 @@
 						</div>
 						<div class="col-lg-6 col-12">
 							<div class="right">
-								<img th:src="@{images/payments.png}" alt="#">
+								<img th:src="@{/images/payments.png}" alt="#">
 							</div>
 						</div>
 					</div>
@@ -569,7 +605,7 @@
 	<!-- Popper JS -->
 	<script th:src="@{/main/js/popper.min.js}"></script>
 	<!-- Bootstrap JS -->
-	<script th:src="@{static/main/js/bootstrap.min.js}"></script>
+	<script th:src="@{/static/main/js/bootstrap.min.js}"></script>
 	<!-- Color JS -->
 	<script th:src="@{/main/js/colors.js}"></script>
 	<!-- Slicknav JS -->
