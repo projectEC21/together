@@ -10,70 +10,186 @@
   <link rel="icon" type="image/png" th:href="@{/production/images/ec21logo.png}">
 
   <title>ec21 관리자 페이지</title>
+
+  <!-- Web Font -->
   	<!-- Web Font -->
-		<!-- Web Font -->
-    <link
-		href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap"
-		rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap" rel="stylesheet">
+	<link
+  href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap"
+  rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap" rel="stylesheet">
 
   <!-- Bootstrap -->
-  <link th:href="@{/vendors/bootstrap/dist/css/bootstrap.css}" rel="stylesheet">
+  <link th:href="@{/vendors/bootstrap/dist/css/bootstrap.min.css}" rel="stylesheet">
   <!-- Font Awesome -->
-  <link th:href="@{/vendors/font-awesome/css/font-awesome.css}" rel="stylesheet">
+  <link th:href="@{/vendors/font-awesome/css/font-awesome.min.css}" rel="stylesheet">
   <!-- NProgress -->
   <link th:href="@{/vendors/nprogress/nprogress.css}" rel="stylesheet">
   <!-- iCheck -->
   <link th:href="@{/vendors/iCheck/skins/flat/green.css}" rel="stylesheet">
 
   <!-- bootstrap-progressbar -->
-  <link th:href="@{/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.css}" rel="stylesheet">
+  <link th:href="@{/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css}" rel="stylesheet">
   <!-- JQVMap -->
-  <link th:href="@{/vendors/jqvmap/dist/jqvmap.css}" rel="stylesheet">
+  <link th:href="@{/vendors/jqvmap/dist/jqvmap.min.css}" rel="stylesheet" />
   <!-- bootstrap-daterangepicker -->
   <link th:href="@{/vendors/bootstrap-daterangepicker/daterangepicker.css}" rel="stylesheet">
 
   <!-- Custom Theme Style -->
   <link th:href="@{/build/css/custom.css}" rel="stylesheet">
 
-  <!-- 240414 dy : JQuery 파일 추가 및 list 관련 ajax 처리 -->
-  <script th:src="@{/script/jquery-3.7.1.js}"></script>
+
+  <!-- 240414 dy : JQuery 파일 추가 및 ajax 추가 -->
+  <!-- 240415 dy : 카테고리와 검색어 기능 구현 -->
+  <script th:src="@{/script/jquery-3.7.1.min.js}"></script>
   <script>
-    $(function () {
-      $("#category").on("change",search);
-      $("#searchWord").on("keyup",search);
-      init();
-    })
 
-    function search() {
-      let category = $("#category").val();
-      let searchWord = $("#searchWord").val();
+    //  =========== 240417 iy: modalBtn 클릭시 모달창 생성 ===========
+    // HTML 문서의 로딩이 완료되었을 때, 해당 함수를 실행
+    document.addEventListener("DOMContentLoaded", function () {
+      // elements
+      var modalBtn = document.getElementById("modalBtn");
+      var modal = document.getElementById("myModal");
+      var closeBtn = document.getElementById("closeBtn");
 
-      $.ajax({
-        url:"/manager/productList/getList",
-        data:{"category":category,"searchWord":searchWord},
-        method:"GET",
-        success : function (list) {
-          $("#result").replaceWith(list);
+      // functions
+      function toggleModal() {
+        modal.classList.toggle("show");
+      }
+
+      // events
+      modalBtn.addEventListener("click", toggleModal);
+      closeBtn.addEventListener("click", toggleModal);
+
+      window.addEventListener("click", function (event) {
+        // 모달의 검은색 배경 부분이 클릭된 경우 닫히도록 하는 코드
+        if (event.target === modal) {
+          toggleModal();
         }
-      })
+      });
 
-    }
+      // 기타 radio 버튼이 선택되었을 때 텍스트 입력란을 나타내도록 하는 코드
+      var etcRadio = document.getElementById("etcRadio");
+      var etcReasonInput = document.getElementById("etcReasonInput");
 
-    function init() {
-      $.ajax({
-        url:"/manager/productList/getList",
-        data:{"category":"total","searchWord":""},
-        method:"GET",
-        success : function (list) {
-          $("#result").replaceWith(list);
+      etcRadio.addEventListener("change", function() {
+        if (etcRadio.checked) {
+          etcReasonInput.style.display = "inline-block";
+          etcReasonInput.required = true; // 텍스트 입력란이 필수 입력 필드로 설정됨
+        } else {
+          etcReasonInput.style.display = "none";
+          etcReasonInput.required = false; // 텍스트 입력란이 필수 입력 필드가 아님
         }
-      })
-    }
+      });
+
+      // 다음 버튼 클릭 시 상세 사유 입력 여부 확인
+      var blackButton = document.getElementById("blackButton");
+      blackButton.addEventListener("click", function() {
+        if (etcRadio.checked && etcReasonInput.value.trim() === "") {
+          alert("기타 사유를 입력해주세요.");
+        } else {
+          // 다음 동작 수행
+          // 여기서는 모달을 닫는 동작만 수행하도록 함
+          $('#myModal').modal('hide');
+        }
+      });
+    });
 
   </script>
 </head>
+
+<!-- 모달창 -->
+<!-- 모달 컨테이너 -->
+<div class="modal" id="myModal">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+    <!-- 모달창의 헤더부분의 시작 -->
+      <div class="modal-header">
+        <h4 class="modal-title">상세 페이지</h4>
+      </div>
+
+      <!-- 모달창의 헤더부분의 끝 -->
+      <!-- 모달창의 바디부분의 시작 바디부분이 모달창에서 표시하고자하는 컨텐츠를 입력한다.-->
+      <div class="modal-body">
+        <div class="info">
+          <ul>
+            <li>
+              <span class="dtr-title">회사명</span>
+              <span>어쩌구</span>
+            </li>
+            <li>
+              <span class="dtr-title">URL</span>
+              <span>어쩌구</span>
+            </li>
+            <li>
+              <span class="dtr-title">회사이메일</span>
+              <span>어쩌구</span>
+            </li>
+            <li>
+              <span class="dtr-title">담당자</span>
+              <span>어쩌구</span>
+            </li>
+            <li>
+              <span class="dtr-title">회사 전화번호</span>
+              <span>어쩌구</span>
+            </li>
+            <li>
+              <span class="dtr-title">회사주소</span>
+              <span>어쩌구</span>
+            </li>
+        </div>
+        
+        <div class="card">
+          <div class="card-body">
+            
+            <table class="table table-striped jambo_table bulk_action">
+              <thead>
+                <tr>
+                  <th>상품ID</th>
+                  <th>상품카테고리</th>
+                  <th>상품명</th>
+                  <th>현상태</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr>
+                  <td>293814</td>
+                  <td>food</td>
+                  <td>당근</td>
+                  <td>정상</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- 모달 바디 -->
+    <div class="modal-body">
+      <!-- 기타 사유 입력 폼 -->
+      <form>
+        <input type="radio" name="reason" value="drug">마약<br>
+        <input type="radio" name="reason" value="intellectual_property">지적재산권 침해<br>
+        <input type="radio" name="reason" value="spam">다발성 이메일<br>
+        <input type="radio" name="reason" value="etc" id="etcRadio">기타<br>
+        <input type="text" name="etcReason" id="etcReasonInput" placeholder="기타 사유 입력" style="display: none;">
+        <!-- 기타 사유 입력 에러 메시지 -->
+        <div id="etcReasonError" style="color: red; display: none;">기타 사유를 입력해주세요.</div>
+        <input type="button" value="블랙" onclick="if (etcRadio.checked && etcReasonInput.value.trim() === '') { alert('기타 사유를 입력해주세요.'); } else { $('#myModal').modal('hide'); }">
+
+      </form>
+    </div>
+
+    <!-- 모달 푸터 -->
+    <div class="modal-footer">
+      <button type="button" class="btn btn-danger btn-xs" id="closeBtn" data-bs-dismiss="modal">닫기</button>
+    </div>
+    </div>
+  </div>
+</div>
+<!-- 모달 끝 -->
+
 
 <body class="nav-md">
   <div class="container body">
@@ -104,7 +220,6 @@
           <!-- sidebar menu -->
           <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
             <div class="menu_section">
-              <h3>General</h3>
               <ul class="nav side-menu">
                 <li><a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
                   <ul class="nav child_menu">
@@ -179,44 +294,46 @@
                 </div>
 
                 <div class="x_content">
-                  <div class="row">
-                    <div class="col-sm-12">
-                      <div class="card-box table-responsive">
+
                         <!-- class="table table-striped jambo_table bulk_action" -->
-                        <table id="datatable" class="table table-striped jambo_table dt-responsive nowrap"
-                          cellspacing="0" width="100%">
+                        <table id="datatable" class="table table-striped jambo_table table-bordered dataTable no-footer"
+                          cellspacing="0" width="100%"> <!-- dt-responsive-->
                           <thead>
+                            <button id="modalBtn">모달 열기</button>
                             <tr>
-                              <th style="width: 10%">구분</th>
-                              <th style="width: 20%">회원ID</th>
-                              <th style="width: 20%">담당자명</th>
-                              <th style="width: 4cm">회사명</th>
-                              <th style="width: 10%">부서명</th>
-                              <th style="width: 10%">국가IP</th>
-                              <th>회사URL</th>
+                              <th></th>
+                              <th>구분</th>
+                              <th >회원ID</th>
+                              <th >담당자명</th>
+                              <th>회사명</th>
+                              <th >부서명</th>
+                              <th >국가IP</th>
+                              <!-- <th>회사URL</th>
                               <th>회사 연락처</th>
                               <th>E-mail</th>
                               <td>회사주소</td>
-                              <td>상품목록</td>
+                              <td>상품목록</td> -->
                             </tr>
                           </thead>
                           <tbody>
                             <tr th:each="customer: ${list}">
+                              <td>
+                                <button id="modalBtn">+</button>
+                              </td>
                               <td th:text="${customer.customerGubun}">셀러</td>
                               <td th:text="${customer.customerId}">System Architect</td>
                               <td th:text="${customer.customerName}">sales Assistant</td>
                               <td th:text="${customer.compName}">Edinburghasdfsadfsf</td>
                               <td th:text="${customer.customerDepartment}">abcdefghtmldkasjf</td>
                               <td th:text="${customer.remoteIp}">121.172.252.00</td>
-                              <td th:text="${customer.compUrl}">www.naver.com</td>
+                              <!-- <td th:text="${customer.compUrl}">www.naver.com</td>
                               <td th:text="${customer.faxNo}">5421</td>
                               <td th:text="${customer.email}">t.nixon@datatables.net</td>
                               <td th:text="${customer.address}"> South Africa </td>
-                              <td><a href="#">보기</a></td>
+                              <td><a href="#">보기</a></td> -->
                             </tr>
                           </tbody>
                         </table>
-
 
                       </div>
                     </div>
@@ -226,16 +343,16 @@
               </div>
             </div>
           </div>
-      </div>
+      <!-- </div> -->
       <!-- /page content -->
-    </div>
-  </div>
+    <!-- </div>
+  </div> -->
 
 
   <!-- jQuery -->
-  <script th:src="@{/vendors/jquery/dist/jquery.min.js}"></script>
+  <script th:src="@{/vendors/jquery/dist/jquery.js}"></script>
   <!-- Bootstrap -->
-  <script th:src="@{/vendors/bootstrap/dist/js/bootstrap.bundle.min.js}"></script>
+  <script th:src="@{/vendors/bootstrap/dist/js/bootstrap.bundle.js}"></script>
   <!-- FastClick -->
   <script th:src="@{/vendors/fastclick/lib/fastclick.js}"></script>
   <!-- NProgress -->
@@ -260,7 +377,7 @@
   <script th:src="@{/vendors/pdfmake/build/vfs_fonts.js}"></script>
 
   <!-- Custom Theme Scripts -->
-  <script th:src="@{/build/js/custom.min.js}"></script>
+  <script th:src="@{/build/js/custom.js}"></script>
 
 
 </body>
