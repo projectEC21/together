@@ -38,10 +38,22 @@ public class ProductController {
      */
     @GetMapping("main/productsDetail")
     public String productsDetail(@RequestParam(name = "productId", defaultValue = "CO00006-20240409") String productId, Model model) {
+        
+        // productId에 해당하는 Product 가져오기
         ProductDTO dto = productService.getProduct(productId);
+
+        // productId에 해당하는 Product와 동일한 카테고리의 상품들 최대 5개 가져오기
         List<ProductDTO> dtoList = productService.getSameCategoryProducts(dto.getCategory(), productId);
+
+        log.info("지금 컨트롤러에서 dto랑 관련 리스트 가져왔어. 이제 조회수 증가할 거야");
+        // productId에 해당하는 Product의 hitCount 증가
+        productService.updateHitCount(productId);
+        
         model.addAttribute("product", dto);
         model.addAttribute("list", dtoList);
+        
+        log.info("지금 모델에 다 담았어. 이제 html로 갈거야");
+        
 
         return "main/productsDetail";
     }

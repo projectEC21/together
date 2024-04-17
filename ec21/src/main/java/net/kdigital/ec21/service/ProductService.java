@@ -9,7 +9,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import net.kdigital.ec21.dto.ProductDTO;
 import net.kdigital.ec21.dto.check.ProductCategory;
 import net.kdigital.ec21.dto.check.YesOrNo;
@@ -17,6 +19,7 @@ import net.kdigital.ec21.entity.ProductEntity;
 import net.kdigital.ec21.repository.ProductRepository;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class ProductService {
     private final ProductRepository productRepository;
@@ -48,6 +51,18 @@ public class ProductService {
 
     //===================================== main/productsDetail ======================================
     
+    /**
+     * productDetail 요청이 있을 때 해당 productId에 해당하는 Product의 hitCount값에 +1 하는 함수
+     * @param productId
+     */
+    @Transactional
+    public void updateHitCount(String productId) {
+        log.info("Updating hit count for product: {}", productId); // 로깅 추가
+        ProductEntity entity = productRepository.findById(productId).get();
+        entity.setHitCount(entity.getHitCount()+1);
+        log.info("New hit count for product {}: {}", productId, entity.getHitCount()); // 새 hitCount 로깅
+    }
+
     /**
      * 전달받은 상품 아이디에 해당하는 상품을 DTO로 변환해 반환 (for productsDetail.html)
      * @param productId
@@ -114,6 +129,9 @@ public class ProductService {
 
         return dtoList;
     }
+
+
+
 
 
 
