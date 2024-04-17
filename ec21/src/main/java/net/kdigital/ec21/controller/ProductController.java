@@ -8,10 +8,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import net.kdigital.ec21.dto.ProductDTO;
 import net.kdigital.ec21.service.ProductService;
 
 @Controller
+@Slf4j
 @RequiredArgsConstructor
 public class ProductController {
     private final ProductService ProductService;
@@ -64,7 +66,7 @@ public class ProductController {
     }
 
     /**
-     * 전달받은 상품 카테고리와 검색어에  해당하는 상품 리스트를 model에 담아 상품 목록 페이지로 보냄
+     * 전달받은 상품 카테고리와 검색어에 해당하는 상품 리스트를 model에 담아 상품 목록 페이지로 보냄
      * 
      * @param category
      * @param model
@@ -74,7 +76,13 @@ public class ProductController {
     public String list(@RequestParam(name = "category", defaultValue = "total") String category,
             @RequestParam(name = "searchWord", defaultValue = "") String searchWord, Model model) {
         List<ProductDTO> dtoList = ProductService.getProductList(category, searchWord);
+        log.info("=========== 카테고리 : {}",category);
+        log.info("=========== 검색어 : {}",searchWord);
+
         model.addAttribute("list", dtoList);
+        model.addAttribute("category", category);
+        model.addAttribute("searchWord", searchWord);
+        
         return "/main/list";
     }
 
