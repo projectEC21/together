@@ -176,18 +176,22 @@ public class ManagerController {
 	/**
 	 * ajax - 블랙리스트 반환 (정상버튼 클릭시는 다르게 처리)
 	 * 
-	 * @param reportCustomerId
-	 * @param reportedId
+	 * @param blacklistId
+	 * @param category
+	 * @param searchWord
 	 * @param model
 	 * @return
 	 */
 	@RequestMapping(value = "/manager/blackList/getList", method = RequestMethod.GET)
-	public String getList(@RequestParam(name = "blacklistId") Long blacklistId, Model model) {
+	public String getList(@RequestParam(name = "blacklistId", defaultValue = "-100") Long blacklistId, 
+			@RequestParam(name = "category", defaultValue = "total") String category,
+			@RequestParam(name = "searchWord", defaultValue = "") String searchWord,Model model) {
+		
 		if (blacklistId != -100) {
 			// 정상버튼 : 블랙리스트 테이블에서 해당 블랙리스트ID(일련번호) 삭제
 			managerService.deleteFromBalcklist(blacklistId);
 		}
-		List<ReportedCustomerWithInfoDTO> dtoList = managerService.selectblackList();
+		List<ReportedCustomerWithInfoDTO> dtoList = managerService.selectblackListBySearch(category, searchWord);
 		model.addAttribute("list", dtoList);
 
 		return "/manager/blackList::#result";

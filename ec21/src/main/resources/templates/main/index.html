@@ -54,6 +54,28 @@
 
 	<link rel="stylesheet" href="#" id="colors">
 
+	<!-- 240417 dy : JQuery 파일 추가 및 ajax 작업 -->
+	<script th:src="@{/script/jquery-3.7.1.min.js}"></script>
+	<!-- 240417 dy : 검색어 입력 후 돋보기 클릭 시 /main/list 요청-->
+	<script>
+		$(function () {
+			$("#searchBtn").on("click",search);
+		})
+
+		function search() {
+			let category = $("#category").val();
+			let searchWord = $("#searchWord").val();
+
+			$.ajax({
+				url:"/main/list",
+				data : {"category":category, "searchWord":searchWord},
+				method : "GET"
+			})
+		}
+
+	</script>
+	
+
 </head>
 
 <body class="js">
@@ -122,20 +144,21 @@
 						<!--/ End Search Form -->
 						<div class="mobile-nav"></div>
 					</div>
+					<!-- 240416 dy : 카테고리 선택 & 검색어 입력 후 버튼 누르면, 해당 카테고리의 목록이 보이도록 -->
 					<div class="col-lg-8 col-md-7 col-12">
 						<div class="search-bar-top">
 							<div class="search-bar">
-								<select>
-									<option selected="selected">All Category</option>
-									<option>Food & Beverage</option>
-									<option>Chemical</option>
-									<option>Health & Medical</option>
-									<option>Electronics</option>
-									<option>Cosmetic</option>
+								<select id="category" name="category">
+									<option value="total" selected="selected">All Category</option>
+									<option value="FOOD_BEVERAGE">Food & Beverage</option>
+									<option value="CHEMICAL">Chemical</option>
+									<option value="HEALTH_MEDICAL">Health & Medical</option>
+									<option value="ELECTRONIC">Electronics</option>
+									<option value="COSMETIC">Cosmetic</option>
 								</select>
 								<form>
-									<input name="search" placeholder="What are you searching for?" type="search">
-									<button class="btnn"><i class="ti-search"></i></button>
+									<input name="search" id="searchWord" placeholder="What are you searching for?" type="search">
+									<button class="btnn" id="searchBtn"><i class="ti-search"></i></button>
 								</form>
 							</div>
 						</div>
@@ -172,13 +195,14 @@
 							<nav class="navbar navbar-expand-lg">
 								<div class="navbar-collapse">
 									<div class="nav-inner">
+										<!-- 240416 dy : 카테고리 별 상품 목록 요청(검색어X) -->
 										<ul class="nav main-menu menu navbar-nav">
-											<li><a th:href="@{/main/list}">All</a></li>
-											<li><a th:href="@{/main/list}">Food & Beverage</a></li>
-											<li><a th:href="@{/main/list}">Chemical</a></li>
-											<li><a th:href="@{/main/list}">Health & Medical</a></li>
-											<li><a th:href="@{/main/list}">Electronics</a></li>
-											<li><a th:href="@{/main/list}">Cosmetic</a></li>
+											<li><a th:href="@{/main/list(category=total)}">All</a></li>
+											<li><a th:href="@{/main/list(category=FOOD_BEVERAGE)}">Food & Beverage</a></li>
+											<li><a th:href="@{/main/list(category=CHEMICAL)}">Chemical</a></li>
+											<li><a th:href="@{/main/list(category=HEALTH_MEDICAL)}">Health & Medical</a></li>
+											<li><a th:href="@{/main/list(category=ELECTRONIC)}">Electronics</a></li>
+											<li><a th:href="@{/main/list(category=COSMETIC)}">Cosmetic</a></li>
 										</ul>
 									</div>
 								</div>
@@ -543,7 +567,7 @@
 	<!-- Magnific Popup JS -->
 	<script th:src="@{/main/js/magnific-popup.js}"></script>
 	<!-- Fancybox JS -->
-	<script src="@{/main/js/facnybox.min.js}"></script>
+	<script th:src="@{/main/js/facnybox.min.js}"></script>
 	<!-- Waypoints JS -->
 	<script th:src="@{/main/js/waypoints.min.js}"></script>
 	<!-- Countdown JS -->

@@ -57,31 +57,34 @@ Version:1.0
 		});
 		
 		/*=======================
-		  Search JS JS
+			Search JS 
+			검색 버튼을 누르면 해당 단어가 검색되도록
 		=========================*/ 
 		$('.top-search a').on( "click", function(){
 			$('.search-top').toggleClass('active');
 		});
+
+		
 		
 		/*=======================
-		  Slider Range JS
+			Slider Range JS
 		=========================*/ 
 		$( function() {
 			$( "#slider-range" ).slider({
-			  range: true,
-			  min: 0,
-			  max: 500,
-			  values: [ 120, 250 ],
-			  slide: function( event, ui ) {
+				range: true,
+				min: 0,
+				max: 500,
+				values: [ 120, 250 ],
+				slide: function( event, ui ) {
 				$( "#amount" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
-			  }
+				}
 			});
 			$( "#amount" ).val( "$" + $( "#slider-range" ).slider( "values", 0 ) +
-			  " - $" + $( "#slider-range" ).slider( "values", 1 ) );
+				" - $" + $( "#slider-range" ).slider( "values", 1 ) );
 		} );
 		
 		/*=======================
-		  Home Slider JS
+			Home Slider JS
 		=========================*/ 
 		$('.home-slider').owlCarousel({
 			items:1,

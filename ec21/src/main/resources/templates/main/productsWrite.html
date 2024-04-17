@@ -54,7 +54,7 @@
 
 	<!-- CK Editor -->
 	<script src="https://cdn.ckeditor.com/ckeditor5/41.3.0/classic/ckeditor.js"></script>
-
+	
 </head>
 
 <body class="js">
@@ -178,78 +178,62 @@
 						<div class="write-form">
 							<!-- Form -->
 							<form class="form" method="post" action="#">
-								<table>
-									<div class="row">
-										<tbody>
-											<tr>
-												<th class="form-group title" colspan="2">Basic Information</th>
-											</tr>
+							<table>
+								<div class="row">
+									<tr>
+										<th class="form-group">Category<span>*</span></th>
+										<td>
+											<select class="category">
+												<option selected="selected">----------------</option>
+												<option value="Food_Beverage">Food & Beverage</option>
+												<option value="Chemical">Chemical</option>
+												<option value="Health_Medical">Health & Medical</option>
+												<option value="Electronics">Electronics</option>
+												<option value="Cosmetic">Cosmetic</option>
+											</select>
+										</td>
+									</tr>
+									<tr>
+										<th class="form-group">Product Name<span>*</span></th>
+										<td><input type="text" name="productName" value=""></td>
+									</tr>
 
-											<tr>
-												<th class="form-group">Category<span>*</span></th>
-												<td>
-													<select class="category">
-														<option selected="selected">----------------</option>
-														<option value="Food_Beverage">Food & Beverage</option>
-														<option value="Chemical">Chemical</option>
-														<option value="Health_Medical">Health & Medical</option>
-														<option value="Electronics">Electronics</option>
-														<option value="Cosmetic">Cosmetic</option>
-													</select>
-												</td>
-											</tr>
-											<tr>
-												<th class="form-group">Product Name<span>*</span></th>
-												<td><input type="text" name="productName" value=""></td>
-											</tr>
-										</tbody>
+									<tr>
+										<!-- 원산지 -->
+										<th class="form-group">Origin<span>*</span></th>
+										<td><input type="text" class="origin" id="origin" name="origin"
+												value=""></td>
+									</tr>
+									<tr>
+										<!-- 가격 과 단위 처리 어떻게 할지 물어보기 -->
+										<!-- 가격 & 단위 -->
+										<th class="form-group">Price<span>*</span></th>
+										<td>
+											$ <input type="text" class="price" id="price" name="price" value="">
+											<!-- <input type="text" class="unit" id="unit" name="unit" value=""> -->
+										</td>
+									</tr>
+									<!-- 최소 주문 수량 -->
+									<tr>
+										<th class="form-group">Quantity<span>*</span></th>
+										<td>
+											<input type="text" class="moq" id="moq" name="moq" value="">
+											<p>Minimum Order</p>
+									</tr>
+								<!-- / 무역 정보 작성 -->
 
-										<!-- 무역 정보 작성 -->
-										<tbody>
-											<tr>
-												<th class="form-group title" colspan="2">Trade Information</th>
-											</tr>
-											<tr>
-												<!-- 원산지 -->
-												<th class="form-group">Origin<span>*</span></th>
-												<td><input type="text" class="origin" id="origin" name="origin"
-														value=""></td>
-											</tr>
-
-											<tr>
-												<!-- 가격 과 단위 처리 어떻게 할지 물어보기 -->
-												<!-- 가격 & 단위 -->
-												<th class="form-group">Price<span>*</span></th>
-												<td>
-													$ <input type="text" class="price" id="price" name="price" value="">
-													<!-- <input type="text" class="unit" id="unit" name="unit" value=""> -->
-												</td>
-											</tr>
-											<!-- 최소 주문 수량 -->
-											<tr>
-												<th class="form-group">Quantity<span>*</span></th>
-												<td>
-													<input type="text" class="moq" id="moq" name="moq" value="">
-													<p>Minimum Order</p>
-											</tr>
-										</tbody>
-										<!-- / 무역 정보 작성 -->
-
-										<!-- 상품 정보 작성 -->
-										<tbody>
-											<tr>
-												<th class="form-group title" colspan="2">Product Description</th>
-											</tr>
-											<tr>
-												<th class="form-group editor">Product Details<span>*</span></th>
-												<td>
-													<div name="editor" id="editor"></div>
-												</td>
-											</tr>
-										</tbody>
-										<!-- / 상품 정보 작성 -->
-									</div>
-								</table>
+								<!-- 상품 정보 작성 -->
+									<tr>
+										<th colspan="2" class="form-group editor">Product Details<span>*</span></th>
+									</tr>
+									<tr>
+										<td colspan="2">
+											<div name="editor" id="editor"></div>
+										</td>
+									</tr>
+								<!-- / 상품 정보 작성 -->
+								</div>
+							</table>
 								<div class="col-12">
 									<div class=" form-group submit-btn">
 										<button class="btn" type="submit">Submit</button>
