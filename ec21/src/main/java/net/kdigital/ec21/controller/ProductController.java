@@ -18,36 +18,14 @@ import net.kdigital.ec21.service.ProductService;
 public class ProductController {
     private final ProductService ProductService;
     
-    // /**
-    // * main페이지에서 내 상품 페이지 요청
-    // *
-    // * @return
-    // */
-    // @GetMapping("/main/myproducts")
-    // public String myProducts(@RequestParam(name = "customerId")String customerId,
-    // Model model) {
-    // CustomerDTO customerDTO = customerService.getCustomer(customerId);
-    // model.addAttribute("customer", customerDTO);
-    // return "/main/myproducts";
-    // }
-
     /**
-     * main 폴더에 있는 마이페이지 버튼 클릭 시 내가 판매하는 상품 목록 화면 요청
-     * 
-     * @return
-     */
-    @GetMapping("/main/myproducts")
-    public String myProducts() {
-        return "/main/myproducts";
-    }
-
-    /**
-     * main페이지에서 상품등록 페이지 productsWrite 요청
+     * main/myproducts에서 상품등록 페이지 productsWrite 요청 (회원ID를 받아서 model에 담아 보냄)
      * 
      * @return
      */
     @GetMapping("/main/productsWrite")
-    public String productsWrite() {
+    public String productsWrite(@RequestParam(name = "customerId", defaultValue = "jooyoungyoon") String customerId, Model model) {
+        model.addAttribute("customerId", customerId);
         return "/main/productsWrite";
     }
 
@@ -59,7 +37,7 @@ public class ProductController {
      * @return
      */
     @GetMapping("/main/productsDetail")
-    public String productsDetail(@RequestParam(name = "productId") String productId, Model model) {
+    public String productsDetail(@RequestParam(name = "productId", defaultValue = "CO00006-20240409") String productId, Model model) {
         ProductDTO dto = ProductService.getProduct(productId);
         model.addAttribute("product", dto);
         return "/main/productsDetail";
