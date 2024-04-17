@@ -57,10 +57,8 @@ public class ProductService {
      */
     @Transactional
     public void updateHitCount(String productId) {
-        log.info("Updating hit count for product: {}", productId); // 로깅 추가
         ProductEntity entity = productRepository.findById(productId).get();
         entity.setHitCount(entity.getHitCount()+1);
-        log.info("New hit count for product {}: {}", productId, entity.getHitCount()); // 새 hitCount 로깅
     }
 
     /**
