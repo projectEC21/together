@@ -74,24 +74,7 @@
         }
       })
     }
-
-    $(document).ready(function() {
-    $('#example').DataTable({
-        responsive: {
-            details: {
-                display: $.fn.dataTable.Responsive.display.modal({
-                    header: function (row) {
-                        var data = row.data();
-                        return 'Details for ' + data[0];
-                    }
-                }),
-                renderer: $.fn.dataTable.Responsive.renderer.tableAll({
-                    tableClass: 'table'
-                })
-            }
-        }
-    });
-});
+ 
 
     //  =========== 240416 iy: modalBtn 클릭시 모달창 생성 ===========
     // HTML 문서의 로딩이 완료되었을 때, 해당 함수를 실행
@@ -207,7 +190,6 @@
           <!-- sidebar menu -->
           <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
             <div class="menu_section">
-              <h3>General</h3>
               <ul class="nav side-menu">
                 <li><a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
                   <ul class="nav child_menu">
@@ -348,9 +330,10 @@
                           </div>
                         </td>
                         <td>
+                          
                           <a href="#" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> 정상 </a>  <!--정상 클릭시 judge 1로 변경-->
-                          <a href="#" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> 이상 </a> <!--이상 클릭 시 judge 0으로 변경-->
-                        </td>
+                          <a href="#" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> 이상 </a> <!--정상 클릭시 judge 0로 변경-->
+                        </td> 
                       </tr>
                     </tbody>
                   </table>
