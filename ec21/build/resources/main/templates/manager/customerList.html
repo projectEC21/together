@@ -10,32 +10,69 @@
   <link rel="icon" type="image/png" th:href="@{/production/images/ec21logo.png}">
 
   <title>ec21 관리자 페이지</title>
-
-  <!-- Web Font -->
-  <link
-    href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap"
-    rel="stylesheet">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap" rel="stylesheet">
+  	<!-- Web Font -->
+		<!-- Web Font -->
+    <link
+		href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap"
+		rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap" rel="stylesheet">
 
   <!-- Bootstrap -->
-  <link th:href="@{/vendors/bootstrap/dist/css/bootstrap.min.css}" rel="stylesheet">
+  <link th:href="@{/vendors/bootstrap/dist/css/bootstrap.css}" rel="stylesheet">
   <!-- Font Awesome -->
-  <link th:href="@{/vendors/font-awesome/css/font-awesome.min.css}" rel="stylesheet">
+  <link th:href="@{/vendors/font-awesome/css/font-awesome.css}" rel="stylesheet">
   <!-- NProgress -->
   <link th:href="@{/vendors/nprogress/nprogress.css}" rel="stylesheet">
   <!-- iCheck -->
   <link th:href="@{/vendors/iCheck/skins/flat/green.css}" rel="stylesheet">
 
   <!-- bootstrap-progressbar -->
-  <link th:href="@{/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css}" rel="stylesheet">
+  <link th:href="@{/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.css}" rel="stylesheet">
   <!-- JQVMap -->
-  <link th:href="@{/vendors/jqvmap/dist/jqvmap.min.css}" rel="stylesheet" />
+  <link th:href="@{/vendors/jqvmap/dist/jqvmap.css}" rel="stylesheet">
   <!-- bootstrap-daterangepicker -->
   <link th:href="@{/vendors/bootstrap-daterangepicker/daterangepicker.css}" rel="stylesheet">
 
   <!-- Custom Theme Style -->
   <link th:href="@{/build/css/custom.css}" rel="stylesheet">
+
+  <!-- 240414 dy : JQuery 파일 추가 및 list 관련 ajax 처리 -->
+  <script th:src="@{/script/jquery-3.7.1.js}"></script>
+  <script>
+    $(function () {
+      $("#category").on("change",search);
+      $("#searchWord").on("keyup",search);
+      init();
+    })
+
+    function search() {
+      let category = $("#category").val();
+      let searchWord = $("#searchWord").val();
+
+      $.ajax({
+        url:"/manager/productList/getList",
+        data:{"category":category,"searchWord":searchWord},
+        method:"GET",
+        success : function (list) {
+          $("#result").replaceWith(list);
+        }
+      })
+
+    }
+
+    function init() {
+      $.ajax({
+        url:"/manager/productList/getList",
+        data:{"category":"total","searchWord":""},
+        method:"GET",
+        success : function (list) {
+          $("#result").replaceWith(list);
+        }
+      })
+    }
+
+  </script>
 </head>
 
 <body class="nav-md">
@@ -80,7 +117,7 @@
                     <li><a th:href="@{/manager/modelPredict}">모델로 이상상품 판별</a></li>
                   </ul>
                 </li>
-                <li><a><i class="fa fa-desktop"></i> 회원관리 <span class="fa fa-chevron-down"></span></a>
+                <li><a><i class="fa fa-users"></i> 회원관리 <span class="fa fa-chevron-down"></span></a>
                   <ul class="nav child_menu">
                     <li><a th:href="@{/manager/customerList}">정상회원</a></li>
                     <li><a th:href="@{/manager/reportedCustomerList}">신고당한회원</a></li>
@@ -92,22 +129,6 @@
           </div>
           <!-- /sidebar menu -->
 
-          <!-- /menu footer buttons -->
-          <div class="sidebar-footer hidden-small">
-            <a data-toggle="tooltip" data-placement="top" title="Settings">
-              <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
-            </a>
-            <a data-toggle="tooltip" data-placement="top" title="FullScreen">
-              <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
-            </a>
-            <a data-toggle="tooltip" data-placement="top" title="Lock">
-              <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
-            </a>
-            <a data-toggle="tooltip" data-placement="top" title="Logout" th:href="@{/main/login}">
-              <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
-            </a>
-          </div>
-          <!-- /menu footer buttons -->
         </div>
       </div>
 
@@ -122,10 +143,11 @@
               <li class="nav-item dropdown open" style="padding-left: 15px;">
                 <a href="javascript:;" class="user-profile dropdown-toggle" aria-haspopup="true" id="navbarDropdown"
                   data-toggle="dropdown" aria-expanded="false">
-                  <img th:src="@{/production/images/user.png}" alt="">관리자
+                  <img th:src=@{/production/images/user.png} alt="">관리자
                 </a>
                 <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
-                  <a class="dropdown-item" th:href="@{main/login}"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
+                  <a class="dropdown-item" th:href="@{/main/login}"><i class="fa fa-sign-out pull-right"></i> Log
+                    Out</a>
                 </div>
               </li>
 
@@ -138,88 +160,76 @@
 
       <!-- page content -->
       <div class="right_col" role="main">
-        <div class="title_left">
-          <h3>Member <small>회원관리</small></h3>
-        </div>
-        <div class="col-md-12 col-sm-12 ">
-          <div class="x_panel">
-            <div class="x_title">
-              <h2>전체 회원 관리</h2>
-
-              <div class="clearfix"></div>
-
+        <div class="">
+          <div class="page-title">
+            <div class="title_left">
+              <h3>Member <small>회원관리</small></h3>
             </div>
+          </div>
+
+          <div class="clearfix"></div>
+
+          <div class="row" >
+            <div class="col-md-12 col-sm-12 ">
+              <div class="x_panel">
+                <div class="x_title">
+                  <h2>전체 회원 관리</h2>
+                  <div class="clearfix"></div>
+                </div>
+
+                <div class="x_content">
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <div class="card-box table-responsive">
+                        <!-- class="table table-striped jambo_table bulk_action" -->
+                        <table id="datatable" class="table table-striped jambo_table dt-responsive nowrap"
+                          cellspacing="0" width="100%">
+                          <thead>
+                            <tr>
+                              <th style="width: 10%">구분</th>
+                              <th style="width: 20%">회원ID</th>
+                              <th style="width: 20%">담당자명</th>
+                              <th style="width: 4cm">회사명</th>
+                              <th style="width: 10%">부서명</th>
+                              <th style="width: 10%">국가IP</th>
+                              <th>회사URL</th>
+                              <th>회사 연락처</th>
+                              <th>E-mail</th>
+                              <td>회사주소</td>
+                              <td>상품목록</td>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr th:each="customer: ${list}">
+                              <td th:text="${customer.customerGubun}">셀러</td>
+                              <td th:text="${customer.customerId}">System Architect</td>
+                              <td th:text="${customer.customerName}">sales Assistant</td>
+                              <td th:text="${customer.compName}">Edinburghasdfsadfsf</td>
+                              <td th:text="${customer.customerDepartment}">abcdefghtmldkasjf</td>
+                              <td th:text="${customer.remoteIp}">121.172.252.00</td>
+                              <td th:text="${customer.compUrl}">www.naver.com</td>
+                              <td th:text="${customer.faxNo}">5421</td>
+                              <td th:text="${customer.email}">t.nixon@datatables.net</td>
+                              <td th:text="${customer.address}"> South Africa </td>
+                              <td><a href="#">보기</a></td>
+                            </tr>
+                          </tbody>
+                        </table>
 
 
-
-
-            <div class="x_content">
-              <div class="row">
-                <div class="col-sm-12">
-                  <div class="card-box table-responsive">
-                    <p class="text-muted font-13 m-b-30">
-                      Responsive is an extension for DataTables that resolves that problem by optimising the table's
-                      layout for different screen sizes through the dynamic insertion and removal of columns from the
-                      table.
-                    </p>
-
-                    <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap"
-                      cellspacing="0" width="100%">
-                      <thead>
-                        <tr>
-                          <th style="width: 10%">구분</th>
-                          <th style="width: 20%">회원ID</th>
-                          <th style="width: 20%">담당자명</th>
-                          <th style="width: 4cm">회사명</th>
-                          <th style="width: 10%">부서명</th>
-                          <th style="width: 10%">국가IP</th>
-                          <th>회사URL</th>
-                          <th>회사 연락처</th>
-                          <th>E-mail</th>
-                          <td>회사주소</td>
-                          <td>상품목록</td>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr th:each="customer: ${list}">
-                          <td th:text="${customer.customerGubun}">셀러</td>
-                          <td th:text="${customer.customerId}">System Architect</td>
-                          <td th:text="${customer.customerName}">sales Assistant</td>
-                          <td th:text="${customer.compName}">Edinburghasdfsadfsf</td>
-                          <td th:text="${customer.customerDepartment}">abcdefghtmldkasjf</td>
-                          <td th:text="${customer.remoteIp}">121.172.252.00</td>
-                          <td th:text="${customer.compUrl}">www.naver.com</td>
-                          <td th:text="${customer.faxNo}">5421</td>
-                          <td th:text="${customer.email}">t.nixon@datatables.net</td>
-                          <td th:text="${customer.address}"> South Africa </td>
-                          <td><a href="#">보기</a></td>
-                        </tr>
-                      </tbody>
-                    </table>
-
-
+                      </div>
+                    </div>
+                  </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
       </div>
+      <!-- /page content -->
     </div>
   </div>
-  <!-- /page content -->
 
-  <!-- footer content -->
-  <footer>
-    <div class="pull-right">
-      Copyright © 1997-2024 <a href="https://www.ec21.com/" target="_blank">EC21 Inc.</a> All Rights Reserved. EC21 in
-      Korean | Chinese Business Registry Number: 120-86-03931
-    </div>
-    <div class="clearfix"></div>
-  </footer>
-  <!-- /footer content -->
-  </div>
-  </div>
 
   <!-- jQuery -->
   <script th:src="@{/vendors/jquery/dist/jquery.min.js}"></script>
@@ -232,20 +242,20 @@
   <!-- iCheck -->
   <script th:src="@{/vendors/iCheck/icheck.min.js}"></script>
   <!-- Datatables -->
-  <script th:src="@{/vendors/datatables.net/js/jquery.dataTables.min.js}"></script>
-  <script th:src="@{/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js}"></script>
-  <script th:src="@{/vendors/datatables.net-buttons/js/dataTables.buttons.min.js}"></script>
-  <script th:src="@{/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js}"></script>
-  <script th:src="@{/vendors/datatables.net-buttons/js/buttons.flash.min.js}"></script>
-  <script th:src="@{/vendors/datatables.net-buttons/js/buttons.html5.min.js}"></script>
-  <script th:src="@{/vendors/datatables.net-buttons/js/buttons.print.min.js}"></script>
-  <script th:src="@{/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js}"></script>
-  <script th:src="@{/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js}"></script>
+  <script th:src="@{/vendors/datatables.net/js/jquery.dataTables.js}"></script>
+  <script th:src="@{/vendors/datatables.net-bs/js/dataTables.bootstrap.js}"></script>
+  <script th:src="@{/vendors/datatables.net-buttons/js/dataTables.buttons.js}"></script>
+  <script th:src="@{/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.js}"></script>
+  <script th:src="@{/vendors/datatables.net-buttons/js/buttons.flash.js}"></script>
+  <script th:src="@{/vendors/datatables.net-buttons/js/buttons.html5.js}"></script>
+  <script th:src="@{/vendors/datatables.net-buttons/js/buttons.print.js}"></script>
+  <script th:src="@{/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.js}"></script>
+  <script th:src="@{/vendors/datatables.net-keytable/js/dataTables.keyTable.js}"></script>
   <script th:src="@{/vendors/datatables.net-responsive/js/dataTables.responsive.js}"></script>
   <script th:src="@{/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js}"></script>
-  <script th:src="@{/vendors/datatables.net-scroller/js/dataTables.scroller.min.js}"></script>
-  <script th:src="@{/vendors/jszip/dist/jszip.min.js}"></script>
-  <script th:src="@{/vendors/pdfmake/build/pdfmake.min.js}"></script>
+  <script th:src="@{/vendors/datatables.net-scroller/js/dataTables.scroller.js}"></script>
+  <script th:src="@{/vendors/jszip/dist/jszip.js}"></script>
+  <script th:src="@{/vendors/pdfmake/build/pdfmake.js}"></script>
   <script th:src="@{/vendors/pdfmake/build/vfs_fonts.js}"></script>
 
   <!-- Custom Theme Scripts -->
