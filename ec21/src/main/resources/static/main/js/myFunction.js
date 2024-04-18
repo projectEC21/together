@@ -6,3 +6,4 @@ $(document).ready(function() {
         $('#myModal').modal('show');  // Bootstrap 모달을 수동으로 열기
     });
 });
+
