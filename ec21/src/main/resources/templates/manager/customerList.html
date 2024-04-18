@@ -12,10 +12,10 @@
   <title>ec21 관리자 페이지</title>
 
   <!-- Web Font -->
-  	<!-- Web Font -->
-	<link
-  href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap"
-  rel="stylesheet">
+  <!-- Web Font -->
+  <link
+    href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap"
+    rel="stylesheet">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap" rel="stylesheet">
 
@@ -38,200 +38,79 @@
   <!-- Custom Theme Style -->
   <link th:href="@{/build/css/custom.css}" rel="stylesheet">
 
-
-  <!-- 240414 dy : JQuery 파일 추가 및 ajax 추가 -->
-  <!-- 240415 dy : 카테고리와 검색어 기능 구현 -->
+  <!-- 240414 dy : JQuery 파일 추가 및 ajax 추가 // 삭제-->
+  <!-- 240415 dy : 카테고리와 검색어 기능 구현 // 삭제-->
+  <!-- 240418 iy : 모달기능 구현 -->
   <script th:src="@{/script/jquery-3.7.1.min.js}"></script>
   <script>
+    $(function () {
 
-    //  =========== 240417 iy: modalBtn 클릭시 모달창 생성 ===========
-    // HTML 문서의 로딩이 완료되었을 때, 해당 함수를 실행
-    document.addEventListener("DOMContentLoaded", function () {
-      // elements
-      var modalBtn = document.getElementById("modalBtn");
-      var modal = document.getElementById("myModal");
-      var closeBtn = document.getElementById("closeBtn");
+      // 모달 변수 초기화
+      var modal = $("#myModal");
 
-      // functions
-      function toggleModal() {
-        modal.classList.toggle("show");
-      }
-
-      // // events
-      // modalBtn.addEventListener("click", toggleModal);
-      // closeBtn.addEventListener("click", toggleModal);
-
-      // window.addEventListener("click", function (event) {
-      //   // 모달의 검은색 배경 부분이 클릭된 경우 닫히도록 하는 코드
-      //   if (event.target === modal) {
-      //     toggleModal();
-      //   }
-      // });
-
-      // events
-      modalBtns.forEach(btn => btn.addEventListener("click", toggleModal)); // 각 버튼에 이벤트 리스너 추가
-      closeBtn.addEventListener("click", toggleModal);
-
-      window.addEventListener("click", function (event) {
-          if (event.target === modal) {
-              toggleModal();
-          }
+      // 닫기 버튼 이벤트
+      $("#closeBtn").on("click", function (event) {
+        modal.hide();
       });
 
-      // 기타 radio 버튼이 선택되었을 때 텍스트 입력란을 나타내도록 하는 코드
-      var etcRadio = document.getElementById("etcRadio");
-      var etcReasonInput = document.getElementById("etcReasonInput");
+      // 모달 백그라운드 클릭 이벤트
+      $(window).on("click", function (event) {
+        if ($(event.target).is(modal)) {
+          modal.hide();
+        }
 
-      etcRadio.addEventListener("change", function() {
-        if (etcRadio.checked) {
-          etcReasonInput.style.display = "inline-block";
-          etcReasonInput.required = true; // 텍스트 입력란이 필수 입력 필드로 설정됨
+      });
+
+      // 이벤트 위임을 사용하여 동적 요소에 이벤트 연결
+      $(document).on("click", "button[id^='modalBtn']", function () {
+        let modalCompName = $(this).data("compname");
+        let modalCompUrl = $(this).data("compurl");
+        let modalEmail = $(this).data("email");
+        let modalCustomerName = $(this).data("customername");
+        let modalbusiNo = $(this).data("busino");
+        let modalAddress = $(this).data("address");
+        $("#myModal").modal();
+
+        $("#modalCompName").html(modalCompName);
+        $("#modalCompUrl").html(modalCompUrl);
+        $("#modalEmail").html(modalEmail);
+        $("#modalCustomerName").html(modalCustomerName);
+        $("#modalbusiNo").html(modalbusiNo);
+        $("#modalAddress").html(modalAddress);
+      });
+
+      var etcRadio = $("#etcRadio");
+      var etcReasonInput = $("#etcReasonInput");
+      var etcReasonError = $("#etcReasonError");
+
+      // Radio 변경 감지
+      $('input[type="radio"][name="reason"]').change(function () {
+        if (etcRadio.is(':checked')) {
+          etcReasonInput.show();
+          etcReasonInput.attr("required", true);
+          etcReasonError.hide();
         } else {
-          etcReasonInput.style.display = "none";
-          etcReasonInput.required = false; // 텍스트 입력란이 필수 입력 필드가 아님
+          etcReasonInput.hide();
+          etcReasonInput.attr("required", false);
         }
       });
 
-      // 다음 버튼 클릭 시 상세 사유 입력 여부 확인
-      var blackButton = document.getElementById("blackButton");
-      blackButton.addEventListener("click", function() {
-        if (etcRadio.checked && etcReasonInput.value.trim() === "") {
+      // 블랙 버튼 클릭 이벤트
+      $('#blackButton').click(function () {
+        if (etcRadio.is(':checked') && etcReasonInput.val().trim() === "") {
+          etcReasonError.show();
           alert("기타 사유를 입력해주세요.");
         } else {
-          // 다음 동작 수행
-          // 여기서는 모달을 닫는 동작만 수행하도록 함
+          etcReasonError.hide();
           $('#myModal').modal('hide');
         }
       });
+
     });
 
-    // ================ 추가 ======================
-    $(document).ready(function() {
-      var modal = $("#myModal");
-      var closeBtn = $("#closeBtn");
-
-      function toggleModal() {
-          modal.toggleClass("show");
-          // 모달을 보여주거나 숨길 때 추가적으로 필요한 로직이 있다면 여기에 구현
-      }
-
-      // 모든 modalBtn에 대해 이벤트 리스너를 추가
-      $(document).on('click', '.modalBtn', function() {
-          toggleModal();
-      });
-
-      // 닫기 버튼에 대한 이벤트 리스너
-      closeBtn.on("click", function() {
-          toggleModal();
-      });
-
-      // 모달 밖의 영역을 클릭했을 때 모달 닫기
-      $(window).on("click", function (event) {
-          if ($(event.target).is(modal)) {
-              toggleModal();
-          }
-      });
-
-      // 기타 로직
-  });
-
-    // ===========================================
 
   </script>
 </head>
-
-<!-- 모달창 -->
-<!-- 모달 컨테이너 -->
-<div class="modal" id="myModal">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-    <!-- 모달창의 헤더부분의 시작 -->
-      <div class="modal-header">
-        <h4 class="modal-title">상세 페이지</h4>
-      </div>
-
-      <!-- 모달창의 헤더부분의 끝 -->
-      <!-- 모달창의 바디부분의 시작 바디부분이 모달창에서 표시하고자하는 컨텐츠를 입력한다.-->
-      <div class="modal-body">
-        <div class="info">
-          <ul>
-            <li>
-              <span class="dtr-title">회사명</span>
-              <span>어쩌구</span>
-            </li>
-            <li>
-              <span class="dtr-title">URL</span>
-              <span>어쩌구</span>
-            </li>
-            <li>
-              <span class="dtr-title">회사이메일</span>
-              <span>어쩌구</span>
-            </li>
-            <li>
-              <span class="dtr-title">담당자</span>
-              <span>어쩌구</span>
-            </li>
-            <li>
-              <span class="dtr-title">회사 전화번호</span>
-              <span>어쩌구</span>
-            </li>
-            <li>
-              <span class="dtr-title">회사주소</span>
-              <span>어쩌구</span>
-            </li>
-        </div>
-        
-        <div class="card">
-          <div class="card-body">
-            
-            <table class="table table-striped jambo_table bulk_action">
-              <thead>
-                <tr>
-                  <th>상품ID</th>
-                  <th>상품카테고리</th>
-                  <th>상품명</th>
-                  <th>현상태</th>
-                </tr>
-              </thead>
-
-              <tbody>
-                <tr>
-                  <td>293814</td>
-                  <td>food</td>
-                  <td>당근</td>
-                  <td>정상</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-
-      <!-- 모달 바디 -->
-    <div class="modal-body">
-      <!-- 기타 사유 입력 폼 -->
-      <form>
-        <input type="radio" name="reason" value="drug">마약<br>
-        <input type="radio" name="reason" value="intellectual_property">지적재산권 침해<br>
-        <input type="radio" name="reason" value="spam">다발성 이메일<br>
-        <input type="radio" name="reason" value="etc" id="etcRadio">기타<br>
-        <input type="text" name="etcReason" id="etcReasonInput" placeholder="기타 사유 입력" style="display: none;">
-        <!-- 기타 사유 입력 에러 메시지 -->
-        <div id="etcReasonError" style="color: red; display: none;">기타 사유를 입력해주세요.</div>
-        <input type="button" value="블랙" onclick="if (etcRadio.checked && etcReasonInput.value.trim() === '') { alert('기타 사유를 입력해주세요.'); } else { $('#myModal').modal('hide'); }">
-
-      </form>
-    </div>
-
-    <!-- 모달 푸터 -->
-    <div class="modal-footer">
-      <button type="button" class="btn btn-danger btn-xs" id="closeBtn" data-bs-dismiss="modal">닫기</button>
-    </div>
-    </div>
-  </div>
-</div>
-<!-- 모달 끝 -->
-
 
 <body class="nav-md">
   <div class="container body">
@@ -327,7 +206,7 @@
 
           <div class="clearfix"></div>
 
-          <div class="row" >
+          <div class="row">
             <div class="col-md-12 col-sm-12 ">
               <div class="x_panel">
                 <div class="x_title">
@@ -337,58 +216,148 @@
 
                 <div class="x_content">
 
-                        <!-- class="table table-striped jambo_table bulk_action" -->
-                        <table id="datatable" class="table table-striped jambo_table table-bordered dataTable no-footer"
-                          cellspacing="0" width="100%"> <!-- dt-responsive-->
-                          <thead>
-                            <!-- <button id="modalBtn">모달 열기</button> -->
-                            <tr>
-                              <th></th>
-                              <th>구분</th>
-                              <th >회원ID</th>
-                              <th >담당자명</th>
-                              <th>회사명</th>
-                              <th >부서명</th>
-                              <th >국가IP</th>
-                              <!-- <th>회사URL</th>
-                              <th>회사 연락처</th>
-                              <th>E-mail</th>
-                              <td>회사주소</td>
-                              <td>상품목록</td> -->
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr th:each="customer: ${list}">
-                              <td>
-                                <button class="modalBtn">+</button>
-                              </td>
-                              <td th:text="${customer.customerGubun}">셀러</td>
-                              <td th:text="${customer.customerId}">System Architect</td>
-                              <td th:text="${customer.customerName}">sales Assistant</td>
-                              <td th:text="${customer.compName}">Edinburghasdfsadfsf</td>
-                              <td th:text="${customer.customerDepartment}">abcdefghtmldkasjf</td>
-                              <td th:text="${customer.remoteIp}">121.172.252.00</td>
-                              <!-- <td th:text="${customer.compUrl}">www.naver.com</td>
-                              <td th:text="${customer.faxNo}">5421</td>
-                              <td th:text="${customer.email}">t.nixon@datatables.net</td>
-                              <td th:text="${customer.address}"> South Africa </td>
-                              <td><a href="#">보기</a></td> -->
-                            </tr>
-                          </tbody>
-                        </table>
+                  <table id="datatable" class="table table-striped jambo_table table-bordered dataTable no-footer"
+                    cellspacing="0" width="100%"> <!-- dt-responsive-->
+                    <thead>
+                      <tr>
+                        <th></th>
+                        <th>구분</th>
+                        <th>회원ID</th>
+                        <th>담당자명</th>
+                        <th>회사명</th>
+                        <th>부서명</th>
+                        <th>국가IP</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr th:each="customer: ${list}">
+                        <td>
+                          <button th:id="'modalBtn' + ${customer.customerId}" class="modalBtn"
+                            th:data-compName="${customer.compName}" th:data-compUrl="${customer.compUrl}"
+                            th:data-email="${customer.email}" th:data-customerName="${customer.customerName}"
+                            th:data-busiNo="${customer.busiNo}" th:data-address="${customer.address}">+</button>
+                        </td>
+                        <td th:text="${customer.customerGubun}">셀러</td>
+                        <td th:text="${customer.customerId}">System Architect</td>
+                        <td th:text="${customer.customerName}">sales Assistant</td>
+                        <td th:text="${customer.compName}">Edinburghasdfsadfsf</td>
+                        <td th:text="${customer.customerDepartment}">abcdefghtmldkasjf</td>
+                        <td th:text="${customer.remoteIp}">121.172.252.00</td>
+                      </tr>
+                    </tbody>
+                  </table>
 
-                      </div>
-                    </div>
-                  </div>
-                  </div>
                 </div>
               </div>
             </div>
           </div>
-      <!-- </div> -->
-      <!-- /page content -->
-    <!-- </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- </div> -->
+  <!-- /page content -->
+  <!-- </div>
   </div> -->
+
+  <!-- 모달창 -->
+  <!-- 모달 컨테이너 -->
+  <div class="modal" id="myModal" style="display:none;">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <!-- 모달창의 헤더부분의 시작 -->
+        <div class="modal-header">
+          <h4 class="modal-title">상세 페이지</h4>
+        </div>
+
+        <!-- 모달창의 헤더부분의 끝 -->
+        <!-- 모달창의 바디부분의 시작 바디부분이 모달창에서 표시하고자하는 컨텐츠를 입력한다.-->
+        <div class="modal-body">
+          <div class="info">
+            <ul>
+              <li>
+                <span class="dtr-title">회사명</span>
+                <span id="modalCompName">-</span>
+              </li>
+              <li>
+                <span class="dtr-title">URL</span>
+                <span id="modalCompUrl">-</span>
+              </li>
+              <li>
+                <span class="dtr-title">회사이메일</span>
+                <span id="modalEmail">-</span>
+              </li>
+              <li>
+                <span class="dtr-title">담당자</span>
+                <span id="modalCustomerName">-</span>
+              </li>
+              <li>
+                <span class="dtr-title">회사 전화번호</span>
+                <span id="modalbusiNo">-</span>
+              </li>
+              <li>
+                <span class="dtr-title">회사주소</span>
+                <span id="modalAddress">-</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <div class="card-body">
+
+              <table class="table table-striped jambo_table bulk_action">
+                <thead>
+                  <tr>
+                    <th>상품ID</th>
+                    <th>상품카테고리</th>
+                    <th>상품명</th>
+                    <th>현상태</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <!-- <tr th:each="product: ${list}">
+                    <td th:text="${product.productId}">293814</td>
+                    <td th:text="${product.productName}">food</td>
+                    <td th:text="${product.category}">당근</td>
+                    <td th:text="${product.judge}">정상</td>
+                  </tr> -->
+                  <tr>
+                    <td>293814</td>
+                    <td>food</td>
+                    <td>당근</td>
+                    <td>정상</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- 모달 바디 -->
+        <div class="modal-body">
+          <!-- 기타 사유 입력 폼 -->
+          <div class="modalForm">
+            <input type="radio" name="reason" value="drug">마약
+            <input type="radio" name="reason" value="intellectual_property">지적재산권 침해
+            <input type="radio" name="reason" value="spam">다발성 이메일
+            <input type="radio" name="reason" value="etc" id="etcRadio">기타
+            <input type="text" name="etcReason" id="etcReasonInput" placeholder="기타 사유 입력" style="display: none;">
+            <!-- 기타 사유 입력 에러 메시지 -->
+            <div id="etcReasonError" style="color: red; display: none;">기타 사유를 입력해주세요.</div>
+            <input type="button" value="블랙" id="blackButton">
+
+          </div>
+        </div>
+
+        <!-- 모달 푸터 -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger btn-xs" id="closeBtn" data-dismiss="modal">닫기</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- 모달 끝 -->
 
 
   <!-- jQuery -->
