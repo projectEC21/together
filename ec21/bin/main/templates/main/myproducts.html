@@ -417,7 +417,7 @@
 													<!-- <td class="total-amount" data-title="Total"><span>$220.88</span></td> -->
 													<td class="createDate" data-title="date"><span>[[${#temporals.format(product.createDate, 'yyyy-MM-dd')}]]</span>
 													</td>
-													<td class="action" data-title="Remove"><a th:href="@{/main/productDelete(productId=${product.productId})}"><i class="ti-trash remove-icon"></i></a></td>
+													<td class="action" data-title="Remove"><a th:href="@{/main/myproducts/delete(productId=${product.productId})}"><i class="ti-trash remove-icon"></i></a></td>
 												</tr>
 											</tbody>
 										</table>
