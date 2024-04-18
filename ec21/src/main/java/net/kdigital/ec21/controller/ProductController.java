@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.kdigital.ec21.dto.ProductDTO;
+import net.kdigital.ec21.service.CustomerService;
 import net.kdigital.ec21.service.ProductService;
 
 
@@ -18,6 +19,8 @@ import net.kdigital.ec21.service.ProductService;
 @RequiredArgsConstructor
 public class ProductController {
     private final ProductService productService;
+    private final CustomerService customerService;
+
     /**
      * main/myproducts에서 상품등록 페이지 productsWrite 요청 (회원ID를 받아서 model에 담아 보냄)
      * 
@@ -75,6 +78,9 @@ public class ProductController {
         
         return "main/list";
     }
+
+    
+    
 
 
 }

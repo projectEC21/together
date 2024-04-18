@@ -1,22 +1,30 @@
 package net.kdigital.ec21.controller;
 
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import net.kdigital.ec21.dto.CustomerDTO;
+import net.kdigital.ec21.dto.ProductDTO;
 import net.kdigital.ec21.service.CustomerService;
+import net.kdigital.ec21.service.ProductService;
+
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 
 @Controller
+@Slf4j
 @RequiredArgsConstructor
 public class CustomerController {
     private final CustomerService customerService;
+    private final ProductService productService;
     
     //===================================  회원가입, 로그인, 로그아웃 ===============================
     /**
@@ -69,11 +77,38 @@ public class CustomerController {
      */
     @GetMapping("/main/myproducts")
     public String myProducts(@RequestParam(name = "customerId", defaultValue = "jooyoungyoon") String customerId, Model model) {
-        CustomerDTO customerDTO = customerService.getCustomer(customerId);
-        model.addAttribute("customer", customerDTO);
-        return "/main/myproducts";
+        log.info(customerId);
+        List<ProductDTO> productList = productService.getCustomerProducts(customerId);
+
+        model.addAttribute("customerId", customerId);
+        model.addAttribute("productList", productList);
+
+        return "main/myproducts";
     }
 
+    /**
+     * 전달 받은 상품ID에 해당하는 상품의 삭제 요청 및
+     * 다시 마이페이지의 자신이 판매하는 상품목록 화면 재요청 처리
+     * 
+     * @param productId
+     * @return
+     */
+    @GetMapping("main/productDelete")
+    public String productDelete(@RequestParam(name = "productId", defaultValue = "CO00006-20240409") String productId,
+            @RequestParam(name = "customerId", defaultValue = "jooyoungyoon") String customerId,
+            RedirectAttributes attributes) {
+        
+        // 상품ID의 productDelete값 변경 (N->Y)
+        productService.updateDeleteCheck(productId);
+
+        // 회원ID가 판매하는 상품 목록
+        List<ProductDTO> productList = productService.getCustomerProducts(customerId);
+
+        attributes.addAttribute("customerId", customerId);
+        attributes.addAttribute("productList", productList);
+
+        return "redirect:/main/myproducts";
+    }
 
     /**
      * myinfo(mypage) 페이지 요청
