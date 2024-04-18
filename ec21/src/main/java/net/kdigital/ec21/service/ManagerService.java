@@ -182,7 +182,9 @@ public class ManagerService {
                     .findProbaByProductEntity_ProductIdOrderBySimilarProbaDesc(prodEntity.getProductId());
 
             // lstmPredictProba 값 환산
-            // Double newProba = 1 - (prodEntity.getLstmPredictProba()/0.79)*0.5;
+            Double newProba = 1 - (prodEntity.getLstmPredictProba()/0.79)*0.5;
+            String formattedProba = String.format("%.2f", newProba); // 소수점 두 자리까지 반올림된 문자열
+            double finalProba = Double.parseDouble(formattedProba); // 문자열을 다시 double로 변환
                     
             // 1) lstmPredict==false && 금지어 유사도 결과 존재 O
             if (entityList != null && !entityList.isEmpty()) {
@@ -193,7 +195,7 @@ public class ManagerService {
                 ModelPredictDTO dto = new ModelPredictDTO(prodEntity.getCustomerEntity().getCustomerId(),
                         prodEntity.getProductId(),
                         prodEntity.getProductName(), prodEntity.getProductDesc(),
-                        prodEntity.getLstmPredictProba(), prodEntity.isLstmPredict(),
+                        finalProba, prodEntity.isLstmPredict(),
                         prohibitSimilarWordEntity.getSimilarWord(), prohibitSimilarWordEntity.getSimilarProba(),
                         prohibitSimilarWordEntity.getProhibitWordEntity().getProhibitWord(),
                         prohibitSimilarWordEntity.getProhibitWordEntity().getProhibitReason());
@@ -206,7 +208,7 @@ public class ManagerService {
                 ModelPredictDTO dto = new ModelPredictDTO(prodEntity.getCustomerEntity().getCustomerId(),
                         prodEntity.getProductId(),
                         prodEntity.getProductName(), prodEntity.getProductDesc(),
-                        prodEntity.getLstmPredictProba(), prodEntity.isLstmPredict(),
+                        finalProba, prodEntity.isLstmPredict(),
                         null, 0.0,null,null);
                 result.add(dto);
             }
