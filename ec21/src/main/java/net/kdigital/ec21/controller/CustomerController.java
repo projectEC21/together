@@ -34,7 +34,7 @@ public class CustomerController {
      */
     @GetMapping("/main/register")
     public String register() {
-        return "/main/register";
+        return "main/register";
     }
 
     /**
@@ -55,7 +55,7 @@ public class CustomerController {
      */
     @GetMapping("/main/login")
     public String login() {
-        return "/main/login";
+        return "main/login";
     }
     
     /**
@@ -120,7 +120,7 @@ public class CustomerController {
     public String myinfo(@RequestParam(name = "customerId", defaultValue = "jooyoungyoon") String customerId, Model model) {
         CustomerDTO customerDTO = customerService.getCustomer(customerId);
         model.addAttribute("customer", customerDTO);
-        return "/main/myinfo";
+        return "main/myinfo";
     }
     
     /**
@@ -132,7 +132,16 @@ public class CustomerController {
     public String inbox(@RequestParam(name = "customerId", defaultValue = "jooyoungyoon") String customerId, Model model) {
         CustomerDTO customerDTO = customerService.getCustomer(customerId);
         model.addAttribute("customer", customerDTO);
-        return "/main/inbox";
+
+        // ==================================================================================================================
+        // 수정 예정 : 지금 일단 myproducts와 동일한 html 쓰고 있어서!!!! 일단 myproduct에서 필요한 애들 model에 담아서 보냄
+        // 회원ID에 해당하는 회원이 판매하고 있는 상품 리스트
+        List<ProductDTO> productList = productService.getCustomerProducts(customerId);
+        model.addAttribute("customerId", customerId);
+        model.addAttribute("productList", productList);
+        // ==================================================================================================================
+        
+        return "main/inbox";
     }
 
     

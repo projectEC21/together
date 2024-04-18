@@ -182,7 +182,7 @@ public class ManagerService {
                     .findProbaByProductEntity_ProductIdOrderBySimilarProbaDesc(prodEntity.getProductId());
 
             // lstmPredictProba 값 환산
-            Double newProba = 1 - (prodEntity.getLstmPredictProba()/0.79)*0.5;
+            // Double newProba = 1 - (prodEntity.getLstmPredictProba()/0.79)*0.5;
                     
             // 1) lstmPredict==false && 금지어 유사도 결과 존재 O
             if (entityList != null && !entityList.isEmpty()) {
@@ -193,7 +193,7 @@ public class ManagerService {
                 ModelPredictDTO dto = new ModelPredictDTO(prodEntity.getCustomerEntity().getCustomerId(),
                         prodEntity.getProductId(),
                         prodEntity.getProductName(), prodEntity.getProductDesc(),
-                        newProba, prodEntity.isLstmPredict(),
+                        prodEntity.getLstmPredictProba(), prodEntity.isLstmPredict(),
                         prohibitSimilarWordEntity.getSimilarWord(), prohibitSimilarWordEntity.getSimilarProba(),
                         prohibitSimilarWordEntity.getProhibitWordEntity().getProhibitWord(),
                         prohibitSimilarWordEntity.getProhibitWordEntity().getProhibitReason());
@@ -206,7 +206,7 @@ public class ManagerService {
                 ModelPredictDTO dto = new ModelPredictDTO(prodEntity.getCustomerEntity().getCustomerId(),
                         prodEntity.getProductId(),
                         prodEntity.getProductName(), prodEntity.getProductDesc(),
-                        newProba, prodEntity.isLstmPredict(),
+                        prodEntity.getLstmPredictProba(), prodEntity.isLstmPredict(),
                         null, 0.0,null,null);
                 result.add(dto);
             }
