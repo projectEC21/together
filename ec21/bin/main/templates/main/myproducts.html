@@ -9,7 +9,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<!-- Title Tag  -->
-	<title>EC21, Global B2B Marketplace</title>
+	<title>EC21, Global B2B Marketplace</title> 
 	<!-- Favicon -->
 	<link rel="icon" type="image/png" th:href="@{/main/images/ec21logo.png}">
 	<!-- Web Font -->
@@ -48,7 +48,7 @@
 
 	<!-- Color CSS -->
 	<link rel="stylesheet" th:href="@{/main/css/color/color2.css}">
-	<link rel="stylesheet" href="#" id="colors">
+	<link rel="stylesheet" href="" id="colors">
 
 </head>
 
@@ -83,7 +83,7 @@
 							<ul class="list-main">
 								<li><i class="ti-power-off"></i><a th:href="@{/main/login}">Login</a></li>
 								<li><i class="ti-user"></i><a th:href="@{/main/register}">Sign up</a></li>
-								<li><i class="ti-power-off"></i><a th:href="@{/main/index}">Logout</a></li>
+								<li><i class="ti-power-off"></i><a th:href="@{/main/logout}">Logout</a></li>
 								</li>
 							</ul>
 						</div>
@@ -120,17 +120,18 @@
 					<div class="col-lg-8 col-md-7 col-12">
 						<div class="search-bar-top">
 							<div class="search-bar">
-								<select>
-									<option selected="selected">All Category</option>
-									<option>Food & Beverage</option>
-									<option>Chemical</option>
-									<option>Health & Medical</option>
-									<option>Electronics</option>
-									<option>Cosmetic</option>
+								<!-- 240418 dy : 카테고리 선택 시 상품 리스트로 가기 위한 요청 걸어줌 -->
+								<select id="category" name="category">
+									<option value="total" selected="selected">All Category</option>
+									<option value="FOOD_BEVERAGE">Food & Beverage</option>
+									<option value="CHEMICAL">Chemical</option>
+									<option value="HEALTH_MEDICAL">Health & Medical</option>
+									<option value="ELECTRONIC">Electronics</option>
+									<option value="COSMETIC">Cosmetic</option>
 								</select>
 								<form>
-									<input name="search" placeholder="What are you searching for?" type="search">
-									<button class="btnn"><i class="ti-search"></i></button>
+									<input name="search" placeholder="What are you searching for?" type="search" id="searchWord">
+									<button class="btnn"><i class="ti-search" id="searchBtn"></i></button>
 								</form>
 							</div>
 						</div>
@@ -146,7 +147,7 @@
 							<!-- 검색창 옆 부분 인콰이어리 new 로만 보이게 하고 인콰이어리 페이지로 넘어가게 하기 -->
 							<div class="sinlge-bar inquiry">
 								<a th:href="@{/main/inbox}" class="single-icon"><i class="fa fa-envelope-o"></i> <span
-										class="total-count">new</span></a>
+										class="total-count">NEW</span></a>
 							</div>
 						</div>
 					</div>
@@ -167,13 +168,14 @@
 							<nav class="navbar navbar-expand-lg">
 								<div class="navbar-collapse">
 									<div class="nav-inner">
+										<!-- 240418 dy : 카테고리 별 상품 목록 요청(검색어X) -->
 										<ul class="nav main-menu menu navbar-nav">
-											<li><a th:href="@{/main/list}">All</a></li>
-											<li><a th:href="@{/main/list}">Food & Beverage</a></li>
-											<li><a th:href="@{/main/list}">Chemical</a></li>
-											<li><a th:href="@{/main/list}">Health & Medical</a></li>
-											<li><a th:href="@{/main/list}">Electronics</a></li>
-											<li><a th:href="@{/main/list}">Cosmetic</a></li>
+											<li><a th:href="@{/main/list(category=total)}">All</a></li>
+											<li><a th:href="@{/main/list(category=FOOD_BEVERAGE)}">Food & Beverage</a></li>
+											<li><a th:href="@{/main/list(category=CHEMICAL)}">Chemical</a></li>
+											<li><a th:href="@{/main/list(category=HEALTH_MEDICAL)}">Health & Medical</a></li>
+											<li><a th:href="@{/main/list(category=ELECTRONIC)}">Electronics</a></li>
+											<li><a th:href="@{/main/list(category=COSMETIC)}">Cosmetic</a></li>
 										</ul>
 									</div>
 								</div>
@@ -346,14 +348,14 @@
 	<section class="product-area shop-sidebar product-list shop section">
 		<div class="container">
 			<div class="row">
-				<div class="col-lg-3 col-md-4 col-12">
+				<div class="col-lg-2 col-md-4 col-12">
 					<div class="shop-sidebar login-form">
 						<!-- Single Widget -->
 						<div class="single-widget category">
 							<h3 class="title">My Page</h3>
 							<ul class="categor-list">
-								<li><a th:href="@{/main/myinfo}">info</a></li>
-								<li><a th:href="@{/main/myproducts}" style="font-weight:600;">Products</a></li>
+								<li><a th:href="@{/main/myinfo(customerId=${customerId})}">info</a></li>
+								<li><a th:href="@{/main/myproducts(customerId=${customerId})}" style="color: #222; font-weight: 700;">Products</a></li>
 								<!-- 해당 페이지에 들어가면 색상이 더 진하게 보이게 해놓음 -->
 							</ul>
 						</div>
@@ -361,7 +363,7 @@
 					</div>
 				</div>
 
-				<div class="col-lg-9 col-md-8 col-12">
+				<div class="col-lg-10 col-md-8 col-12">
 					<div class="row">
 						<!-- My products List -->
 						<div class="shopping-cart section">
@@ -372,12 +374,12 @@
 										<div class="shop-top">
 											<div class="shop-shorter">
 												<div class="single-shorter">
-													<label>Show :<span> 3</span></label>
+													<label>Show :<span> [[${#lists.size(productList)}]]</span></label>
 												</div>
 											</div>
 											<div class="single-slider">
 												<div class="single-slider">
-													<a th:href="@{/main/productsWrite}">상품 등록하기</a>
+													<a th:href="@{/main/productsWrite(customerId=${customerId})}">상품 등록하기</a>
 												</div>
 											</div>
 										</div>
@@ -397,57 +399,25 @@
 												</tr>
 											</thead>
 											<tbody>
-												<tr>
-													<td>1</td>
+												<!-- 240418 dy : 회원의 상품 목록 출력 -->
+												<tr th:if="${productList != null and !#lists.isEmpty(productList)}" th:each="product, i : ${productList}">
+													<td class="no"><span>[[${i.count}]]</span></td>
 													<!-- 이미지 우선 임시 링크 -->
 													<td class="image" data-title="No"><img
 															src="https://via.placeholder.com/100x100" alt="#"></td>
-													<td class="product-desc" data-title="Description">
-														<p class="product-name"><a href="#">Women Dress</a></p>
-														<p class="product-desc">Maboriosam in a tonto nesciung eget
-															distingy magndapibus.</p>
+													<td class="product-info" data-title="Description">
+														<p class="product-name"><a th:href="@{/main/productsDetail(productId=${product.productId})}">[[${product.productName}]]</a></p>
+														<p class="product-desc">[[${product.productDesc}]]</p>
 													</td>
-													<td class="price" data-title="Price"><span>$110.00 </span></td>
-													<td class="qty" data-title="Qty"><span>2,000</span></td>
+													<td class="price" data-title="Price"><span>$[[${product.price}]]</span></td>
+													<td class="qty" data-title="Qty">
+														<span th:if="${product.moq >= 1000}" th:text="${#numbers.formatInteger(product.moq, 3, 'COMMA')} + ' ' + ${product.unit}"> </span>
+														<span th:unless="${product.moq >= 1000}" th:text="${product.moq} + ' ' + ${product.unit}"></span>
+													</td>
 													<!-- <td class="total-amount" data-title="Total"><span>$220.88</span></td> -->
-													<td class="createDate" data-title="date"><span>2024/03/14</span>
+													<td class="createDate" data-title="date"><span>[[${#temporals.format(product.createDate, 'yyyy-MM-dd')}]]</span>
 													</td>
-													<td class="action" data-title="Remove"><a href="#"><i
-																class="ti-trash remove-icon"></i></a></td>
-												</tr>
-												<tr>
-													<td>2</td>
-													<td class="image" data-title="No"><img
-															src="https://via.placeholder.com/100x100" alt="#"></td>
-													<td class="product-desc" data-title="Description">
-														<p class="product-name"><a href="#">Women Dress</a></p>
-														<p class="product-desc">Maboriosam in a tonto nesciung eget
-															distingy magndapibus.</p>
-													</td>
-													<td class="price" data-title="Price"><span>$110.00 </span></td>
-													<td class="qty" data-title="Qty"><span>2,000</span></td>
-													<!-- <td class="total-amount" data-title="Total"><span>$220.88</span></td> -->
-													<td class="createDate" data-title="date"><span>2024/03/14</span>
-													</td>
-													<td class="action" data-title="Remove"><a href="#"><i
-																class="ti-trash remove-icon"></i></a></td>
-												</tr>
-												<tr>
-													<td>3</td>
-													<td class="image" data-title="No"><img
-															src="https://via.placeholder.com/100x100" alt="#"></td>
-													<td class="product-desc" data-title="Description">
-														<p class="product-name"><a href="#">Women Dress</a></p>
-														<p class="product-desc ">Maboriosam in a tonto nesciung eget
-															distingy magndapibus.</p>
-													</td>
-													<td class="price" data-title="Price"><span>$110.00 </span></td>
-													<td class="qty" data-title="Qty"><span>3,000</span></td>
-													<!-- <td class="total-amount" data-title="Total"><span>$220.88</span></td> -->
-													<td class="createDate" data-title="date"><span>2024/03/14</span>
-													</td>
-													<td class="action" data-title="Remove"><a href="#"><i
-																class="ti-trash remove-icon"></i></a></td>
+													<td class="action" data-title="Remove"><a th:href="@{/main/productDelete(productId=${product.productId})}"><i class="ti-trash remove-icon"></i></a></td>
 												</tr>
 											</tbody>
 										</table>

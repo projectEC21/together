@@ -2,619 +2,577 @@
 <html lang="en" xmlns:th="http://thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
-  <!-- Meta Tag -->
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name='copyright' content=''>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <!-- Title Tag  -->
-  <title>EC21, Global B2B Marketplace</title>
+	<!-- Meta Tag -->
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name='copyright' content=''>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<!-- Title Tag  -->
+	<title>EC21, Global B2B Marketplace</title> 
+	<!-- Favicon -->
+	<link rel="icon" type="image/png" th:href="@{/main/images/ec21logo.png}">
+	<!-- Web Font -->
+	<link
+		href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap"
+		rel="stylesheet">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap" rel="stylesheet">
 
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" th:href="@{/main/images/ec21logo.png}">
-  <!-- Web Font -->
-  <link
-    href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap"
-    rel="stylesheet">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap" rel="stylesheet">
+	<!-- StyleSheet -->
+	<!-- Bootstrap -->
+	<link rel="stylesheet" th:href="@{/main/css/bootstrap.css}">
+	<!-- Magnific Popup -->
+	<link rel="stylesheet" th:href="@{/main/css/magnific-popup.min.css}">
+	<!-- Font Awesome -->
+	<link rel="stylesheet" th:href="@{/main/css/font-awesome.css}">
+	<!-- Fancybox -->
+	<link rel="stylesheet" th:href="@{/main/css/jquery.fancybox.min.css}">
+	<!-- Themify Icons -->
+	<link rel="stylesheet" th:href="@{/main/css/themify-icons.css}">
+	<!-- Nice Select CSS -->
+	<link rel="stylesheet" th:href="@{/main/css/niceselect.css}">
+	<!-- Animate CSS -->
+	<link rel="stylesheet" th:href="@{/main/css/animate.css}">
+	<!-- Flex Slider CSS -->
+	<link rel="stylesheet" th:href="@{/main/css/flex-slider.min.css}">
+	<!-- Owl Carousel -->
+	<link rel="stylesheet" th:href="@{/main/css/owl-carousel.css}">
+	<!-- Slicknav -->
+	<link rel="stylesheet" th:href="@{/main/css/slicknav.min.css}">
 
-  <!-- StyleSheet -->
+	<!-- Eshop StyleSheet -->
+	<link rel="stylesheet" th:href="@{/main/css/reset.css}">
+	<link rel="stylesheet" th:href="@{/main/css/style.css}">
+	<link rel="stylesheet" th:href="@{/main/css/responsive.css}">
 
-  <!-- Bootstrap -->
-  <link rel="stylesheet" th:href="@{/main/css/bootstrap.css}">
-  <!-- Magnific Popup -->
-  <link rel="stylesheet" th:href="@{/main/css/magnific-popup.min.css}">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" th:href="@{/main/css/font-awesome.css}">
-  <!-- Fancybox -->
-  <link rel="stylesheet" th:href="@{/main/css/jquery.fancybox.min.css}">
-  <!-- Themify Icons -->
-  <link rel="stylesheet" th:href="@{/main/css/themify-icons.css}">
-  <!-- Nice Select CSS -->
-  <link rel="stylesheet" th:href="@{/main/css/niceselect.css}">
-  <!-- Animate CSS -->
-  <link rel="stylesheet" th:href="@{/main/css/animate.css}">
-  <!-- Flex Slider CSS -->
-  <link rel="stylesheet" th:href="@{/main/css/flex-slider.min.css}">
-  <!-- Owl Carousel -->
-  <link rel="stylesheet" th:href="@{/main/css/owl-carousel.css}">
-  <!-- Slicknav -->
-  <link rel="stylesheet" th:href="@{/main/css/slicknav.min.css}">
+	<!-- Color CSS -->
+	<link rel="stylesheet" th:href="@{/main/css/color/color2.css}">
+	<link rel="stylesheet" href="" id="colors">
 
-  <!-- Eshop StyleSheet -->
-  <link rel="stylesheet" th:href="@{/main/css/reset.css}">
-  <link rel="stylesheet" th:href="@{/main/css/style.css}">
-  <link rel="stylesheet" th:href="@{/main/css/responsive.css}">
-
-  <!-- Color CSS -->
-  <link rel="stylesheet" th:href="@{/main/css/color/color2.css}">
-
-  <link rel="stylesheet" href="#" id="colors">
 </head>
 
 <body class="js">
 
-  <!-- Preloader -->
-  <div class="preloader">
-    <div class="preloader-inner">
-      <div class="preloader-icon">
-        <span></span>
-        <span></span>
-      </div>
-    </div>
-  </div>
-  <!-- End Preloader -->
+	<!-- Preloader -->
+	<div class="preloader">
+		<div class="preloader-inner">
+			<div class="preloader-icon">
+				<span></span>
+				<span></span>
+			</div>
+		</div>
+	</div>
+	<!-- End Preloader -->
 
-  <!-- Header -->
-  <header class="header shop">
-    <!-- Topbar -->
-    <div class="topbar">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-4 col-md-12 col-12">
-            <!-- Top Left -->
-            <div class="top-left">
-            </div>
-            <!--/ End Top Left -->
-          </div>
-          <div class="col-lg-8 col-md-12 col-12">
-            <!-- Top Right -->
-            <div class="right-content">
-              <ul class="list-main">
-                <li><i class="ti-user"></i> <a th:href="@{/main/myinfo}">My account</a></li>
-                <li><i class="ti-power-off"></i><a th:href="@{/main/login}">Login</a></li>
-                <li><i class="ti-user"></i><a th:href="@{/main/register}">Sign up</a></li>
-                <li><i class="ti-power-off"></i><a th:href="@{/}">Logout</a></li>
-              </ul>
-            </div>
-            <!-- End Top Right -->
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- End Topbar -->
-    <div class="middle-inner">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-2 col-md-2 col-12">
-            <!-- Logo -->
-            <div class="logo">
-              <a th:href="@{/}"><img src="@{/main/images/ec21logo.png}" alt="logo"></a>
-            </div>
-            <!--/ End Logo -->
-            <!-- Search Form -->
-            <div class="search-top">
-              <div class="top-search"><a href="#0"><i class="ti-search"></i></a></div>
-              <!-- Search Form -->
-              <div class="search-top">
-                <form class="search-form">
-                  <input type="text" placeholder="Search here..." name="search">
-                  <button value="search" type="submit"><i class="ti-search"></i></button>
-                </form>
-              </div>
-              <!--/ End Search Form -->
-            </div>
-            <!--/ End Search Form -->
-            <div class="mobile-nav"></div>
-          </div>
-          <div class="col-lg-8 col-md-7 col-12">
-            <div class="search-bar-top">
-              <div class="search-bar">
-                <select>
-                  <option selected="selected">All Category</option>
-                  <option>Food & Beverage</option>
-                  <option>Chemical</option>
-                  <option>Health & Medical</option>
-                  <option>Electronics</option>
-                  <option>Cosmetic</option>
-                </select>
-                <form>
-                  <input name="search" placeholder="What are you searching for?" type="search">
-                  <button class="btnn"><i class="ti-search"></i></button>
-                </form>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-2 col-md-3 col-12">
-            <div class="right-bar">
-              <!-- Search Form -->
-              <div class="sinlge-bar">
-                <a th:href="@{/main/myproducts}" class="single-icon"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a>
-              </div>
+	<!-- Header -->
+	<header class="header shop">
+		<!-- Topbar -->
+		<div class="topbar">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-4 col-md-12 col-12">
+						<!-- Top Left -->
+						<div class="top-left">
+						</div>
+						<!--/ End Top Left -->
+					</div>
+					<div class="col-lg-8 col-md-12 col-12">
+						<!-- Top Right -->
+						<div class="right-content">
+							<ul class="list-main">
+								<li><i class="ti-power-off"></i><a th:href="@{/main/login}">Login</a></li>
+								<li><i class="ti-user"></i><a th:href="@{/main/register}">Sign up</a></li>
+								<li><i class="ti-power-off"></i><a th:href="@{/main/logout}">Logout</a></li>
+								</li>
+							</ul>
+						</div>
+						<!-- End Top Right -->
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- End Topbar -->
+		<div class="middle-inner">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-2 col-md-2 col-12">
+						<!-- Logo -->
+						<div class="logo">
+							<a th:href="@{/}"><img th:src="@{/main/images/ec21logo.png}" alt="logo"></a>
+						</div>
+						<!--/ End Logo -->
+						<!-- Search Form -->
+						<div class="search-top">
+							<div class="top-search"><a href="#"><i class="ti-search"></i></a></div>
+							<!-- Search Form -->
+							<div class="search-top">
+								<form class="search-form">
+									<input type="text" placeholder="Search here..." name="search">
+									<button value="search" type="submit"><i class="ti-search"></i></button>
+								</form>
+							</div>
+							<!--/ End Search Form -->
+						</div>
+						<!--/ End Search Form -->
+						<div class="mobile-nav"></div>
+					</div>
+					<div class="col-lg-8 col-md-7 col-12">
+						<div class="search-bar-top">
+							<div class="search-bar">
+								<!-- 240418 dy : 카테고리 선택 시 상품 리스트로 가기 위한 요청 걸어줌 -->
+								<select id="category" name="category">
+									<option value="total" selected="selected">All Category</option>
+									<option value="FOOD_BEVERAGE">Food & Beverage</option>
+									<option value="CHEMICAL">Chemical</option>
+									<option value="HEALTH_MEDICAL">Health & Medical</option>
+									<option value="ELECTRONIC">Electronics</option>
+									<option value="COSMETIC">Cosmetic</option>
+								</select>
+								<form>
+									<input name="search" placeholder="What are you searching for?" type="search" id="searchWord">
+									<button class="btnn"><i class="ti-search" id="searchBtn"></i></button>
+								</form>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-2 col-md-3 col-12">
+						<div class="right-bar">
+							<!-- Search Form -->
+							<div class="sinlge-bar">
+								<a th:href="@{/main/myproducts}" class="single-icon"><i class="fa fa-user-circle-o"
+										aria-hidden="true"></i></a>
+							</div>
 
-              <!-- 검색창 옆 부분 -->
-              <div class="sinlge-bar inquiry">
-                <a th:href="@{/main/inbox}" class="single-icon"><i class="fa fa-envelope-o"></i> <span
-                    class="total-count">3</span></a>
-                <!-- inquiry start -->
-                <div class="inquiry-item">
-                  <div class="dropdown-cart-header">
-                    <span>3 Items</span>
-                  </div>
-                  <ul class="inquiry-list">
-                    <li>
-                      <!-- <a class="cart-img" href="#"><img src="images/user.png" alt="profile Image"></a> -->
-                      <span>
-                        <h4><a href="#">John Smith</a></h4>
-                        <span class="time">3 mins ago</span>
-                      </span>
-                      <span class="message">
-                        Film festivals used to be do-or-die moments for movie makers. They were where...
-                      </span>
-                    </li>
-                    <li>
-                      <!-- <a class="cart-img" href="#"><img src="images/user.png" alt="profile Image"></a> -->
-                      <span>
-                        <h4><a href="#">John Smith</a></h4>
-                        <span class="time">3 mins ago</span>
-                      </span>
-                      <span class="message">
-                        Film festivals used to be do-or-die moments for movie makers. They were where...
-                      </span>
-                    </li>
-                    <li>
-                      <!-- <a class="cart-img" href="#"><img src="images/user.png" alt="profile Image"></a> -->
-                      <span>
-                        <h4><a href="#">John Smith</a></h4>
-                        <span class="time">3 mins ago</span>
-                      </span>
-                      <span class="message">
-                        Film festivals used to be do-or-die moments for movie makers. They were where...
-                      </span>
-                    </li>
-                  </ul>
-                  <div class="bottom">
-                    <a href="@{/}" class="btn animate">See more inquiries</a>
-                  </div>
-                </div>
-                <!--/ End inquiry Item -->
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+							<!-- 검색창 옆 부분 인콰이어리 new 로만 보이게 하고 인콰이어리 페이지로 넘어가게 하기 -->
+							<div class="sinlge-bar inquiry">
+								<a th:href="@{/main/inbox}" class="single-icon"><i class="fa fa-envelope-o"></i> <span
+										class="total-count">NEW</span></a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 
-    <!-- Header Inner -->
-    <div class="header-inner">
-      <div class="container">
-        <div class="cat-nav-head">
-          <div class="row">
-          </div>
-          <div class="col-lg-9 col-12">
-            <div class="menu-area">
+		<!-- Header Inner -->
+		<div class="header-inner">
+			<div class="container">
+				<div class="cat-nav-head">
+					<div class="row">
+					</div>
+					<div class="col-lg-9 col-12">
+						<div class="menu-area">
 
-              <!-- Main Menu -->
-              <nav class="navbar navbar-expand-lg">
-                <div class="navbar-collapse">
-                  <div class="nav-inner">
-                    <ul class="nav main-menu menu navbar-nav">
-                      <li><a th:href="@{/main/list}">All</a></li>
-                      <li><a th:href="@{/main/list}">Food & Beverage</a></li>
-                      <li><a th:href="@{/main/list}">Chemical</a></li>
-                      <li><a th:href="@{/main/list}">Health & Medical</a></li>
-                      <li><a th:href="@{/main/list}">Electronics</a></li>
-                      <li><a th:href="@{/main/list}">Cosmetic</a></li>
-                    </ul>
-                  </div>
-                </div>
-              </nav>
-              <!--/ End Main Menu -->
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    </div>
-    <!--/ End Header Inner -->
-  </header>
-  <!--/ End Header -->
+							<!-- Main Menu -->
+							<nav class="navbar navbar-expand-lg">
+								<div class="navbar-collapse">
+									<div class="nav-inner">
+										<!-- 240418 dy : 카테고리 별 상품 목록 요청(검색어X) -->
+										<ul class="nav main-menu menu navbar-nav">
+											<li><a th:href="@{/main/list(category=total)}">All</a></li>
+											<li><a th:href="@{/main/list(category=FOOD_BEVERAGE)}">Food & Beverage</a></li>
+											<li><a th:href="@{/main/list(category=CHEMICAL)}">Chemical</a></li>
+											<li><a th:href="@{/main/list(category=HEALTH_MEDICAL)}">Health & Medical</a></li>
+											<li><a th:href="@{/main/list(category=ELECTRONIC)}">Electronics</a></li>
+											<li><a th:href="@{/main/list(category=COSMETIC)}">Cosmetic</a></li>
+										</ul>
+									</div>
+								</div>
+							</nav>
+							<!--/ End Main Menu -->
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		</div>
+		<!--/ End Header Inner -->
+	</header>
+	<!--/ End Header -->
 
-  <!-- page content -->
-  <section class="product-area shop-sidebar product-list shop section"></section>
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-3 col-md-4 col-12">
-        <div class="shop-sidebar login-form">
-          <!-- Single Widget -->
-          <div class="single-widget category">
-            <button id="compose" class="btn btn-sm btn-success btn-block" type="button">COMPOSE</button>
+	<!-- Breadcrumbs : 사이트 내 경로 -->
+	<div class="breadcrumbs">
+		<div class="container">
+			<div class="row">
+				<div class="col-12">
+					<div class="bread-inner">
+						<ul class="bread-list">
+							<li><a th:href="@{/}">Home<i class="ti-arrow-right"></i></a></li>
+							<li class="active"><a th:href="@{/main/myinfo}">My Page</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- End Breadcrumbs -->
 
-            <div class="mail_list">
-              <div class="left">
-                <i class="fa fa-circle"></i> <i class="fa fa-edit"></i>
-              </div>
-              <div class="title">
-                <a href="#">
-                  <h3>Dennis Mugo <small>3.00 PM</small></h3>
-                  <p>Ut enim ad minim veniam, quis nostrud exercitation enim ad minim veniam, quis nostrud
-                    exercitation...</p>
-                </a>
-              </div>
-            </div>
+	
 
-            <a href="#">
-              <div class="mail_list">
-                <div class="left">
-                  <i class="fa fa-star"></i>
-                </div>
-                <div class="right">
-                  <h3>Jane Nobert <small>4.09 PM</small></h3>
-                  <p><span class="badge">To</span> Ut enim ad minim veniam, quis nostrud exercitation enim ad minim
-                    veniam, quis nostrud exercitation...</p>
-                </div>
-              </div>
-            </a>
-            <a href="#">
-              <div class="mail_list">
-                <div class="left">
-                  <i class="fa fa-circle-o"></i><i class="fa fa-paperclip"></i>
-                </div>
-                <div class="right">
-                  <h3>Musimbi Anne <small>4.09 PM</small></h3>
-                  <p><span class="badge">CC</span> Ut enim ad minim veniam, quis nostrud exercitation enim ad minim
-                    veniam, quis nostrud exercitation...</p>
-                </div>
-              </div>
-            </a>
-            <a href="#">
-              <div class="mail_list">
-                <div class="left">
-                  <i class="fa fa-paperclip"></i>
-                </div>
-                <div class="right">
-                  <h3>Jon Dibbs <small>4.09 PM</small></h3>
-                  <p>Ut enim ad minim veniam, quis nostrud exercitation enim ad minim veniam, quis nostrud
-                    exercitation...</p>
-                </div>
-              </div>
-            </a>
-            <a href="#">
-              <div class="mail_list">
-                <div class="left">
-                  .
-                </div>
-                <div class="right">
-                  <h3>Debbis & Raymond <small>4.09 PM</small></h3>
-                  <p>Ut enim ad minim veniam, quis nostrud exercitation enim ad minim veniam, quis nostrud
-                    exercitation...</p>
-                </div>
-              </div>
-            </a>
-            <a href="#">
-              <div class="mail_list">
-                <div class="left">
-                  .
-                </div>
-                <div class="right">
-                  <h3>Debbis & Raymond <small>4.09 PM</small></h3>
-                  <p>Ut enim ad minim veniam, quis nostrud exercitation enim ad minim veniam, quis nostrud
-                    exercitation...</p>
-                </div>
-              </div>
-            </a>
-            <a href="#">
-              <div class="mail_list">
-                <div class="left">
-                  <i class="fa fa-circle"></i> <i class="fa fa-edit"></i>
-                </div>
-                <div class="right">
-                  <h3>Dennis Mugo <small>3.00 PM</small></h3>
-                  <p>Ut enim ad minim veniam, quis nostrud exercitation enim ad minim veniam, quis nostrud
-                    exercitation...</p>
-                </div>
-              </div>
-            </a>
-            <a href="#">
-              <div class="mail_list">
-                <div class="left">
-                  <i class="fa fa-star"></i>
-                </div>
-                <div class="right">
-                  <h3>Jane Nobert <small>4.09 PM</small></h3>
-                  <p>Ut enim ad minim veniam, quis nostrud exercitation enim ad minim veniam, quis nostrud
-                    exercitation...</p>
-                </div>
-              </div>
-            </a>
-          </div>
-          <!-- /MAIL LIST -->
-        </div>
-      </div>
-      <!-- CONTENT MAIL -->
-      <div class="col-sm-9 mail_view">
-        <div class="inbox-body">
-          <div class="mail_heading row">
-            <div class="col-md-8">
-              <div class="btn-group">
-                <button class="btn btn-sm btn-primary" type="button"><i class="fa fa-reply"></i> Reply</button>
-                <button class="btn btn-sm btn-default" type="button" data-placement="top" data-toggle="tooltip"
-                  data-original-title="Forward"><i class="fa fa-share"></i></button>
-                <button class="btn btn-sm btn-default" type="button" data-placement="top" data-toggle="tooltip"
-                  data-original-title="Print"><i class="fa fa-print"></i></button>
-                <button class="btn btn-sm btn-default" type="button" data-placement="top" data-toggle="tooltip"
-                  data-original-title="Trash"><i class="fa fa-trash-o"></i></button>
-              </div>
-            </div>
-            <div class="col-md-4 text-right">
-              <p class="date"> 8:02 PM 12 FEB 2014</p>
-            </div>
-            <div class="col-md-12">
-              <h4> Donec vitae leo at sem lobortis porttitor eu consequat risus. Mauris sed congue orci. Donec ultrices
-                faucibus rutrum.</h4>
-            </div>
-          </div>
-          <div class="sender-info">
-            <div class="row">
-              <div class="col-md-12">
-                <strong>Jon Doe</strong>
-                <span>(jon.doe@gmail.com)</span> to
-                <strong>me</strong>
-                <a class="sender-dropdown"><i class="fa fa-chevron-down"></i></a>
-              </div>
-            </div>
-          </div>
-          <div class="view-mail">
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-              dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-              ea commodo consequat.
-              Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-              Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est
-              laborum. </p>
-            <p>Riusmod tempor incididunt ut labor erem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-              tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-              ullamco laboris
-              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-              cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
-              officia deserunt
-              mollit anim id est laborum.</p>
-            <p>Modesed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
-              nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-              reprehenderit in voluptate
-              velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-              culpa qui officia deserunt mollit anim id est laborum.</p>
-          </div>
-          <div class="attachment">
-            <p>
-              <span><i class="fa fa-paperclip"></i> 3 attachments — </span>
-              <a href="#">Download all attachments</a> |
-              <a href="#">View all images</a>
-            </p>
-            <ul>
-              <li>
-                <a href="#" class="atch-thumb">
-                  <img th:src="@{/images/inbox.png}" alt="img" />
-                </a>
+	<!-- My products List-->
 
-                <div class="file-name">
-                  image-name.jpg
-                </div>
-                <span>12KB</span>
+	</div>
+	</div>
+	</div>
+	</div>
+	</section>
+	<!-- End Shop Newsletter -->
 
 
-                <div class="links">
-                  <a href="#">View</a> -
-                  <a href="#">Download</a>
-                </div>
-              </li>
+	<!-- Modal -->
+	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span class="ti-close"
+							aria-hidden="true"></span></button>
+				</div>
+				<div class="modal-body">
+					<div class="row no-gutters">
+						<div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+							<!-- Product Slider -->
+							<div class="product-gallery">
+								<div class="quickview-slider-active">
+									<div class="single-slider">
+										<img src="https://via.placeholder.com/569x528" alt="#">
+									</div>
+									<div class="single-slider">
+										<img src="https://via.placeholder.com/569x528" alt="#">
+									</div>
+									<div class="single-slider">
+										<img src="https://via.placeholder.com/569x528" alt="#">
+									</div>
+									<div class="single-slider">
+										<img src="https://via.placeholder.com/569x528" alt="#">
+									</div>
+								</div>
+							</div>
+							<!-- End Product slider -->
+						</div>
+						<div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+							<div class="quickview-content">
+								<h2>Flared Shift Dress</h2>
+								<div class="quickview-ratting-review">
+									<div class="quickview-ratting-wrap">
+										<div class="quickview-ratting">
+											<i class="yellow fa fa-star"></i>
+											<i class="yellow fa fa-star"></i>
+											<i class="yellow fa fa-star"></i>
+											<i class="yellow fa fa-star"></i>
+											<i class="fa fa-star"></i>
+										</div>
+										<a href="#"> (1 customer review)</a>
+									</div>
+									<div class="quickview-stock">
+										<span><i class="fa fa-check-circle-o"></i> in stock</span>
+									</div>
+								</div>
+								<h3>$29.00</h3>
+								<div class="quickview-peragraph">
+									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia iste laborum
+										ad impedit pariatur esse optio tempora sint ullam autem deleniti nam in quos qui
+										nemo ipsum numquam.</p>
+								</div>
+								<div class="size">
+									<div class="row">
+										<div class="col-lg-6 col-12">
+											<h5 class="title">Size</h5>
+											<select>
+												<option selected="selected">s</option>
+												<option>m</option>
+												<option>l</option>
+												<option>xl</option>
+											</select>
+										</div>
+										<div class="col-lg-6 col-12">
+											<h5 class="title">Color</h5>
+											<select>
+												<option selected="selected">orange</option>
+												<option>purple</option>
+												<option>black</option>
+												<option>pink</option>
+											</select>
+										</div>
+									</div>
+								</div>
+								<div class="quantity">
+									<!-- Input Order -->
+									<div class="input-group">
+										<div class="button minus">
+											<button type="button" class="btn btn-primary btn-number" disabled="disabled"
+												data-type="minus" data-field="quant[1]">
+												<i class="ti-minus"></i>
+											</button>
+										</div>
+										<input type="text" name="quant[1]" class="input-number" data-min="1"
+											data-max="1000" value="1">
+										<div class="button plus">
+											<button type="button" class="btn btn-primary btn-number" data-type="plus"
+												data-field="quant[1]">
+												<i class="ti-plus"></i>
+											</button>
+										</div>
+									</div>
+									<!--/ End Input Order -->
+								</div>
+								<div class="add-to-cart">
+									<a href="#" class="btn">Add to cart</a>
+									<a href="#" class="btn min"><i class="ti-heart"></i></a>
+									<a href="#" class="btn min"><i class="fa fa-compress"></i></a>
+								</div>
+								<div class="default-social">
+									<h4 class="share-now">Share:</h4>
+									<ul>
+										<li><a class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
+										<li><a class="twitter" href="#"><i class="fa fa-twitter"></i></a></li>
+										<li><a class="youtube" href="#"><i class="fa fa-pinterest-p"></i></a></li>
+										<li><a class="dribbble" href="#"><i class="fa fa-google-plus"></i></a></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Modal end -->
+	<!-- End Breadcrumbs -->
 
-              <li>
-                <a href="#" class="atch-thumb">
-                  <img th:src="@{/images/inbox.png}" alt="img" />
-                </a>
+	<!-- 
+			Product Style 1 
+			Products 페이지가 myAccount 디폴트 화면!
+			옆 사이드 바
+		-->
+	<section class="product-area shop-sidebar product-list shop section">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-2 col-md-4 col-12">
+					<div class="shop-sidebar login-form">
+						<!-- Single Widget -->
+						<div class="single-widget category">
+							<h3 class="title">My Page</h3>
+							<ul class="categor-list">
+								<li><a th:href="@{/main/myinfo(customerId=${customerId})}">info</a></li>
+								<li><a th:href="@{/main/myproducts(customerId=${customerId})}" style="color: #222; font-weight: 700;">Products</a></li>
+								<!-- 해당 페이지에 들어가면 색상이 더 진하게 보이게 해놓음 -->
+							</ul>
+						</div>
+						<!--/ End Single Widget -->
+					</div>
+				</div>
 
-                <div class="file-name">
-                  img_name.jpg
-                </div>
-                <span>40KB</span>
+				<div class="col-lg-10 col-md-8 col-12">
+					<div class="row">
+						<!-- My products List -->
+						<div class="shopping-cart section">
+							<div class="container">
+								<div class="row">
+									<div class="col-12">
+										<!-- Shop Top -->
+										<div class="shop-top">
+											<div class="shop-shorter">
+												<div class="single-shorter">
+													<label>Show :<span> [[${#lists.size(productList)}]]</span></label>
+												</div>
+											</div>
+											<div class="single-slider">
+												<div class="single-slider">
+													<a th:href="@{/main/productsWrite(customerId=${customerId})}">상품 등록하기</a>
+												</div>
+											</div>
+										</div>
 
-                <div class="links">
-                  <a href="#">View</a> -
-                  <a href="#">Download</a>
-                </div>
-              </li>
-              <li>
-                <a href="#" class="atch-thumb">
-                  <img th:src="@{/images/inbox.png}" alt="img" />
-                </a>
+										<!-- 올린 상품 리스트 -->
+										<table class="table shopping-summery">
+											<thead>
+												<tr class="main-hading">
+													<th class="text-center">no</th>
+													<th colspan="2">PRODUCT</th>
+													<!-- <th>PRODUCT</th> -->
+													<th class="text-center">PRICE</th> <!-- -->
+													<th class="text-center">QUANTITY</th> <!-- 단위-->
+													<!-- <th class="text-center">TOTAL</th>  -->
+													<th class="text-center">DATE</th>
+													<th class="text-center"><i class="ti-trash remove-icon"></i></th>
+												</tr>
+											</thead>
+											<tbody>
+												<!-- 240418 dy : 회원의 상품 목록 출력 -->
+												<tr th:if="${productList != null and !#lists.isEmpty(productList)}" th:each="product, i : ${productList}">
+													<td class="no"><span>[[${i.count}]]</span></td>
+													<!-- 이미지 우선 임시 링크 -->
+													<td class="image" data-title="No"><img
+															src="https://via.placeholder.com/100x100" alt="#"></td>
+													<td class="product-info" data-title="Description">
+														<p class="product-name"><a th:href="@{/main/productsDetail(productId=${product.productId})}">[[${product.productName}]]</a></p>
+														<p class="product-desc">[[${product.productDesc}]]</p>
+													</td>
+													<td class="price" data-title="Price"><span>$[[${product.price}]]</span></td>
+													<td class="qty" data-title="Qty">
+														<span th:if="${product.moq >= 1000}" th:text="${#numbers.formatInteger(product.moq, 3, 'COMMA')} + ' ' + ${product.unit}"> </span>
+														<span th:unless="${product.moq >= 1000}" th:text="${product.moq} + ' ' + ${product.unit}"></span>
+													</td>
+													<!-- <td class="total-amount" data-title="Total"><span>$220.88</span></td> -->
+													<td class="createDate" data-title="date"><span>[[${#temporals.format(product.createDate, 'yyyy-MM-dd')}]]</span>
+													</td>
+													<td class="action" data-title="Remove"><a th:href="@{/main/productDelete(productId=${product.productId})}"><i class="ti-trash remove-icon"></i></a></td>
+												</tr>
+											</tbody>
+										</table>
+										<!--/ End Shopping Summery -->
+									</div>
+									<!-- 페이징 -->
+								</div>
+							</div>
+						</div>
+						<!--/ End Shopping Cart -->
+					</div>
+					<span class="paging"> << < 1 2 3 4 5 > >> </span>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!--/ End Product Style 1  -->
 
-                <div class="file-name">
-                  img_name.jpg
-                </div>
-                <span>30KB</span>
+	<!-- Start Footer Area -->
+	<footer class="footer">
+		<!-- Footer Top -->
+		<div class="footer-top section">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-2 col-md-6 col-12">
+						<!-- Single Widget -->
+						<div class="single-footer links">
+							<h4>About Us</h4>
+							<ul>
+								<li><a href="#">Company Overview</a></li>
+								<li><a href="#">Agent Program</a></li>
+								<li><a href="#">Advertise with us</a></li>
+							</ul>
+						</div>
+						<!-- End Single Widget -->
+					</div>
+					<div class="col-lg-2 col-md-6 col-12">
+						<!-- Single Widget -->
+						<div class="single-footer links">
+							<h4>Buying on EC21</h4>
+							<ul>
+								<li><a href="#">Post Buying Leads</a></li>
+								<li><a href="#">Browse Category</a></li>
+								<li><a href="#">Products by Keywords</a></li>
+								<li><a href="#">Products by Country</a></li>
+								<li><a href="#">Idea Products</a></li>
+							</ul>
+						</div>
+						<!-- End Single Widget -->
+					</div>
 
-                <div class="links">
-                  <a href="#">View</a> -
-                  <a href="#">Download</a>
-                </div>
-              </li>
+					<!-- Single Widget -->
+					<div class="col-lg-2 col-md-6 col-12">
+						<!-- Single Widget -->
+						<div class="single-footer links">
+							<h4>Selling on EC21</h4>
+							<ul>
+								<li><a href="#">Post Products</a></li>
+								<li><a href="#">Manage Products</a></li>
+								<li><a href="#">Post Selling Leads</a></li>
+								<li><a href="#">Search Buying Leads</a></li>
+								<li><a href="#">Search Buyer Data</a></li>
+							</ul>
+						</div>
+						<!-- End Single Widget -->
+					</div>
+					<div class="col-lg-2 col-md-6 col-12">
+						<!-- Single Widget -->
+						<div class="single-footer links">
+							<h4>Services</h4>
+							<ul>
+								<li><a href="#">Basic Services</a></li>
+								<li><a href="#">Trade PRO</a></li>
+								<li><a href="#">Trade OK</a></li>
+								<li><a href="#">Credit Reports</a></li>
+								<li><a href="#">TradeVerify</a></li>
+							</ul>
+						</div>
+					</div>
+					<!-- End Single Widget -->
+					<div class="col-lg-3 col-md-6 col-12">
+						<!-- Single Widget -->
+						<div class="single-footer social">
+							<h4>Share this page</h4>
+							<ul>
+								<li><a href="#"><i class="ti-facebook"></i></a></li>
+								<li><a href="#"><i class="ti-twitter"></i></a></li>
+								<li><a href="#"><i class="ti-flickr"></i></a></li>
+								<li><a href="#"><i class="ti-instagram"></i></a></li>
+							</ul>
+						</div>
+						<!-- End Single Widget -->
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- End Footer Top -->
+		<div class="copyright">
+			<div class="container">
+				<div class="inner">
+					<div class="row">
+						<div class="col-lg-6 col-12">
+							<div class="left">
+								<p>Copyright © 1997-2024 <a href="#" target="_blank">EC21 Inc.</a> All Rights Reserved.
+									EC21 in Korean | Chinese Business Registry Number: 120-86-03931</p>
+							</div>
+						</div>
+						<div class="col-lg-6 col-12">
+							<div class="right">
+								<img th:src="@{/main/images/payments.png}" alt="#">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>
+	<!-- /End Footer Area -->
 
-            </ul>
-          </div>
-          <div class="btn-group">
-            <button class="btn btn-sm btn-primary" type="button"><i class="fa fa-reply"></i> Reply</button>
-            <button class="btn btn-sm btn-default" type="button" data-placement="top" data-toggle="tooltip"
-              data-original-title="Forward"><i class="fa fa-share"></i></button>
-            <button class="btn btn-sm btn-default" type="button" data-placement="top" data-toggle="tooltip"
-              data-original-title="Print"><i class="fa fa-print"></i></button>
-            <button class="btn btn-sm btn-default" type="button" data-placement="top" data-toggle="tooltip"
-              data-original-title="Trash"><i class="fa fa-trash-o"></i></button>
-          </div>
-        </div>
-
-      </div>
-      <!-- /CONTENT MAIL -->
-    </div>
-  </div>
-  </div>
-  </div>
-  </div>
-  </div>
-  </div>
-  <!-- /page content -->
-
-  <!-- footer content -->
-  <footer>
-    <div class="pull-right">
-      Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
-    </div>
-    <div class="clearfix"></div>
-  </footer>
-  <!-- /footer content -->
-  </div>
-  </div>
-
-  <!-- compose -->
-  <div class="compose col-md-6  ">
-    <div class="compose-header">
-      New Message
-      <button type="button" class="close compose-close">
-        <span>×</span>
-      </button>
-    </div>
-
-    <div class="compose-body">
-      <div id="alerts"></div>
-
-      <div class="btn-toolbar editor" data-role="editor-toolbar" data-target="#editor">
-        <div class="btn-group">
-          <a class="btn dropdown-toggle" data-toggle="dropdown" title="Font"><i class="fa fa-font"></i><b
-              class="caret"></b></a>
-          <ul class="dropdown-menu">
-          </ul>
-        </div>
-
-        <div class="btn-group">
-          <a class="btn dropdown-toggle" data-toggle="dropdown" title="Font Size"><i
-              class="fa fa-text-height"></i>&nbsp;<b class="caret"></b></a>
-          <ul class="dropdown-menu">
-            <li>
-              <a data-edit="fontSize 5">
-                <p style="font-size:17px">Huge</p>
-              </a>
-            </li>
-            <li>
-              <a data-edit="fontSize 3">
-                <p style="font-size:14px">Normal</p>
-              </a>
-            </li>
-            <li>
-              <a data-edit="fontSize 1">
-                <p style="font-size:11px">Small</p>
-              </a>
-            </li>
-          </ul>
-        </div>
-
-        <div class="btn-group">
-          <a class="btn" data-edit="bold" title="Bold (Ctrl/Cmd+B)"><i class="fa fa-bold"></i></a>
-          <a class="btn" data-edit="italic" title="Italic (Ctrl/Cmd+I)"><i class="fa fa-italic"></i></a>
-          <a class="btn" data-edit="strikethrough" title="Strikethrough"><i class="fa fa-strikethrough"></i></a>
-          <a class="btn" data-edit="underline" title="Underline (Ctrl/Cmd+U)"><i class="fa fa-underline"></i></a>
-        </div>
-
-        <div class="btn-group">
-          <a class="btn" data-edit="insertunorderedlist" title="Bullet list"><i class="fa fa-list-ul"></i></a>
-          <a class="btn" data-edit="insertorderedlist" title="Number list"><i class="fa fa-list-ol"></i></a>
-          <a class="btn" data-edit="outdent" title="Reduce indent (Shift+Tab)"><i class="fa fa-dedent"></i></a>
-          <a class="btn" data-edit="indent" title="Indent (Tab)"><i class="fa fa-indent"></i></a>
-        </div>
-
-        <div class="btn-group">
-          <a class="btn" data-edit="justifyleft" title="Align Left (Ctrl/Cmd+L)"><i class="fa fa-align-left"></i></a>
-          <a class="btn" data-edit="justifycenter" title="Center (Ctrl/Cmd+E)"><i class="fa fa-align-center"></i></a>
-          <a class="btn" data-edit="justifyright" title="Align Right (Ctrl/Cmd+R)"><i class="fa fa-align-right"></i></a>
-          <a class="btn" data-edit="justifyfull" title="Justify (Ctrl/Cmd+J)"><i class="fa fa-align-justify"></i></a>
-        </div>
-
-        <div class="btn-group">
-          <a class="btn dropdown-toggle" data-toggle="dropdown" title="Hyperlink"><i class="fa fa-link"></i></a>
-          <div class="dropdown-menu input-append">
-            <input class="span2" placeholder="URL" type="text" data-edit="createLink" />
-            <button class="btn" type="button">Add</button>
-          </div>
-          <a class="btn" data-edit="unlink" title="Remove Hyperlink"><i class="fa fa-cut"></i></a>
-        </div>
-
-        <div class="btn-group">
-          <a class="btn" title="Insert picture (or just drag & drop)" id="pictureBtn"><i
-              class="fa fa-picture-o"></i></a>
-          <input type="file" data-role="magic-overlay" data-target="#pictureBtn" data-edit="insertImage" />
-        </div>
-
-        <div class="btn-group">
-          <a class="btn" data-edit="undo" title="Undo (Ctrl/Cmd+Z)"><i class="fa fa-undo"></i></a>
-          <a class="btn" data-edit="redo" title="Redo (Ctrl/Cmd+Y)"><i class="fa fa-repeat"></i></a>
-        </div>
-      </div>
-
-      <div id="editor" class="editor-wrapper"></div>
-    </div>
-
-    <div class="compose-footer">
-      <button id="send" class="btn btn-sm btn-success" type="button">Send</button>
-    </div>
-  </div>
-  <!-- /compose -->
-
-  <!-- Jquery -->
-  <script th:src="@{/main/js/jquery.min.js}"></script>
-  <script th:src="@{/main/js/jquery-migrate-3.0.0.js}"></script>
-  <script th:src="@{/main/js/jquery-ui.min.js}"></script>
-  <!-- Popper JS -->
-  <script th:src="@{/main/js/popper.min.js}"></script>
-  <!-- Bootstrap JS -->
-  <script th:src="@{static/main/js/bootstrap.min.js}"></script>
-  <!-- Color JS -->
-  <script th:src="@{/main/js/colors.js}"></script>
-  <!-- Slicknav JS -->
-  <script th:src="@{/main/js/slicknav.min.js}"></script>
-  <!-- Owl Carousel JS -->
-  <script th:src="@{/main/js/owl-carousel.js}"></script>
-  <!-- Magnific Popup JS -->
-  <script th:src="@{/main/js/magnific-popup.js}"></script>
-  <!-- Fancybox JS -->
-  <script th:src="@{/main/js/facnybox.min.js}"></script>
-  <!-- Waypoints JS -->
-  <script th:src="@{/main/js/waypoints.min.js}"></script>
-  <!-- Countdown JS -->
-  <script th:src="@{/main/js/finalcountdown.min.js}"></script>
-  <!-- Nice Select JS -->
-  <script th:src="@{/main/js/nicesellect.js}"></script>
-  <!-- Ytplayer JS -->
-  <script th:src="@{/main/js/ytplayer.min.js}"></script>
-  <!-- Flex Slider JS -->
-  <script th:src="@{/main/js/flex-slider.js}"></script>
-  <!-- ScrollUp JS -->
-  <script th:src="@{/main/js/scrollup.js}"></script>
-  <!-- Onepage Nav JS -->
-  <script th:src="@{/main/js/onepage-nav.min.js}"></script>
-  <!-- Easing JS -->
-  <script th:src="@{/main/js/easing.js}"></script>
-  <!-- Active JS -->
-  <script th:src="@{/main/js/active.js}"></script>
+	<!-- Jquery -->
+	<script th:src="@{/main/js/jquery.min.js}"></script>
+	<script th:src="@{/main/js/jquery-migrate-3.0.0.js}"></script>
+	<script th:src="@{/main/js/jquery-ui.min.js}"></script>
+	<!-- Popper JS -->
+	<script th:src="@{/main/js/popper.min.js}"></script>
+	<!-- Bootstrap JS -->
+	<script th:src="@{/main/js/bootstrap.min.js}"></script>
+	<!-- Color JS -->
+	<script th:src="@{/main/js/colors.js}"></script>
+	<!-- Slicknav JS -->
+	<script th:src="@{/main/js/slicknav.min.js}"></script>
+	<!-- Owl Carousel JS -->
+	<script th:src="@{/main/js/owl-carousel.js}"></script>
+	<!-- Magnific Popup JS -->
+	<script th:src="@{/main/js/magnific-popup.js}"></script>
+	<!-- Fancybox JS -->
+	<script th:src="@{/main/js/facnybox.min.js}"></script>
+	<!-- Waypoints JS -->
+	<script th:src="@{/main/js/waypoints.min.js}"></script>
+	<!-- Countdown JS -->
+	<script th:src="@{/main/js/finalcountdown.min.js}"></script>
+	<!-- Nice Select JS -->
+	<script th:src="@{/main/js/nicesellect.js}"></script>
+	<!-- Ytplayer JS -->
+	<script th:src="@{/main/js/ytplayer.min.js}"></script>
+	<!-- Flex Slider JS -->
+	<script th:src="@{/main/js/flex-slider.js}"></script>
+	<!-- ScrollUp JS -->
+	<script th:src="@{/main/js/scrollup.js}"></script>
+	<!-- Onepage Nav JS -->
+	<script th:src="@{/main/js/onepage-nav.min.js}"></script>
+	<!-- Easing JS -->
+	<script th:src="@{/main/js/easing.js}"></script>
+	<!-- Active JS -->
+	<script th:src="@{/main/js/active.js}"></script>
 </body>
 
 </html>
