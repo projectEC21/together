@@ -152,14 +152,7 @@ public class ManagerService {
             // 1) productId에 해당하는 금지어유사도 결과 데이터들 가져오기 (금지어 유사 확률 높은 순)
             List<ProhibitSimilarWordEntity> entityList = prohibitSimilarWordRepository
                     .findProbaByProductEntity_ProductIdOrderBySimilarProbaDesc(prodEntity.getProductId());
-            List<ProhibitSimilarWordDTO> prohibitSimilarDTOs = new ArrayList<>();
-            // productId에 해당하는 모든 금지어유사도 결과들을 DTO로 변환하여 리스트에 담음
-            entityList.forEach((entity)->{
-                prohibitSimilarDTOs.add(ProhibitSimilarWordDTO.toDTO(entity, 
-                                        entity.getProhibitWordEntity().getProhibitWord(), 
-                                        entity.getProductEntity().getProductId()));
-            });
-
+            
             // 2) lstmPredictProba 값 환산
             // Double newProba = 1 - (prodEntity.getLstmPredictProba()/0.79)*0.5; // 지금 저장된 데이터들은 백분율로 저장되어있음..
             Double newProba = 1 - (((prodEntity.getLstmPredictProba()*0.01)/0.79)*0.5);
@@ -176,7 +169,7 @@ public class ManagerService {
                         newProba, prodEntity.isLstmPredict(),
                         prohibitSimilarWordEntity.getSimilarWord(), prohibitSimilarWordEntity.getSimilarProba(),
                         prohibitSimilarWordEntity.getProhibitWordEntity().getProhibitWord(),
-                        prohibitSimilarWordEntity.getProhibitWordEntity().getProhibitReason(), prohibitSimilarDTOs);
+                        prohibitSimilarWordEntity.getProhibitWordEntity().getProhibitReason());
                 result.add(dto);
                         
             }
@@ -187,7 +180,7 @@ public class ManagerService {
                         prodEntity.getProductId(),
                         prodEntity.getProductName(), prodEntity.getProductDesc(),
                         newProba, prodEntity.isLstmPredict(),
-                        null, 0.0,null,null, null);
+                        null, 0.0,null,null);
                 result.add(dto);
             }
         });

@@ -83,17 +83,21 @@
           data:{"productId":productId},
           method:"GET",
           success:function(resp){
-            if (!resp) { // 금지어 유사도 결과가 없는 경우
-              tableContent+=`<tr><td colspan="3">존재하지 않습니다.</td></tr></tbody>`;
+            if (!resp || resp.length === 0) { // 금지어 유사도 결과가 없는 경우
+              tableContent+=`<tr><td colspan="3"><span>결과가 존재하지 않습니다.</span></td></tr></tbody>`;
             }else{
               let list = JSON.parse(resp);
-              list.forEach(function (item) {
-                tableContent += `<tr>
-                                    <td>${item.similarWord}</td>
-                                    <td>${item.prohibitWord} (${item.prohibitReason})</td>
-                                    <td><input type="button" value="단어추가"> </td>
-                                </tr>`;
-              })
+              if (list.length === 0) { // 파싱된 리스트가 비어 있는 경우
+                tableContent += `<tr><td colspan="3"><span>결과가 존재하지 않습니다.</span></td></tr>`;
+              } else {
+                list.forEach(function (item) {
+                  tableContent += `<tr>
+                                      <td>${item.similarWord}</td>
+                                      <td>${item.prohibitWord} (${item.prohibitReason})</td>
+                                      <td><input type="button" value="단어추가"> </td>
+                                  </tr>`;
+                });
+              }
               tableContent += '</tbody>';
             }
 

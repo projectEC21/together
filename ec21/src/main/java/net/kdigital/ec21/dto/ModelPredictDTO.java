@@ -25,5 +25,4 @@ public class ModelPredictDTO {
     private double similarProba;    // 금지어 유사 확률
     private String prohibitWord;     // 금지 단어
     private ProhibitReason prohibitReason; // 금지 사유
-    private List<ProhibitSimilarWordDTO> similarList; // 금지어유사도 결과 리스트
 }
