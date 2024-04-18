@@ -14,4 +14,5 @@ public interface CustomerRepository extends JpaRepository<CustomerEntity, String
 
     // 정상 회원 (blacklist_check==N)인 모든 customerEntity 최신 등록 순으로 리스트 반환
     List<CustomerEntity> findByBlacklistCheckOrderByCreateDateDesc(YesOrNo blacklistCheck);
+
 }

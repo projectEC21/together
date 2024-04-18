@@ -13,7 +13,7 @@ import net.kdigital.ec21.dto.check.ReportCategory;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-// 신고 회원 목록 조회를 위한 DTO
+// 신고 회원 및 블랙리스트 목록 조회를 위한 DTO
 public class ReportedCustomerWithInfoDTO {
     private String reportedId;              // 회원ID
     private Long reportCustomerId;          // 테이블ID(일련번호) - reportCustomerId / blacklistId

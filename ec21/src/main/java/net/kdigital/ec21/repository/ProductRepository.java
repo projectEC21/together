@@ -109,5 +109,17 @@ public interface ProductRepository extends JpaRepository<ProductEntity, String> 
                 @Param("searchWord") String searchWord,
                 @Param("category") ProductCategory category);
 
+        // ============================ 메인 카테고리별 상품 목록 화면 =================================
 
+        // 전달받은 카테고리에 해당하고 전달받은 상품id에 해당하는 상품은 제외한 상품들 중
+        // 상위(조회수, lstmPredictProba, 등록일) 5개 상품 데이터 조회를 위해 Pageable 사용 
+        // (pageable :정렬 조건과 조회 개수 조건 넘김)
+        @Query("SELECT p FROM ProductEntity p JOIN p.customerEntity c " +
+        "WHERE p.judge = 'Y' AND c.blacklistCheck = 'N' AND p.productDelete = 'N' " +
+        "AND p.category = :category AND p.productId != :productId")
+        Page<ProductEntity> findTopProductsByCategoryAndJudgeAndBlacklistCheckAndNotDeletedExcludingProductId(
+                @Param("category") ProductCategory category,
+                @Param("productId") String productId,
+                Pageable pageable);
+        
 }

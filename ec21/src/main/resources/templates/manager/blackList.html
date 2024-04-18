@@ -39,17 +39,22 @@
 
   <!-- 240414 dy : JQuery 파일 추가 및 ajax 추가 -->
   <script th:src="@{/script/jquery-3.7.1.min.js}"></script>
-
+  
+  <!-- 240417 dy : 카테고리, 검색어에 따른 list 가져오기 및 정상버튼 활성화-->
   <script>
     $(function () {
+      $("#category").on("change",search);
+      $("#searchWord").on("keyup",search);
       init();
     })
 
     function toNormal() {
+      let category = $("#category").val();
+      let searchWord = $("#searchWord").val();
       let blacklistId = $("#blacklistId").val();
       $.ajax({
         url: "/manager/blackList/getList",
-        data: { "blacklistId": blacklistId},
+        data: { "blacklistId": blacklistId, "category": category, "searchWord": searchWord},
         method: "GET",
         success: function (list) {
           $("#result").replaceWith(list);
@@ -58,10 +63,28 @@
       });
     }
 
+    // 카테고리 및 검색어 상태 변경 시 
+    function search() {
+      let category = $("#category").val();
+      let searchWord = $("#searchWord").val();
+      console.log(category);
+      console.log(searchWord);
+      $.ajax({
+        url:"/manager/blackList/getList",
+        data: {"category": category, "searchWord": searchWord },
+        method: "GET",
+        success: function (list) {
+          $("#result").replaceWith(list);
+          $("#blackBtn").on("click", toBlacklist);
+          $("#normalBtn").on("click", toNormal);
+        }
+      })
+
+    }
+
     function init() {
       $.ajax({
         url: "/manager/blackList/getList",
-        data: { "blacklistId": -100},
         method: "GET",
         success: function (list) {
           $("#result").replaceWith(list);
@@ -146,6 +169,7 @@
                   <img th:src="@{/production/images/user.png}" alt="">관리자
                 </a>
                 <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
+                  <a class="dropdown-item" th:href=@{/}><i class="fa fa-home pull-right"></i> Home</a>
                   <a class="dropdown-item" th:href="@{main/login}"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
                 </div>
               </li>
@@ -182,13 +206,15 @@
                 <div class="title_right">
                   <div class="col-md-5 col-sm-5   form-group pull-right top_search">
                     <div class="input-group">
-                      <select name="" id="">
-                        <option value="전체">전체</option>
-                        <option value="회원ID">회원ID</option>
-                        <option value="카테고리">카테고리</option>
-                        <option value="상품명">상품명</option>
+                      <!-- 240417 dy : select를 신고카테고리로 바꾸고, 검색어는 신고당한 회원ID, 담당자명, 회사명에서 검색되게 함 -->
+                      <select name="category" id="category">
+                        <option value="total">전체</option>
+                        <option value="DRUG">DRUG</option>
+                        <option value="IPR">IPR</option>
+                        <option value="SPAM">SPAM</option>
+                        <option value="ETC">ETC</option>
                       </select>
-                      <input type="text" class="form-control" placeholder="Search for...">
+                      <input type="text" class="form-control" id="searchWord" placeholder="Search for...">
                       <span class="input-group-btn">
                         <button class="btn btn-default" type="button">찾기</button>
                       </span>

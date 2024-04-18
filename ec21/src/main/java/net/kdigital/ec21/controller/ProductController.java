@@ -10,60 +10,53 @@ import org.springframework.web.bind.annotation.RequestParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.kdigital.ec21.dto.ProductDTO;
+import net.kdigital.ec21.service.CustomerService;
 import net.kdigital.ec21.service.ProductService;
+
 
 @Controller
 @Slf4j
 @RequiredArgsConstructor
 public class ProductController {
-    private final ProductService ProductService;
-    
-    // /**
-    // * main페이지에서 내 상품 페이지 요청
-    // *
-    // * @return
-    // */
-    // @GetMapping("/main/myproducts")
-    // public String myProducts(@RequestParam(name = "customerId")String customerId,
-    // Model model) {
-    // CustomerDTO customerDTO = customerService.getCustomer(customerId);
-    // model.addAttribute("customer", customerDTO);
-    // return "/main/myproducts";
-    // }
+    private final ProductService productService;
+    private final CustomerService customerService;
 
     /**
-     * main 폴더에 있는 마이페이지 버튼 클릭 시 내가 판매하는 상품 목록 화면 요청
+     * main/myproducts에서 상품등록 페이지 productsWrite 요청 (회원ID를 받아서 model에 담아 보냄)
      * 
      * @return
      */
-    @GetMapping("/main/myproducts")
-    public String myProducts() {
-        return "/main/myproducts";
+    @GetMapping("main/productsWrite")
+    public String productsWrite(@RequestParam(name = "customerId", defaultValue = "jooyoungyoon") String customerId, Model model) {
+        model.addAttribute("customerId", customerId);
+        return "main/productsWrite";
     }
 
     /**
-     * main페이지에서 상품등록 페이지 productsWrite 요청
-     * 
-     * @return
-     */
-    @GetMapping("/main/productsWrite")
-    public String productsWrite() {
-        return "/main/productsWrite";
-    }
-
-    /**
-     * 전달받은 상품 아이디에 해당하는 상품DTO를 model에 담아 상품 디테일 페이지로 보냄
-     * 
+     * 전달받은 상품 아이디에 해당하는 상품DTO와 해당 상품과 동일한 카테고리에 속한 상품들 최대 5개를 
+     *  model에 담아 상품 상세 정보 페이지로 보냄
      * @param productId
      * @param model
      * @return
      */
-    @GetMapping("/main/productsDetail")
-    public String productsDetail(@RequestParam(name = "productId") String productId, Model model) {
-        ProductDTO dto = ProductService.getProduct(productId);
+    @GetMapping("main/productsDetail")
+    public String productsDetail(@RequestParam(name = "productId", defaultValue = "CO00006-20240409") String productId, Model model) {
+        // productId에 해당하는 Product의 hitCount 증가
+        productService.updateHitCount(productId);
+        
+        // productId에 해당하는 Product 가져오기
+        ProductDTO dto = productService.getProduct(productId);
+        
+        // productId에 해당하는 Product와 동일한 카테고리의 상품들 최대 5개 가져오기
+        List<ProductDTO> dtoList = productService.getSameCategoryProducts(dto.getCategory(), productId);
+        
+        
         model.addAttribute("product", dto);
-        return "/main/productsDetail";
+        model.addAttribute("list", dtoList);
+        
+        return "main/productsDetail";
     }
+    
 
     /**
      * 전달받은 상품 카테고리와 검색어에 해당하는 상품 리스트를 model에 담아 상품 목록 페이지로 보냄
@@ -72,10 +65,10 @@ public class ProductController {
      * @param model
      * @return 
      */
-    @GetMapping("/main/list")
+    @GetMapping("main/list")
     public String list(@RequestParam(name = "category", defaultValue = "total") String category,
             @RequestParam(name = "searchWord", defaultValue = "") String searchWord, Model model) {
-        List<ProductDTO> dtoList = ProductService.getProductList(category, searchWord);
+        List<ProductDTO> dtoList = productService.getProductList(category, searchWord);
         log.info("=========== 카테고리 : {}",category);
         log.info("=========== 검색어 : {}",searchWord);
 
@@ -83,8 +76,11 @@ public class ProductController {
         model.addAttribute("category", category);
         model.addAttribute("searchWord", searchWord);
         
-        return "/main/list";
+        return "main/list";
     }
+
+    
+    
 
 
 }
