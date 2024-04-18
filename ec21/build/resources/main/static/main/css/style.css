@@ -23,6 +23,7 @@ Version:1.0
 11. Checkout CSS
 12. Login & Register CSS
 * productsWrite CSS
+* inbox CSS
 13. Cowndown CSS
 14. Shop Services CSS
 15. Newslatter CSS
@@ -3744,6 +3745,17 @@ body {
 	End Write CSS
 ========================================*/
 
+/*======================================
+	start Inquiry CSS
+========================================*/
+.header.shop .top-left .logo {
+	width: 100px;
+	height: auto;
+} 
+
+/*======================================
+	End Inquiry CSS
+========================================*/
 
 /*======================================
    Start Shop List CSS
