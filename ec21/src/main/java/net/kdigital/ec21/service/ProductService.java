@@ -15,7 +15,9 @@ import lombok.extern.slf4j.Slf4j;
 import net.kdigital.ec21.dto.ProductDTO;
 import net.kdigital.ec21.dto.check.ProductCategory;
 import net.kdigital.ec21.dto.check.YesOrNo;
+import net.kdigital.ec21.entity.CustomerEntity;
 import net.kdigital.ec21.entity.ProductEntity;
+import net.kdigital.ec21.repository.CustomerRepository;
 import net.kdigital.ec21.repository.ProductRepository;
 
 @Service
@@ -23,6 +25,7 @@ import net.kdigital.ec21.repository.ProductRepository;
 @RequiredArgsConstructor
 public class ProductService {
     private final ProductRepository productRepository;
+    private final CustomerRepository customerRepository;
 
     //===================================== main/index ======================================
     /**
@@ -127,6 +130,40 @@ public class ProductService {
 
         return dtoList;
     }
+
+    // ===================================== main/myproducts ======================================
+
+    /**
+     * 전달 받은 상품ID에 해당하는 상품의 productDelete 값을 Y로 변경하는 함수
+     * @param productId
+     */
+    public void updateDeleteCheck(String productId) {
+        ProductEntity entity = productRepository.findById(productId).get();
+        entity.setProductDelete(YesOrNo.Y);
+    }
+
+    /**
+     * 전달받은 회원 ID에 해당하는 entity를 찾아서 entity가 자식으로 갖는 ProductEntity를 반환하는 함수 (productDelete가 N인 상품들만 포함)
+     * @param customerId
+     * @return
+     */
+    public List<ProductDTO> getCustomerProducts(String customerId) {
+        CustomerEntity customerEntity = customerRepository.findById(customerId).get();
+        List<ProductDTO> result = new ArrayList<>();
+
+        List<ProductEntity> productList = customerEntity.getProductEntity();
+        
+        productList.forEach((entity)->{
+            // productDelete 값이 Y인 경우는 제외
+            if (entity.getProductDelete() == YesOrNo.N) {
+                result.add(ProductDTO.toDTO(entity, customerId));
+            }
+        });
+
+        return result;
+    }
+
+
 
 
 
