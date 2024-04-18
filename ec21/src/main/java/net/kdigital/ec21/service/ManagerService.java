@@ -17,6 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 import net.kdigital.ec21.dto.BlacklistDTO;
 import net.kdigital.ec21.dto.CustomerDTO;
 import net.kdigital.ec21.dto.ModelPredictDTO;
+import net.kdigital.ec21.dto.ModelPredictModalDTO;
 import net.kdigital.ec21.dto.ProductDTO;
 import net.kdigital.ec21.dto.ProhibitSimilarWordDTO;
 import net.kdigital.ec21.dto.ReportedCustomerWithInfoDTO;
@@ -192,6 +193,28 @@ public class ManagerService {
         });
 
         return result;
+    }
+    
+    /**
+     * 상품 ID에 해당하는 금지어 유사도 결과 리스트의 결과를 새로운 modalDTO에 담아서 리스트로 반환하는 함수
+     * (상품ID, 유사단어, 금지어 리스트 단어, 금지어 사유)
+     * @param productId
+     * @return
+     */
+    public List<ModelPredictModalDTO> getProhibitSimilarWordDTOs(String productId) {
+        List<ModelPredictModalDTO> modalDTOs = new ArrayList<>();
+        
+        //productId에 해당하는 금지어유사도 결과 데이터들 가져오기 (금지어 유사 확률 높은 순)
+        List<ProhibitSimilarWordEntity> entityList = prohibitSimilarWordRepository.findProbaByProductEntity_ProductIdOrderBySimilarProbaDesc(productId);
+        if (entityList==null) {
+            return null;
+        }
+        entityList.forEach((entity)->{
+            ModelPredictModalDTO dto = new ModelPredictModalDTO(productId, entity.getSimilarWord(), 
+                                            entity.getProhibitWordEntity().getProhibitWord(), entity.getProhibitWordEntity().getProhibitReason());
+            modalDTOs.add(dto);
+        });
+        return modalDTOs;
     }
 
 
@@ -378,6 +401,10 @@ public class ManagerService {
 
         return result;
     }
+
+
+
+    
 
 
 

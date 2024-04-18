@@ -13,10 +13,15 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.kdigital.ec21.dto.CustomerDTO;
 import net.kdigital.ec21.dto.ModelPredictDTO;
+import net.kdigital.ec21.dto.ModelPredictModalDTO;
 import net.kdigital.ec21.dto.ProductDTO;
 import net.kdigital.ec21.dto.ReportedCustomerWithInfoDTO;
 import net.kdigital.ec21.service.ManagerService;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
@@ -106,6 +111,25 @@ public class ManagerController {
 
 		return "/manager/modelPredict::#result";
 	}
+
+	/**
+	 * 전달받은 상품 ID에 해당하는 금지어유사도 결과 리스트를 JSON 데이터로 반환
+	 * @param productId
+	 * @return
+	 * @throws JsonProcessingException
+	 */
+	@ResponseBody
+	@GetMapping("/manager/modelPredict/getProhibitSimilarWordDTOs")
+	public String getProhibitSimilarWordDTOs(@RequestParam(name = "productId") String productId) throws JsonProcessingException {
+		List<ModelPredictModalDTO>result = managerService.getProhibitSimilarWordDTOs(productId);
+		if (result==null) {
+			return null;
+		}
+		ObjectMapper mapper = new ObjectMapper();
+		return mapper.writeValueAsString(result);
+	}
+	
+
 
 	// ============================= 회원 관리 =============================
 
