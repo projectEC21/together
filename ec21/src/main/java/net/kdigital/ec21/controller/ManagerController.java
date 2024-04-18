@@ -158,7 +158,6 @@ public class ManagerController {
 		
 		List<ReportedCustomerWithInfoDTO> dtoList = managerService.selectReportedCustomerBySearch(category, searchWord);
 		model.addAttribute("list", dtoList);
-		log.info("list 받아왔어");
 		
 		return "/manager/reportedCustomerList::#result";
 	}

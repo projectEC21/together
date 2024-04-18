@@ -66,9 +66,26 @@
       $(document).on("click", "a[id^='modalBtn']", function () {
         let modalName = $(this).data("name");
         let modalDesc = $(this).data("desc");
+        let similarList = $(this).data("similar-list");
+
+        console.log(similarList);
+        console.log(typeof similarList);
+
+        let tableContent = '<thead><tr><th>유사단어</th><th>금지어</th><th>확률</th></tr></thead><tbody>';
+        similarList.forEach(item => {
+            tableContent += `<tr>
+                                <td>${item.similarWord}</td>
+                                <td>${item.prohibitWord}</td>
+                                <td>${item.similarProba}%</td>
+                            </tr>`;
+        });
+        tableContent += '</tbody>';
+
         $("#myModal").modal();
+
         $("#modalName").html(modalName);
         $("#modalDesc").html(modalDesc);
+        $("#modalTable").innerHTML = tableContent;
       });
 
     });
@@ -255,7 +272,7 @@
                         <td>
                           <!-- <a href="#myModal" id="modalBtn" th:text="${product.productName}">ipone</a> -->
                           <a href="#" th:id="'modalBtn' + ${product.productId}" th:text="${product.productName}"
-                            th:data-name="${product.productName}" th:data-desc="${product.productDesc}">iphone</a>
+                            th:data-name="${product.productName}" th:data-desc="${product.productDesc}" th:data-similar-list="${product.similarList}">iphone</a>
                         </td>
                         <!-- 나중에 th:utext로 바꿔야 함 -->
                         <td class="project_progress" th:text="${product.productDesc}">
@@ -325,8 +342,8 @@
           <div class="card">
             <div class="card-body">
 
-              <table class="table table-striped jambo_table bulk_action">
-                <thead>
+              <table class="table table-striped jambo_table bulk_action" id="modalTable">
+                <!-- <thead>
                   <tr>
                     <th>유사단어</th>
                     <th>금지어리스트 단어 (카테고리)</th>
@@ -340,7 +357,7 @@
                     <td>macbook (IPR)</td>
                     <td><input type="button" value="단어추가"> </td>
                   </tr>
-                </tbody>
+                </tbody> -->
               </table>
             </div>
           </div>
