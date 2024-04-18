@@ -1,0 +1,17 @@
+/*======================================
+	start Inquiry CSS
+========================================*/
+.header.shop .top-left .logo {
+	width: 90px;
+	height: auto;
+	margin-top: -2px;
+} 
+
+.header.shop .inquiry-area {
+    background-color: #333 !important;
+    color: #fff;
+}
+
+/*======================================
+	End Inquiry CSS
+========================================*/
