@@ -34,7 +34,7 @@ public class CustomerController {
      */
     @GetMapping("/main/register")
     public String register() {
-        return "/main/register";
+        return "main/register";
     }
 
     /**
@@ -55,7 +55,7 @@ public class CustomerController {
      */
     @GetMapping("/main/login")
     public String login() {
-        return "/main/login";
+        return "main/login";
     }
     
     /**
@@ -77,7 +77,8 @@ public class CustomerController {
      */
     @GetMapping("/main/myproducts")
     public String myProducts(@RequestParam(name = "customerId", defaultValue = "jooyoungyoon") String customerId, Model model) {
-        log.info(customerId);
+        
+        // 회원ID에 해당하는 회원이 판매하고 있는 상품 리스트
         List<ProductDTO> productList = productService.getCustomerProducts(customerId);
 
         model.addAttribute("customerId", customerId);
@@ -88,13 +89,13 @@ public class CustomerController {
 
     /**
      * 전달 받은 상품ID에 해당하는 상품의 삭제 요청 및
-     * 다시 마이페이지의 자신이 판매하는 상품목록 화면 재요청 처리
+     * 다시 마이페이지의 자신이 판매하는 상품목록 화면 재요청 처리 (상품페이지에서 delete 버튼 클릭시는 다른 요청의 형태로 만들 것임)
      * 
      * @param productId
      * @return
      */
-    @GetMapping("main/productDelete")
-    public String productDelete(@RequestParam(name = "productId", defaultValue = "CO00006-20240409") String productId,
+    @GetMapping("main/myproducts/delete")
+    public String myProductsDelete(@RequestParam(name = "productId", defaultValue = "CO00006-20240409") String productId,
             @RequestParam(name = "customerId", defaultValue = "jooyoungyoon") String customerId,
             RedirectAttributes attributes) {
         
@@ -119,7 +120,7 @@ public class CustomerController {
     public String myinfo(@RequestParam(name = "customerId", defaultValue = "jooyoungyoon") String customerId, Model model) {
         CustomerDTO customerDTO = customerService.getCustomer(customerId);
         model.addAttribute("customer", customerDTO);
-        return "/main/myinfo";
+        return "main/myinfo";
     }
     
     /**
@@ -131,7 +132,16 @@ public class CustomerController {
     public String inbox(@RequestParam(name = "customerId", defaultValue = "jooyoungyoon") String customerId, Model model) {
         CustomerDTO customerDTO = customerService.getCustomer(customerId);
         model.addAttribute("customer", customerDTO);
-        return "/main/inbox";
+
+        // ==================================================================================================================
+        // 수정 예정 : 지금 일단 myproducts와 동일한 html 쓰고 있어서!!!! 일단 myproduct에서 필요한 애들 model에 담아서 보냄
+        // 회원ID에 해당하는 회원이 판매하고 있는 상품 리스트
+        List<ProductDTO> productList = productService.getCustomerProducts(customerId);
+        model.addAttribute("customerId", customerId);
+        model.addAttribute("productList", productList);
+        // ==================================================================================================================
+        
+        return "main/inbox";
     }
 
     

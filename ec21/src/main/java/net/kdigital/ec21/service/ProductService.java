@@ -1,8 +1,14 @@
 package net.kdigital.ec21.service;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -13,12 +19,19 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.kdigital.ec21.dto.ProductDTO;
+import net.kdigital.ec21.dto.ProhibitSimilarWordDTO;
 import net.kdigital.ec21.dto.check.ProductCategory;
 import net.kdigital.ec21.dto.check.YesOrNo;
+import net.kdigital.ec21.dto.modelDTO.Lstm;
 import net.kdigital.ec21.entity.CustomerEntity;
 import net.kdigital.ec21.entity.ProductEntity;
+import net.kdigital.ec21.entity.ProhibitSimilarWordEntity;
+import net.kdigital.ec21.entity.ProhibitWordEntity;
 import net.kdigital.ec21.repository.CustomerRepository;
 import net.kdigital.ec21.repository.ProductRepository;
+import net.kdigital.ec21.repository.ProhibitSimilarWordRepository;
+import net.kdigital.ec21.repository.ProhibitWordRepository;
+import net.kdigital.ec21.util.FileService;
 
 @Service
 @Slf4j
@@ -26,6 +39,31 @@ import net.kdigital.ec21.repository.ProductRepository;
 public class ProductService {
     private final ProductRepository productRepository;
     private final CustomerRepository customerRepository;
+    private final ProhibitSimilarWordRepository prohibitSimilarWordRepository;
+    private final ProhibitWordRepository prohibitWordRepository;
+    private final ModelService modelService;
+
+    @Value("${spring.servlet.multipart.location}")
+    String uploadPath;
+
+
+    // ===========================  prodId 생성을 위한 함수 ====================================
+    private static int serialNumber = 1;
+
+    private static String getCurrentDateAsString() {
+        // 현재 날짜를 yyyyMMdd 형식의 문자열로 변환
+        LocalDate currentDate = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
+        return currentDate.format(formatter);
+    }
+
+    public static String generateId(String prefix) {
+        // 두 글자의 prefix와 일련번호, 그리고 현재 날짜를 조합하여 아이디 생성
+        String id = prefix + String.format("%05d", serialNumber) + "-" + getCurrentDateAsString();
+        serialNumber++; // 일련번호 증가
+        return id;
+    }
+
 
     //===================================== main/index ======================================
     /**
@@ -98,6 +136,27 @@ public class ProductService {
         return result;
     }
 
+    /**
+     * 전달받은 productDTO의 productId에 해당하는 productEntity의 값을 수정하고 수정된 productDTO 반환
+     * @param productDTO
+     * @return
+     */
+    @Transactional
+	public ProductDTO updateProduct(ProductDTO productDTO) {
+        ProductEntity entity = productRepository.findById(productDTO.getProductId()).get();
+
+        // 수정
+        entity.setProductName(productDTO.getProductName());
+        entity.setProductDesc(productDTO.getProductDesc());
+        entity.setPrice(productDTO.getPrice());
+        entity.setOrigin(productDTO.getOrigin());
+        entity.setMoq(productDTO.getMoq());
+        entity.setUnit(productDTO.getUnit());
+        entity.setCategory(productDTO.getCategory());
+
+        return ProductDTO.toDTO(entity, productDTO.getCustomerId());
+	}
+
 
     //===================================== main/list ======================================
     
@@ -164,11 +223,89 @@ public class ProductService {
     }
 
 
+    /**
+     * 새로운 상품 등록 
+     * @param productDTO
+     */
+    public void insertProduct(ProductDTO productDTO) {
+        // 상품 등록하는 회원
+        CustomerEntity customerEntity = customerRepository.findById(productDTO.getCustomerId()).get();
 
+        // prodId 생성
+        String categoryCode = productDTO.getCategory().getCategoryCode();
+        String prodId = ProductService.generateId(categoryCode);
+        productDTO.setProductId(prodId);
 
+        // 대표 이미지 저장을 위한 경로 
+        String originalFileName = null;
+        String savedFileName = null;
 
+        // 첨부파일이 있으면 파일명 세팅 실시
+        if (!productDTO.getUploadImg().isEmpty()) {
+            originalFileName = productDTO.getUploadImg().getOriginalFilename();
+            savedFileName = FileService.saveFile(productDTO.getUploadImg(), uploadPath);
 
+            productDTO.setOriginalFileName(originalFileName);
+            productDTO.setSavedFileName(savedFileName); // entity로 변환 전 dto의 savedFileName 변경해주기
+        }
+        log.info("============ 파일 저장해써");
 
+        // lstm
+        Lstm lstm = new Lstm(productDTO.getProductName(), productDTO.getProductDesc()); // lstm 객체 생성
 
+        List<Map<String, Object>> result = modelService.predictLSTM(lstm);
+        log.info("============ {}", result);
+        log.info("============ {}", result.get(0).get("lstm_predict"));
+
+        Boolean lstmPredict = false;
+        Double lstmPredictProba = 0.0;
+
+        // 리스트 사이즈 == 1 : lstm 값이 1인 경우 , lstm 값이 0인데 금지어 유사도가 결과가 나오지 않은 경우
+        if (result.size() == 1) {
+            lstmPredict = String.valueOf(result.get(0).get("lstm_predict")).equals("1") ? true : false;
+            lstmPredictProba = Double.parseDouble(String.valueOf(result.get(0).get("lstm_predict_proba")));
+        } // 리스트 사이즈 >= 1 : lstm 값이 0이고 금지어 유사도 결과가 1개 이상 나온 경우
+        else {
+            lstmPredict = String.valueOf(result.get(0).get("lstm_predict")).equals("1") ? true : false;
+            lstmPredictProba = Double.parseDouble(String.valueOf(result.get(0).get("lstm_predict_proba")));
+
+            result.remove(0);
+
+            // 중복제거
+            // LinkedHashSet을 사용하여 중복 제거하면서 순서 유지
+            Set<Map<String, Object>> resultSet = new LinkedHashSet<>(result);
+            result.clear();
+            result.addAll(resultSet);
+
+            for (int i = 0; i < result.size(); i++) {
+
+                String similarWord = String.valueOf(result.get(i).get("Similar_Word"));
+                String prohibitWord = String.valueOf(result.get(i).get("Prohibited_Word"));
+                Double similarProba = Double.parseDouble(String.valueOf(result.get(i).get("Similarity_Score")));
+
+                ProhibitSimilarWordDTO prohibitDTO = new ProhibitSimilarWordDTO(null,similarWord, similarProba,
+                        prohibitWord, productDTO.getProductId());
+                log.info("{}", prohibitDTO);
+                
+                // 여기서 prohibitSmilarDB에 save하면 될 듯
+                ProhibitWordEntity prohibitWordEntity = prohibitWordRepository.findById(prohibitWord).get();
+                ProductEntity productEntity = ProductEntity.toEntity(productDTO, customerEntity);
+                prohibitSimilarWordRepository.save(ProhibitSimilarWordEntity.toEntity(prohibitDTO, prohibitWordEntity , productEntity));
+                
+            }
+        }
+
+        productDTO.setLstmPredict(lstmPredict);
+        productDTO.setLstmPredictProba(lstmPredictProba);
+        // lstmPredict가 1이면 judge를 Y로.. 0이면 null로 
+        if (lstmPredict) {
+            productDTO.setJudge(YesOrNo.Y);
+        }
+        log.info("============ dto에 저장해써 : {}", lstmPredict);
+
+        // productDTO -> productEntity 변환 후 DB에 저장
+        productRepository.save(ProductEntity.toEntity(productDTO,customerEntity));
+
+    }
     
 }

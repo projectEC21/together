@@ -147,7 +147,7 @@
 							<!-- 검색창 옆 부분 인콰이어리 new 로만 보이게 하고 인콰이어리 페이지로 넘어가게 하기 -->
 							<div class="sinlge-bar inquiry">
 								<a th:href="@{/main/inbox}" class="single-icon"><i class="fa fa-envelope-o"></i> <span
-										class="total-count">new</span></a>
+										class="total-count">NEW</span></a>
 							</div>
 						</div>
 					</div>
@@ -348,14 +348,14 @@
 	<section class="product-area shop-sidebar product-list shop section">
 		<div class="container">
 			<div class="row">
-				<div class="col-lg-3 col-md-4 col-12">
+				<div class="col-lg-2 col-md-4 col-12">
 					<div class="shop-sidebar login-form">
 						<!-- Single Widget -->
 						<div class="single-widget category">
 							<h3 class="title">My Page</h3>
 							<ul class="categor-list">
 								<li><a th:href="@{/main/myinfo(customerId=${customerId})}">info</a></li>
-								<li><a th:href="@{/main/myproducts(customerId=${customerId})}" style="font-weight:600;">Products</a></li>
+								<li><a th:href="@{/main/myproducts(customerId=${customerId})}" style="color: #222; font-weight: 700;">Products</a></li>
 								<!-- 해당 페이지에 들어가면 색상이 더 진하게 보이게 해놓음 -->
 							</ul>
 						</div>
@@ -363,7 +363,7 @@
 					</div>
 				</div>
 
-				<div class="col-lg-9 col-md-8 col-12">
+				<div class="col-lg-10 col-md-8 col-12">
 					<div class="row">
 						<!-- My products List -->
 						<div class="shopping-cart section">
@@ -401,11 +401,11 @@
 											<tbody>
 												<!-- 240418 dy : 회원의 상품 목록 출력 -->
 												<tr th:if="${productList != null and !#lists.isEmpty(productList)}" th:each="product, i : ${productList}">
-													<td>[[${i.count}]]</td>
+													<td class="no"><span>[[${i.count}]]</span></td>
 													<!-- 이미지 우선 임시 링크 -->
 													<td class="image" data-title="No"><img
 															src="https://via.placeholder.com/100x100" alt="#"></td>
-													<td class="product-desc" data-title="Description">
+													<td class="product-info" data-title="Description">
 														<p class="product-name"><a th:href="@{/main/productsDetail(productId=${product.productId})}">[[${product.productName}]]</a></p>
 														<p class="product-desc">[[${product.productDesc}]]</p>
 													</td>
@@ -417,7 +417,7 @@
 													<!-- <td class="total-amount" data-title="Total"><span>$220.88</span></td> -->
 													<td class="createDate" data-title="date"><span>[[${#temporals.format(product.createDate, 'yyyy-MM-dd')}]]</span>
 													</td>
-													<td class="action" data-title="Remove"><a th:href="@{/main/productDelete(productId=${product.productId})}"><i class="ti-trash remove-icon"></i></a></td>
+													<td class="action" data-title="Remove"><a th:href="@{/main/myproducts/delete(productId=${product.productId})}"><i class="ti-trash remove-icon"></i></a></td>
 												</tr>
 											</tbody>
 										</table>
