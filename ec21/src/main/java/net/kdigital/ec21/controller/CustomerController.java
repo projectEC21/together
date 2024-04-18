@@ -88,13 +88,13 @@ public class CustomerController {
 
     /**
      * 전달 받은 상품ID에 해당하는 상품의 삭제 요청 및
-     * 다시 마이페이지의 자신이 판매하는 상품목록 화면 재요청 처리
+     * 다시 마이페이지의 자신이 판매하는 상품목록 화면 재요청 처리 (상품페이지에서 delete 버튼 클릭시는 다른 요청의 형태로 만들 것임)
      * 
      * @param productId
      * @return
      */
-    @GetMapping("main/productDelete")
-    public String productDelete(@RequestParam(name = "productId", defaultValue = "CO00006-20240409") String productId,
+    @GetMapping("main/myproducts/delete")
+    public String myProductsDelete(@RequestParam(name = "productId", defaultValue = "CO00006-20240409") String productId,
             @RequestParam(name = "customerId", defaultValue = "jooyoungyoon") String customerId,
             RedirectAttributes attributes) {
         
