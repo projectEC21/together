@@ -77,7 +77,8 @@ public class CustomerController {
      */
     @GetMapping("/main/myproducts")
     public String myProducts(@RequestParam(name = "customerId", defaultValue = "jooyoungyoon") String customerId, Model model) {
-        log.info(customerId);
+        
+        // 회원ID에 해당하는 회원이 판매하고 있는 상품 리스트
         List<ProductDTO> productList = productService.getCustomerProducts(customerId);
 
         model.addAttribute("customerId", customerId);

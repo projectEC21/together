@@ -180,6 +180,9 @@ public class ManagerService {
             // productId에 해당하는 금지어유사도 결과 데이터들 가져오기 (금지어 유사 확률 높은 순)
             List<ProhibitSimilarWordEntity> entityList = prohibitSimilarWordRepository
                     .findProbaByProductEntity_ProductIdOrderBySimilarProbaDesc(prodEntity.getProductId());
+
+            // lstmPredictProba 값 환산
+            Double newProba = 1 - (prodEntity.getLstmPredictProba()/0.79)*0.5;
                     
             // 1) lstmPredict==false && 금지어 유사도 결과 존재 O
             if (entityList != null && !entityList.isEmpty()) {
@@ -190,7 +193,7 @@ public class ManagerService {
                 ModelPredictDTO dto = new ModelPredictDTO(prodEntity.getCustomerEntity().getCustomerId(),
                         prodEntity.getProductId(),
                         prodEntity.getProductName(), prodEntity.getProductDesc(),
-                        prodEntity.getLstmPredictProba(), prodEntity.isLstmPredict(),
+                        newProba, prodEntity.isLstmPredict(),
                         prohibitSimilarWordEntity.getSimilarWord(), prohibitSimilarWordEntity.getSimilarProba(),
                         prohibitSimilarWordEntity.getProhibitWordEntity().getProhibitWord(),
                         prohibitSimilarWordEntity.getProhibitWordEntity().getProhibitReason());
@@ -203,7 +206,7 @@ public class ManagerService {
                 ModelPredictDTO dto = new ModelPredictDTO(prodEntity.getCustomerEntity().getCustomerId(),
                         prodEntity.getProductId(),
                         prodEntity.getProductName(), prodEntity.getProductDesc(),
-                        prodEntity.getLstmPredictProba(), prodEntity.isLstmPredict(),
+                        newProba, prodEntity.isLstmPredict(),
                         null, 0.0,null,null);
                 result.add(dto);
             }

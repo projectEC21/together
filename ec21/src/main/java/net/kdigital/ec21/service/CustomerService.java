@@ -1,10 +1,13 @@
 package net.kdigital.ec21.service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
 import lombok.RequiredArgsConstructor;
 import net.kdigital.ec21.dto.CustomerDTO;
+import net.kdigital.ec21.dto.ProductDTO;
 import net.kdigital.ec21.entity.CustomerEntity;
+import net.kdigital.ec21.entity.ProductEntity;
 import net.kdigital.ec21.repository.CustomerRepository;
 
 @Service
@@ -30,5 +33,7 @@ public class CustomerService {
         CustomerEntity entity = CustomerEntity.toEntity(customerDTO);
         customerRepository.save(entity);
     }
+
+    
     
 }
