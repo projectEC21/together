@@ -25,10 +25,7 @@ INDEX VERSION 1.134+/Users/inn00/together/.metadata/.plugins/org.eclipse.jdt.cor
 747816314.index
 2132304448.index
 4049935732.index
-<<<<<<< HEAD
-=======
 2138335691.index
->>>>>>> e6d3cf3e98e630712ebb454e42b44c47b090de66
 1757125897.index
 1519315443.index
 968149340.index
