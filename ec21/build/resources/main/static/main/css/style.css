@@ -652,7 +652,7 @@ body {
 }
 .header.shop .logo {
 	float: left;
-	margin: 19px 0 0;
+	margin: 10px 0 0;
 }
 .header.shop .top-contact {
 	margin-top:0px;
@@ -947,7 +947,7 @@ body {
 	position: relative;
 }
 .header.shop .nav li {
-	margin-right:5px;
+	margin-right:45px;
 	position: relative;
 	float: none;
 }
@@ -2168,9 +2168,10 @@ body {
 	display: inline-block;
 	color: #666;
 	font-weight: 400;
-	font-size: 14px;
+	font-size: 16px;
 	text-transform: capitalize;
 }
+
 .shop-sidebar .categor-list li a:hover{
 	color:#F7941D;
 }
@@ -2250,6 +2251,7 @@ body {
 	float: left;
 	margin: 4px 5px 0 0;
 	font-weight:500;
+	font-size: large;
 }
 
 .shop .single-slider a{
@@ -2258,6 +2260,7 @@ body {
 	float: right;
 	margin: 4px 5px 0 0;
 	font-weight:500;
+	font-size: large;
 }
 .shop .single-slider a:hover{
 	font-weight: 700;
@@ -2337,7 +2340,7 @@ body {
 	text-align: start
 }
 
-.shop.single .modal-body th>span {
+.shop.single .modal-body th.text-center>span {
 	color: #ff2c18;
 	display: inline-block;
 	position: sticky;
@@ -2346,23 +2349,28 @@ body {
 	font-size: 16px;
 }
 
-.shop.single .modal-body .message-field {
-	resize: none;
-	width: 400px;
-    height: 300px;
+.shop.single .modal-body input, textarea {
+    resize: none;
+    width: 80%;
 }
+
 
 .shop.single .modal-body td.col-12 input{
 	width: 400px;
 }
 
+
 .shop.single .modal-body .agree-check {
     margin: 50px;
     font-style: italic;
-    font-size: 13px;
+    font-size: 14px;
 }
 
+.shop.single .modal-body .agree-check input{
+	width: inherit;
+}
 /* /modal 과 관련된 css */
+
 .shop.single{
 	padding:70px 0 100px;
 }
@@ -2653,7 +2661,7 @@ body {
     background-color: #fff;
 }
 
-.shop.single .btn-edit .user-custom a:hover {
+.shop.single .btn-edit .user-custom a.btn:hover {
     color: #fff;
 }
 
@@ -2955,6 +2963,11 @@ body {
 .shopping-summery tbody tr:last-child{
 	border:none;
 }
+
+.shopping-summery .product-info {
+	display: block;
+}
+
 .shopping-summery tbody .product-name a {
 	font-weight: 600;
 	color: #282828;
@@ -2962,12 +2975,15 @@ body {
 	font-size: 17px;
 }
 .shopping-cart .table p {
-	font-size: 14px;
+	font-size: 13px;
 	color: #666;
 }
+
+
 .shopping-summery tbody .product-name a:hover{
 	color:#F7941D;
 }
+
 .shopping-summery tbody .product img {
 	max-width: 70px;
 	border-radius: 100%;
@@ -2975,6 +2991,7 @@ body {
 	border: 1px solid #e6e6e6;
 	padding: 4px;
 }
+
 .shopping-summery tbody .product:hover img{
 	border-color:#F7941D;
 	-webkit-transform:rotate(360deg);
@@ -2990,19 +3007,20 @@ body {
 .shopping-cart .table td {
 	vertical-align: middle;
 	border-top: 1px solid #eee;
-	padding: 15px;
+	padding: 10px;
 }
+
+.shopping-summery tbody .no,
+.shopping-summery tbody .createDate,
+.shopping-summery tbody .qty,
 .shopping-summery tbody .price {
 	text-align: center;
 }
 
 .shopping-summery tbody .price span{}
 
-.shopping-cart tbody .qty {
-	text-align: center;
-}
 
-.shopping-summery tbody .qty span{}
+.shopping-summery tbody .qty span {}
 
 .shopping-cart .qty .button {
 	display: inline-block;
@@ -3673,13 +3691,14 @@ body {
 
 .product-list.section th, td {
 	padding-left: 10px;
-    padding-top: 20px; /* ìœ„ìª½ íŒ¨ë”© */
-    padding-bottom: 20px; /* ì•„ëž˜ìª½ íŒ¨ë”© */
+    padding-top: 20px; 
+    padding-bottom: 20px; 
+	width: 320px;
 }
 
 .product-list.section .nice-select.category {
     width: 320px;
-	text-align: center; /* í…ìŠ¤íŠ¸ë¥¼ ì¤‘ì•™ ì •ë ¬ */
+	text-align: center;
 }
 
 .product-list.section td.form-group input[type="text"] {
