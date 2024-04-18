@@ -57,15 +57,25 @@
         modal.classList.toggle("show");
       }
 
+      // // events
+      // modalBtn.addEventListener("click", toggleModal);
+      // closeBtn.addEventListener("click", toggleModal);
+
+      // window.addEventListener("click", function (event) {
+      //   // 모달의 검은색 배경 부분이 클릭된 경우 닫히도록 하는 코드
+      //   if (event.target === modal) {
+      //     toggleModal();
+      //   }
+      // });
+
       // events
-      modalBtn.addEventListener("click", toggleModal);
+      modalBtns.forEach(btn => btn.addEventListener("click", toggleModal)); // 각 버튼에 이벤트 리스너 추가
       closeBtn.addEventListener("click", toggleModal);
 
       window.addEventListener("click", function (event) {
-        // 모달의 검은색 배경 부분이 클릭된 경우 닫히도록 하는 코드
-        if (event.target === modal) {
-          toggleModal();
-        }
+          if (event.target === modal) {
+              toggleModal();
+          }
       });
 
       // 기타 radio 버튼이 선택되었을 때 텍스트 입력란을 나타내도록 하는 코드
@@ -94,6 +104,38 @@
         }
       });
     });
+
+    // ================ 추가 ======================
+    $(document).ready(function() {
+      var modal = $("#myModal");
+      var closeBtn = $("#closeBtn");
+
+      function toggleModal() {
+          modal.toggleClass("show");
+          // 모달을 보여주거나 숨길 때 추가적으로 필요한 로직이 있다면 여기에 구현
+      }
+
+      // 모든 modalBtn에 대해 이벤트 리스너를 추가
+      $(document).on('click', '.modalBtn', function() {
+          toggleModal();
+      });
+
+      // 닫기 버튼에 대한 이벤트 리스너
+      closeBtn.on("click", function() {
+          toggleModal();
+      });
+
+      // 모달 밖의 영역을 클릭했을 때 모달 닫기
+      $(window).on("click", function (event) {
+          if ($(event.target).is(modal)) {
+              toggleModal();
+          }
+      });
+
+      // 기타 로직
+  });
+
+    // ===========================================
 
   </script>
 </head>
@@ -299,7 +341,7 @@
                         <table id="datatable" class="table table-striped jambo_table table-bordered dataTable no-footer"
                           cellspacing="0" width="100%"> <!-- dt-responsive-->
                           <thead>
-                            <button id="modalBtn">모달 열기</button>
+                            <!-- <button id="modalBtn">모달 열기</button> -->
                             <tr>
                               <th></th>
                               <th>구분</th>
@@ -318,7 +360,7 @@
                           <tbody>
                             <tr th:each="customer: ${list}">
                               <td>
-                                <button id="modalBtn">+</button>
+                                <button class="modalBtn">+</button>
                               </td>
                               <td th:text="${customer.customerGubun}">셀러</td>
                               <td th:text="${customer.customerId}">System Architect</td>
