@@ -2337,7 +2337,7 @@ body {
 	text-align: start
 }
 
-.shop.single .modal-body th>span {
+.shop.single .modal-body th.text-center>span {
 	color: #ff2c18;
 	display: inline-block;
 	position: sticky;
@@ -2346,23 +2346,28 @@ body {
 	font-size: 16px;
 }
 
-.shop.single .modal-body .message-field {
-	resize: none;
-	width: 400px;
-    height: 300px;
+.shop.single .modal-body input, textarea {
+    resize: none;
+    width: 80%;
 }
+
 
 .shop.single .modal-body td.col-12 input{
 	width: 400px;
 }
 
+
 .shop.single .modal-body .agree-check {
     margin: 50px;
     font-style: italic;
-    font-size: 13px;
+    font-size: 14px;
 }
 
+.shop.single .modal-body .agree-check input{
+	width: inherit;
+}
 /* /modal 과 관련된 css */
+
 .shop.single{
 	padding:70px 0 100px;
 }
@@ -2653,7 +2658,7 @@ body {
     background-color: #fff;
 }
 
-.shop.single .btn-edit .user-custom a:hover {
+.shop.single .btn-edit .user-custom a.btn:hover {
     color: #fff;
 }
 
