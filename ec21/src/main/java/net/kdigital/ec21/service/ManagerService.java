@@ -37,17 +37,17 @@ import net.kdigital.ec21.repository.ReportCustomerRepository;
 @RequiredArgsConstructor
 @Slf4j
 public class ManagerService {
-    // ==================================== Repository ====================================
+    // ==================================== Repository
+    // ====================================
     private final ProductRepository productRepository;
     private final CustomerRepository customerRepository;
     private final ReportCustomerRepository reportCustomerRepository;
     private final BlacklistRepository blacklistRepository;
     private final ProhibitSimilarWordRepository prohibitSimilarWordRepository;
 
-    
-    
-    //==================================== 메인 보드 ====================================
-    
+    // ==================================== 메인 보드
+    // ====================================
+
     /**
      * 당일 등록된 상품 개수, 당일 이상상품 개수, 당일 등록한 고객 수, 미처리된 신고 개수 반환하는 함수
      * 
@@ -79,17 +79,16 @@ public class ManagerService {
         return result;
     }
 
+    // ==================================== 상품관리
+    // ======================================
 
-
-    //==================================== 상품관리 ======================================
-    
     /**
      * 모든 상품 DTO 리스트로 반환하는 함수
      * 
      * @return
      */
     public List<ProductDTO> selectAll() {
-        List<ProductEntity> entityList = productRepository.findAll(Sort.by(Direction.DESC,"createDate"));
+        List<ProductEntity> entityList = productRepository.findAll(Sort.by(Direction.DESC, "createDate"));
         List<ProductDTO> dtoList = new ArrayList<>();
         entityList.forEach((entity) -> {
             dtoList.add(ProductDTO.toDTO(entity, entity.getCustomerEntity().getCustomerId()));
@@ -99,6 +98,7 @@ public class ManagerService {
 
     /**
      * 전달받은 카테고리와 검색어에 해당하는 상품DTO 리스트 반환 (디폴트 : total/"")
+     * 
      * @param category
      * @param searchWord
      * @return
@@ -109,47 +109,52 @@ public class ManagerService {
 
         if (category.equals("total")) {
             // 회원ID, 상품ID, 상품명에 검색어가 포함된 상품들을 최신 등록일 순으로 가져오기
-            productEntities = productRepository.findByMultipleFieldsContaining(searchWord.toLowerCase(), Sort.by(Direction.DESC, "createDate"));
-        }else{
+            productEntities = productRepository.findByMultipleFieldsContaining(searchWord.toLowerCase(),
+                    Sort.by(Direction.DESC, "createDate"));
+        } else {
             // 카테고리 타입 변경 : String -> Enum
             ProductCategory targetCategory = ProductCategory.valueOf(category);
             // 전달받은 카테고리에 해당하고 회원ID, 상품ID, 상품명에 검색어가 포함된 상품들을 최신 등록일 순으로 가져오기
-            productEntities = productRepository.findByCategoryAndMultipleFieldsContaining(targetCategory, searchWord.toLowerCase(), Sort.by(Direction.DESC, "createDate"));
+            productEntities = productRepository.findByCategoryAndMultipleFieldsContaining(targetCategory,
+                    searchWord.toLowerCase(), Sort.by(Direction.DESC, "createDate"));
         }
 
-        productEntities.forEach((entity)->{
+        productEntities.forEach((entity) -> {
             dtoList.add(ProductDTO.toDTO(entity, entity.getCustomerEntity().getCustomerId()));
         });
 
         return dtoList;
     }
 
-
     /**
-     * lstm 예측값이 0(false)이고 관리자가 미처리한 상품들을 
+     * lstm 예측값이 0(false)이고 관리자가 미처리한 상품들을
      * 새로운 ModelPredictDTO에 담아 리스트로 반환하는 함수
+     * 
      * @return
      */
     public List<ModelPredictDTO> selectAllModelPredictWeird() {
 
         // lstm==false && judge==null인 상품 데이터들 리스트로 가져오기
-        List<ProductEntity> productEntities = productRepository.findByLstmPredictAndJudgeOrderByCreateDateDesc(false,null);
+        List<ProductEntity> productEntities = productRepository.findByLstmPredictAndJudgeOrderByCreateDateDesc(false,
+                null);
         List<ModelPredictDTO> result = new ArrayList<>();
 
-        productEntities.forEach((prodEntity)->{
+        productEntities.forEach((prodEntity) -> {
             // productId에 해당하는 금지어유사도 결과 데이터들 가져오기 (금지어 유사 확률 높은 순)
-            List<ProhibitSimilarWordEntity> entityList = prohibitSimilarWordRepository.findProbaByProductEntity_ProductIdOrderBySimilarProbaDesc(prodEntity.getProductId());
+            List<ProhibitSimilarWordEntity> entityList = prohibitSimilarWordRepository
+                    .findProbaByProductEntity_ProductIdOrderBySimilarProbaDesc(prodEntity.getProductId());
             // 금지 유사확률이 가장 높은 데이터 가져오기
-            ProhibitSimilarWordEntity prohibitSimilarWordEntity = entityList.get(0); 
-            
+            ProhibitSimilarWordEntity prohibitSimilarWordEntity = entityList.get(0);
+
             // 화면 출력을 위한 새로운 ModelPredictDTO 생성
-            ModelPredictDTO dto = new ModelPredictDTO(prodEntity.getCustomerEntity().getCustomerId(), prodEntity.getProductId(), 
-                prodEntity.getProductName(), prodEntity.getProductDesc(), 
-                prodEntity.getLstmPredictProba(), prodEntity.isLstmPredict(), 
-                prohibitSimilarWordEntity.getSimilarWord(), prohibitSimilarWordEntity.getSimilarProba(), 
-                prohibitSimilarWordEntity.getProhibitWordEntity().getProhibitWord(), 
-                prohibitSimilarWordEntity.getProhibitWordEntity().getProhibitReason());
-            
+            ModelPredictDTO dto = new ModelPredictDTO(prodEntity.getCustomerEntity().getCustomerId(),
+                    prodEntity.getProductId(),
+                    prodEntity.getProductName(), prodEntity.getProductDesc(),
+                    prodEntity.getLstmPredictProba(), prodEntity.isLstmPredict(),
+                    prohibitSimilarWordEntity.getSimilarWord(), prohibitSimilarWordEntity.getSimilarProba(),
+                    prohibitSimilarWordEntity.getProhibitWordEntity().getProhibitWord(),
+                    prohibitSimilarWordEntity.getProhibitWordEntity().getProhibitReason());
+
             result.add(dto);
         });
         return result;
@@ -157,8 +162,9 @@ public class ManagerService {
 
     /**
      * lstm 예측값이 0(false)이고 관리자가 미처리한 상품들 중
-     *  전달받은 카테고리와 검색어에 해당하는 상품들을 
-     *  새로운 ModelPredictDTO에 담아 리스트로 반환하는 함수
+     * 전달받은 카테고리와 검색어에 해당하는 상품들을
+     * 새로운 ModelPredictDTO에 담아 리스트로 반환하는 함수
+     * 
      * @param category
      * @param searchWord
      * @return
@@ -168,12 +174,14 @@ public class ManagerService {
         List<ModelPredictDTO> result = new ArrayList<>();
         if (category.equals("total")) {
             // lstm==false && judge==null && 회원ID, 상품ID, 상품명에 검색어가 포함된 상품들을 최신 등록일 순으로 가져오기
-            productEntities = productRepository.findByMultipleFieldsContainingOrderByCreateDateDesc(searchWord.toLowerCase());
+            productEntities = productRepository
+                    .findByMultipleFieldsContainingOrderByCreateDateDesc(searchWord.toLowerCase());
         } else {
             // 카테고리 타입 변경 : String -> Enum
             ProductCategory targetCategory = ProductCategory.valueOf(category);
             // 전달받은 카테고리에 해당하고 회원ID, 상품ID, 상품명에 검색어가 포함된 상품들을 최신 등록일 순으로 가져오기
-            productEntities = productRepository.findByCategoryAndMultipleFieldsContainingOrderByCreateDateDesc(targetCategory, searchWord.toLowerCase());
+            productEntities = productRepository.findByCategoryAndMultipleFieldsContainingOrderByCreateDateDesc(
+                    targetCategory, searchWord.toLowerCase());
         }
 
         productEntities.forEach((prodEntity) -> {
@@ -183,12 +191,12 @@ public class ManagerService {
 
             // lstmPredictProba 값 환산
             // Double newProba = 1 - (prodEntity.getLstmPredictProba()/0.79)*0.5;
-                    
+
             // 1) lstmPredict==false && 금지어 유사도 결과 존재 O
             if (entityList != null && !entityList.isEmpty()) {
                 // 금지 유사확률이 가장 높은 데이터 가져오기
                 ProhibitSimilarWordEntity prohibitSimilarWordEntity = entityList.get(0);
-    
+
                 // 화면 출력을 위한 새로운 ModelPredictDTO 생성
                 ModelPredictDTO dto = new ModelPredictDTO(prodEntity.getCustomerEntity().getCustomerId(),
                         prodEntity.getProductId(),
@@ -198,16 +206,16 @@ public class ManagerService {
                         prohibitSimilarWordEntity.getProhibitWordEntity().getProhibitWord(),
                         prohibitSimilarWordEntity.getProhibitWordEntity().getProhibitReason());
                 result.add(dto);
-                        
+
             }
             // 2) lstmPredict==false && 금지어 유사도 결과 존재 X
-            else{
+            else {
                 // 화면 출력을 위한 새로운 ModelPredictDTO 생성
                 ModelPredictDTO dto = new ModelPredictDTO(prodEntity.getCustomerEntity().getCustomerId(),
                         prodEntity.getProductId(),
                         prodEntity.getProductName(), prodEntity.getProductDesc(),
                         prodEntity.getLstmPredictProba(), prodEntity.isLstmPredict(),
-                        null, 0.0,null,null);
+                        null, 0.0, null, null);
                 result.add(dto);
             }
         });
@@ -215,8 +223,8 @@ public class ManagerService {
         return result;
     }
 
-
-    //==================================== 회원관리 ======================================
+    // ==================================== 회원관리
+    // ======================================
 
     /**
      * 정상회원(blacklist_check==N)인 CustomerDTO 최신 가입 순으로 반환
@@ -241,7 +249,8 @@ public class ManagerService {
      */
     public List<ReportedCustomerWithInfoDTO> selectReportedCustomer() {
         // 관리자가 처리하지 않은 데이터(최신 신고날짜 순으로) 가져오기
-        List<ReportCustomerEntity> reportCustomerEntities = reportCustomerRepository.findByManagerCheckOrderByReportDateDesc(YesOrNo.N);
+        List<ReportCustomerEntity> reportCustomerEntities = reportCustomerRepository
+                .findByManagerCheckOrderByReportDateDesc(YesOrNo.N);
         List<ReportedCustomerWithInfoDTO> result = new ArrayList<>();
 
         reportCustomerEntities.forEach((entity) -> {
@@ -257,11 +266,12 @@ public class ManagerService {
     }
 
     /**
-     * 검색 기능 추가 ver -> 전달받은 카테고리 및 검색어에 해당하는 데이터 
+     * 검색 기능 추가 ver -> 전달받은 카테고리 및 검색어에 해당하는 데이터
      * 관리자가 처리하지 않은 신고당한 회원 DTO를 반환하고자 하는데 회원의 기본적인 정보를 같이 담기 위해 새로운 DTO에 담아 리스트를
      * 반환
      * (신고당한 회원 ID, 신고회원테이블ID, 신고당한 회원의 신고당한 횟수, 구분, 이름, 회사명, 부서명, IP, 신고 카테고리, 신고
      * 사유)
+     * 
      * @param category
      * @param searchWord
      * @return
@@ -272,11 +282,13 @@ public class ManagerService {
 
         if (category.equals("total")) {
             // 관리자가 처리하지 않은 데이터 중에 전달받은 검색어에 해당하는 신고받은 회원 (최신 신고날짜 순으로) 가져오기
-            reportCustomerEntities = reportCustomerRepository.findBySearchWordWithManagerCheckNOrderByReportDateDesc(searchWord);
-        }else{
+            reportCustomerEntities = reportCustomerRepository
+                    .findBySearchWordWithManagerCheckNOrderByReportDateDesc(searchWord);
+        } else {
             // 관리자가 처리하지 않은 데이터 중에 전달받은 카테고리와 검색어에 해당하는 신고받은 회원 (최신 신고날짜 순으로) 가져오기
             ReportCategory targetCategory = ReportCategory.valueOf(category);
-            reportCustomerEntities = reportCustomerRepository.findByReportCategoryAndMultipleFieldsContainingOrderByReportDateDesc(targetCategory,searchWord);
+            reportCustomerEntities = reportCustomerRepository
+                    .findByReportCategoryAndMultipleFieldsContainingOrderByReportDateDesc(targetCategory, searchWord);
         }
 
         reportCustomerEntities.forEach((entity) -> {
@@ -291,7 +303,6 @@ public class ManagerService {
         return result;
     }
 
-    
     /**
      * 신고회원 관리자 처리 여부 변경 (N->Y)
      */
@@ -331,7 +342,8 @@ public class ManagerService {
     }
 
     /**
-     *  블랙리스트 테이블에서 전달받은 ID에 해당하는 데이터 삭제하는 함수 
+     * 블랙리스트 테이블에서 전달받은 ID에 해당하는 데이터 삭제하는 함수
+     * 
      * @param blacklistId
      */
     @Transactional
@@ -339,10 +351,11 @@ public class ManagerService {
         blacklistRepository.deleteById(blacklistId);
     }
 
-
     /**
-     * 블랙리스트 회원 DTO를 반환하고자 하는데 회원의 기본적인 정보를 같이 담기 위해 새로운 DTO에 담아 리스트를 반환하는 함수 
-     * (신고당한 회원 ID, 신고회원테이블ID, 신고당한 회원의 신고당한 횟수, 구분, 이름, 회사명, 부서명, IP, 신고 카테고리, 신고 사유)
+     * 블랙리스트 회원 DTO를 반환하고자 하는데 회원의 기본적인 정보를 같이 담기 위해 새로운 DTO에 담아 리스트를 반환하는 함수
+     * (신고당한 회원 ID, 신고회원테이블ID, 신고당한 회원의 신고당한 횟수, 구분, 이름, 회사명, 부서명, IP, 신고 카테고리, 신고
+     * 사유)
+     * 
      * @return
      */
     public List<ReportedCustomerWithInfoDTO> selectblackList() {
@@ -365,10 +378,11 @@ public class ManagerService {
     }
 
     /**
-     * 검색 기능 추가 ver -> 전달받은 카테고리 및 검색어에 해당하는 데이터 
+     * 검색 기능 추가 ver -> 전달받은 카테고리 및 검색어에 해당하는 데이터
      * 블랙리스트 회원 DTO를 반환하고자 하는데 회원의 기본적인 정보를 같이 담기 위해 새로운 DTO에 담아 리스트를 반환
      * (신고당한 회원 ID, 신고회원테이블ID, 신고당한 회원의 신고당한 횟수, 구분, 이름, 회사명, 부서명, IP, 신고 카테고리, 신고
      * 사유)
+     * 
      * @param category
      * @param searchWord
      * @return
@@ -376,14 +390,16 @@ public class ManagerService {
     public List<ReportedCustomerWithInfoDTO> selectblackListBySearch(String category, String searchWord) {
         List<BlacklistEntity> blacklistEntityList = new ArrayList<>();
         List<ReportedCustomerWithInfoDTO> result = new ArrayList<>();
-        
+
         if (category.equals("total")) {
             // 블랙리스트 중 회원ID, 담당자명, 회사명에 검색어가 포함된 데이터를 inputDate 최신순으로 가져오기
-            blacklistEntityList = blacklistRepository.findByCustomerIdOrCompNameContainingAndOrderByInputDateDesc(searchWord.toLowerCase());
-        }else{
+            blacklistEntityList = blacklistRepository
+                    .findByCustomerIdOrCompNameContainingAndOrderByInputDateDesc(searchWord.toLowerCase());
+        } else {
             // 관리자가 처리하지 않은 데이터 중에 전달받은 카테고리와 검색어에 해당하는 신고받은 회원 (최신 신고날짜 순으로) 가져오기
             ReportCategory targetCategory = ReportCategory.valueOf(category);
-            blacklistEntityList = blacklistRepository.findBySearchWordAndBlackTypeOrderByInputDateDesc(searchWord,targetCategory);
+            blacklistEntityList = blacklistRepository.findBySearchWordAndBlackTypeOrderByInputDateDesc(searchWord,
+                    targetCategory);
         }
 
         blacklistEntityList.forEach((entity) -> {
@@ -400,9 +416,4 @@ public class ManagerService {
         return result;
     }
 
-
-
-    
-
-    
 }
