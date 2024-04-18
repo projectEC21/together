@@ -23,10 +23,7 @@ Version:1.0
 11. Checkout CSS
 12. Login & Register CSS
 * productsWrite CSS
-<<<<<<< HEAD
-=======
 * inbox CSS
->>>>>>> 80e103d3cb088814a4a0d25e217517dedea4d146
 13. Cowndown CSS
 14. Shop Services CSS
 15. Newslatter CSS
@@ -2264,10 +2261,7 @@ body {
 	float: right;
 	margin: 4px 5px 0 0;
 	font-weight:500;
-<<<<<<< HEAD
-=======
 	font-size: large;
->>>>>>> 80e103d3cb088814a4a0d25e217517dedea4d146
 }
 .shop .single-slider a:hover{
 	font-weight: 700;
@@ -2413,12 +2407,8 @@ body {
 	display:none;
 }
 .shop.single .product-desc{
-<<<<<<< HEAD
-	margin-top:30px;
-=======
 	margin-top: 32px;
     margin-left: 70px;
->>>>>>> 80e103d3cb088814a4a0d25e217517dedea4d146
 }
 .shop.single .product-desc .short h4 {
 	font-size: 22px;
@@ -2457,27 +2447,12 @@ body {
 .shop.single .product-desc .rating li.dark i{
 	color:#555;
 }
-<<<<<<< HEAD
-.shop.single .product-desc .price {
-=======
 
 /* .shop.single .product-desc .price {
->>>>>>> 80e103d3cb088814a4a0d25e217517dedea4d146
 	font-size: 20px;
 	color: #333;
 	font-weight: 600;
 	margin-top: 15px;
-<<<<<<< HEAD
-}
-.shop.single .product-desc .price s{
-	color:#333;
-}
-.shop.single .product-desc .price span{
-	display:inline-block;
-	margin-right:15px;
-	color:#F7941D;
-}
-=======
 } */
 
 .shop.single .product-desc .price s{
@@ -2490,15 +2465,11 @@ body {
 	color:#F7941D;
 } */
 
->>>>>>> 80e103d3cb088814a4a0d25e217517dedea4d146
 .shop.single .product-desc .product-buy {
 	margin-top: 40px;
 }
 .shop.single .product-desc .product-buy{}
-<<<<<<< HEAD
-=======
 
->>>>>>> 80e103d3cb088814a4a0d25e217517dedea4d146
 .shop.single .product-desc .color {
 	display: inline-block;
 	margin-right: 50px;
@@ -3037,11 +3008,7 @@ body {
 .shopping-cart .table td {
 	vertical-align: middle;
 	border-top: 1px solid #eee;
-<<<<<<< HEAD
-	padding: 15px;
-=======
 	padding: 10px;
->>>>>>> 80e103d3cb088814a4a0d25e217517dedea4d146
 }
 
 .shopping-summery tbody .no,
@@ -3053,16 +3020,8 @@ body {
 
 .shopping-summery tbody .price span{}
 
-<<<<<<< HEAD
-.shopping-cart tbody .qty {
-	text-align: center;
-}
-
-.shopping-summery tbody .qty span{}
-=======
 
 .shopping-summery tbody .qty span {}
->>>>>>> 80e103d3cb088814a4a0d25e217517dedea4d146
 
 .shopping-cart .qty .button {
 	display: inline-block;
@@ -3233,18 +3192,11 @@ body {
 	color: #fff;
 }
 
-<<<<<<< HEAD
-/* 페이징 css 제작 */
-.shopping-cart span.paging{
-	display: flex;
-    justify-content: center;
-=======
 /* íŽ˜ì´ì§• css ì œìž‘ */
 .product-area span.paging{
 	display: flex;
     justify-content: center;
 	padding: 40px;
->>>>>>> 80e103d3cb088814a4a0d25e217517dedea4d146
 }
 /*======================================
    End Shopping Cart CSS
@@ -3717,11 +3669,7 @@ body {
     padding-bottom: 50px;
 }
 
-<<<<<<< HEAD
-/* css 는 조금 더 생각해보기 */
-=======
 /* css ëŠ” ì¡°ê¸ˆ ë” ìƒê°í•´ë³´ê¸° */
->>>>>>> 80e103d3cb088814a4a0d25e217517dedea4d146
 .product-list.section th.form-group.title {
 	font-size: 25px;
     border: 1px solid #efefef;
@@ -3744,23 +3692,14 @@ body {
 
 .product-list.section th, td {
 	padding-left: 10px;
-<<<<<<< HEAD
-    padding-top: 20px; /* 위쪽 패딩 */
-    padding-bottom: 20px; /* 아래쪽 패딩 */
-=======
     padding-top: 20px; 
     padding-bottom: 20px; 
 	width: 320px;
->>>>>>> 80e103d3cb088814a4a0d25e217517dedea4d146
 }
 
 .product-list.section .nice-select.category {
     width: 320px;
-<<<<<<< HEAD
-	text-align: center; /* 텍스트를 중앙 정렬 */
-=======
 	text-align: center;
->>>>>>> 80e103d3cb088814a4a0d25e217517dedea4d146
 }
 
 .product-list.section td.form-group input[type="text"] {
@@ -3775,11 +3714,7 @@ body {
 	width: 320px;
 }
 
-<<<<<<< HEAD
-/* 가격 */
-=======
 /* ê°€ê²© */
->>>>>>> 80e103d3cb088814a4a0d25e217517dedea4d146
 .product-list.section input.price {
 	padding-left: 10px;
 	width: 310px;
@@ -3810,8 +3745,6 @@ body {
 	End Write CSS
 ========================================*/
 
-<<<<<<< HEAD
-=======
 /*======================================
 	start Inquiry CSS
 ========================================*/
@@ -3823,7 +3756,6 @@ body {
 /*======================================
 	End Inquiry CSS
 ========================================*/
->>>>>>> 80e103d3cb088814a4a0d25e217517dedea4d146
 
 /*======================================
    Start Shop List CSS
