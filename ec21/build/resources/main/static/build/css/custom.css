@@ -1154,14 +1154,11 @@ body .container.body .right_col {
     color: black;
   }
 
-<<<<<<< HEAD
-=======
   span.dtr-title {
     display: inline-block;
     min-width: 75px;
     font-weight: bold;
   }
->>>>>>> 054329084281b42770d10158b332d4b31c6b1a7f
 /**  ------------------------------------------  **/
 .blue {
   color: #3498DB; }
