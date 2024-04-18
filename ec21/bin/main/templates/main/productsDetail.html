@@ -30,7 +30,8 @@
 	<!-- Font Awesome -->
 	<link rel="stylesheet" th:href="@{/main/css/font-awesome.css}">
 	<!-- Fancybox -->
-	<link rel="stylesheet" th:href="@{/main/css/jquery.fancybox.min.css}">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" />
+	<!-- <link rel="stylesheet" th:href="@{/main/css/jquery.fancybox.min.css}"> -->
 	<!-- Themify Icons -->
 	<link rel="stylesheet" th:href="@{/main/css/themify-icons.css}">
 	<!-- Nice Select CSS -->
@@ -225,6 +226,7 @@
 							<ul class="bread-list">
 								<li><a th:href="@{/main/index}">Home<i class="ti-arrow-right"></i></a></li>
 								<li class="active"><a th:href="@{/main/list}">Products<i class="ti-arrow-right"></i></a></li>
+								<li class="active"><a th:href="@{/main/list(category=${product.category})}">[[${product.category.name().replace('_', '&')}]]<i class="ti-arrow-right"></i></a></li>
 								<li class="active"><a th:href="@{/main/productsDetail(productId=${product.productId})}">[[${product.productName}]]</a></li> 
 								<!-- 상품명은 th로 넣기 -->
 							</ul>
@@ -300,13 +302,13 @@
 											<p class="caution"><i class="ti-user"></i> Reminder for Buyers: Be cautious with pre-payment by T/T or Western Union. Do not make pre-payment to any sellers unless you can fully trust the sellers. <br> More... EC21.com is NOT RESPONSIBLE for transactions between buyers and sellers.</p>
 											<table>
 												<tr><th class="text-center">To</th><td id="receivedId">zettlernb (Ningbo Zettler Electronics Co., Ltd.)</td></tr>
-												<tr><th class="text-center">Subject <span>*</span></th><td><input type="text" required></td></tr>
-												<tr><th class="text-center">Category <span>*</span></th><td><input type="text" required></td></tr>
-												<tr><th class="text-center">Message <span>*</span></th><td><textarea required></textarea></td></tr>
-												<tr><th class="text-center">Attach File</th><td><input type="file" value="Upload File"></td></tr>
+												<tr><th class="text-center">Subject <span>*</span></th><td><input type="text" name="subject" required></td></tr>
+												<tr><th class="text-center">Category <span>*</span></th><td><input type="text" name="category" required></td></tr>
+												<tr><th class="text-center">Message <span>*</span></th><td><textarea name="message" required></textarea></td></tr>
+												<tr><th class="text-center">Attach File</th><td><input type="file" name="attachment" value="Upload File"></td></tr>
 											</table>
 											<div class="agree-check">
-												<input type="checkbox" required> I Agree To EC21 Terms of Services, Privacy Policy, And Receive Emails From EC21 And Its Partners Related To Their Services, Promotions And Business Matching.
+												<input type="checkbox" name="termsAgreement" required> I Agree To EC21 Terms of Services, Privacy Policy, And Receive Emails From EC21 And Its Partners Related To Their Services, Promotions And Business Matching.
 											</div>
 										</div>
 										<!-- Modal Footer -->
@@ -350,6 +352,7 @@
 			</div>
 		</section>
 		<!-- End Shop Single Section -->
+
 
 		
 		<!-- Start Most Popular -->
