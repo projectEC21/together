@@ -41,7 +41,7 @@ public class InquiryEntity {
 
     // FK
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "customer_id")
+    @JoinColumn(name = "sender_id")
     private CustomerEntity customerEntity;
 
     @Column(name = "receiver_id", nullable = false)

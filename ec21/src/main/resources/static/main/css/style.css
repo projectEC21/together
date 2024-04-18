@@ -23,6 +23,7 @@ Version:1.0
 11. Checkout CSS
 12. Login & Register CSS
 * productsWrite CSS
+* inbox CSS
 13. Cowndown CSS
 14. Shop Services CSS
 15. Newslatter CSS
@@ -36,6 +37,12 @@ Version:1.0
 20. 404 Error CSS
 21. Footer CSS
 ========================================*/
+body {
+	font-family: "IBM Plex Sans KR", sans-serif;
+  	font-weight: 400;
+  	font-style: normal;
+}
+
 .color-plate {
 	position: fixed;
 	display: block;
@@ -513,7 +520,7 @@ Version:1.0
 }
 .header .inquiry-list li {
 	display: flex;
-	flex-direction: column; /* 요소들을 세로로 쌓기 */
+	flex-direction: column; /* ìš”ì†Œë“¤ì„ ì„¸ë¡œë¡œ ìŒ“ê¸° */
 	overflow: hidden;
 	border-bottom: 1px solid #e6e6e6;
 	padding-bottom: 5px;
@@ -522,20 +529,20 @@ Version:1.0
 
 .header .inquiry-list li>span{
 	display: flex;
-    align-items: center; /* 이미지와 이름/시간을 세로 중앙 정렬 */
-	flex-grow: 1; /* 내용을 가능한 너비 전체에 분포 */
+    align-items: center; /* ì´ë¯¸ì§€ì™€ ì´ë¦„/ì‹œê°„ì„ ì„¸ë¡œ ì¤‘ì•™ ì •ë ¬ */
+	flex-grow: 1; /* ë‚´ìš©ì„ ê°€ëŠ¥í•œ ë„ˆë¹„ ì „ì²´ì— ë¶„í¬ */
 }
 
 .header .inquiry-list li .time {
-	margin-left: 10px; /* 이름과 시간 사이에 여백 추가 */
+	margin-left: 10px; /* ì´ë¦„ê³¼ ì‹œê°„ ì‚¬ì´ì— ì—¬ë°± ì¶”ê°€ */
 	font-size: 10px;
 }
 
 .header .inquiry-list li .message {
-	display: block; /* 메시지를 블록 요소로 만들어 줄 바꿈 */
+	display: block; /* ë©”ì‹œì§€ë¥¼ ë¸”ë¡ ìš”ì†Œë¡œ ë§Œë“¤ì–´ ì¤„ ë°”ê¿ˆ */
 	font-size: 11px;
 	margin-top: 5px;
-	width: 100%; /* 메시지가 전체 너비를 차지하게 설정 */
+	width: 100%; /* ë©”ì‹œì§€ê°€ ì „ì²´ ë„ˆë¹„ë¥¼ ì°¨ì§€í•˜ê²Œ ì„¤ì • */
 }
 
 .header .inquiry-list li .remove {
@@ -562,7 +569,7 @@ Version:1.0
 	float: right;
 	/* border: 1px solid #ededed; */
 	overflow:hidden;
-	margin-right: 10px; /* 이미지와 이름/시간 사이에 여백 추가 */
+	margin-right: 10px; /* ì´ë¯¸ì§€ì™€ ì´ë¦„/ì‹œê°„ ì‚¬ì´ì— ì—¬ë°± ì¶”ê°€ */
 }
 .header .inquiry-list .cart-img img {
 	width: 30px;
@@ -646,7 +653,7 @@ Version:1.0
 }
 .header.shop .logo {
 	float: left;
-	margin: 19px 0 0;
+	margin: 10px 0 0;
 }
 .header.shop .top-contact {
 	margin-top:0px;
@@ -941,7 +948,7 @@ Version:1.0
 	position: relative;
 }
 .header.shop .nav li {
-	margin-right:5px;
+	margin-right:45px;
 	position: relative;
 	float: none;
 }
@@ -968,8 +975,8 @@ Version:1.0
 .header.shop .nav li a {
 	color: #fff;
 	text-transform: capitalize;
-	font-size: 15px;
-	padding: 20px 20px;
+	font-size: 18px;
+	padding: 20px 27px;
 	font-weight: 500;
 	display: block;
 	position: relative;
@@ -2027,9 +2034,9 @@ Version:1.0
     line-height: 22px;
 }
 .single-product .product-content h3 a {
-	font-size: 14px;
-	font-weight: 500;
-	margin: 0;
+	font-size: 15px;
+    font-weight: 700;
+    margin: 0;
 }
 .single-product .product-content h3 a:hover{
 	color:#F7941D;
@@ -2162,9 +2169,10 @@ Version:1.0
 	display: inline-block;
 	color: #666;
 	font-weight: 400;
-	font-size: 14px;
+	font-size: 16px;
 	text-transform: capitalize;
 }
+
 .shop-sidebar .categor-list li a:hover{
 	color:#F7941D;
 }
@@ -2244,6 +2252,7 @@ Version:1.0
 	float: left;
 	margin: 4px 5px 0 0;
 	font-weight:500;
+	font-size: large;
 }
 
 .shop .single-slider a{
@@ -2252,6 +2261,7 @@ Version:1.0
 	float: right;
 	margin: 4px 5px 0 0;
 	font-weight:500;
+	font-size: large;
 }
 .shop .single-slider a:hover{
 	font-weight: 700;
@@ -2320,6 +2330,48 @@ Version:1.0
 /*======================================
    Start Shop Single CSS
 ========================================*/
+/* modal 과 관련된 css */
+.shop.single .modal-header {
+	color: #fff;
+    background-color: #333;
+}
+
+.shop.single .modal-body tr {
+	margin: 15px;
+	text-align: start
+}
+
+.shop.single .modal-body th.text-center>span {
+	color: #ff2c18;
+	display: inline-block;
+	position: sticky;
+	right: -12px;
+	top: 4px;
+	font-size: 16px;
+}
+
+.shop.single .modal-body input, textarea {
+    resize: none;
+    width: 80%;
+}
+
+
+.shop.single .modal-body td.col-12 input{
+	width: 400px;
+}
+
+
+.shop.single .modal-body .agree-check {
+    margin: 50px;
+    font-style: italic;
+    font-size: 14px;
+}
+
+.shop.single .modal-body .agree-check input{
+	width: inherit;
+}
+/* /modal 과 관련된 css */
+
 .shop.single{
 	padding:70px 0 100px;
 }
@@ -2355,12 +2407,13 @@ Version:1.0
 	display:none;
 }
 .shop.single .product-desc{
-	margin-top:30px;
+	margin-top: 32px;
+    margin-left: 70px;
 }
 .shop.single .product-desc .short h4 {
 	font-size: 22px;
 	font-weight: 600;
-	margin-top: -5px;
+	margin: -5px 0 20px 0;
 	line-height: 28px;
 }
 .shop.single .product-desc .short .description {
@@ -2394,24 +2447,29 @@ Version:1.0
 .shop.single .product-desc .rating li.dark i{
 	color:#555;
 }
-.shop.single .product-desc .price {
+
+/* .shop.single .product-desc .price {
 	font-size: 20px;
 	color: #333;
 	font-weight: 600;
 	margin-top: 15px;
-}
+} */
+
 .shop.single .product-desc .price s{
 	color:#333;
 }
-.shop.single .product-desc .price span{
+
+/* .shop.single .product-desc .price span{
 	display:inline-block;
 	margin-right:15px;
 	color:#F7941D;
-}
+} */
+
 .shop.single .product-desc .product-buy {
 	margin-top: 40px;
 }
 .shop.single .product-desc .product-buy{}
+
 .shop.single .product-desc .color {
 	display: inline-block;
 	margin-right: 50px;
@@ -2506,12 +2564,16 @@ Version:1.0
 	display: inline-block;
 	margin-right: 10px;
 }
-.shop.single .quantity h6 {
+.shop.single .price h6
+, .shop.single .origin h6
+, .shop.single .quantity h6 {
 	display: inline-block;
-	margin-right: 10px;
-	font-size: 15px;
-	font-weight: 500;
+    margin-right: 10px;
+    font-size: 20px;
+    font-weight: 500;
+    padding-bottom: 10px;
 }
+
 .shop.single .quantity .input-group {
 	width: 151px;
 	display: inline-block;
@@ -2559,18 +2621,19 @@ Version:1.0
 	display:inline-block;
 }
 .shop.single .add-to-cart .btn {
-	height: 45px;
-	width: auto;
-	padding: 0 42px;
-	line-height: 45px;
-	text-align: center;
-	text-transform: capitalize;
-	margin-right: 5px;
-	border-radius: 0px;
-	background: #333;
-	color: #fff;
-	display: inline-block;
-	font-weight: 500;
+	height: 55px;
+    width: 350px;
+    padding: 5px 42px;
+    line-height: 45px;
+    text-align: center;
+    text-transform: uppercase;
+    margin: 30px 5px 0 0;
+    border-radius: 0px;
+    background: #333;
+    color: #fff;
+    display: inline-block;
+    font-weight: 500;
+	font-size: 21px;
 }
 .shop.single .add-to-cart .btn:hover{
 	color:#fff;
@@ -2583,7 +2646,27 @@ Version:1.0
 	top: 1px;
 	line-height: 45px;
 }
-.shop.single .cat{
+
+.shop.single .btn-edit .user-custom li {
+	display: inline-block;
+    line-height: 1px;
+}
+
+/* 사용자 또는 관리자가 조작하는 버튼 */
+.shop.single .btn-edit .user-custom a {
+	border-radius: 25px;
+    border: 1px solid #333;
+	height: min-content;
+    width: 120px;
+    text-align: center;
+    background-color: #fff;
+}
+
+.shop.single .btn-edit .user-custom a.btn:hover {
+    color: #fff;
+}
+
+.shop.single .cat {
 	font-size: 14px;
 	font-weight: 500;
 	color:#333;
@@ -2675,117 +2758,11 @@ Version:1.0
 	padding: 10px;
 }
 .shop.single .item-info tbody strong{}
-.shop.single .ratting-main{}
-.shop.single .avg-ratting {
-	margin-bottom: 20px;
+
+.shop.single .tab-content .productDesc {
+	font-size: 16px;
 }
-.shop.single .avg-ratting h4 {
-	font-size: 18px;
-	margin: 0;
-}
-.shop.single .avg-ratting h4 span{
-	font-size:14px;
-}
-.shop.single .single-rating {
-	margin-bottom: 20px;
-}
-.shop.single .single-rating:last-child{
-	margin:0;
-	border:none;
-	padding:0;
-}
-.shop.single .rating-author {
-	float: left;
-	margin-right: 10px;
-	padding: 20px;
-	padding-right: 10px;
-}
-.shop.single .rating-author img {
-	width: 60px;
-	border-radius: 100%;
-	height: 60px;
-}
-.shop.single .rating-des {
-	padding-left: 72px;
-	background: #f9f8f8;
-	padding: 17px 20px 17px 107px;
-}
-.shop.single .rating-des .ratings {
-	margin: 0;
-}
-.shop.single .rating-des h6 {
-	font-size: 14px;
-	font-weight: 600;
-	line-height: 18px;
-}
-.shop.single .ratting-main .single-rating ul{}
-.shop.single .ratting-main .single-rating ul li{
-	display:inline-block;
-}
-.shop.single .ratting-main .single-rating ul li i{
-	color:#F7941D;
-	font-size:14px;
-}
-.shop.single .review-inner label {
-	display: inline-block;
-	margin: 0 5px 0 0;
-}
-.shop.single .review-inner .ratings {
-	overflow: visible;
-	display: inline-block;
-	margin: 0;
-}
-.shop.single .review-inner .ratings ul{
-	display:inline-block;
-}
-.shop.single .ratting-main .single-rating ul {
-	display: inline-block;
-	margin-right: 5px;
-}
-.shop.single .ratings .rate-count {
-	display: inline-block;
-	color: #666;
-	font-size: 13px;
-}
-.shop.single .comment-review {
-	margin-bottom: 30px;
-}
-.shop.single .comment-review .add-review{
-	margin-top:30px;
-}
-.shop.single .comment-review .add-review h5{
-	font-size: 18px;
-	font-weight: 600;
-	margin-bottom: 7px;
-}
-.shop.single .comment-review .add-review p{
-	color:#333;
-}
-.shop.single .comment-review h4 {
-	font-size: 15px;
-	font-weight: 600;
-	margin-bottom: 7px;
-	margin-top:20px;
-}
-.shop.single .comment-review .review-inner{
-	margin-bottom:15px;
-	display:block;
-}
-.shop.single .comment-review .rating li {
-	display:inline-block;
-}
-.shop.single .comment-review .rating li i{
-	color:#F7941D;
-	font-size: 14px;
-}
-.shop.single .rating-des p{
-	margin-top:5px;
-}
-.shop.single .avg-ratting h4 {
-	font-size: 20px;
-	color: #333;
-}
-.shop.single .avg-ratting{}
+
 .shop.single .form .form-group input {
 	width: 100%;
 	height: 45px;
@@ -2987,6 +2964,11 @@ Version:1.0
 .shopping-summery tbody tr:last-child{
 	border:none;
 }
+
+.shopping-summery .product-info {
+	display: block;
+}
+
 .shopping-summery tbody .product-name a {
 	font-weight: 600;
 	color: #282828;
@@ -2994,12 +2976,15 @@ Version:1.0
 	font-size: 17px;
 }
 .shopping-cart .table p {
-	font-size: 14px;
+	font-size: 13px;
 	color: #666;
 }
+
+
 .shopping-summery tbody .product-name a:hover{
 	color:#F7941D;
 }
+
 .shopping-summery tbody .product img {
 	max-width: 70px;
 	border-radius: 100%;
@@ -3007,6 +2992,7 @@ Version:1.0
 	border: 1px solid #e6e6e6;
 	padding: 4px;
 }
+
 .shopping-summery tbody .product:hover img{
 	border-color:#F7941D;
 	-webkit-transform:rotate(360deg);
@@ -3022,19 +3008,20 @@ Version:1.0
 .shopping-cart .table td {
 	vertical-align: middle;
 	border-top: 1px solid #eee;
-	padding: 15px;
+	padding: 10px;
 }
+
+.shopping-summery tbody .no,
+.shopping-summery tbody .createDate,
+.shopping-summery tbody .qty,
 .shopping-summery tbody .price {
 	text-align: center;
 }
 
 .shopping-summery tbody .price span{}
 
-.shopping-cart tbody .qty {
-	text-align: center;
-}
 
-.shopping-summery tbody .qty span{}
+.shopping-summery tbody .qty span {}
 
 .shopping-cart .qty .button {
 	display: inline-block;
@@ -3205,10 +3192,11 @@ Version:1.0
 	color: #fff;
 }
 
-/* 페이징 css 제작 */
-.shopping-cart span.paging{
+/* íŽ˜ì´ì§• css ì œìž‘ */
+.product-area span.paging{
 	display: flex;
     justify-content: center;
+	padding: 40px;
 }
 /*======================================
    End Shopping Cart CSS
@@ -3452,51 +3440,46 @@ Version:1.0
 }
 
 .shop.login .login-form .title{
-	font-size: 20px;
+	font-size: 25px;
 	font-style: italic;
-	margin-top: 20px;
+	margin-top: 30px;
 	font-weight: 500;
 }
 
-.shop.login .login-form h2 {
-	position:relative;
-	font-size: 35px;
-	color: #333;
-	font-weight: 400;
-	line-height: 27px;
-	text-transform: uppercase;
-	margin-bottom: 12px;
-	padding-bottom: 20px;
-	text-align: center;
+.shop.login h2 {
+	position: relative;
+    font-size: 40px;
+    color: #333;
+    font-weight: 400;
+    text-transform: uppercase;
+    margin: 12px 0 0 -100px;
+    padding-bottom: 20px;
+    text-align: center;
 }
-.shop.login .login-form h2:before{
+.shop.login h2:before{
 	position:absolute;
 	content:"";
 	left:50%;
 	bottom:0;
 	height:2px;
 	width:50px;
-	background:#F7941D;
+	background:#0072ab;
 	margin-left:-25px;
 }
-.shop.login .login-form p {
+
+.shop.login p {
 	font-size: 14px;
 	color: #333;
 	font-weight: 400;
 	text-align: center;
-	margin-bottom:50px;
-}
-
-.shop.login .login-form span{
-	font-size: 10px;
-	color: #6a6a6a;
-	font-weight: 300;
+	margin: 12px 0 50px -100px;
 }
 
 .form-group span{
-	font-size: 10px;
+	display: inline-block;
+	font-size: 14px;
 	color: #6a6a6a;
-	font-weight: 300;
+	font-weight: 400;
 }
 
 .shop.login .form {
@@ -3504,34 +3487,44 @@ Version:1.0
 }
 .shop.login .form .form-group {
 	margin-bottom: 22px;
+	font-size: 15px;
 }
 .shop.login .form .form-group input {
-	width: 100%;
+	width: 90%;
 	height: 45px;
 	line-height: 50px;
 	padding: 0 20px;
 	border-radius: 3px;
-	border-radius: 0px;
+	/* border-radius: 0px; */
 	color:#333 !important;
 	border: none;
 	background:#F6F7FB;
+	display: block;
 }
 
 .shop.login .form .form-group .short-input {
-    width: 20%; /* 또는 원하는 가로 길이 */
-    height: 25px;
+	display: inline-block;
+    width: 30%;
+    height: 45px;
     line-height: 50px;
     padding: 0 20px;
-    border-radius: 3px;
-	border-radius: 0px;
     color: #333 !important;
     border: none;
     background: #F6F7FB;
 }
 
+.shop.login .form .form-group.title label {
+    color: #222;
+    position: relative;
+    font-size: 28px;
+    margin-top: 20px;
+}
+
 .shop.login .form .form-group label {
 	color: #333;
-	position: relative;
+    position: relative;
+    font-size: 20px;
+    padding-top: 15px;
 }
 
 
@@ -3565,13 +3558,13 @@ Version:1.0
 	margin: 0;
 }
 .shop.login .form button {
-	border: none;
-	margin-top: 20px;
+	
 }
 .shop.login .form .btn {
 	display: inline-block;
-	margin-right: 10px;
+	margin:40px 0;
 	height: 46px;
+	border: none;
 	color: #fff;
 	line-height: 20px;
 }
@@ -3588,8 +3581,10 @@ Version:1.0
 .shop.login .login-form .checkbox label {
 	font-size: 14px;
 	font-weight: 400;
+	font-style: italic;
 	color: #333;
 	position: relative;
+	margin-top: 30px;
 	padding-left: 20px;
 }
 .shop.login .login-form .checkbox label:hover{
@@ -3633,7 +3628,7 @@ Version:1.0
 }
 .shop.login .login-form .lost-pass{
 	display:inline-block;
-	margin-left:25px;
+	margin-left:45px;
 	color:#333;
 	font-size:14px;
 	font-weight:400;
@@ -3674,7 +3669,7 @@ Version:1.0
     padding-bottom: 50px;
 }
 
-/* css 는 조금 더 생각해보기 */
+/* css ëŠ” ì¡°ê¸ˆ ë” ìƒê°í•´ë³´ê¸° */
 .product-list.section th.form-group.title {
 	font-size: 25px;
     border: 1px solid #efefef;
@@ -3697,13 +3692,14 @@ Version:1.0
 
 .product-list.section th, td {
 	padding-left: 10px;
-    padding-top: 20px; /* 위쪽 패딩 */
-    padding-bottom: 20px; /* 아래쪽 패딩 */
+    padding-top: 20px; 
+    padding-bottom: 20px; 
+	width: 320px;
 }
 
 .product-list.section .nice-select.category {
     width: 320px;
-	text-align: center; /* 텍스트를 중앙 정렬 */
+	text-align: center;
 }
 
 .product-list.section td.form-group input[type="text"] {
@@ -3718,7 +3714,7 @@ Version:1.0
 	width: 320px;
 }
 
-/* 가격 */
+/* ê°€ê²© */
 .product-list.section input.price {
 	padding-left: 10px;
 	width: 310px;
@@ -3749,6 +3745,17 @@ Version:1.0
 	End Write CSS
 ========================================*/
 
+/*======================================
+	start Inquiry CSS
+========================================*/
+.header.shop .top-left .logo {
+	width: 100px;
+	height: auto;
+} 
+
+/*======================================
+	End Inquiry CSS
+========================================*/
 
 /*======================================
    Start Shop List CSS
@@ -3945,6 +3952,7 @@ Version:1.0
 .shop-services.home{
 	padding:60px 0;
 	background:#F6F7FB;
+	margin-bottom: 60px;
 }
 .shop-services .single-service {
 	position: relative;

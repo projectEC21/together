@@ -33,6 +33,7 @@ public class InquiryBlockEntity {
     @GeneratedValue(generator = "inquiry_block_seq")
     private Long inquiryBlockId;
 
+    // FK
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_id")
     private CustomerEntity customerEntity;
