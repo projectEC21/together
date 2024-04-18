@@ -2653,7 +2653,7 @@ body {
     background-color: #fff;
 }
 
-.shop.single .btn-edit .user-custom a:hover {
+.shop.single .btn-edit .user-custom a.btn:hover {
     color: #fff;
 }
 

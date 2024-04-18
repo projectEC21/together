@@ -108,7 +108,7 @@
 								<li><i class="ti-power-off"></i><a th:href="@{/main/login}">Login</a></li>
 								<li><i class="ti-user"></i><a th:href="@{/main/register}">Sign up</a></li>
 								<form class="search-form">
-								<li><i class="ti-power-off"></i><a th:href="@{/main/index}">Logout</a></li>
+								<li><i class="ti-power-off"></i><a th:href="@{/main/Logout}">Logout</a></li>
 								</li>
 							</ul>
 						</div>
@@ -262,6 +262,7 @@
 									</div>
 								</div>
 							</div>
+
 							<!-- Product Description -->
 							<div class="col-lg-6 col-12">
 								<div class="product-desc">
@@ -271,17 +272,19 @@
 										<h6 class="origin">Origin : <span>[[${product.origin}]]</span></h6>
 										<h6 class="quantity">Minimum Order Quantity : <span>[[${product.moq}]] [[${product.unit}]]</span></h6>
 									</div>
+
 									<!-- Inquiry Button -->
 									<div class="add-to-cart">
-										<button class="btn" data-toggle="modal" data-target="#myModal">
+										<button class="btn" id="inquiry" data-toggle="modal" data-target="#myModal">
 											Inquire Now  <i class="fa fa-envelope-o"></i>
 										</button>
 									</div>
 								</div>
 							</div>
 						</div>
+
 						<!-- Inquiry Modal -->
-						<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+						<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 							<div class="modal-dialog" role="document">
 								<div class="modal-content">
 									<form class="form" th:action="@{/main/productsDetail}" method="post">
@@ -308,7 +311,7 @@
 										</div>
 										<!-- Modal Footer -->
 										<div class="modal-footer">
-											<button type="submit" class="btn" data-dismiss="modal">Send</button>
+											<button type="submit" class="btn">Send</button>
 											<button type="button" class="btn" data-dismiss="modal">Close</button>
 										</div>
 									</form>
@@ -338,9 +341,11 @@
 										</div>
 									</div>
 								</div>
+								<!-- /Tab Content -->
 							</div>
 						</div>
 					</div>
+					<!-- /Additional Info -->
 				</div>
 			</div>
 		</section>
@@ -504,7 +509,7 @@
 	<!-- Magnific Popup JS -->
 	<script th:src="@{/main/js/magnific-popup.js}"></script>
 	<!-- Fancybox JS -->
-	<script th:src="@{/main/js/facnybox.min.js}"></script>
+	<script th:src="@{/main/js/fancybox.min.js}"></script>
 	<!-- Waypoints JS -->
 	<script th:src="@{/main/js/waypoints.min.js}"></script>
 	<!-- Countdown JS -->
