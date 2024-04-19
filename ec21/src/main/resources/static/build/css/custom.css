@@ -1426,63 +1426,23 @@ body .container.body .right_col {
   box-sizing: border-box;
 }
 
-.modal {
-  /* 스타일 - customize */
-  background-color: rgba(0, 0, 0, 0.7);
-  pointer-events: none;
-  padding: 20px;
 
-  /* 트랜지션 효과 */
-  transition: opacity 0.3s ease-in-out;
-  opacity: 0;
-
-  /* 화면 전체를 덮게하는 코드 */
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-
+.modal.show {
   /* 중앙에 오게하는 코드 */
   display: flex;
   justify-content: center;
   align-items: center;
   align-content: center;
 
-}
+  opacity: 1;
+  pointer-events: auto;
 
-.modal-content {
-  /* 스타일 - customize */
-  max-width: 100%;
-  width: 800px;
-
-  background-color: white;
-  padding: 20px;
-  border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-
-  /* 트랜지션 효과 */
-  opacity: 0;
-  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
-
-  transform: scale(0.8);
 }
 
 .car-header {
   font-size: 20px;
 }
 
-.modal.show {
-  /* 모달이 열렸을 때 보여지게 하는 코드 */
-  opacity: 1;
-  pointer-events: auto;
-}
-
-.modal.show .modal-content {
-  /* 모달이 열렸을 때 보여지게 하는 코드 */
-  opacity: 1;
-  transform: scale(1);
-}
 
 .close {
   color: #aaa;
@@ -1609,7 +1569,7 @@ body {
   color: #73879C;
   background: #333;
   font-family: "Fontawesome";
-  font-size: 13px;
+  /* font-size: 13px; */
   font-weight: 400;
   line-height: 1.471;
 }
@@ -5893,6 +5853,8 @@ fieldset {
   max-width: 100%;
 }
 
+/** /모달설정 **/
+/*모달창 내 radio 묶음*/
 .modal-body .modalForm {
   text-align: right;
   width: 100%;
@@ -5903,15 +5865,7 @@ fieldset {
   margin: 8px;
 }
 
-.cropper .docs-diagram .modal-dialog {
-  max-width: 352px;
-}
 
-
-
-.cropper .docs-cropped canvas {
-  max-width: 100%;
-}
 
 /** /Cropper **/
 /** jQuery Smart Wizard  **/
