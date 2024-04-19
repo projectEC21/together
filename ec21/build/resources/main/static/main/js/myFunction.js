@@ -9,12 +9,17 @@ $(document).ready(function() {
 
 // saved-icon 을 누르면 색이 있는 별로 되게 하는 스크립트
 $(document).ready(function() {
-    $('#saved-icon').click(function(event) {
-        event.preventDefault(); // 기본 동작 방지
-        var icon = $(this).find('i'); // .saved-icon 내부의 <i> 태그를 찾음
-    
-        // 클래스 변경
-        icon.removeClass('ti-star'); // 기존 클래스 제거
-        icon.addClass('fa fa-star'); // 새 클래스 추가
+
+    // 이벤트 위임하는 것
+    $(document).on('click', '.saved-icon', function(event) {
+        event.preventDefault();
+        var icon = $(this).find('i');
+        
+        if (icon.hasClass('ti-star')) {
+            icon.removeClass('ti-star').addClass('fa fa-star');
+        } else {    
+            icon.removeClass('fa fa-star').addClass('ti-star');
+        }
     });
 });
+
