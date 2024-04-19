@@ -7,10 +7,15 @@
 	margin-top: -2px;
 } 
 
-.single-widget.category {
+.single-widget.category, div.col-md-2.col-12{
     background-color: #333; /* 배경색을 어두운 회색으로 설정 */
 	color: #fff;
 }
+
+.table.inquiry-summery {
+	background: #fff;
+}
+
 
 /*======================================
 	End Inquiry CSS

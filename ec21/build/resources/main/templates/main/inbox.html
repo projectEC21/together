@@ -124,11 +124,11 @@
 						<div class="single-widget category">
 							<h3 Inquiry class="title">My Inquiry</h3>
 							<ul class="categor-list">
-								<li><a href="/main/inbox(customerId=${customerId})">Received Inquiry</a></li>
-								<li><a href="/main/myproducts(customerId=${customerId})" >Send Inquiry</a></li>
-								<li><a href="/main/myproducts(customerId=${customerId})" >Saved List</a></li>
-								<li><a href="/main/myproducts(customerId=${customerId})" >Spam List</a></li>
-								<li><a href="/main/myproducts(customerId=${customerId})" >Block List</a></li>
+								<li><a href="/main/inbox(customerId=${customerId})">Received</a></li>
+								<li><a href="/main/myproducts(customerId=${customerId})" >Sended</a></li>
+								<li><a href="/main/myproducts(customerId=${customerId})" >Saved</a></li>
+								<li><a href="/main/myproducts(customerId=${customerId})" >Spam</a></li>
+								<li><a href="/main/myproducts(customerId=${customerId})" >Block</a></li>
 								<li><a href="/main/myproducts(customerId=${customerId})" >Trash</a></li>
 							</ul>
 						</div>
@@ -145,6 +145,11 @@
 									<div class="col-12">
 										<!-- Shop Top -->
 										<div class="shop-top">
+											<div class="submitBtn">
+												<a href="" class="btn">Delete</a>
+												<a href="" class="btn">Spam</a>
+											</div>
+											<a></a>
 											<div class="shop-shorter">
 												<div class="single-shorter">
 													<label>Show :<span> [[${#lists.size(productList)}]]</span></label>
@@ -161,7 +166,6 @@
 													<th class="text-center">NO</th>
 													<th class="text-center">NAME</th>
 													<th class="text-center">TITLE</th>
-													<th class="text-center">PRICE</th> <!-- -->
 													<th class="text-center">DATE</th>
 													<th class="text-center"><i class="ti-trash remove-icon"></i></th>
 													<th class="text-center"><i class="fa fa-envelope-open"></i></th>
@@ -170,24 +174,17 @@
 											<tbody>
 												<!-- 240418 dy : 회원의 상품 목록 출력 -->
 												<tr th:if="${productList != null and !#lists.isEmpty(productList)}" th:each="product, i : ${productList}">
-													<td class="no"><span>[[${i.count}]]</span></td>
-													<!-- 이미지 우선 임시 링크 -->
-													<td class="image" data-title="No"><img
-															src="https://via.placeholder.com/100x100" alt="#"></td>
-													<td class="contents" data-title="contents">
-														<p class="product-name"><a th:href="@{/main/productsDetail(productId=${product.productId})}">[[${product.productName}]]</a></p>
-														<p class="product-desc">[[${product.productDesc}]]</p>
-													</td>
-													<td class="price" data-title="Price"><span>$[[${product.price}]]</span></td>
-													<td class="qty" data-title="Qty">
-														<span th:if="${product.moq >= 1000}" th:text="${#numbers.formatInteger(product.moq, 3, 'COMMA')} + ' ' + ${product.unit}"> </span>
-														<span th:unless="${product.moq >= 1000}" th:text="${product.moq} + ' ' + ${product.unit}"></span>
-													</td>
-													<!-- <td class="total-amount" data-title="Total"><span>$220.88</span></td> -->
-													<td class="createDate" data-title="date"><span>[[${#temporals.format(product.createDate, 'yyyy-MM-dd')}]]</span>
-													</td>
-													<td class="action" data-title="Remove"><a th:href="@{/main/myproducts/delete(productId=${product.productId})}"><i class="ti-trash remove-icon"></i></a></td>
-													<td class="action" data-title="Remove"><a th:href="@{/main/myproducts/delete(productId=${product.productId})}"><i class="fa fa-envelope-open"></i></a></td>
+														<td class="no"><span>[[${i.count}]]</span></td>
+														<td class="contactName" data-title="contactName">
+															<p class="contactName"><a th:href="@{/main/productsDetail(productId=${product.productId})}">[[$product.productName]]</a></p>
+														</td>
+														<td class="InquiryTitle" data-title="InquiryTitle" colspan="2"> 
+															<p class="InquiryTitle"><a th:href="@{/main/productsDetail(productId=${product.productId})}">[[${product.productName}]]</a></p>
+														</td>
+														<td class="sendDate" data-title="sendDate"><span>[[${#temporals.format(product.createDate, 'yyyy-MM-dd')}]]</span>
+														</td>
+														<td class="action" data-title="Remove"><a th:href="@{/main/myproducts/delete(productId=${product.productId})}"><i class="ti-trash remove-icon"></i></a></td>
+														<td class="action" data-title="Spam"><a th:href="@{/main/myproducts/delete(productId=${product.productId})}"><i class="fa fa-envelope-open"></i></a></td>
 												</tr>
 											</tbody>
 										</table>
