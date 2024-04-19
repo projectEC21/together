@@ -119,7 +119,7 @@
 
 
 	<!-- 인콰이어리 목록 -->
-	<section class="inquiry-area inquiry-list">
+	<section class="inquiry-area">
 			<div class="main-container">
 				<aside class="shop-sidebar">
 					<!-- Single Widget -->
@@ -164,23 +164,29 @@
 									<tbody>
 										<!-- 240418 dy : 회원의 상품 목록 출력 -->
 										<tr th:if="${productList != null and !#lists.isEmpty(productList)}" th:each="product, i : ${productList}">
+											<!-- 저장 여부 : 클릭하면 색상 변하게 해둠-->
 											<td class="saved-icon"><a href="#" id="saved-icon"><i class="ti-star"></i></a></td>
+											<!-- 개수 -->
 											<td class="no"><span>[[${i.count}]]</span></td>
+											<!-- 담당자명 -->
 											<td class="contactName" data-title="contactName"><span class="contactName">[[${product.category}]]</span></td>
+											<!-- 제목만 -->
 											<td class="inquiryTitle" data-title="inquiryTitle" colspan="2">
 												<span class="inquiryTitle" th:href="@{/main/productsDetail(productId=${product.productId})}">[[${product.productName}]]</span>
 											</td>
-											<td class="sendDate" data-title="sendDate"><span>[[${#temporals.format(product.createDate, 'yyyy-MM-dd')}]]</span>
-											</td>
+											<!-- 보낸 날짜 -->
+											<td class="sendDate" data-title="sendDate"><span>[[${#temporals.format(product.createDate, 'yyyy-MM-dd')}]]</span></td>
+											<!-- 누르면 삭제 되면서 스팸함으로 -->
 											<td class="action" data-title="spam"><a th:href="@{/main/myproducts/delete(productId=${product.productId})}"><i class="fa fa-refresh"></i></a></td>
+											<!-- 누르면 삭제 되면서 쓰통으로 -->
 											<td class="action" data-title="delete"><a th:href="@{/main/myproducts/delete(productId=${product.productId})}"><i class="ti-trash remove-icon"></i></a></td>
 										</tr>
 									</tbody>
 								</table>
 								<!--/ End Shopping Summery -->
-							</div>
-							<!-- 페이징 -->
+								<!-- 페이징 -->
 							<span class="paging"> << < 1 2 3 4 5 > >> </span>
+							</div>
 						</div>
 					</div>
 				</div>
