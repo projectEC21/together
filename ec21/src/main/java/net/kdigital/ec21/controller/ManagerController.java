@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.kdigital.ec21.dto.CustomerDTO;
+import net.kdigital.ec21.dto.CustomerListModalDTO;
 import net.kdigital.ec21.dto.ModelPredictDTO;
 import net.kdigital.ec21.dto.ModelPredictModalDTO;
 import net.kdigital.ec21.dto.ProductDTO;
@@ -147,6 +148,27 @@ public class ManagerController {
 		List<CustomerDTO> dtoList = managerService.selectNotBlacklist();
 		model.addAttribute("list", dtoList);
 		return "manager/customerList";
+	}
+
+
+	/**
+	 * 전달받은 상품 ID에 해당하는 금지어유사도 결과 리스트를 JSON 데이터로 반환
+	 * 
+	 * @param productId
+	 * @return
+	 * @throws JsonProcessingException
+	 */
+	@ResponseBody
+	@GetMapping("/manager/customerList/getCustomerProductDTOs")
+	public String getCustomerProductDTOs(@RequestParam(name = "customerId") String customerId)
+			throws JsonProcessingException {
+		log.info(customerId);
+		List<CustomerListModalDTO> result = managerService.getCustomerProductDTOs(customerId); 
+		if (result == null) {
+			return null;
+		}
+		ObjectMapper mapper = new ObjectMapper();
+		return mapper.writeValueAsString(result);
 	}
 
 	/**

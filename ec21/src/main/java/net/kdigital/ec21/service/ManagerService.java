@@ -16,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.kdigital.ec21.dto.BlacklistDTO;
 import net.kdigital.ec21.dto.CustomerDTO;
+import net.kdigital.ec21.dto.CustomerListModalDTO;
 import net.kdigital.ec21.dto.ModelPredictDTO;
 import net.kdigital.ec21.dto.ModelPredictModalDTO;
 import net.kdigital.ec21.dto.ProductDTO;
@@ -235,6 +236,27 @@ public class ManagerService {
     }
 
     /**
+     * customerId에 해당하는 회원이 판매하는 상품DTO 리스트를 반환하는 함수
+     * @param customerId
+     * @return
+     */
+    public List<CustomerListModalDTO> getCustomerProductDTOs(String customerId) {
+        CustomerEntity entity = customerRepository.findById(customerId).get();
+        List<ProductEntity> productEntities = entity.getProductEntity();
+        // 판매하는 상품이 없는 경우
+        if (productEntities==null) {
+            return null;
+        }
+        // 판매하는 상품이 있는 경우
+        List<CustomerListModalDTO> dtos = new ArrayList<>();
+        productEntities.forEach((product)->{
+            CustomerListModalDTO dto = new CustomerListModalDTO(customerId, product.getProductId(), product.getProductName(), product.getProductDesc(), product.getCategory(), product.isLstmPredict(), product.getJudge());
+            dtos.add(dto);
+        });
+        return dtos;
+    }
+
+    /**
      * 관리자가 처리하지 않은 신고당한 회원 DTO를 반환하고자 하는데 회원의 기본적인 정보를 같이 담기 위해 새로운 DTO에 담아 리스트를
      * 반환하는 함수
      * (신고당한 회원 ID, 신고회원테이블ID, 신고당한 회원의 신고당한 횟수, 구분, 이름, 회사명, 부서명, IP, 신고 카테고리, 신고
@@ -410,5 +432,7 @@ public class ManagerService {
 
         return result;
     }
+
+    
 
 }
