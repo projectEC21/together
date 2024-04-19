@@ -16,8 +16,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.kdigital.ec21.dto.BlacklistDTO;
 import net.kdigital.ec21.dto.CustomerDTO;
+import net.kdigital.ec21.dto.CustomerListModalDTO;
 import net.kdigital.ec21.dto.ModelPredictDTO;
+import net.kdigital.ec21.dto.ModelPredictModalDTO;
 import net.kdigital.ec21.dto.ProductDTO;
+import net.kdigital.ec21.dto.ProhibitSimilarWordDTO;
 import net.kdigital.ec21.dto.ReportedCustomerWithInfoDTO;
 import net.kdigital.ec21.dto.check.ProductCategory;
 import net.kdigital.ec21.dto.check.ReportCategory;
@@ -126,39 +129,6 @@ public class ManagerService {
         return dtoList;
     }
 
-    /**
-     * lstm 예측값이 0(false)이고 관리자가 미처리한 상품들을
-     * 새로운 ModelPredictDTO에 담아 리스트로 반환하는 함수
-     * 
-     * @return
-     */
-    public List<ModelPredictDTO> selectAllModelPredictWeird() {
-
-        // lstm==false && judge==null인 상품 데이터들 리스트로 가져오기
-        List<ProductEntity> productEntities = productRepository.findByLstmPredictAndJudgeOrderByCreateDateDesc(false,
-                null);
-        List<ModelPredictDTO> result = new ArrayList<>();
-
-        productEntities.forEach((prodEntity) -> {
-            // productId에 해당하는 금지어유사도 결과 데이터들 가져오기 (금지어 유사 확률 높은 순)
-            List<ProhibitSimilarWordEntity> entityList = prohibitSimilarWordRepository
-                    .findProbaByProductEntity_ProductIdOrderBySimilarProbaDesc(prodEntity.getProductId());
-            // 금지 유사확률이 가장 높은 데이터 가져오기
-            ProhibitSimilarWordEntity prohibitSimilarWordEntity = entityList.get(0);
-
-            // 화면 출력을 위한 새로운 ModelPredictDTO 생성
-            ModelPredictDTO dto = new ModelPredictDTO(prodEntity.getCustomerEntity().getCustomerId(),
-                    prodEntity.getProductId(),
-                    prodEntity.getProductName(), prodEntity.getProductDesc(),
-                    prodEntity.getLstmPredictProba(), prodEntity.isLstmPredict(),
-                    prohibitSimilarWordEntity.getSimilarWord(), prohibitSimilarWordEntity.getSimilarProba(),
-                    prohibitSimilarWordEntity.getProhibitWordEntity().getProhibitWord(),
-                    prohibitSimilarWordEntity.getProhibitWordEntity().getProhibitReason());
-
-            result.add(dto);
-        });
-        return result;
-    }
 
     /**
      * lstm 예측값이 0(false)이고 관리자가 미처리한 상품들 중
@@ -185,13 +155,14 @@ public class ManagerService {
         }
 
         productEntities.forEach((prodEntity) -> {
-            // productId에 해당하는 금지어유사도 결과 데이터들 가져오기 (금지어 유사 확률 높은 순)
+            // 1) productId에 해당하는 금지어유사도 결과 데이터들 가져오기 (금지어 유사 확률 높은 순)
             List<ProhibitSimilarWordEntity> entityList = prohibitSimilarWordRepository
                     .findProbaByProductEntity_ProductIdOrderBySimilarProbaDesc(prodEntity.getProductId());
-
-            // lstmPredictProba 값 환산
-            // Double newProba = 1 - (prodEntity.getLstmPredictProba()/0.79)*0.5;
-
+            
+            // 2) lstmPredictProba 값 환산
+            // Double newProba = 1 - (prodEntity.getLstmPredictProba()/0.79)*0.5; // 지금 저장된 데이터들은 백분율로 저장되어있음..
+            Double newProba = 1 - (((prodEntity.getLstmPredictProba()*0.01)/0.79)*0.5);
+                    
             // 1) lstmPredict==false && 금지어 유사도 결과 존재 O
             if (entityList != null && !entityList.isEmpty()) {
                 // 금지 유사확률이 가장 높은 데이터 가져오기
@@ -201,7 +172,7 @@ public class ManagerService {
                 ModelPredictDTO dto = new ModelPredictDTO(prodEntity.getCustomerEntity().getCustomerId(),
                         prodEntity.getProductId(),
                         prodEntity.getProductName(), prodEntity.getProductDesc(),
-                        prodEntity.getLstmPredictProba(), prodEntity.isLstmPredict(),
+                        newProba, prodEntity.isLstmPredict(),
                         prohibitSimilarWordEntity.getSimilarWord(), prohibitSimilarWordEntity.getSimilarProba(),
                         prohibitSimilarWordEntity.getProhibitWordEntity().getProhibitWord(),
                         prohibitSimilarWordEntity.getProhibitWordEntity().getProhibitReason());
@@ -214,8 +185,8 @@ public class ManagerService {
                 ModelPredictDTO dto = new ModelPredictDTO(prodEntity.getCustomerEntity().getCustomerId(),
                         prodEntity.getProductId(),
                         prodEntity.getProductName(), prodEntity.getProductDesc(),
-                        prodEntity.getLstmPredictProba(), prodEntity.isLstmPredict(),
-                        null, 0.0, null, null);
+                        newProba, prodEntity.isLstmPredict(),
+                        null, 0.0,null,null);
                 result.add(dto);
             }
         });
@@ -223,8 +194,33 @@ public class ManagerService {
         return result;
     }
 
-    // ==================================== 회원관리
-    // ======================================
+    /**
+     * 상품 ID에 해당하는 금지어 유사도 결과 리스트의 결과를 새로운 modalDTO에 담아서 리스트로 반환하는 함수
+     * (상품ID, 유사단어, 금지어 리스트 단어, 금지어 사유)
+     * 
+     * @param productId
+     * @return
+     */
+    public List<ModelPredictModalDTO> getProhibitSimilarWordDTOs(String productId) {
+        List<ModelPredictModalDTO> modalDTOs = new ArrayList<>();
+
+        // productId에 해당하는 금지어유사도 결과 데이터들 가져오기 (금지어 유사 확률 높은 순)
+        List<ProhibitSimilarWordEntity> entityList = prohibitSimilarWordRepository
+                .findProbaByProductEntity_ProductIdOrderBySimilarProbaDesc(productId);
+        if (entityList == null) {
+            return null;
+        }
+        entityList.forEach((entity) -> {
+            ModelPredictModalDTO dto = new ModelPredictModalDTO(productId, entity.getSimilarWord(),
+                    entity.getProhibitWordEntity().getProhibitWord(),
+                    entity.getProhibitWordEntity().getProhibitReason());
+            modalDTOs.add(dto);
+        });
+        return modalDTOs;
+    }
+
+
+    //==================================== 회원관리 ======================================
 
     /**
      * 정상회원(blacklist_check==N)인 CustomerDTO 최신 가입 순으로 반환
@@ -237,6 +233,27 @@ public class ManagerService {
         });
 
         return dtoList;
+    }
+
+    /**
+     * customerId에 해당하는 회원이 판매하는 상품DTO 리스트를 반환하는 함수
+     * @param customerId
+     * @return
+     */
+    public List<CustomerListModalDTO> getCustomerProductDTOs(String customerId) {
+        CustomerEntity entity = customerRepository.findById(customerId).get();
+        List<ProductEntity> productEntities = entity.getProductEntity();
+        // 판매하는 상품이 없는 경우
+        if (productEntities==null) {
+            return null;
+        }
+        // 판매하는 상품이 있는 경우
+        List<CustomerListModalDTO> dtos = new ArrayList<>();
+        productEntities.forEach((product)->{
+            CustomerListModalDTO dto = new CustomerListModalDTO(customerId, product.getProductId(), product.getProductName(), product.getProductDesc(), product.getCategory(), product.isLstmPredict(), product.getJudge());
+            dtos.add(dto);
+        });
+        return dtos;
     }
 
     /**
@@ -415,5 +432,7 @@ public class ManagerService {
 
         return result;
     }
+
+    
 
 }
