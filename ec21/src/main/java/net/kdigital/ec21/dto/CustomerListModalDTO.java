@@ -23,6 +23,7 @@ public class CustomerListModalDTO {
     private String origin;
     private int moq;
     private String unit;
+    private Double price;
     private ProductCategory category;
     private boolean lstmPredict;
     private YesOrNo judge;
