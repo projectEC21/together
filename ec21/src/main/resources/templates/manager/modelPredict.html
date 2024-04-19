@@ -94,34 +94,42 @@
     // 정상 버튼 클릭 시 judge Y로 변경
     function productNormal() {
       let productId = $(this).attr("data-id");
-      $.ajax({
-        url: "/modelPredict/productNormal",
-        data: { "productId": productId },
-        method: "GET",
-        success: function (resp) {
-          // resp의 타입 : Boolean
-          if (resp) {
-            alert("정상 상품으로 등록되었습니다.");
+      if (confirm("정상 상품으로 처리하시겠습니까?")) {
+        $.ajax({
+          url: "/modelPredict/productNormal",
+          data: { "productId": productId },
+          method: "GET",
+          success: function (resp) {
+            // resp의 타입 : Boolean
+            if (resp) {
+              alert("정상 상품으로 등록되었습니다.");
+              // 페이지 새로고침
+              window.location.reload();
+            }
           }
-        }
-      });
+        });
+      }
     }
 
 
     // 이상 버튼 클릭 시 judge N으로 변경
     function productWeird() {
       let productId = $(this).attr("data-id");
-      $.ajax({
-        url: "/modelPredict/productWeird",
-        data: { "productId": productId },
-        method: "GET",
-        success: function (resp) {
-          // resp의 타입 : Boolean
-          if (resp) {
-            alert("이상 상품으로 등록되었습니다.");
+      if (confirm("이상 상품으로 처리하시겠습니까? ")) {
+        $.ajax({
+          url: "/modelPredict/productWeird",
+          data: { "productId": productId },
+          method: "GET",
+          success: function (resp) {
+            // resp의 타입 : Boolean
+            if (resp) {
+              alert("이상 상품으로 등록되었습니다.");
+              // 페이지 새로고침
+              window.location.reload();
+            }
           }
-        }
-      });
+        });
+      }
     }
 
 
@@ -130,24 +138,27 @@
       let btn = $(this);
       let similarWord = $(this).data("word");
       let prohibitReason = $(this).data("reason");
-      $.ajax({
-        url: "/modelPredict/wordPlus",
-        data: { "similarWord": similarWord, "prohibitReason": prohibitReason },
-        method: "GET",
-        success: function (resp) {
-          console.log(resp);
-          // resp : Boolean 타입 넘어옴
-          // true인 경우 DB에 저장됨
-          if (resp) {
-            // 버튼 활성화 해제
-            btn.disabled = true;
-            alert("금지어리스트에 추가되었습니다.")
-          } else {
-            // false인 경우 이미 존재하다고 알려야 함
-            alert("이미 금지어 리스트에 존재하는 단어입니다.");
+      // 처리 전 확인 
+      if (confirm(similarWord+" ("+prohibitReason+")"+"를 금지어 리스트에 추가하시겠습니까? ")) {
+        $.ajax({
+          url: "/modelPredict/wordPlus",
+          data: { "similarWord": similarWord, "prohibitReason": prohibitReason },
+          method: "GET",
+          success: function (resp) {
+            console.log(resp);
+            // resp : Boolean 타입 넘어옴
+            // true인 경우 DB에 저장됨
+            if (resp) {
+              // 버튼 활성화 해제
+              btn.disabled = true;
+              alert("금지어리스트에 추가되었습니다.")
+            } else {
+              // false인 경우 이미 존재하다고 알려야 함
+              alert("이미 금지어 리스트에 존재하는 단어입니다.");
+            }
           }
-        }
-      });
+        });
+      }
     }
 
 
