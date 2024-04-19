@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
@@ -803,4 +804,395 @@
 </body>
 
 >>>>>>> 2c97a4394feb4cf0a2474ab185d597d6ca54a046
+=======
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <!-- Meta, title, CSS, favicons, etc. -->
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/png" th:href="@{/production/images/ec21logo.png}">
+
+  <title>ec21 관리자 페이지</title>
+
+  <!-- Web Font -->
+  <link
+    href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap"
+    rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap" rel="stylesheet">
+
+  <!-- Bootstrap -->
+  <link th:href="@{/vendors/bootstrap/dist/css/bootstrap.min.css}" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link th:href="@{/vendors/font-awesome/css/font-awesome.min.css}" rel="stylesheet">
+  <!-- NProgress -->
+  <link th:href="@{/vendors/nprogress/nprogress.css}" rel="stylesheet">
+  <!-- iCheck -->
+  <link th:href="@{/vendors/iCheck/skins/flat/green.css}" rel="stylesheet">
+
+  <!-- bootstrap-progressbar -->
+  <link th:href="@{/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css}" rel="stylesheet">
+  <!-- JQVMap -->
+  <link th:href="@{/vendors/jqvmap/dist/jqvmap.min.css}" rel="stylesheet" />
+  <!-- bootstrap-daterangepicker -->
+  <link th:href="@{/vendors/bootstrap-daterangepicker/daterangepicker.css}" rel="stylesheet">
+
+  <!-- Custom Theme Style -->
+  <link th:href="@{/build/css/custom.css}" rel="stylesheet">
+
+  <!-- 240414 dy : JQuery 파일 추가 및 ajax 추가 -->
+  <!-- 240415 dy : 카테고리와 검색어 기능 구현 -->
+  <script th:src="@{/script/jquery-3.7.1.min.js}"></script>
+  <script>
+    $(function () {
+      $("#category").on("change", search);
+      $("#searchWord").on("keyup", search);
+      init();
+
+      // 240418 iy: 모달 기능 구현 
+      // 모달 변수 초기화
+      var modal = $("#myModal");
+
+      // 닫기 버튼 이벤트
+      $("#closeBtn").on("click", function (event) {
+        modal.hide();
+      });
+
+      // 모달 백그라운드 클릭 이벤트
+      $(window).on("click", function (event) {
+        if ($(event.target).is(modal)) {
+          modal.hide();
+        }
+
+      });
+
+      // 이벤트 위임을 사용하여 동적 요소에 이벤트 연결
+      $(document).on("click", "a[id^='modalBtn']", function () {
+        let productId = $(this).data("id");
+        let modalName = $(this).data("name");
+        let modalDesc = $(this).data("desc");
+        
+        let tableContent = `<thead>
+                              <tr>
+                                <th>유사단어</th>
+                                <th>금지어리스트 단어 (카테고리)</th>
+                                <th>금지어 사전 추가</th>
+                              </tr>
+                            </thead>
+                            <tbody>`;
+        // 금지어 유사단어 결과 가져오기
+        $.ajax({
+          url:"/manager/modelPredict/getProhibitSimilarWordDTOs",
+          data:{"productId":productId},
+          method:"GET",
+          success:function(resp){
+            if (!resp || resp.length === 0) { // 금지어 유사도 결과가 없는 경우
+              tableContent+=`<tr><td colspan="3"><span>결과가 존재하지 않습니다.</span></td></tr></tbody>`;
+            }else{
+              let list = JSON.parse(resp);
+              if (list.length === 0) { // 파싱된 리스트가 비어 있는 경우
+                tableContent += `<tr><td colspan="3"><span>결과가 존재하지 않습니다.</span></td></tr>`;
+              } else {
+                list.forEach(function (item) {
+                  tableContent += `<tr>
+                                      <td>${item.similarWord}</td>
+                                      <td>${item.prohibitWord} (${item.prohibitReason})</td>
+                                      <td><input type="button" value="단어추가"> </td>
+                                  </tr>`;
+                });
+              }
+              tableContent += '</tbody>';
+            }
+            // 모달 컨텐츠 업데이트
+            $("#modalName").html(modalName);
+            $("#modalDesc").html(modalDesc);
+            $("#modalTable").html(tableContent);
+            // 모달 열기
+            $("#myModal").modal();
+
+          }
+        });
+
+
+      });
+      // 240418 iy: 모달 기능 구현 끝
+
+    });
+
+    function search() {
+      let category = $("#category").val();
+      let searchWord = $("#searchWord").val();
+
+      $.ajax({
+        url: "/manager/modelPredict/getList",
+        data: { "category": category, "searchWord": searchWord },
+        method: "GET",
+        success: function (list) {
+          $("#result").replaceWith(list);
+        }
+      })
+
+    }
+
+    function init() {
+      $.ajax({
+        url: "/manager/modelPredict/getList",
+        data: { "category": "total", "searchWord": "" },
+        method: "GET",
+        success: function (list) {
+          $("#result").replaceWith(list);
+        }
+      })
+    }
+  </script>
+</head>
+
+<body class="nav-md">
+  <div class="container body" style="z-index: 2;">
+    <div class="main_container">
+      <div class="col-md-3 left_col">
+        <div class="left_col scroll-view">
+          <div class="navbar nav_title" style="border: 0; text-align: center;">
+            <a th:href="@{/manager/manager_index}" class="site_title">
+              <img th:src="@{/production/images/ec21logo.png}" alt="" height="30px">
+            </a>
+          </div>
+
+          <div class="clearfix"></div>
+
+          <!-- menu profile quick info -->
+          <div class="profile clearfix">
+            <div class="profile_pic">
+              <img th:src="@{/production/images/user.png}" alt="..." class="img-circle profile_img">
+            </div>
+            <div class="profile_info">
+              <h2>관리자</h2>
+            </div>
+          </div>
+          <!-- /menu profile quick info -->
+
+          <br />
+
+          <!-- sidebar menu -->
+          <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+            <div class="menu_section">
+              <ul class="nav side-menu">
+                <li><a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
+                  <ul class="nav child_menu">
+                    <li><a th:href="@{/manager/manager_index}">Dashboard</a></li>
+                  </ul>
+                </li>
+                <li><a><i class="fa fa-edit"></i> 상품관리 <span class="fa fa-chevron-down"></span></a>
+                  <ul class="nav child_menu">
+                    <li><a th:href="@{/manager/productList}">전체 상품 조회</a></li>
+                    <li><a th:href="@{/manager/modelPredict}">모델로 이상상품 판별</a></li>
+                  </ul>
+                </li>
+                <li><a><i class="fa fa-users"></i> 회원관리 <span class="fa fa-chevron-down"></span></a>
+                  <ul class="nav child_menu">
+                    <li><a th:href="@{/manager/customerList}">정상회원</a></li>
+                    <li><a th:href="@{/manager/reportedCustomerList}">신고당한회원</a></li>
+                    <li><a th:href="@{/manager/blackList}">블랙리스트회원</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <!-- /sidebar menu -->
+
+        </div>
+      </div>
+
+      <!-- top navigation -->
+      <div class="top_nav">
+        <div class="nav_menu">
+          <div class="nav toggle">
+            <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+          </div>
+          <nav class="nav navbar-nav">
+            <ul class=" navbar-right">
+              <li class="nav-item dropdown open" style="padding-left: 15px;">
+                <a href="javascript:#;" class="user-profile dropdown-toggle" aria-haspopup="true" id="navbarDropdown"
+                  data-toggle="dropdown" aria-expanded="false">
+                  <img th:src="@{/production/images/user.png}" alt="">관리자
+                </a>
+                <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
+                  <a class="dropdown-item" th:href="@{/main/login}"><i class="fa fa-sign-out pull-right"></i> Log
+                    Out</a>
+                </div>
+              </li>
+
+            </ul>
+          </nav>
+        </div>
+      </div>
+
+      <!-- /top navigation -->
+
+      <!-- page content -->
+      <div class="right_col" role="main">
+        <div class="">
+          <div class="page-title">
+            <div class="title_left">
+              <h3>Products <small>상품관리</small></h3>
+            </div>
+
+          </div>
+
+          <div class="clearfix"></div>
+
+          <div class="row">
+            <div class="col-md-12">
+              <div class="x_panel">
+                <div class="x_title">
+                  <h2>모델이상상품</h2>
+
+                  <div class="clearfix"></div>
+                </div>
+
+                <div class="title_right">
+                  <div class="col-md-5 col-sm-5   form-group pull-right top_search">
+                    <div class="input-group">
+                      <input type="text" class="form-control" id="searchWord" placeholder="Search for...">
+                      <span class="input-group-btn">
+                        <button class="btn btn-default" type="button">찾기</button>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="x_content">
+
+                  <!-- start project list -->
+                  <table id="datatable" class="table table-striped jambo_table table-bordered dataTable no-footer">
+                    <thead>
+                      <!-- <button id="modalBtn">모달 열기</button> -->
+                      <tr>
+                        <th style="width: 10%">회원 ID</th>
+                        <th style="width: 10%">상품 ID</th>
+                        <th style="width: 20%">상품명</th>
+                        <th style="width: 20%">상품내용</th>
+                        <th>예측값</th>
+                        <th style="width: 20%">#Edit</th>
+                      </tr>
+                    </thead>
+
+                    <!-- 240414 dy : ajax로 모델이상상품 정보 꽂아 넣기 -->
+                    <tbody id="result">
+                      <tr class="view" th:each="product:${list}">
+                        <input type="hidden" name="" id="modelProduct" th:value="${product}">
+                        <td th:text="${product.customerId}">#</td>
+                        <td th:text="${product.productId}">121000203</td>
+                        <td>
+                          <!-- <a href="#myModal" id="modalBtn" th:text="${product.productName}">ipone</a> -->
+                          <a href="#" th:id="'modalBtn' + ${product.productId}" th:text="${product.productName}"
+                            th:data-name="${product.productName}" th:data-desc="${product.productDesc}" th:data-id="${product.productId}">iphone</a>
+                        </td>
+                        <!-- 나중에 th:utext로 바꿔야 함 -->
+                        <td class="project_progress" th:text="${product.productDesc}">
+                          아이폰 11 판매
+                        </td>
+                        <td>
+                          이상단어 검출: <br> [[${product.prohibitWord}]]([[${product.prohibitReason}]])</p>
+                          이상검출도: [[${product.lstmPredictProba}]] %
+                          <div class="progress progress_sm">
+                            <div class="progress-bar bg-green" role="progressbar"
+                              data-transitiongoal="${product.lstmPredictProba}"></div>
+                          </div>
+                          이상단어유사도: [[${product.similarProba}]] %
+                          <div class="progress progress_sm">
+                            <div class="progress-bar bg-green" role="progressbar"
+                              data-transitiongoal="${product.similarProba}"></div>
+                          </div>
+                        </td>
+                        <td>
+
+                          <a href="#" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> 정상 </a>
+                          <!--정상 클릭시 judge 1로 변경-->
+                          <a href="#" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> 이상 </a>
+                          <!--정상 클릭시 judge 0로 변경-->
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <!-- end project list -->
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /page content -->
+
+    </div>
+  </div>
+
+
+  <!-- 모달창 -->
+  <!-- 모달 컨테이너 -->
+  <div class="modal" id="myModal" style="display:none;">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <!-- 모달창의 헤더부분의 시작 -->
+        <div class="modal-header">
+          <h4 class="modal-title">상세 페이지</h4>
+        </div>
+        <!-- 모달창의 헤더부분의 끝 -->
+        <!-- 모달창의 바디부분의 시작 바디부분이 모달창에서 표시하고자하는 컨텐츠를 입력한다.-->
+
+
+        <div class="modal-body">
+          <div class="info">
+            <div class="car-header">상품명</div>
+            <p id="modalName">Laptop for Gamming</p>
+            <div class="car-header">상품설명</div>
+            <p id="modalDesc">Apple mackbook pro 7th generation in sealed pack box and warranty with free delivery to
+              your home
+              address.
+              product comes with complete pack box</p>
+          </div>
+
+          <div class="card">
+            <div class="card-body">
+              
+              <table class="table table-striped jambo_table bulk_action" id="modalTable">
+                
+              </table>
+            </div>
+          </div>
+        </div>
+        <!-- 모달창의 바디부분의 끝 -->
+        <!-- 모달창의 푸터부분의 시작 -->
+        <!-- 푸터부에는 닫기부분이 위치하게 된다.  -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger btn-xs" id="closeBtn" data-dismiss="modal">닫기</button>
+        </div>
+        <!-- 모달창의 푸터부분의 끝 -->
+      </div>
+    </div>
+  </div>
+  <!-- 모달 끝 -->
+  <!-- jQuery -->
+  <script th:src="@{/vendors/jquery/dist/jquery.min.js}"></script>
+  <!-- Bootstrap -->
+  <script th:src="@{/vendors/bootstrap/dist/js/bootstrap.bundle.min.js}"></script>
+  <!-- FastClick -->
+  <script th:src="@{/vendors/fastclick/lib/fastclick.js}"></script>
+  <!-- NProgress -->
+  <script th:src="@{/vendors/nprogress/nprogress.js}"></script>
+  <!-- bootstrap-progressbar -->
+  <script th:src="@{/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js}"></script>
+
+  <!-- Custom Theme Scripts -->
+  <script th:src="@{/build/js/custom.min.js}"></script>
+
+
+</body>
+
+>>>>>>> 22370810a95141a66351bfc913cc6ba92c60a308
 </html>

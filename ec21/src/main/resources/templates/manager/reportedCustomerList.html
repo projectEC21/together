@@ -12,9 +12,9 @@
   <title>ec21 관리자 페이지</title>
 
   <!-- Web Font -->
-	<link
-  href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap"
-  rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap"
+    rel="stylesheet">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap" rel="stylesheet">
 
@@ -42,27 +42,29 @@
 
   <script>
     $(function () {
-      $("#category").on("change",search);
-      $("#searchWord").on("keyup",search);
+      $("#category").on("change", search);
+      $("#searchWord").on("keyup", search);
       init();
     })
 
-    // 블랙 버튼 클릭 시
     function toBlacklist() {
-      let category = $("#category").val();
-      let searchWord = $("#searchWord").val();
-      let reportCutomerId = $("#reportCustomerId").val();  // ReportCustomer 테이블의 managerCheck 값 변경을 위해 (모든 버튼에 해당) 
-      let reportedId = $("#reportedId").val();             // Customer 테이블의 blackListCheck 값 변경을 위해 (블랙버튼에 해당)
-      $.ajax({
-        url: "/manager/reportedCustomerList/getList",
-        data: { "reportCustomerId": reportCutomerId, "reportedId": reportedId , "category": category, "searchWord": searchWord },
-        method: "GET",
-        success: function (list) {
-          $("#result").replaceWith(list);
-          $("#blackBtn").on("click", toBlacklist);
-          $("#normalBtn").on("click", toNormal);
-        }
-      });
+      // 확인 창을 띄우고, 확인 시 블랙리스트로 이동
+      if (confirm("정말 블랙으로 처리하시겠습니까?")) {
+        let category = $("#category").val();
+        let searchWord = $("#searchWord").val();
+        let reportCutomerId = $("#reportCustomerId").val();
+        let reportedId = $("#reportedId").val();
+        $.ajax({
+          url: "/manager/reportedCustomerList/getList",
+          data: { "reportCustomerId": reportCutomerId, "reportedId": reportedId, "category": category, "searchWord": searchWord },
+          method: "GET",
+          success: function (list) {
+            $("#result").replaceWith(list);
+            $("#blackBtn").on("click", toBlacklist);
+            $("#normalBtn").on("click", toNormal);
+          }
+        });
+      }
     }
 
     // 정상 버튼 클릭 시
@@ -89,8 +91,8 @@
       console.log(category);
       console.log(searchWord);
       $.ajax({
-        url:"/manager/reportedCustomerList/getList",
-        data: {"category": category, "searchWord": searchWord },
+        url: "/manager/reportedCustomerList/getList",
+        data: { "category": category, "searchWord": searchWord },
         method: "GET",
         success: function (list) {
           $("#result").replaceWith(list);
@@ -104,7 +106,7 @@
     function init() {
       $.ajax({
         url: "/manager/reportedCustomerList/getList",
-        data: { "reportCustomerId": -100, "reportedId": "" , "category": "total", "searchWord": "" },
+        data: { "reportCustomerId": -100, "reportedId": "", "category": "total", "searchWord": "" },
         method: "GET",
         success: function (list) {
           console.log("ajax 돾어");
@@ -126,7 +128,7 @@
       <div class="col-md-3 left_col">
         <div class="left_col scroll-view">
           <div class="navbar nav_title" style="border: 0; text-align: center;">
-            <a th:href="@{/manager_index}" class="site_title">
+            <a th:href="@{/manager/manager_index}" class="site_title">
               <img th:src="@{/production/images/ec21logo.png}" alt="" height="30px">
             </a>
           </div>
@@ -172,7 +174,7 @@
             </div>
           </div>
           <!-- /sidebar menu -->
-          
+
         </div>
       </div>
 
@@ -215,8 +217,8 @@
           </div>
 
           <div class="clearfix"></div>
-          
-          <div class="row" >
+
+          <div class="row">
 
             <div class="col-md-12 col-sm-12  ">
               <div class="x_panel">
@@ -274,7 +276,7 @@
                       </thead>
                       <tbody id="result">
                         <tr class="even pointer" th:each="reportedCustomer : ${list}">
-                          
+
                           <td class=" " th:text="${reportedCustomer.reportedCount}">#</td>
                           <td class=" " th:text="${reportedCustomer.customerGubun}">셀러</td>
                           <td class=" " th:text="${reportedCustomer.reportedId}">121000040</td>
@@ -290,7 +292,7 @@
                               th:value="${reportedCustomer.reportCustomerId}">
                             <input type="hidden" name="" id="reportedId" th:value="${reportedCustomer.reportedId}">
                             <!--블랙 버튼 클릭 시 팝업창? (신고 테이블의 관리자 처리 여부 변경 , 블랙리스트로 변경할 고객ID )-->
-                            
+
                             <input class="btn btn-hover color-8" type="button" id="blackBtn" value="블랙">
                             <!--정상 버튼 클릭 시 (신고 테이블의 관리자 처리 여부 변경) -->
                             <input class="btn btn-hover color-9" type="button" id="normalBtn" value="정상">
