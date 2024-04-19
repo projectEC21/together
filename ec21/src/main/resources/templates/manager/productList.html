@@ -75,6 +75,8 @@
         method: "GET",
         success: function (list) {
           $("#result").replaceWith(list);
+          $(".toNormal").on("click", productNormal);
+          $(".toWeird").on("click", productWeird);
         }
       })
     }
@@ -86,6 +88,8 @@
         method: "GET",
         success: function (list) {
           $("#result").replaceWith(list);
+          $(".toNormal").on("click", productNormal);
+          $(".toWeird").on("click", productWeird);
         }
       })
     }
@@ -252,23 +256,31 @@
                                   th:href="@{/main/productDetail}">3248202404071536</a></td>
                               <td class=" ">
                                 <a href="#" id="productList" class="productLink"
-                                  data-product-name="${product.productName}" data-product-category="${product.category}"
-                                  data-productDesc="${product.productDesc}" data-price="${product.price}"
-                                  data-quantity="${product.moq}" data-origin="${product.origin}"
-                                  th:text="${product.productName}">
+                                  th:data-product-name="${product.productName}"
+                                  th:data-product-category="${product.category}"
+                                  th:data-productDesc="${product.productDesc}" th:data-price="${product.price}"
+                                  th:data-moq="${product.moq}" th:data-origin="${product.origin}"
+                                  th:data-unit="${product.unit}" th:text="${product.productName}">
                                   LOWA Men’s Renegade GTX Mid Hiking Boots Review
                                 </a>
                               </td>
-                              <td class=" " th:text="${product.category}">신발</td>
-                              <th:block th:if="${product.lstmPredict==false}">
-                                <td class=" "> 이상</td>
-                              </th:block>
-                              <th:block th:unless="${product.lstmPredict==false}">
-                                <td class=" "> 정상</td>
-                              </th:block>
-                              <td class="a-right a-right " th:text="${product.judge}">이상</td>
-                              <td class=" last"><input type="button" class="btn-hover color-9" value="정상"><input
-                                  type="button" class="btn-hover color-11" value="이상"></a></td>
+                              <td class=" " th:text="${product.category}"></td>
+
+                              <td class=" " th:if="${product.lstmPredict==false}">이상</td>
+                              <td class=" " th:unless="${product.lstmPredict==false}"> 정상</td>
+
+                              <td class="a-right a-right" th:if="${product.judge == null}">미처리</td>
+                              <td class="a-right a-right" th:unless="${product.judge == null}">
+                                <span th:if="${product.judge.name() == 'N'}">이상</span>
+                                <span th:unless="${product.judge.name() == 'N'}">정상</span>
+                              </td>
+
+                              <td class=" last">
+                                <input type="button" class="btn-hover color-9 toNormal"
+                                  th:data-id="${product.productId}" value="정상">
+                                <input type="button" class="btn-hover color-11 toWeird"
+                                  th:data-id="${product.productId}" value="이상">
+                              </td>
                             </tr>
                           </tbody>
                         </table>
@@ -320,8 +332,12 @@
                 <span id="modalProductDesc">-</span>
               </li>
               <li>
-                <span class="dtr-title">Quantity:</span>
-                <span id="modalQuantity">-</span>
+                <span class="dtr-title">Unit:</span>
+                <span id="modalUnit">-</span>
+              </li>
+              <li>
+                <span class="dtr-title">MOQ:</span>
+                <span id="modalMoq">-</span>
               </li>
             </ol>
           </div>
@@ -347,20 +363,20 @@
   <!-- Custom Theme Scripts -->
   <script th:src="@{/build/js/custom.js}"></script>
 
-  <script src="/vendors/datatables.net/js/jquery.dataTables.js"></script>
-  <script src="/vendors/datatables.net-bs/js/dataTables.bootstrap.js"></script>
-  <script src="/vendors/datatables.net-buttons/js/dataTables.buttons.js"></script>
-  <script src="/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.js"></script>
-  <script src="/vendors/datatables.net-buttons/js/buttons.flash.js"></script>
-  <script src="/vendors/datatables.net-buttons/js/buttons.html5.js"></script>
-  <script src="/vendors/datatables.net-buttons/js/buttons.print.js"></script>
-  <script src="/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.js"></script>
-  <script src="/vendors/datatables.net-keytable/js/dataTables.keyTable.js"></script>
-  <script src="/vendors/datatables.net-responsive/js/dataTables.responsive.js"></script>
-  <script src="/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
-  <script src="/vendors/datatables.net-scroller/js/dataTables.scroller.js"></script>
-  <script src="/vendors/jszip/dist/jszip.js"></script>
-  <script src="/vendors/pdfmake/build/pdfmake.js"></script>
-  <script src="/vendors/pdfmake/build/vfs_fonts.js"></script>
+  <script th:src="@{/vendors/datatables.net/js/jquery.dataTables.js}"></script>
+  <script th:src="@{/vendors/datatables.net-bs/js/dataTables.bootstrap.js}"></script>
+  <script th:src="@{/vendors/datatables.net-buttons/js/dataTables.buttons.js}"></script>
+  <script th:src="@{/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.js}"></script>
+  <script th:src="@{/vendors/datatables.net-buttons/js/buttons.flash.js}"></script>
+  <script th:src="@{/vendors/datatables.net-buttons/js/buttons.html5.js}"></script>
+  <script th:src="@{/vendors/datatables.net-buttons/js/buttons.print.js}"></script>
+  <script th:src="@{/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.js}"></script>
+  <script th:src="@{/vendors/datatables.net-keytable/js/dataTables.keyTable.js}"></script>
+  <script th:src="@{/vendors/datatables.net-responsive/js/dataTables.responsive.js}"></script>
+  <script th:src="@{/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js}"></script>
+  <script th:src="@{/vendors/datatables.net-scroller/js/dataTables.scroller.js}"></script>
+  <script th:src="@{/vendors/jszip/dist/jszip.js}"></script>
+  <script th:src="@{/vendors/pdfmake/build/pdfmake.js}"></script>
+  <script th:src="@{/vendors/pdfmake/build/vfs_fonts.js}"></script>
 
 </html>
