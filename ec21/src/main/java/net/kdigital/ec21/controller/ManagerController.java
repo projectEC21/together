@@ -3,6 +3,7 @@ package net.kdigital.ec21.controller;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +18,8 @@ import net.kdigital.ec21.dto.ModelPredictModalDTO;
 import net.kdigital.ec21.dto.ProductDTO;
 import net.kdigital.ec21.dto.ReportedCustomerWithInfoDTO;
 import net.kdigital.ec21.service.ManagerService;
+import net.kdigital.ec21.service.ProductService;
+
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -29,6 +32,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Slf4j
 public class ManagerController {
 	private final ManagerService managerService;
+	private final ProductService productService;
 
 	// ============================= 메인보드 =============================
 	/**
@@ -179,7 +183,7 @@ public class ManagerController {
 			// 정상버튼 : 관리자 처리 완료 상태로 변경
 			managerService.reportCustomerUpdateManagerCheck(reportCustomerId);
 		}
-		
+
 		List<ReportedCustomerWithInfoDTO> dtoList = managerService.selectReportedCustomerBySearch(category, searchWord);
 		model.addAttribute("list", dtoList);
 		
@@ -206,10 +210,10 @@ public class ManagerController {
 	 * @return
 	 */
 	@RequestMapping(value = "/manager/blackList/getList", method = RequestMethod.GET)
-	public String getList(@RequestParam(name = "blacklistId", defaultValue = "-100") Long blacklistId, 
+	public String getList(@RequestParam(name = "blacklistId", defaultValue = "-100") Long blacklistId,
 			@RequestParam(name = "category", defaultValue = "total") String category,
-			@RequestParam(name = "searchWord", defaultValue = "") String searchWord,Model model) {
-		
+			@RequestParam(name = "searchWord", defaultValue = "") String searchWord, Model model) {
+
 		if (blacklistId != -100) {
 			// 정상버튼 : 블랙리스트 테이블에서 해당 블랙리스트ID(일련번호) 삭제
 			managerService.deleteFromBalcklist(blacklistId);
