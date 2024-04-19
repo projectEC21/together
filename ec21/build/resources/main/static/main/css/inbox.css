@@ -7,13 +7,63 @@
 	margin-top: -2px;
 } 
 
-.single-widget.category, div.col-md-2.col-12{
-    background-color: #333; /* 배경색을 어두운 회색으로 설정 */
+.main-container {
+	display: flex;
+}
+
+.shop-sidebar {
+	flex: 3; /* 사이드바가 차지할 공간 비율 설정 */
 	color: #fff;
 }
 
-.table.inquiry-summery {
-	background: #fff;
+.shop-sidebar .single-widget.inquiry-category {
+	background-color: #333;
+    height: 100vh;
+	padding: 10px;
+	color: #fff;
+
+}
+
+.shop-sidebar .single-widget.inquiry-category h3 {
+	font-size: 22px;
+}
+
+.shopping-cart .container {
+	flex: 4; /* 메인 콘텐츠가 차지할 공간 비율 설정 */
+}
+
+.inquiry-list .shopping-cart {
+	background: #444;
+	padding: 10px;
+}
+
+
+
+.table.shopping-summery {
+	width: 100%;
+    table-layout: fixed;
+	text-align: center;
+}
+
+.table.shopping-summery .inquiryTitle {
+	width: 600px;
+	text-align: start;
+}
+
+.table.shopping-summery .saved-icon, .delete, .spam, .no{
+	width: 100px;
+}
+
+.shop-sidebar .single-widget .title {
+	color: #fff;
+	position: relative;
+    font-size: 18px;
+    font-weight: 500;
+    text-transform: capitalize;
+    margin-bottom: 25px;
+    display: block;
+    border-bottom: 1px solid #ddd;
+	padding-bottom: 15px;
 }
 
 
