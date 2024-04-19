@@ -134,7 +134,6 @@ public class ManagerService {
         return dtoList;
     }
 
-
     /**
      * lstm 예측값이 0(false)이고 관리자가 미처리한 상품들 중
      * 전달받은 카테고리와 검색어에 해당하는 상품들을
@@ -163,11 +162,12 @@ public class ManagerService {
             // 1) productId에 해당하는 금지어유사도 결과 데이터들 가져오기 (금지어 유사 확률 높은 순)
             List<ProhibitSimilarWordEntity> entityList = prohibitSimilarWordRepository
                     .findProbaByProductEntity_ProductIdOrderBySimilarProbaDesc(prodEntity.getProductId());
-            
+
             // 2) lstmPredictProba 값 환산
-            // Double newProba = 1 - (prodEntity.getLstmPredictProba()/0.79)*0.5; // 지금 저장된 데이터들은 백분율로 저장되어있음..
-            Double newProba = 1 - (((prodEntity.getLstmPredictProba()*0.01)/0.79)*0.5);
-                    
+            // Double newProba = 1 - (prodEntity.getLstmPredictProba()/0.79)*0.5; // 지금 저장된
+            // 데이터들은 백분율로 저장되어있음..
+            Double newProba = 1 - (((prodEntity.getLstmPredictProba() * 0.01) / 0.79) * 0.5);
+
             // 1) lstmPredict==false && 금지어 유사도 결과 존재 O
             if (entityList != null && !entityList.isEmpty()) {
                 // 금지 유사확률이 가장 높은 데이터 가져오기
@@ -191,7 +191,7 @@ public class ManagerService {
                         prodEntity.getProductId(),
                         prodEntity.getProductName(), prodEntity.getProductDesc(),
                         newProba, prodEntity.isLstmPredict(),
-                        null, 0.0,null,null);
+                        null, 0.0, null, null);
                 result.add(dto);
             }
         });
@@ -226,13 +226,14 @@ public class ManagerService {
 
     /**
      * 금지어 리스트 DB에 새로 전달받은 유사단어와 금지어 사유를 저장하는 함수
+     * 
      * @param similarWord
      * @param prohibitReason
      * @return
      */
     public Boolean insertProhibitWord(String similarWord, String prohibitReason) {
         // 금지어 테이블에 이미 단어가 존재하면 DB에 접근하지 못하고 false를 가지고 돌아감
-        Optional<ProhibitWordEntity> prohibitWord =  prohibitWordRepository.findById(similarWord);
+        Optional<ProhibitWordEntity> prohibitWord = prohibitWordRepository.findById(similarWord);
         if (prohibitWord.isPresent()) {
             return false;
         }
@@ -243,9 +244,9 @@ public class ManagerService {
         return true;
     }
 
-
     /**
      * 상품 ID를 전달받아 해당 상픔의 judge 값을 Y로 변경해주는 함수
+     * 
      * @param productId
      * @return
      */
@@ -258,6 +259,7 @@ public class ManagerService {
 
     /**
      * 상품 ID를 전달받아 해당 상픔의 judge 값을 N으로 변경해주는 함수
+     * 
      * @param productId
      * @return
      */
@@ -268,8 +270,8 @@ public class ManagerService {
         return true;
     }
 
-
-    //==================================== 회원관리 ======================================
+    // ==================================== 회원관리
+    // ======================================
 
     /**
      * 정상회원(blacklist_check==N)인 CustomerDTO 최신 가입 순으로 반환
@@ -286,6 +288,7 @@ public class ManagerService {
 
     /**
      * customerId에 해당하는 회원이 판매하는 상품DTO 리스트를 반환하는 함수
+     * 
      * @param customerId
      * @return
      */
@@ -293,15 +296,17 @@ public class ManagerService {
         CustomerEntity entity = customerRepository.findById(customerId).get();
         List<ProductEntity> productEntities = entity.getProductEntity();
         // 판매하는 상품이 없는 경우
-        if (productEntities==null) {
+        if (productEntities == null) {
             return null;
         }
         // 판매하는 상품이 있는 경우
         List<CustomerListModalDTO> dtos = new ArrayList<>();
-        productEntities.forEach((product)->{
-            CustomerListModalDTO dto = new CustomerListModalDTO(customerId, product.getProductId(),product.getProductName(), 
-                                        product.getProductDesc(), product.getOrigin(), product.getMoq(),product.getUnit(), 
-                                        product.getCategory(), product.isLstmPredict(), product.getJudge());
+        productEntities.forEach((product) -> {
+            CustomerListModalDTO dto = new CustomerListModalDTO(customerId, product.getProductId(),
+                    product.getProductName(),
+                    product.getProductDesc(), product.getOrigin(), product.getMoq(), product.getUnit(),
+                    product.getPrice(),
+                    product.getCategory(), product.isLstmPredict(), product.getJudge());
             dtos.add(dto);
         });
         return dtos;
@@ -483,11 +488,5 @@ public class ManagerService {
 
         return result;
     }
-
-    
-
-    
-
-    
 
 }
