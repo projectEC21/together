@@ -68,7 +68,7 @@
     function productNormal() {
       let productId = $(this).data("id");
       if (confirm("정상 상품으로 처리하겠습니까?")) {
-          $.ajax({
+        $.ajax({
           url: "/modelPredict/productNormal",
           data: { "productId": productId },
           method: "GET",
@@ -87,7 +87,7 @@
     function productWeird() {
       let productId = $(this).data("id");
       if (confirm("이상 상품으로 처리하겠습니까?")) {
-          $.ajax({
+        $.ajax({
           url: "/modelPredict/productWeird",
           data: { "productId": productId },
           method: "GET",
@@ -126,8 +126,8 @@
         method: "GET",
         success: function (list) {
           $("#result").replaceWith(list);
-          $(".toNormal").on("click",productNormal);
-          $(".toWeird").on("click",productWeird);
+          $(".toNormal").on("click", productNormal);
+          $(".toWeird").on("click", productWeird);
         }
       })
     }
@@ -294,10 +294,11 @@
                                   th:href="@{/main/productDetail}">3248202404071536</a></td>
                               <td class=" ">
                                 <a href="#" id="productList" class="productLink"
-                                  th:data-product-name="${product.productName}" th:data-product-category="${product.category}"
+                                  th:data-product-name="${product.productName}"
+                                  th:data-product-category="${product.category}"
                                   th:data-productDesc="${product.productDesc}" th:data-price="${product.price}"
-                                  th:data-moq="${product.moq}" th:data-origin="${product.origin}" th:data-unit="${product.unit}"
-                                  th:text="${product.productName}">
+                                  th:data-moq="${product.moq}" th:data-origin="${product.origin}"
+                                  th:data-unit="${product.unit}" th:text="${product.productName}">
                                   LOWA Men’s Renegade GTX Mid Hiking Boots Review
                                 </a>
                               </td>
@@ -305,7 +306,7 @@
 
                               <td class=" " th:if="${product.lstmPredict==false}">이상</td>
                               <td class=" " th:unless="${product.lstmPredict==false}"> 정상</td>
-                              
+
                               <td class="a-right a-right" th:if="${product.judge == null}">미처리</td>
                               <td class="a-right a-right" th:unless="${product.judge == null}">
                                 <span th:if="${product.judge.name() == 'N'}">이상</span>
@@ -313,8 +314,10 @@
                               </td>
 
                               <td class=" last">
-                                <input type="button" class="btn-hover color-9 toNormal" th:data-id="${product.productId}" value="정상">
-                                <input type="button" class="btn-hover color-11 toWeird" th:data-id="${product.productId}" value="이상">
+                                <input type="button" class="btn-hover color-9 toNormal"
+                                  th:data-id="${product.productId}" value="정상">
+                                <input type="button" class="btn-hover color-11 toWeird"
+                                  th:data-id="${product.productId}" value="이상">
                               </td>
                             </tr>
                           </tbody>

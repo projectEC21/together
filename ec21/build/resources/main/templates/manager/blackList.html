@@ -255,7 +255,8 @@
                           <td class=" " th:text="${customer.remoteIp}"> 121.172.252.00</td>
                           <td class="a-right a-right " th:text="${customer.reportCategory}">마약</td>
                           <input type="hidden" name="" id="blacklistId" th:value="${customer.reportCustomerId}">
-                          <td class=" last"><input class="btn btn-info btn-xs" type="button" id="normalBtn" value="정상">
+                          <td class=" last">
+                            <input class="btn btn-info btn-xs" type="button" id="normalBtn" value="정상">
                           </td>
                         </tr>
 
@@ -283,9 +284,6 @@
   <script th:src="@{/vendors/nprogress/nprogress.js}"></script>
   <!-- iCheck -->
   <script th:src="@{/vendors/iCheck/icheck.min.js}"></script>
-  <!-- Datatables -->
-  <script th:src="@{/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js}"></script>
-
   <!-- Custom Theme Scripts -->
   <script th:src="@{/build/js/custom.min.js}"></script>
 </body>
