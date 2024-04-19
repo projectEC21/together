@@ -116,6 +116,7 @@
 
 
 	<!-- 인콰이어리 목록 -->
+	<section class="inquiry-area inquiry-list">
 			<div class="row">
 				<div class="col-md-2 col-12">
 					<aside class="shop-sidebar">
@@ -150,9 +151,6 @@
 												</div>
 											</div>
 											<div class="single-slider">
-												<div class="single-slider">
-													<a th:href="@{/main/productsWrite(customerId=${customerId})}">상품 등록하기</a>
-												</div>
 											</div>
 										</div>
 
@@ -176,7 +174,7 @@
 													<!-- 이미지 우선 임시 링크 -->
 													<td class="image" data-title="No"><img
 															src="https://via.placeholder.com/100x100" alt="#"></td>
-													<td class="product-info" data-title="Description">
+													<td class="contents" data-title="contents">
 														<p class="product-name"><a th:href="@{/main/productsDetail(productId=${product.productId})}">[[${product.productName}]]</a></p>
 														<p class="product-desc">[[${product.productDesc}]]</p>
 													</td>
@@ -189,6 +187,7 @@
 													<td class="createDate" data-title="date"><span>[[${#temporals.format(product.createDate, 'yyyy-MM-dd')}]]</span>
 													</td>
 													<td class="action" data-title="Remove"><a th:href="@{/main/myproducts/delete(productId=${product.productId})}"><i class="ti-trash remove-icon"></i></a></td>
+													<td class="action" data-title="Remove"><a th:href="@{/main/myproducts/delete(productId=${product.productId})}"><i class="fa fa-envelope-open"></i></a></td>
 												</tr>
 											</tbody>
 										</table>
@@ -203,6 +202,7 @@
 					<span class="paging"> << < 1 2 3 4 5 > >> </span>
 				</div>
 			</div>
+	</section>
 	<!--/ End Product Style 1  -->
 
 

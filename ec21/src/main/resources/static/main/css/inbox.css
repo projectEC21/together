@@ -7,9 +7,9 @@
 	margin-top: -2px;
 } 
 
-.header.shop .inquiry-area {
-    background-color: #333 !important;
-    color: #fff;
+.single-widget.category div.col-md-2.col-12{
+    background-color: #333; /* 배경색을 어두운 회색으로 설정 */
+	color: #fff;
 }
 
 /*======================================
