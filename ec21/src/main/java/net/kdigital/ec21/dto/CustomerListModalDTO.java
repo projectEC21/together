@@ -20,6 +20,9 @@ public class CustomerListModalDTO {
     private String productId;
     private String productName;
     private String productDesc;
+    private String origin;
+    private int moq;
+    private String unit;
     private ProductCategory category;
     private boolean lstmPredict;
     private YesOrNo judge;

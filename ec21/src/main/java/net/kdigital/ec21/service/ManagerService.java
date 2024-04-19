@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
@@ -23,17 +24,20 @@ import net.kdigital.ec21.dto.ProductDTO;
 import net.kdigital.ec21.dto.ProhibitSimilarWordDTO;
 import net.kdigital.ec21.dto.ReportedCustomerWithInfoDTO;
 import net.kdigital.ec21.dto.check.ProductCategory;
+import net.kdigital.ec21.dto.check.ProhibitReason;
 import net.kdigital.ec21.dto.check.ReportCategory;
 import net.kdigital.ec21.dto.check.YesOrNo;
 import net.kdigital.ec21.entity.BlacklistEntity;
 import net.kdigital.ec21.entity.CustomerEntity;
 import net.kdigital.ec21.entity.ProductEntity;
 import net.kdigital.ec21.entity.ProhibitSimilarWordEntity;
+import net.kdigital.ec21.entity.ProhibitWordEntity;
 import net.kdigital.ec21.entity.ReportCustomerEntity;
 import net.kdigital.ec21.repository.BlacklistRepository;
 import net.kdigital.ec21.repository.CustomerRepository;
 import net.kdigital.ec21.repository.ProductRepository;
 import net.kdigital.ec21.repository.ProhibitSimilarWordRepository;
+import net.kdigital.ec21.repository.ProhibitWordRepository;
 import net.kdigital.ec21.repository.ReportCustomerRepository;
 
 @Service
@@ -47,6 +51,7 @@ public class ManagerService {
     private final ReportCustomerRepository reportCustomerRepository;
     private final BlacklistRepository blacklistRepository;
     private final ProhibitSimilarWordRepository prohibitSimilarWordRepository;
+    private final ProhibitWordRepository prohibitWordRepository;
 
     // ==================================== 메인 보드
     // ====================================
@@ -219,6 +224,50 @@ public class ManagerService {
         return modalDTOs;
     }
 
+    /**
+     * 금지어 리스트 DB에 새로 전달받은 유사단어와 금지어 사유를 저장하는 함수
+     * @param similarWord
+     * @param prohibitReason
+     * @return
+     */
+    public Boolean insertProhibitWord(String similarWord, String prohibitReason) {
+        // 금지어 테이블에 이미 단어가 존재하면 DB에 접근하지 못하고 false를 가지고 돌아감
+        Optional<ProhibitWordEntity> prohibitWord =  prohibitWordRepository.findById(similarWord);
+        if (prohibitWord.isPresent()) {
+            return false;
+        }
+        // 금지어 테이블에 추가 작업
+        ProhibitReason reason = ProhibitReason.valueOf(prohibitReason);
+        ProhibitWordEntity entity = new ProhibitWordEntity(similarWord, reason, new ArrayList<>());
+        prohibitWordRepository.save(entity);
+        return true;
+    }
+
+
+    /**
+     * 상품 ID를 전달받아 해당 상픔의 judge 값을 Y로 변경해주는 함수
+     * @param productId
+     * @return
+     */
+    @Transactional
+    public Boolean updateProductJudgeNormal(String productId) {
+        ProductEntity entity = productRepository.findById(productId).get();
+        entity.setJudge(YesOrNo.Y);
+        return true;
+    }
+
+    /**
+     * 상품 ID를 전달받아 해당 상픔의 judge 값을 N으로 변경해주는 함수
+     * @param productId
+     * @return
+     */
+    @Transactional
+    public Boolean updateProductJudgeWeird(String productId) {
+        ProductEntity entity = productRepository.findById(productId).get();
+        entity.setJudge(YesOrNo.N);
+        return true;
+    }
+
 
     //==================================== 회원관리 ======================================
 
@@ -250,7 +299,9 @@ public class ManagerService {
         // 판매하는 상품이 있는 경우
         List<CustomerListModalDTO> dtos = new ArrayList<>();
         productEntities.forEach((product)->{
-            CustomerListModalDTO dto = new CustomerListModalDTO(customerId, product.getProductId(), product.getProductName(), product.getProductDesc(), product.getCategory(), product.isLstmPredict(), product.getJudge());
+            CustomerListModalDTO dto = new CustomerListModalDTO(customerId, product.getProductId(),product.getProductName(), 
+                                        product.getProductDesc(), product.getOrigin(), product.getMoq(),product.getUnit(), 
+                                        product.getCategory(), product.isLstmPredict(), product.getJudge());
             dtos.add(dto);
         });
         return dtos;
@@ -432,6 +483,10 @@ public class ManagerService {
 
         return result;
     }
+
+    
+
+    
 
     
 

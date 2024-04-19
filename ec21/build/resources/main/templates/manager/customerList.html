@@ -90,11 +90,11 @@
           method:"GET",
           success : function (resp) {
             if (!resp || resp.length === 0) { // 판매 상품이 없는 경우
-              tableContent += `<tr><td colspan="3"><span>결과가 존재하지 않습니다.</span></td></tr></tbody>`;
+              tableContent += `<tr><td colspan="4"><span>결과가 존재하지 않습니다.</span></td></tr></tbody>`;
             } else {
               let list = JSON.parse(resp);
               if (list.length === 0) { // 파싱된 리스트가 비어 있는 경우
-                tableContent += `<tr><td colspan="3"><span>결과가 존재하지 않습니다.</span></td></tr></tbody>`;
+                tableContent += `<tr><td colspan="4"><span>결과가 존재하지 않습니다.</span></td></tr></tbody>`;
               } else {
                 list.forEach(function (item) {
                   // judge 값 라벨링
@@ -398,7 +398,7 @@
             <input type="text" name="etcReason" id="etcReasonInput" placeholder="기타 사유 입력" style="display: none;">
             <!-- 기타 사유 입력 에러 메시지 -->
             <div id="etcReasonError" style="color: red; display: none;">기타 사유를 입력해주세요.</div>
-            <input type="button" value="블랙" id="blackButton">
+            <input type="button" class="btn btn-hover color-8" value="블랙" id="blackButton">
 
           </div>
         </div>
