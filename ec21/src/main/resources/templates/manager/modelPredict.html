@@ -281,10 +281,10 @@
                         <td th:text="${product.customerId}">#</td>
                         <td th:text="${product.productId}">121000203</td>
                         <td>
-                          <!-- <a href="#myModal" id="modalBtn" th:text="${product.productName}">ipone</a> -->
-                          <a href="#" th:id="'modalBtn' + ${product.productId}" th:text="${product.productName}"
+                          <a href="#myModal" id="modalBtn" th:text="${product.productName}">ipone</a>
+                          <!-- <a href="#" th:id="'modalBtn' + ${product.productId}" th:text="${product.productName}"
                             th:data-name="${product.productName}" th:data-desc="${product.productDesc}"
-                            th:data-id="${product.productId}">iphone</a>
+                            th:data-id="${product.productId}">iphone</a> -->
                         </td>
                         <!-- 나중에 th:utext로 바꿔야 함 -->
                         <td class="project_progress" th:text="${product.productDesc}">

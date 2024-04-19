@@ -5853,6 +5853,8 @@ fieldset {
   max-width: 100%;
 }
 
+/** /모달설정 **/
+/*모달창 내 radio 묶음*/
 .modal-body .modalForm {
   text-align: right;
   width: 100%;
@@ -5863,15 +5865,7 @@ fieldset {
   margin: 8px;
 }
 
-.cropper .docs-diagram .modal-dialog {
-  max-width: 352px;
-}
 
-
-
-.cropper .docs-cropped canvas {
-  max-width: 100%;
-}
 
 /** /Cropper **/
 /** jQuery Smart Wizard  **/
