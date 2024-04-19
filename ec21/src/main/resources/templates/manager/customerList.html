@@ -134,7 +134,8 @@
                                         data-product-category="${item.category}" 
                                         data-productDesc="${item.productDesc}"
                                         data-price="${item.price}"
-                                        data-quantity="${item.quantity}"
+                                        data-moq="${item.moq}"
+                                        data-unit="${item.unit}"
                                         data-origin="${item.origin}">
                                         ${item.productName}
                                         </a>
@@ -165,12 +166,17 @@
           let modalProductDesc = $(this).data("productdesc");
           let modalPrice = $(this).data("price");
           let modalOrigin = $(this).data("origin");
-          let modalQuantity = $(this).data("quantity");
+          let modalUnit = $(this).data("unit");
+          let modalMoq = $(this).data("moq");
           $("#myModal2").modal('show'); // 두 번째 모달을 엽니다.
 
           $("#modalProductName").html(modalProductName);
           $("#modalProductCategory").html(modalProductCategory);
           $("#modalProductDesc").html(modalProductDesc);
+          $("#modalPrice").html(modalPrice);
+          $("#modalOrigin").html(modalOrigin);
+          $("#modalMoq").html(modalMoq);
+          $("#modalUnit").html(modalUnit);
         });
 
       });
@@ -520,8 +526,12 @@
                 <span id="modalProductDesc">-</span>
               </li>
               <li>
-                <span class="dtr-title">Quantity:</span>
-                <span id="modalQuantity">-</span>
+                <span class="dtr-title">Unit:</span>
+                <span id="modalUnit"></span>
+              </li>
+              <li>
+                <span class="dtr-title">MOQ:</span>
+                <span id="modalMoq"></span>
               </li>
             </ol>
           </div>
@@ -555,7 +565,21 @@
   <!-- bootstrap-theme.min.css -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 
-
+  <script src="/vendors/datatables.net/js/jquery.dataTables.js"></script>
+  <script src="/vendors/datatables.net-bs/js/dataTables.bootstrap.js"></script>
+  <script src="/vendors/datatables.net-buttons/js/dataTables.buttons.js"></script>
+  <script src="/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.js"></script>
+  <script src="/vendors/datatables.net-buttons/js/buttons.flash.js"></script>
+  <script src="/vendors/datatables.net-buttons/js/buttons.html5.js"></script>
+  <script src="/vendors/datatables.net-buttons/js/buttons.print.js"></script>
+  <script src="/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.js"></script>
+  <script src="/vendors/datatables.net-keytable/js/dataTables.keyTable.js"></script>
+  <script src="/vendors/datatables.net-responsive/js/dataTables.responsive.js"></script>
+  <script src="/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+  <script src="/vendors/datatables.net-scroller/js/dataTables.scroller.js"></script>
+  <script src="/vendors/jszip/dist/jszip.js"></script>
+  <script src="/vendors/pdfmake/build/pdfmake.js"></script>
+  <script src="/vendors/pdfmake/build/vfs_fonts.js"></script>
 
 </body>
 

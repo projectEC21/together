@@ -44,6 +44,7 @@
     $(function () {
       $("#category").on("change", search);
       $("#searchWord").on("keyup", search);
+      $("#wordPlusBtn").on("click", wordPlus);
       init();
 
       // 240418 iy: 모달 기능 구현 
@@ -69,52 +70,86 @@
         let modalName = $(this).data("name");
         let modalDesc = $(this).data("desc");
 
-        let tableContent = `<thead>
-                              <tr>
-                                <th>유사단어</th>
-                                <th>금지어리스트 단어 (카테고리)</th>
-                                <th>금지어 사전 추가</th>
-                              </tr>
-                            </thead>
-                            <tbody>`;
-        // 금지어 유사단어 결과 가져오기
+        // 모달 컨텐츠 업데이트
+        $("#modalName").html(modalName);
+        $("#modalDesc").html(modalDesc);
         $.ajax({
           url: "/manager/modelPredict/getProhibitSimilarWordDTOs",
           data: { "productId": productId },
           method: "GET",
-          success: function (resp) {
-            if (!resp || resp.length === 0) { // 금지어 유사도 결과가 없는 경우
-              tableContent += `<tr><td colspan="3"><span>결과가 존재하지 않습니다.</span></td></tr></tbody>`;
-            } else {
-              let list = JSON.parse(resp);
-              if (list.length === 0) { // 파싱된 리스트가 비어 있는 경우
-                tableContent += `<tr><td colspan="3"><span>결과가 존재하지 않습니다.</span></td></tr>`;
-              } else {
-                list.forEach(function (item) {
-                  tableContent += `<tr>
-                                      <td>${item.similarWord}</td>
-                                      <td>${item.prohibitWord} (${item.prohibitReason})</td>
-                                      <td><input type="button" value="단어추가"> </td>
-                                  </tr>`;
-                });
-              }
-              tableContent += '</tbody>';
-            }
-            // 모달 컨텐츠 업데이트
-            $("#modalName").html(modalName);
-            $("#modalDesc").html(modalDesc);
-            $("#modalTable").html(tableContent);
-            // 모달 열기
-            $("#myModal").modal("show");
-
+          success: function (list) {
+            console.log(list);
+            $("#modalTable").replaceWith(list);
+            $("#wordPlusBtn").on("click", wordPlus);
           }
-        });
-
+        })
+        // 모달 열기
+        $("#myModal").modal();
 
       });
       // 240418 iy: 모달 기능 구현 끝
-
     });
+
+
+    // 정상 버튼 클릭 시 judge Y로 변경
+    function productNormal() {
+      let productId = $(this).attr("data-id");
+      $.ajax({
+        url: "/modelPredict/productNormal",
+        data: { "productId": productId },
+        method: "GET",
+        success: function (resp) {
+          // resp의 타입 : Boolean
+          if (resp) {
+            alert("정상 상품으로 등록되었습니다.");
+          }
+        }
+      });
+    }
+
+
+    // 이상 버튼 클릭 시 judge N으로 변경
+    function productWeird() {
+      let productId = $(this).attr("data-id");
+      $.ajax({
+        url: "/modelPredict/productWeird",
+        data: { "productId": productId },
+        method: "GET",
+        success: function (resp) {
+          // resp의 타입 : Boolean
+          if (resp) {
+            alert("이상 상품으로 등록되었습니다.");
+          }
+        }
+      });
+    }
+
+
+    // 단어 추가 버튼 클릭 시 DB에 추가하고 버튼 비활성화
+    function wordPlus() {
+      let btn = $(this);
+      let similarWord = $(this).data("word");
+      let prohibitReason = $(this).data("reason");
+      $.ajax({
+        url: "/modelPredict/wordPlus",
+        data: { "similarWord": similarWord, "prohibitReason": prohibitReason },
+        method: "GET",
+        success: function (resp) {
+          console.log(resp);
+          // resp : Boolean 타입 넘어옴
+          // true인 경우 DB에 저장됨
+          if (resp) {
+            // 버튼 활성화 해제
+            btn.disabled = true;
+            alert("금지어리스트에 추가되었습니다.")
+          } else {
+            // false인 경우 이미 존재하다고 알려야 함
+            alert("이미 금지어 리스트에 존재하는 단어입니다.");
+          }
+        }
+      });
+    }
+
 
     function search() {
       let category = $("#category").val();
@@ -126,6 +161,8 @@
         method: "GET",
         success: function (list) {
           $("#result").replaceWith(list);
+          $(".toNormal").on("click", productNormal);
+          $(".toWeird").on("click", productWeird);
         }
       })
 
@@ -138,8 +175,10 @@
         method: "GET",
         success: function (list) {
           $("#result").replaceWith(list);
+          $(".toNormal").on("click", productNormal);
+          $(".toWeird").on("click", productWeird);
         }
-      })
+      });
     }
   </script>
 </head>
@@ -247,9 +286,18 @@
                   <div class="clearfix"></div>
                 </div>
 
+
                 <div class="title_right">
                   <div class="col-md-5 col-sm-5   form-group pull-right top_search">
                     <div class="input-group">
+                      <select name="category" id="category">
+                        <option value="total">전체</option>
+                        <option value="FOOD_BEVERAGE">FOOD_BEVERAGE</option>
+                        <option value="CHEMICAL">CHEMICAL</option>
+                        <option value="HEALTH_MEDICAL">HEALTH_MEDICAL</option>
+                        <option value="ELECTRONIC">ELECTRONIC</option>
+                        <option value="COSMETIC">COSMETIC</option>
+                      </select>
                       <input type="text" class="form-control" id="searchWord" placeholder="Search for...">
                       <span class="input-group-btn">
                         <button class="btn btn-default" type="button">찾기</button>
@@ -261,12 +309,15 @@
                 <div class="x_content">
 
                   <!-- start project list -->
-                  <table id="datatable" class="table table-striped jambo_table table-bordered dataTable no-footer">
+                  <table id="datatable" class="table table-striped jambo_table table-bordered dataTable no-footer"
+                    cellspacing="0" width="100%"> <!-- dt-responsive-->
+                    <!-- <table id="datatable" class="table table-striped jambo_table table-bordered dataTable no-footer"> -->
                     <thead>
                       <!-- <button id="modalBtn">모달 열기</button> -->
                       <tr>
                         <th style="width: 10%">회원 ID</th>
                         <th style="width: 10%">상품 ID</th>
+                        <!-- <th style="width: 10%">카테고리</th> -->
                         <th style="width: 20%">상품명</th>
                         <th style="width: 20%">상품내용</th>
                         <th>예측값</th>
@@ -277,14 +328,15 @@
                     <!-- 240414 dy : ajax로 모델이상상품 정보 꽂아 넣기 -->
                     <tbody id="result">
                       <tr class="view" th:each="product:${list}">
-                        <input type="hidden" name="" id="modelProduct" th:value="${product}">
+                        <input type="hidden" id="modelProduct" th:value="${product}">
                         <td th:text="${product.customerId}">#</td>
                         <td th:text="${product.productId}">121000203</td>
+                        <!-- <td th:text="${product.category}">카테고리</td> -->
                         <td>
-                          <a href="#myModal" id="modalBtn" th:text="${product.productName}">ipone</a>
-                          <!-- <a href="#" th:id="'modalBtn' + ${product.productId}" th:text="${product.productName}"
+                          <!-- <a href="#myModal" id="modalBtn" th:text="${product.productName}">ipone</a> -->
+                          <a href="#" th:id="'modalBtn' + ${product.productId}" th:text="${product.productName}"
                             th:data-name="${product.productName}" th:data-desc="${product.productDesc}"
-                            th:data-id="${product.productId}">iphone</a> -->
+                            th:data-id="${product.productId}">iphone</a>
                         </td>
                         <!-- 나중에 th:utext로 바꿔야 함 -->
                         <td class="project_progress" th:text="${product.productDesc}">
@@ -304,11 +356,12 @@
                           </div>
                         </td>
                         <td>
-
-                          <a href="#" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> 정상 </a>
+                          <a href="#" class="btn btn-info btn-xs toNormal" th:data-id="${product.productId}"><i
+                              class="fa fa-pencil"></i> 정상 </a>
                           <!--정상 클릭시 judge 1로 변경-->
-                          <a href="#" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> 이상 </a>
-                          <!--정상 클릭시 judge 0로 변경-->
+                          <a href="#" class="btn btn-danger btn-xs toWeird" th:data-id="${product.productId}"><i
+                              class="fa fa-trash-o"></i> 이상 </a>
+                          <!--이상 클릭시 judge 0로 변경-->
                         </td>
                       </tr>
                     </tbody>
@@ -355,9 +408,28 @@
           <div class="card">
             <div class="card-body">
 
+              <!-- 240419 dy : 모달html에 ajax와 thymeleaf 잘 섞어서 사용.. -->
               <table class="table table-striped jambo_table bulk_action" id="modalTable">
-
+                <thead>
+                  <tr>
+                    <th>유사단어</th>
+                    <th>금지어리스트 단어 (카테고리)</th>
+                    <th>금지어 사전 추가</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr th:each="item : ${list}" th:if="${list != null and not #lists.isEmpty(list)}">
+                    <td id="similarWord">[[${item.similarWord}]]</td>
+                    <td>[[${item.prohibitWord}]] ([[${item.prohibitReason}]])</td>
+                    <td><input type="button" value="단어추가" id="wordPlusBtn" th:data-word="${item.similarWord}"
+                        th:data-reason="${item.prohibitReason}"> </td>
+                  </tr>
+                  <tr th:unless="${list != null and not #lists.isEmpty(list)}">
+                    <td colspan="3">결과가 존재하지 않습니다.</td>
+                  </tr>
+                </tbody>
               </table>
+
             </div>
           </div>
         </div>
@@ -386,18 +458,22 @@
   <!-- Custom Theme Scripts -->
   <script th:src="@{/build/js/custom.min.js}"></script>
 
-  <!-- 모달-->
-  <!-- JQUERY -->
-  <!-- <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script> -->
-
-  <!-- JQUERY-UI -->
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
-  <!-- bootstrap-theme.min.css -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
-
-
-
-
+  <!-- Datatables -->
+  <script src="/vendors/datatables.net/js/jquery.dataTables.js"></script>
+  <script src="/vendors/datatables.net-bs/js/dataTables.bootstrap.js"></script>
+  <script src="/vendors/datatables.net-buttons/js/dataTables.buttons.js"></script>
+  <script src="/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.js"></script>
+  <script src="/vendors/datatables.net-buttons/js/buttons.flash.js"></script>
+  <script src="/vendors/datatables.net-buttons/js/buttons.html5.js"></script>
+  <script src="/vendors/datatables.net-buttons/js/buttons.print.js"></script>
+  <script src="/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.js"></script>
+  <script src="/vendors/datatables.net-keytable/js/dataTables.keyTable.js"></script>
+  <script src="/vendors/datatables.net-responsive/js/dataTables.responsive.js"></script>
+  <script src="/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+  <script src="/vendors/datatables.net-scroller/js/dataTables.scroller.js"></script>
+  <script src="/vendors/jszip/dist/jszip.js"></script>
+  <script src="/vendors/pdfmake/build/pdfmake.js"></script>
+  <script src="/vendors/pdfmake/build/vfs_fonts.js"></script>
 </body>
 
 </html>
