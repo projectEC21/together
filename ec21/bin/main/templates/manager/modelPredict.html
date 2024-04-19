@@ -12,10 +12,9 @@
   <title>ec21 관리자 페이지</title>
 
   <!-- Web Font -->
-  	<!-- Web Font -->
-	<link
-  href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap"
-  rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap"
+    rel="stylesheet">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap" rel="stylesheet">
 
@@ -38,7 +37,6 @@
   <!-- Custom Theme Style -->
   <link th:href="@{/build/css/custom.css}" rel="stylesheet">
 
-
   <!-- 240414 dy : JQuery 파일 추가 및 ajax 추가 -->
   <!-- 240415 dy : 카테고리와 검색어 기능 구현 -->
   <script th:src="@{/script/jquery-3.7.1.min.js}"></script>
@@ -46,8 +44,112 @@
     $(function () {
       $("#category").on("change", search);
       $("#searchWord").on("keyup", search);
+      $("#wordPlusBtn").on("click", wordPlus);
       init();
-    })
+
+      // 240418 iy: 모달 기능 구현 
+      // 모달 변수 초기화
+      var modal = $("#myModal");
+
+      // 닫기 버튼 이벤트
+      $("#closeBtn").on("click", function (event) {
+        modal.hide();
+      });
+
+      // 모달 백그라운드 클릭 이벤트
+      $(window).on("click", function (event) {
+        if ($(event.target).is(modal)) {
+          modal.hide();
+        }
+
+      });
+
+      // 이벤트 위임을 사용하여 동적 요소에 이벤트 연결
+      $(document).on("click", "a[id^='modalBtn']", function () {
+        let productId = $(this).data("id");
+        let modalName = $(this).data("name");
+        let modalDesc = $(this).data("desc");
+
+        // 모달 컨텐츠 업데이트
+        $("#modalName").html(modalName);
+        $("#modalDesc").html(modalDesc);
+        $.ajax({
+          url: "/manager/modelPredict/getProhibitSimilarWordDTOs",
+          data: { "productId": productId },
+          method: "GET",
+          success: function (list) {
+            console.log(list);
+            $("#modalTable").replaceWith(list);
+            $("#wordPlusBtn").on("click", wordPlus);
+          }
+        })
+        // 모달 열기
+        $("#myModal").modal();
+
+      });
+      // 240418 iy: 모달 기능 구현 끝
+    });
+
+
+    // 정상 버튼 클릭 시 judge Y로 변경
+    function productNormal() {
+      let productId = $(this).attr("data-id");
+      $.ajax({
+        url: "/modelPredict/productNormal",
+        data: { "productId": productId },
+        method: "GET",
+        success: function (resp) {
+          // resp의 타입 : Boolean
+          if (resp) {
+            alert("정상 상품으로 등록되었습니다.");
+          }
+        }
+      });
+    }
+
+
+    // 이상 버튼 클릭 시 judge N으로 변경
+    function productWeird() {
+      let productId = $(this).attr("data-id");
+      $.ajax({
+        url: "/modelPredict/productWeird",
+        data: { "productId": productId },
+        method: "GET",
+        success: function (resp) {
+          // resp의 타입 : Boolean
+          if (resp) {
+            alert("이상 상품으로 등록되었습니다.");
+          }
+        }
+      });
+    }
+
+
+    // 단어 추가 버튼 클릭 시 DB에 추가하고 버튼 비활성화
+    function wordPlus() {
+      let btn = $(this);
+      let similarWord = $(this).data("word");
+      let prohibitReason = $(this).data("reason");
+      $.ajax({
+        url: "/modelPredict/wordPlus",
+        data: { "similarWord": similarWord, "prohibitReason": prohibitReason },
+        method: "GET",
+        success: function (resp) {
+          console.log(resp);
+          // resp : Boolean 타입 넘어옴
+          // true인 경우 DB에 저장됨
+          if (resp) {
+            // 버튼 활성화 해제
+            btn.disabled = true;
+            alert("금지어리스트에 추가되었습니다.")
+          } else {
+            // false인 경우 이미 존재하다고 알려야 함
+            alert("이미 금지어 리스트에 존재하는 단어입니다.");
+          }
+        }
+      });
+    }
+
 
     function search() {
       let category = $("#category").val();
@@ -59,164 +161,27 @@
         method: "GET",
         success: function (list) {
           $("#result").replaceWith(list);
+          $(".toNormal").on("click", productNormal);
+          $(".toWeird").on("click", productWeird);
         }
       })
 
-      }    
+    }
 
     function init() {
       $.ajax({
-        url:"/manager/modelPredict/getList",
+        url: "/manager/modelPredict/getList",
         data: { "category": "total", "searchWord": "" },
-        method:"GET",
-        success:function(list){
+        method: "GET",
+        success: function (list) {
           $("#result").replaceWith(list);
+          $(".toNormal").on("click", productNormal);
+          $(".toWeird").on("click", productWeird);
         }
-      })
-    }
- 
-
-//    //  =========== 240416 iy: modalBtn 클릭시 모달창 생성 ===========
-//    // HTML 문서의 로딩이 완료되었을 때, 해당 함수를 실행
-    // document.addEventListener("DOMContentLoaded", function () {
-//      // elements
-  //     var modalBtn = document.getElementById("modalBtn");
-  //     var modal = document.getElementById("myModal");
-  //    var closeBtn = document.getElementById("closeBtn");
-
-  //    // functions
-  //    function toggleModal() {
-  //      modal.classList.toggle("show");
-  //    }
-
-  //    // events
-  //    modalBtn.addEventListener("click", toggleModal);
-  //    closeBtn.addEventListener("click", toggleModal);
-
-  //    window.addEventListener("click", function (event) {
-  //      // 모달의 검은색 배경 부분이 클릭된 경우 닫히도록 하는 코드
-  //      if (event.target === modal) {
-  //        toggleModal();
-  //      }
-  //    });
-  //  });
-    //  ==========================================================
-
-    document.addEventListener("DOMContentLoaded", function () {
-    var modal = document.getElementById("myModal");
-    var closeBtn = document.getElementById("closeBtn");
-
-    // 모든 모달 버튼에 대해 이벤트 리스너를 동적으로 추가
-    var modalButtons = document.querySelectorAll("[id^='modalBtn']");
-    console.log('모달 버튼 수:', modalButtons.length); // 버튼의 수를 로깅
-
-    modalButtons.forEach(function (btn) {
-      console.log('버튼 ID:', btn.id); // 각 버튼의 ID를 로깅
-      btn.addEventListener("click", function () {
-        console.log('모달 토글 이벤트 발생'); // 이벤트 발생시 로깅
-        modal.classList.toggle("show");
       });
-    });
-
-    // 닫기 버튼 이벤트
-    closeBtn.addEventListener("click", function () {
-      console.log('닫기 버튼 클릭'); // 닫기 이벤트 로깅
-      modal.classList.remove("show");
-    });
-
-    // 모달 외부 클릭 시 닫기 이벤트
-    window.addEventListener("click", function (event) {
-      if (event.target === modal) {
-        console.log('모달 외부 클릭'); // 외부 클릭 이벤트 로깅
-        modal.classList.remove("show");
-      }
-    });
-  });
-
-
-  $(document).ready(function() {
-  // 모달 변수 초기화
-  var modal = $("#myModal");
-  
-  // 닫기 버튼 이벤트
-  $("#closeBtn").on("click", function() {
-    modal.hide();
-  });
-
-  // 모달 백그라운드 클릭 이벤트
-  $(window).on("click", function(event) {
-    if ($(event.target).is(modal)) {
-      modal.hide();
     }
-  });
-
-  // 이벤트 위임을 사용하여 동적 요소에 이벤트 연결
-  $(document).on("click", "a[id^='modalBtn']", function() {
-    modal.show();
-  });
-});
-
-
   </script>
-
-
 </head>
-
- <!-- 모달창 -->
-  <!-- 모달 컨테이너 -->
-  <div class="modal" id="myModal">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-      <!-- 모달창의 헤더부분의 시작 -->
-        <div class="modal-header">
-          <h4 class="modal-title">상세 페이지</h4>
-        </div>
-        <!-- 모달창의 헤더부분의 끝 -->
-        <!-- 모달창의 바디부분의 시작 바디부분이 모달창에서 표시하고자하는 컨텐츠를 입력한다.-->
-        
-
-        <div class="modal-body">
-          <div class="info">
-            <div class="car-header">상품명</div>
-            <p>Laptop for Gamming</p>
-            <div class="car-header">상품설명</div>
-            <p>Apple mackbook pro 7th generation in sealed pack box and warranty with free delivery to your home address. product comes with complete pack box</p>
-          </div>
-          
-          <div class="card">
-            <div class="card-body">
-              
-              <table class="table table-striped jambo_table bulk_action">
-                <thead>
-                  <tr>
-                    <th>유사단어</th>
-                    <th>금지어리스트 단어 (카테고리)</th>
-                    <th>금지어 사전 추가</th>
-                  </tr>
-                </thead>
-
-                <tbody>
-                  <tr>
-                    <td>macbook</td>
-                    <td>macbook (IPR)</td>
-                    <td><input type="button" value="단어추가"> </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-          <!-- 모달창의 바디부분의 끝 -->
-          <!-- 모달창의 푸터부분의 시작 -->
-          <!-- 푸터부에는 닫기부분이 위치하게 된다.  -->
-          <div class="modal-footer">
-            <button type="button" class="btn btn-danger btn-xs" id="closeBtn" data-bs-dismiss="modal">닫기</button>
-          </div>
-          <!-- 모달창의 푸터부분의 끝 -->
-      </div>
-    </div>
-  </div>
-  <!-- 모달 끝 -->
 
 <body class="nav-md">
   <div class="container body">
@@ -261,7 +226,7 @@
                 </li>
                 <li><a><i class="fa fa-users"></i> 회원관리 <span class="fa fa-chevron-down"></span></a>
                   <ul class="nav child_menu">
-                    <li><a th:href="@{/manager/customerList}">정상회원</a></li>
+                    <li><a th:href="@{/manager/customerList}">전체회원</a></li>
                     <li><a th:href="@{/manager/reportedCustomerList}">신고당한회원</a></li>
                     <li><a th:href="@{/manager/blackList}">블랙리스트회원</a></li>
                   </ul>
@@ -288,8 +253,8 @@
                   <img th:src="@{/production/images/user.png}" alt="">관리자
                 </a>
                 <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
-                  <a class="dropdown-item" th:href="@{/main/login}"><i class="fa fa-sign-out pull-right"></i> Log
-                    Out</a>
+                  <a class="dropdown-item" th:href=@{/}><i class="fa fa-home pull-right"></i> Home</a>
+                  <a class="dropdown-item" th:href="@{main/login}"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
                 </div>
               </li>
 
@@ -321,24 +286,18 @@
                   <div class="clearfix"></div>
                 </div>
 
+
                 <div class="title_right">
                   <div class="col-md-5 col-sm-5   form-group pull-right top_search">
                     <div class="input-group">
-                      <!-- <select name="" id="">
-                        <option value="전체">전체</option>
-                        <option value="회원ID">회원ID</option>
-                        <option value="카테고리">카테고리</option>
-                        <option value="상품명">상품명</option>  
-                      </select> -->
-                      <!-- 240415 dy : select를 카테고리로 바꾸고, 검색어는 회원ID, 상품ID, 상품명에서 모두 검색되게 함-->
-                      <!-- <select name="category" id="category">
+                      <select name="category" id="category">
                         <option value="total">전체</option>
                         <option value="FOOD_BEVERAGE">FOOD_BEVERAGE</option>
                         <option value="CHEMICAL">CHEMICAL</option>
                         <option value="HEALTH_MEDICAL">HEALTH_MEDICAL</option>
                         <option value="ELECTRONIC">ELECTRONIC</option>
                         <option value="COSMETIC">COSMETIC</option>
-                      </select> -->
+                      </select>
                       <input type="text" class="form-control" id="searchWord" placeholder="Search for...">
                       <span class="input-group-btn">
                         <button class="btn btn-default" type="button">찾기</button>
@@ -348,14 +307,17 @@
                 </div>
 
                 <div class="x_content">
-                  
+
                   <!-- start project list -->
-                  <table id="datatable" class="table table-striped jambo_table table-bordered dataTable no-footer">
+                  <table id="datatable" class="table table-striped jambo_table table-bordered dataTable no-footer"
+                    cellspacing="0" width="100%"> <!-- dt-responsive-->
+                    <!-- <table id="datatable" class="table table-striped jambo_table table-bordered dataTable no-footer"> -->
                     <thead>
-                      <button id="modalBtn">모달 열기</button>
+                      <!-- <button id="modalBtn">모달 열기</button> -->
                       <tr>
                         <th style="width: 10%">회원 ID</th>
                         <th style="width: 10%">상품 ID</th>
+                        <!-- <th style="width: 10%">카테고리</th> -->
                         <th style="width: 20%">상품명</th>
                         <th style="width: 20%">상품내용</th>
                         <th>예측값</th>
@@ -366,32 +328,41 @@
                     <!-- 240414 dy : ajax로 모델이상상품 정보 꽂아 넣기 -->
                     <tbody id="result">
                       <tr class="view" th:each="product:${list}">
+                        <input type="hidden" id="modelProduct" th:value="${product}">
                         <td th:text="${product.customerId}">#</td>
                         <td th:text="${product.productId}">121000203</td>
+                        <!-- <td th:text="${product.category}">카테고리</td> -->
                         <td>
                           <!-- <a href="#myModal" id="modalBtn" th:text="${product.productName}">ipone</a> -->
-                          <a href="#" th:id="'modalBtn' + ${product.productId}" th:text="${product.productName}">iphone</a>
-                        </td> 
+                          <a href="#" th:id="'modalBtn' + ${product.productId}" th:text="${product.productName}"
+                            th:data-name="${product.productName}" th:data-desc="${product.productDesc}"
+                            th:data-id="${product.productId}">iphone</a>
+                        </td>
                         <!-- 나중에 th:utext로 바꿔야 함 -->
-                        <td class="project_progress"  th:text="${product.productDesc}">
+                        <td class="project_progress" th:text="${product.productDesc}">
                           아이폰 11 판매
                         </td>
                         <td>
                           이상단어 검출: <br> [[${product.prohibitWord}]]([[${product.prohibitReason}]])</p>
                           이상검출도: [[${product.lstmPredictProba}]] %
                           <div class="progress progress_sm">
-                            <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="${product.lstmPredictProba}"></div>
+                            <div class="progress-bar bg-green" role="progressbar"
+                              data-transitiongoal="${product.lstmPredictProba}"></div>
                           </div>
                           이상단어유사도: [[${product.similarProba}]] %
                           <div class="progress progress_sm">
-                            <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="${product.similarProba}"></div>
+                            <div class="progress-bar bg-green" role="progressbar"
+                              data-transitiongoal="${product.similarProba}"></div>
                           </div>
                         </td>
                         <td>
-                          
-                          <a href="#" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> 정상 </a>  <!--정상 클릭시 judge 1로 변경-->
-                          <a href="#" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> 이상 </a> <!--정상 클릭시 judge 0로 변경-->
-                        </td> 
+                          <a href="#" class="btn btn-info btn-xs toNormal" th:data-id="${product.productId}"><i
+                              class="fa fa-pencil"></i> 정상 </a>
+                          <!--정상 클릭시 judge 1로 변경-->
+                          <a href="#" class="btn btn-danger btn-xs toWeird" th:data-id="${product.productId}"><i
+                              class="fa fa-trash-o"></i> 이상 </a>
+                          <!--이상 클릭시 judge 0로 변경-->
+                        </td>
                       </tr>
                     </tbody>
                   </table>
@@ -408,6 +379,71 @@
     </div>
   </div>
 
+
+  <!-- 모달창 -->
+  <!-- 모달 컨테이너 -->
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <!-- 모달창의 헤더부분의 시작 -->
+        <div class="modal-header">
+          <h4 class="modal-title">상세 페이지</h4>
+        </div>
+        <!-- 모달창의 헤더부분의 끝 -->
+        <!-- 모달창의 바디부분의 시작 바디부분이 모달창에서 표시하고자하는 컨텐츠를 입력한다.-->
+
+
+        <div class="modal-body">
+          <div class="info">
+            <div class="car-header">상품명</div>
+            <p id="modalName">Laptop for Gamming</p>
+            <div class="car-header">상품설명</div>
+            <p id="modalDesc">Apple mackbook pro 7th generation in sealed pack box and warranty with free delivery to
+              your home
+              address.
+              product comes with complete pack box</p>
+          </div>
+
+          <div class="card">
+            <div class="card-body">
+
+              <!-- 240419 dy : 모달html에 ajax와 thymeleaf 잘 섞어서 사용.. -->
+              <table class="table table-striped jambo_table bulk_action" id="modalTable">
+                <thead>
+                  <tr>
+                    <th>유사단어</th>
+                    <th>금지어리스트 단어 (카테고리)</th>
+                    <th>금지어 사전 추가</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr th:each="item : ${list}" th:if="${list != null and not #lists.isEmpty(list)}">
+                    <td id="similarWord">[[${item.similarWord}]]</td>
+                    <td>[[${item.prohibitWord}]] ([[${item.prohibitReason}]])</td>
+                    <td><input type="button" value="단어추가" id="wordPlusBtn" th:data-word="${item.similarWord}"
+                        th:data-reason="${item.prohibitReason}"> </td>
+                  </tr>
+                  <tr th:unless="${list != null and not #lists.isEmpty(list)}">
+                    <td colspan="3">결과가 존재하지 않습니다.</td>
+                  </tr>
+                </tbody>
+              </table>
+
+            </div>
+          </div>
+        </div>
+        <!-- 모달창의 바디부분의 끝 -->
+        <!-- 모달창의 푸터부분의 시작 -->
+        <!-- 푸터부에는 닫기부분이 위치하게 된다.  -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger btn-xs" id="closeBtn" data-dismiss="modal">닫기</button>
+        </div>
+        <!-- 모달창의 푸터부분의 끝 -->
+      </div>
+    </div>
+  </div>
+  <!-- 모달 끝 -->
   <!-- jQuery -->
   <script th:src="@{/vendors/jquery/dist/jquery.min.js}"></script>
   <!-- Bootstrap -->
@@ -422,7 +458,22 @@
   <!-- Custom Theme Scripts -->
   <script th:src="@{/build/js/custom.min.js}"></script>
 
-  
+  <!-- Datatables -->
+  <script src="/vendors/datatables.net/js/jquery.dataTables.js"></script>
+  <script src="/vendors/datatables.net-bs/js/dataTables.bootstrap.js"></script>
+  <script src="/vendors/datatables.net-buttons/js/dataTables.buttons.js"></script>
+  <script src="/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.js"></script>
+  <script src="/vendors/datatables.net-buttons/js/buttons.flash.js"></script>
+  <script src="/vendors/datatables.net-buttons/js/buttons.html5.js"></script>
+  <script src="/vendors/datatables.net-buttons/js/buttons.print.js"></script>
+  <script src="/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.js"></script>
+  <script src="/vendors/datatables.net-keytable/js/dataTables.keyTable.js"></script>
+  <script src="/vendors/datatables.net-responsive/js/dataTables.responsive.js"></script>
+  <script src="/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+  <script src="/vendors/datatables.net-scroller/js/dataTables.scroller.js"></script>
+  <script src="/vendors/jszip/dist/jszip.js"></script>
+  <script src="/vendors/pdfmake/build/pdfmake.js"></script>
+  <script src="/vendors/pdfmake/build/vfs_fonts.js"></script>
 </body>
 
 </html>

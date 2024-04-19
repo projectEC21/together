@@ -3,6 +3,7 @@ package net.kdigital.ec21.controller;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,11 +13,19 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.kdigital.ec21.dto.CustomerDTO;
+import net.kdigital.ec21.dto.CustomerListModalDTO;
 import net.kdigital.ec21.dto.ModelPredictDTO;
+import net.kdigital.ec21.dto.ModelPredictModalDTO;
 import net.kdigital.ec21.dto.ProductDTO;
 import net.kdigital.ec21.dto.ReportedCustomerWithInfoDTO;
 import net.kdigital.ec21.service.ManagerService;
+import net.kdigital.ec21.service.ProductService;
+
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
@@ -24,6 +33,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Slf4j
 public class ManagerController {
 	private final ManagerService managerService;
+	private final ProductService productService;
 
 	// ============================= 메인보드 =============================
 	/**
@@ -106,6 +116,59 @@ public class ManagerController {
 
 		return "/manager/modelPredict::#result";
 	}
+	
+	/**
+	 * ajax - 전달받은 상품ID에 해당하는 (금지어 유사단어, 금지어 단어, 금지어 카테고리) 정보 리스트로 반환
+	 * @param productId
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/manager/modelPredict/getProhibitSimilarWordDTOs", method = RequestMethod.GET)
+	public String getProhibitSimilarWordDTOs(@RequestParam(name = "productId") String productId, Model model) {
+		List<ModelPredictModalDTO> result = managerService.getProhibitSimilarWordDTOs(productId);
+		model.addAttribute("list", result);
+		return "/manager/modelPredict::#modalTable";
+	}
+
+	/**
+	 * 금지어 목록에 새로운 단어 추가 요청
+	 * @param similarWord
+	 * @param prohibitReason
+	 * @return
+	 */
+	@ResponseBody
+	@GetMapping("modelPredict/wordPlus")
+	public Boolean getMethodName(@RequestParam(name = "similarWord") String similarWord, 
+								@RequestParam(name = "prohibitReason")String prohibitReason) {
+		return managerService.insertProhibitWord(similarWord, prohibitReason);
+	}
+
+	/**
+	 * 정상상품 요청 시 상품의 judge를 Y 즉, 정상으로 변경
+	 * @param productId
+	 * @return
+	 */
+	@ResponseBody
+	@GetMapping("modelPredict/productNormal")
+	public Boolean productNormal(@RequestParam(name = "productId") String productId){
+		log.info("지금 정상 버튼 눌러서 컨트롤러왔어");
+		return managerService.updateProductJudgeNormal(productId);
+	}
+
+	/**
+	 * 이상상품 요청 시 상품의 judge를 N 즉, 이상으로 변경
+	 * @param productId
+	 * @return
+	 */
+	@ResponseBody
+	@GetMapping("modelPredict/productWeird")
+	public Boolean productWeird(@RequestParam(name = "productId") String productId){
+		log.info("지금 블랙 버튼 눌러서 컨트롤러왔어");
+		return managerService.updateProductJudgeWeird(productId);
+	}
+	
+	
+
 
 	// ============================= 회원 관리 =============================
 
@@ -119,6 +182,27 @@ public class ManagerController {
 		List<CustomerDTO> dtoList = managerService.selectNotBlacklist();
 		model.addAttribute("list", dtoList);
 		return "manager/customerList";
+	}
+
+
+	/**
+	 * 전달받은 상품 ID에 해당하는 금지어유사도 결과 리스트를 JSON 데이터로 반환
+	 * 
+	 * @param productId
+	 * @return
+	 * @throws JsonProcessingException
+	 */
+	@ResponseBody
+	@GetMapping("/manager/customerList/getCustomerProductDTOs")
+	public String getCustomerProductDTOs(@RequestParam(name = "customerId") String customerId)
+			throws JsonProcessingException {
+		log.info(customerId);
+		List<CustomerListModalDTO> result = managerService.getCustomerProductDTOs(customerId); 
+		if (result == null) {
+			return null;
+		}
+		ObjectMapper mapper = new ObjectMapper();
+		return mapper.writeValueAsString(result);
 	}
 
 	/**
@@ -155,10 +239,9 @@ public class ManagerController {
 			// 정상버튼 : 관리자 처리 완료 상태로 변경
 			managerService.reportCustomerUpdateManagerCheck(reportCustomerId);
 		}
-		
+
 		List<ReportedCustomerWithInfoDTO> dtoList = managerService.selectReportedCustomerBySearch(category, searchWord);
 		model.addAttribute("list", dtoList);
-		log.info("list 받아왔어");
 		
 		return "/manager/reportedCustomerList::#result";
 	}
@@ -183,10 +266,10 @@ public class ManagerController {
 	 * @return
 	 */
 	@RequestMapping(value = "/manager/blackList/getList", method = RequestMethod.GET)
-	public String getList(@RequestParam(name = "blacklistId", defaultValue = "-100") Long blacklistId, 
+	public String getList(@RequestParam(name = "blacklistId", defaultValue = "-100") Long blacklistId,
 			@RequestParam(name = "category", defaultValue = "total") String category,
-			@RequestParam(name = "searchWord", defaultValue = "") String searchWord,Model model) {
-		
+			@RequestParam(name = "searchWord", defaultValue = "") String searchWord, Model model) {
+
 		if (blacklistId != -100) {
 			// 정상버튼 : 블랙리스트 테이블에서 해당 블랙리스트ID(일련번호) 삭제
 			managerService.deleteFromBalcklist(blacklistId);
