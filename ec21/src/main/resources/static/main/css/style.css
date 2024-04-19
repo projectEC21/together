@@ -687,7 +687,7 @@ body {
 	margin: 0;
 	height: 48px;
 	width: 150px;
-	border: none;
+	border: 1px solid #444;
 	text-align: center;
 	background: transparent;
 	text-transform: capitalize;
@@ -727,7 +727,7 @@ body {
 	background: transparent;
 	color: #666;
 	border-radius: 0;
-	border: none;
+	border: 1px solid #444;
 	font-size: 14px;
 	font-weight: 400;
 	padding: 0 25px 0 20px;

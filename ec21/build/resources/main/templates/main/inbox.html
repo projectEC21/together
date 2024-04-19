@@ -77,7 +77,9 @@
 						<div class="top-left">
 							<!-- logo -->
 							<div class="logo">
-								<a th:href="@{/}"><img th:src="@{/main/images/ec21logo.png}" alt="logo"></a>
+								<a th:href="@{/}">
+									<img th:src="@{/main/images/ec21logo.png}" alt="logo" style="width: 100px; height: 30px;">
+								</a>
 							</div>
 						</div>
 						<!--/ End Top Left -->
@@ -89,7 +91,8 @@
 								<li><i class="ti-power-off"></i><a th:href="@{/main/login}">Login</a></li>
 								<li><i class="ti-user"></i><a th:href="@{/main/register}">Sign up</a></li>
 								<li><i class="ti-power-off"></i><a th:href="@{/main/logout}">Logout</a></li>
-								<li><i class="fa fa-user-circle-o" th:href="@{/main/myproducts}" aria-hidden="true"></i></li>
+								<li><a th:href="@{/main/myproducts}" class="single-icon"><i class="fa fa-user-circle-o"
+									aria-hidden="true"></i></a></li>
 								</li>
 							</ul>
 						</div>
@@ -145,11 +148,6 @@
 									<div class="col-12">
 										<!-- Shop Top -->
 										<div class="shop-top">
-											<div class="submitBtn">
-												<a href="" class="btn">Delete</a>
-												<a href="" class="btn">Spam</a>
-											</div>
-											<a></a>
 											<div class="shop-shorter">
 												<div class="single-shorter">
 													<label>Show :<span> [[${#lists.size(productList)}]]</span></label>
@@ -163,48 +161,29 @@
 										<table class="table shopping-summery">
 											<thead>
 												<tr class="main-hading">
-													<th class="text-center">NO</th>
-													<th class="text-center">NAME</th>
-													<th class="text-center" colspan="2">TITLE</th>
-													<th class="text-center">DATE</th>
-													<th class="text-center"><i class="ti-trash remove-icon"></i></th>
-													<th class="text-center"><i class="fa fa-envelope-open"></i></th>
+													<th class="saved-icon"></th>
+													<th class="no">NO</th>
+													<th class="contactName">NAME</th>
+													<th class="inquiryTitle" colspan="2">TITLE</th>
+													<th class="sendData">DATE</th>
+													<th class="delete"><i class="ti-trash remove-icon"></i></th>
+													<th class="spam"><i class="fa fa-envelope-open"></i></th>
 												</tr>
 											</thead>
 											<tbody>
 												<!-- 240418 dy : 회원의 상품 목록 출력 -->
 												<tr th:if="${productList != null and !#lists.isEmpty(productList)}" th:each="product, i : ${productList}">
+													<td class="saved-icon"><a href="#" id="saved-icon"><i class="ti-star"></i></a></td>
 													<td class="no"><span>[[${i.count}]]</span></td>
-													<!-- 이미지 우선 임시 링크 -->
-													<td class="image" data-title="No"><img
-															src="https://via.placeholder.com/100x100" alt="#"></td>
-													<td class="product-info" data-title="Description">
-														<p class="product-name"><a th:href="@{/main/productsDetail(productId=${product.productId})}">[[${product.productName}]]</a></p>
-														<p class="product-desc">[[${product.productDesc}]]</p>
+													<td class="contactName" data-title="contactName"><span class="contactName">[[${product.category}]]</span></td>
+													<td class="inquiryTitle" data-title="inquiryTitle" colspan="2">
+														<span class="inquiryTitle" th:href="@{/main/productsDetail(productId=${product.productId})}">[[${product.productName}]]</span>
 													</td>
-													<td class="price" data-title="Price"><span>$[[${product.price}]]</span></td>
-													<td class="qty" data-title="Qty">
-														<span th:if="${product.moq >= 1000}" th:text="${#numbers.formatInteger(product.moq, 3, 'COMMA')} + ' ' + ${product.unit}"> </span>
-														<span th:unless="${product.moq >= 1000}" th:text="${product.moq} + ' ' + ${product.unit}"></span>
+													<td class="sendDate" data-title="sendDate"><span>[[${#temporals.format(product.createDate, 'yyyy-MM-dd')}]]</span>
 													</td>
-													<!-- <td class="total-amount" data-title="Total"><span>$220.88</span></td> -->
-													<td class="createDate" data-title="date"><span>[[${#temporals.format(product.createDate, 'yyyy-MM-dd')}]]</span>
-													</td>
-													<td class="action" data-title="Remove"><a th:href="@{/main/myproducts/delete(productId=${product.productId})}"><i class="ti-trash remove-icon"></i></a></td>
+													<td class="action" data-title="delete"><a th:href="@{/main/myproducts/delete(productId=${product.productId})}"><i class="ti-trash remove-icon"></i></a></td>
+													<td class="action" data-title="spam"><a th:href="@{/main/myproducts/delete(productId=${product.productId})}"><i class="fa-comment-slash"></i></a></td>
 												</tr>
-												<!-- <tr th:if="${productList != null and !#lists.isEmpty(productList)}" th:each="product, i : ${productList}">
-														<td class="no"><span>[[${i.count}]]</span></td>
-														<td class="contactName" data-title="contactName">
-															<p class="contactName"><a th:href="@{/main/productsDetail(productId=${product.productId})}">[[$product.productName]]</a></p>
-														</td>
-														<td class="InquiryTitle" data-title="InquiryTitle" colspan="2"> 
-															<p class="InquiryTitle"><a th:href="@{/main/productsDetail(productId=${product.productId})}">[[${product.productName}]]</a></p>
-														</td>
-														<td class="sendDate" data-title="sendDate"><span>[[${#temporals.format(product.createDate, 'yyyy-MM-dd')}]]</span>
-														</td>
-														<td class="action" data-title="Remove"><a th:href="@{/main/myproducts/delete(productId=${product.productId})}"><i class="ti-trash remove-icon"></i></a></td>
-														<td class="action" data-title="Spam"><a th:href="@{/main/myproducts/delete(productId=${product.productId})}"><i class="fa fa-envelope-open"></i></a></td>
-												</tr> -->
 											</tbody>
 										</table>
 										<!--/ End Shopping Summery -->
@@ -258,6 +237,9 @@
 	<script th:src="@{/main/js/easing.js}"></script>
 	<!-- Active JS -->
 	<script th:src="@{/main/js/active.js}"></script>
+	<!-- myFunction JS : 필요한 자바 스크립트 이리로 넣어서 사용하면 됩니다 -->
+	<script th:src="@{/main/js/myFunction.js}"></script>
+
 </body>
 
 </html>

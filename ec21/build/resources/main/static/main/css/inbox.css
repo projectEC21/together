@@ -12,10 +12,20 @@
 	color: #fff;
 }
 
-.table.inquiry-summery {
-	background: #fff;
+.table.shopping-summery {
+	width: 100%;
+    table-layout: fixed;
+	text-align: center;
 }
 
+.table.shopping-summery .inquiryTitle {
+	width: 600px;
+	text-align: start;
+}
+
+.table.shopping-summery .saved-icon, .delete, .spam, .no{
+	width: 100px;
+}
 
 /*======================================
 	End Inquiry CSS
