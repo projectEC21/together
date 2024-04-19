@@ -28,7 +28,7 @@
 	<!-- Font Awesome -->
 	<link rel="stylesheet" th:href="@{/main/css/font-awesome.css}">
 	<!-- Fancybox -->
-	<link rel="stylesheet" th:href="@{/main/css/jquery.fancybox.min.css}">
+	<!-- <link rel="stylesheet" th:href="@{/main/css/jquery.fancybox.min.css}"> -->
 	<!-- Themify Icons -->
 	<link rel="stylesheet" th:href="@{/main/css/themify-icons.css}">
 	<!-- Nice Select CSS -->
@@ -48,60 +48,59 @@
 	<link rel="stylesheet" th:href="@{/main/css/responsive.css}">
 
 	<!-- Color CSS -->
-	<!-- <link rel="stylesheet" href="css/color/color1.css"> -->
 	<link rel="stylesheet" th:href="@{/main/css/color/color2.css}">
 
-	<link rel="stylesheet" href="#" id="colors">
-
-	<!-- 240417 dy : JQuery 파일 추가 및 ajax 작업 -->
+	<!-- 240420 iy : 수정버튼 클릭 시 readonly, disable 속성 삭제/ 수정완료 후 alert창 / 수정버튼 클릭 시 취소버튼 추가 -->
 	<script th:src="@{/script/jquery-3.7.1.min.js}"></script>
-	<!-- 240417 dy : 검색어 입력 후 돋보기 클릭 시 /main/list 요청-->
+
 
 	<script>
 		document.addEventListener('DOMContentLoaded', function () {
 			var editButton = document.getElementById('editButton');
-			if (editButton) {
+			var cancelButton = document.getElementById('cancelButton');
+
+			if (editButton && cancelButton) {
 				editButton.addEventListener('click', function () {
 					// 버튼의 현재 상태에 따라 동작을 변경
 					if (editButton.textContent === 'Edit My Account') {
 						// 'readonly' 및 'disabled' 속성 제거, 특정 필드는 제외
 						toggleFields(false); // 편집 활성화
 						editButton.textContent = 'Modify Account';
+						cancelButton.style.display = 'inline'; // 취소 버튼 보이기
 					} else {
-						// 'readonly' 및 'disabled' 속성 추가
+						// 'readonly' 및 'disabled' 속성 추가, 수정이 완료되었다는 메시지 표시
 						toggleFields(true); // 편집 비활성화
 						editButton.textContent = 'Edit My Account';
+						alert('Your account has been successfully modified.');
+						cancelButton.style.display = 'none'; // 취소 버튼 숨기기
+						// 버튼을 비활성화하지 않고, 수정 가능 상태를 계속 유지
 					}
 				});
+
+				cancelButton.addEventListener('click', function () {
+					// 취소 버튼을 클릭했을 때 모든 필드 비활성화 및 초기 상태로 리셋
+					toggleFields(true);
+					editButton.textContent = 'Edit My Account';
+					cancelButton.style.display = 'none'; // 취소 버튼 숨기기
+				});
 			} else {
-				console.log('Edit button not found');
+				console.log('Buttons not found');
 			}
 		});
 
 		function toggleFields(disable) {
 			var inputs = document.querySelectorAll('input, textarea');
 			inputs.forEach(function (input) {
-				// 특정 필드의 readonly 상태를 변경하지 않음
 				if (!input.classList.contains('no-edit')) {
-					if (disable) {
-						input.setAttribute('readonly', 'readonly');
-					} else {
-						input.removeAttribute('readonly');
-					}
+					input.readOnly = disable;
 				}
 			});
 
-			var selectsAndButtons = document.querySelectorAll('input[type="checkbox"], select, button');
+			var selectsAndButtons = document.querySelectorAll('input[type="checkbox"], select');
 			selectsAndButtons.forEach(function (item) {
-				if (disable) {
-					item.setAttribute('disabled', 'disabled');
-				} else {
-					item.removeAttribute('disabled');
-				}
-
+				item.disabled = disable;
 			});
 		}
-
 
 
 	</script>
@@ -390,7 +389,8 @@
 								<div class="col-12">
 									<div class="form-group login-btn">
 										<button class="btn" type="button" id="editButton">Edit My Account</button>
-
+										<button class="btn" type="button" id="cancelButton"
+											style="display: none;">Cancel</button>
 									</div>
 								</div>
 
@@ -530,8 +530,6 @@
 	<script th:src="@{/main/js/finalcountdown.min.js}"></script>
 	<!-- Nice Select JS -->
 	<script th:src="@{/main/js/nicesellect.js}"></script>
-	<!-- Ytplayer JS -->
-	<!-- <script th:src="@{/main/js/ytplayer.min.js}"></script> -->
 	<!-- Flex Slider JS -->
 	<script th:src="@{/main/js/flex-slider.js}"></script>
 	<!-- ScrollUp JS -->

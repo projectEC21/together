@@ -139,7 +139,7 @@
       let similarWord = $(this).data("word");
       let prohibitReason = $(this).data("reason");
       // 처리 전 확인 
-      if (confirm(similarWord+" ("+prohibitReason+")"+"를 금지어 리스트에 추가하시겠습니까? ")) {
+      if (confirm(similarWord + " (" + prohibitReason + ")" + "를 금지어 리스트에 추가하시겠습니까? ")) {
         $.ajax({
           url: "/modelPredict/wordPlus",
           data: { "similarWord": similarWord, "prohibitReason": prohibitReason },
