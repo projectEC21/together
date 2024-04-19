@@ -10,10 +10,10 @@
   <link rel="icon" type="image/png" th:href="@{/production/images/ec21logo.png}">
 
   <title>ec21 관리자 페이지</title>
-  	<!-- Web Font -->
-	<link
-  href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap"
-  rel="stylesheet">
+  <!-- Web Font -->
+  <link
+    href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap"
+    rel="stylesheet">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap" rel="stylesheet">
 
@@ -40,9 +40,24 @@
   <script th:src="@{/script/jquery-3.7.1.min.js}"></script>
   <script>
     $(function () {
-      $("#category").on("change",search);
-      $("#searchWord").on("keyup",search);
+      $("#category").on("change", search);
+      $("#searchWord").on("keyup", search);
       init();
+
+      // 두 번째 모달 열기 버튼 클릭 이벤트
+      $(document).on("click", "a[id^='productList']", function () {
+        let modalProductName = $(this).data("product-name");
+        let modalProductCategory = $(this).data("product-category");
+        let modalProductDesc = $(this).data("productdesc");
+        let modalPrice = $(this).data("price");
+        let modalOrigin = $(this).data("origin");
+        let modalQuantity = $(this).data("quantity");
+        $("#myModal2").modal('show'); // 두 번째 모달을 엽니다.
+
+        $("#modalProductName").html(modalProductName);
+        $("#modalProductCategory").html(modalProductCategory);
+        $("#modalProductDesc").html(modalProductDesc);
+      });
     })
 
     function search() {
@@ -50,22 +65,21 @@
       let searchWord = $("#searchWord").val();
 
       $.ajax({
-        url:"/manager/productList/getList",
-        data:{"category":category,"searchWord":searchWord},
-        method:"GET",
-        success : function (list) {
+        url: "/manager/productList/getList",
+        data: { "category": category, "searchWord": searchWord },
+        method: "GET",
+        success: function (list) {
           $("#result").replaceWith(list);
         }
       })
-
     }
 
     function init() {
       $.ajax({
-        url:"/manager/productList/getList",
-        data:{"category":"total","searchWord":""},
-        method:"GET",
-        success : function (list) {
+        url: "/manager/productList/getList",
+        data: { "category": "total", "searchWord": "" },
+        method: "GET",
+        success: function (list) {
           $("#result").replaceWith(list);
         }
       })
@@ -117,7 +131,7 @@
                 </li>
                 <li><a><i class="fa fa-users"></i> 회원관리 <span class="fa fa-chevron-down"></span></a>
                   <ul class="nav child_menu">
-                    <li><a th:href="@{/manager/customerList}">정상회원</a></li>
+                    <li><a th:href="@{/manager/customerList}">전체회원</a></li>
                     <li><a th:href="@{/manager/reportedCustomerList}">신고당한회원</a></li>
                     <li><a th:href="@{/manager/blackList}">블랙리스트회원</a></li>
                   </ul>
@@ -141,11 +155,11 @@
               <li class="nav-item dropdown open" style="padding-left: 15px;">
                 <a href="javascript:;" class="user-profile dropdown-toggle" aria-haspopup="true" id="navbarDropdown"
                   data-toggle="dropdown" aria-expanded="false">
-                  <img th:src=@{/production/images/user.png} alt="">관리자
+                  <img th:src="@{/production/images/user.png}" alt="">관리자
                 </a>
                 <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
-                  <a class="dropdown-item" th:href="@{/main/login}"><i class="fa fa-sign-out pull-right"></i> Log
-                    Out</a>
+                  <a class="dropdown-item" th:href=@{/}><i class="fa fa-home pull-right"></i> Home</a>
+                  <a class="dropdown-item" th:href="@{main/login}"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
                 </div>
               </li>
 
@@ -167,7 +181,7 @@
 
           <div class="clearfix"></div>
 
-          <div class="row" >
+          <div class="row">
             <div class="col-md-12 col-sm-12  ">
               <div class="x_panel">
                 <div class="x_title">
@@ -206,7 +220,8 @@
                   <div class="row">
                     <div class="col-sm-12">
                       <div class="card-box table-responsive">
-                        <table id="datatable-responsive" class="table table-striped  jambo_table dt-responsive nowrap" cellspacing="0" width="100%"> 
+                        <table id="datatable" class="table table-striped jambo_table table-bordered dataTable no-footer"
+                          cellspacing="0" width="100%">
                           <!-- table-bordered dataTable no-footer -->
                           <thead>
                             <tr class="headings">
@@ -226,22 +241,30 @@
                           </thead>
                           <!-- 240414 dy : 전달받은 카테고리와 검색어에 해당하는 상품 리스트 꽂아 넣음 (디폴트- 카테고리:전체/검색어:"") -->
                           <tbody id="result">
-                              <tr class="even pointer" th:each="product:${list}">
-                                <td class=" " th:text="${product.customerId}">121000040</td>
-                                <td class=" " th:text="${product.productId}"><a
-                                    th:href="@{/main/productDetail}">3248202404071536</a></td>
-                                <td class=" "><a th:href="@{/main/productDetail}" th:text="${product.productName}"> 
-                                  LOWA Men’s Renegade GTX Mid Hiking Boots Review</a></td>
-                                <td class=" " th:text="${product.category}">신발</td>
-                                <th:block th:if="${product.lstmPredict==false}">
-                                  <td class=" "> 이상</td>
-                                </th:block>
-                                <th:block th:unless="${product.lstmPredict==false}">
-                                  <td class=" "> 정상</td>
-                                </th:block>
-                                <td class="a-right a-right " th:text="${product.judge}">이상</td>
-                                <td class=" last"><input type="button" class="btn-hover color-9" value="정상"><input type="button" class="btn-hover color-11" value="이상"></a></td>
-                              </tr>
+                            <tr class="even pointer" th:each="product:${list}">
+                              <td class=" " th:text="${product.customerId}">121000040</td>
+                              <td class=" " th:text="${product.productId}"><a
+                                  th:href="@{/main/productDetail}">3248202404071536</a></td>
+                              <td class=" ">
+                                <a href="#" id="productList" class="productLink"
+                                  data-product-name="${product.productName}" data-product-category="${product.category}"
+                                  data-productDesc="${product.productDesc}" data-price="${product.price}"
+                                  data-quantity="${product.quantity}" data-origin="${product.origin}"
+                                  th:text="${product.productName}">
+                                  LOWA Men’s Renegade GTX Mid Hiking Boots Review
+                                </a>
+                              </td>
+                              <td class=" " th:text="${product.category}">신발</td>
+                              <th:block th:if="${product.lstmPredict==false}">
+                                <td class=" "> 이상</td>
+                              </th:block>
+                              <th:block th:unless="${product.lstmPredict==false}">
+                                <td class=" "> 정상</td>
+                              </th:block>
+                              <td class="a-right a-right " th:text="${product.judge}">이상</td>
+                              <td class=" last"><input type="button" class="btn-hover color-9" value="정상"><input
+                                  type="button" class="btn-hover color-11" value="이상"></a></td>
+                            </tr>
                           </tbody>
                         </table>
 
@@ -258,6 +281,51 @@
     </div>
   </div>
 
+  <!-- 두번째 모달창-->
+  <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <h4 class="modal-title">상세 페이지</h4>
+        </div>
+
+        <div class="modal-body">
+          <div class="info">
+            <ol>
+              <li>
+                <span class="dtr-title">Product Name:</span>
+                <span id="modalProductName">-</span>
+              </li>
+              <li>
+                <span class="dtr-title">Price:</span>
+                <span id="modalPrice">-</span>
+              </li>
+              <li>
+                <span class="dtr-title">Origin:</span>
+                <span id="modalOrigin">-</span>
+              </li>
+              <li>
+                <span class="dtr-title">Category:</span>
+                <span id="modalProductCategory">-</span>
+              </li>
+              <li>
+                <span class="dtr-title">Product Details:</span>
+                <span id="modalProductDesc">-</span>
+              </li>
+              <li>
+                <span class="dtr-title">Quantity:</span>
+                <span id="modalQuantity">-</span>
+              </li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- 두번째 모달창 끝-->
+
   <!-- jQuery -->
   <script th:src="@{/vendors/jquery/dist/jquery.js}"></script>
   <!-- Bootstrap -->
@@ -269,10 +337,25 @@
   <!-- iCheck -->
   <script th:src="@{/vendors/iCheck/icheck.js}"></script>
   <!-- Datatables -->
-  <script th:src="@{/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.js}"></script>
+  <!-- <script th:src="@{/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.js}"></script> -->
 
   <!-- Custom Theme Scripts -->
   <script th:src="@{/build/js/custom.js}"></script>
-</body>
+
+  <script src="/vendors/datatables.net/js/jquery.dataTables.js"></script>
+  <script src="/vendors/datatables.net-bs/js/dataTables.bootstrap.js"></script>
+  <script src="/vendors/datatables.net-buttons/js/dataTables.buttons.js"></script>
+  <script src="/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.js"></script>
+  <script src="/vendors/datatables.net-buttons/js/buttons.flash.js"></script>
+  <script src="/vendors/datatables.net-buttons/js/buttons.html5.js"></script>
+  <script src="/vendors/datatables.net-buttons/js/buttons.print.js"></script>
+  <script src="/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.js"></script>
+  <script src="/vendors/datatables.net-keytable/js/dataTables.keyTable.js"></script>
+  <script src="/vendors/datatables.net-responsive/js/dataTables.responsive.js"></script>
+  <script src="/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+  <script src="/vendors/datatables.net-scroller/js/dataTables.scroller.js"></script>
+  <script src="/vendors/jszip/dist/jszip.js"></script>
+  <script src="/vendors/pdfmake/build/pdfmake.js"></script>
+  <script src="/vendors/pdfmake/build/vfs_fonts.js"></script>
 
 </html>

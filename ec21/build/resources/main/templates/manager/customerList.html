@@ -43,25 +43,44 @@
   <!-- 240418 iy : 모달기능 구현 -->
   <!-- 240419 dy : 모달에 리스트 꽂아넣기 -->
   <script th:src="@{/script/jquery-3.7.1.min.js}"></script>
+
   <script>
     $(function () {
 
       // 모달 변수 초기화
-      var modal = $("#myModal");
+      var modal1 = $("#myModal1");
+      var modal2 = $("#myModal2");
 
+
+      // 첫번째 모달 닫기
       // 닫기 버튼 이벤트
       $("#closeBtn").on("click", function (event) {
-        modal.hide();
+        modal1.hide();
       });
 
       // 모달 백그라운드 클릭 이벤트
       $(window).on("click", function (event) {
-        if ($(event.target).is(modal)) {
-          modal.hide();
+        if ($(event.target).is(modal1)) {
+          modal1.hide();
         }
 
       });
 
+      // 두번째 모달 닫기
+      // 닫기 버튼 이벤트
+      $("#closeBtn2").on("click", function (event) {
+        modal2.hide();
+      });
+
+      // 모달 백그라운드 클릭 이벤트
+      $(window).on("click", function (event) {
+        if ($(event.target).is(modal2)) {
+          modal2.hide();
+        }
+
+      });
+
+      // 첫번째 모달 버튼 클릭 시 작동
       // 이벤트 위임을 사용하여 동적 요소에 이벤트 연결
       $(document).on("click", "button[id^='modalBtn']", function () {
         let modalCompName = $(this).data("compname");
@@ -85,10 +104,10 @@
 
         // 판매 상품 리스트 가져오기
         $.ajax({
-          url:"/manager/customerList/getCustomerProductDTOs",
-          data:{"customerId": modalCustomerId },
-          method:"GET",
-          success : function (resp) {
+          url: "/manager/customerList/getCustomerProductDTOs",
+          data: { "customerId": modalCustomerId },
+          method: "GET",
+          success: function (resp) {
             if (!resp || resp.length === 0) { // 판매 상품이 없는 경우
               tableContent += `<tr><td colspan="4"><span>결과가 존재하지 않습니다.</span></td></tr></tbody>`;
             } else {
@@ -109,12 +128,23 @@
                   tableContent += `<tr>
                                       <td>${item.productId}</td>
                                       <td>${item.category}</td>
-                                      <td>${item.productName}</td>
+                                      <td>
+                                        <a href="#" id ="productList" class="productLink"
+                                        data-product-name="${item.productName}"  
+                                        data-product-category="${item.category}" 
+                                        data-productDesc="${item.productDesc}"
+                                        data-price="${item.price}"
+                                        data-moq="${item.moq}"
+                                        data-unit="${item.unit}"
+                                        data-origin="${item.origin}">
+                                        ${item.productName}
+                                        </a>
+                                      </td>
                                       <td>${label}</td>
                                     </tr>`;
                 });
               }
-              tableContent+= '</tbody>';
+              tableContent += '</tbody>';
             }
             // 모달 컨텐츠 업데이트
             $("#modalCompName").html(modalCompName);
@@ -125,10 +155,32 @@
             $("#modalAddress").html(modalAddress);
             $("#modalTable").html(tableContent);
             // 모달 열기
-            $("#myModal").modal();
+            $("#myModal1").modal('show');
           }
         });
+
+        // 두 번째 모달 열기 버튼 클릭 이벤트
+        $(document).on("click", "a[id^='productList']", function () {
+          let modalProductName = $(this).data("product-name");
+          let modalProductCategory = $(this).data("product-category");
+          let modalProductDesc = $(this).data("productdesc");
+          let modalPrice = $(this).data("price");
+          let modalOrigin = $(this).data("origin");
+          let modalUnit = $(this).data("unit");
+          let modalMoq = $(this).data("moq");
+          $("#myModal2").modal('show'); // 두 번째 모달을 엽니다.
+
+          $("#modalProductName").html(modalProductName);
+          $("#modalProductCategory").html(modalProductCategory);
+          $("#modalProductDesc").html(modalProductDesc);
+          $("#modalPrice").html(modalPrice);
+          $("#modalOrigin").html(modalOrigin);
+          $("#modalMoq").html(modalMoq);
+          $("#modalUnit").html(modalUnit);
+        });
+
       });
+
 
       var etcRadio = $("#etcRadio");
       var etcReasonInput = $("#etcReasonInput");
@@ -153,13 +205,32 @@
           alert("기타 사유를 입력해주세요.");
         } else {
           etcReasonError.hide();
-          $('#myModal').modal('hide');
+          $('#myModal1').modal('hide');
         }
       });
 
+      // 모달창 나가면 초기화
+      $('#myModal1').on('hidden.bs.modal', function (e) {
+        // 입력 필드 초기화
+        $("#etcReasonInput").val('');
+
+        // 라디오 버튼 초기화 (기본값으로 설정하고 싶은 버튼의 id를 'defaultRadio'로 가정)
+        // $("#defaultRadio").prop("checked", true);
+
+        // 라디오 버튼 선택 해제
+        $('input[type="radio"][name="reason"]').prop("checked", false);
+
+        // 기타 사유 입력 상자를 숨기고 값 초기화
+        $('#etcReasonInput').hide().val('');
+
+        // 에러 메시지 숨기기
+        $("#etcReasonError").hide();
+      });
+
+
+
+
     });
-
-
   </script>
 </head>
 
@@ -206,7 +277,7 @@
                 </li>
                 <li><a><i class="fa fa-users"></i> 회원관리 <span class="fa fa-chevron-down"></span></a>
                   <ul class="nav child_menu">
-                    <li><a th:href="@{/manager/customerList}">정상회원</a></li>
+                    <li><a th:href="@{/manager/customerList}">전체회원</a></li>
                     <li><a th:href="@{/manager/reportedCustomerList}">신고당한회원</a></li>
                     <li><a th:href="@{/manager/blackList}">블랙리스트회원</a></li>
                   </ul>
@@ -230,12 +301,11 @@
               <li class="nav-item dropdown open" style="padding-left: 15px;">
                 <a href="javascript:;" class="user-profile dropdown-toggle" aria-haspopup="true" id="navbarDropdown"
                   data-toggle="dropdown" aria-expanded="false">
-                  <img th:src=@{/production/images/user.png} alt="">관리자
+                  <img th:src="@{/production/images/user.png}" alt="">관리자
                 </a>
                 <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
                   <a class="dropdown-item" th:href=@{/}><i class="fa fa-home pull-right"></i> Home</a>
-                  <a class="dropdown-item" th:href="@{/main/login}"><i class="fa fa-sign-out pull-right"></i> Log
-                    Out</a>
+                  <a class="dropdown-item" th:href="@{main/login}"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
                 </div>
               </li>
 
@@ -263,6 +333,22 @@
                 <div class="x_title">
                   <h2>전체 회원 관리</h2>
                   <div class="clearfix"></div>
+                </div>
+
+                <div class="title_right">
+                  <div class="col-md-5 col-sm-5   form-group pull-right top_search">
+                    <div class="input-group">
+                      <select name="" id="">
+                        <option value="전체">전체</option>
+                        <option value="회원ID">회원ID</option>
+                        <option value="회사명">회사명</option>
+                      </select>
+                      <input type="text" class="form-control" id="searchWord" placeholder="Search for...">
+                      <span class="input-group-btn">
+                        <button class="btn btn-default" type="button">찾기</button>
+                      </span>
+                    </div>
+                  </div>
                 </div>
 
                 <div class="x_content">
@@ -308,15 +394,14 @@
       </div>
     </div>
   </div>
-  <!-- </div> -->
   <!-- /page content -->
-  <!-- </div>
-  </div> -->
 
-  <!-- 모달창 -->
+
+  <!-- 첫번째 모달창 -->
   <!-- 모달 컨테이너 -->
-  <div class="modal" id="myModal" style="display:none;">
-    <div class="modal-dialog modal-lg">
+  <div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <!-- 모달창의 헤더부분의 시작 -->
         <div class="modal-header">
@@ -327,7 +412,7 @@
         <!-- 모달창의 바디부분의 시작 바디부분이 모달창에서 표시하고자하는 컨텐츠를 입력한다.-->
         <div class="modal-body">
           <div class="info">
-            <ul>
+            <ol>
               <li>
                 <span class="dtr-title">회사명</span>
                 <span id="modalCompName">-</span>
@@ -352,7 +437,7 @@
                 <span class="dtr-title">회사주소</span>
                 <span id="modalAddress">-</span>
               </li>
-            </ul>
+            </ol>
           </div>
 
           <div class="card">
@@ -369,12 +454,6 @@
                 </thead>
 
                 <tbody>
-                  <!-- <tr th:each="product: ${list}">
-                    <td th:text="${product.productId}">293814</td>
-                    <td th:text="${product.productName}">food</td>
-                    <td th:text="${product.category}">당근</td>
-                    <td th:text="${product.judge}">정상</td>
-                  </tr> -->
                   <tr>
                     <td>293814</td>
                     <td>food</td>
@@ -410,11 +489,60 @@
       </div>
     </div>
   </div>
-  <!-- 모달 끝 -->
+  <!-- 첫번째 모달 끝 -->
+
+  <!-- 두번째 모달창-->
+  <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <h4 class="modal-title">상세 페이지</h4>
+        </div>
+
+        <div class="modal-body">
+          <div class="info">
+            <ol>
+              <li>
+                <span class="dtr-title">Product Name:</span>
+                <span id="modalProductName">-</span>
+              </li>
+              <li>
+                <span class="dtr-title">Price:</span>
+                <span id="modalPrice">-</span>
+              </li>
+              <li>
+                <span class="dtr-title">Origin:</span>
+                <span id="modalOrigin">-</span>
+              </li>
+              <li>
+                <span class="dtr-title">Category:</span>
+                <span id="modalProductCategory">-</span>
+              </li>
+              <li>
+                <span class="dtr-title">Product Details:</span>
+                <span id="modalProductDesc">-</span>
+              </li>
+              <li>
+                <span class="dtr-title">Unit:</span>
+                <span id="modalUnit"></span>
+              </li>
+              <li>
+                <span class="dtr-title">MOQ:</span>
+                <span id="modalMoq"></span>
+              </li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- 두번째 모달창 끝-->
 
 
   <!-- jQuery -->
-  <script th:src="@{/vendors/jquery/dist/jquery.js}"></script>
+  <!-- <script th:src="@{/vendors/jquery/dist/jquery.js}"></script> -->
   <!-- Bootstrap -->
   <script th:src="@{/vendors/bootstrap/dist/js/bootstrap.bundle.js}"></script>
   <!-- FastClick -->
@@ -423,26 +551,34 @@
   <script th:src="@{/vendors/nprogress/nprogress.js}"></script>
   <!-- iCheck -->
   <script th:src="@{/vendors/iCheck/icheck.min.js}"></script>
-  <!-- Datatables -->
-  <script th:src="@{/vendors/datatables.net/js/jquery.dataTables.js}"></script>
-  <script th:src="@{/vendors/datatables.net-bs/js/dataTables.bootstrap.js}"></script>
-  <script th:src="@{/vendors/datatables.net-buttons/js/dataTables.buttons.js}"></script>
-  <script th:src="@{/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.js}"></script>
-  <script th:src="@{/vendors/datatables.net-buttons/js/buttons.flash.js}"></script>
-  <script th:src="@{/vendors/datatables.net-buttons/js/buttons.html5.js}"></script>
-  <script th:src="@{/vendors/datatables.net-buttons/js/buttons.print.js}"></script>
-  <script th:src="@{/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.js}"></script>
-  <script th:src="@{/vendors/datatables.net-keytable/js/dataTables.keyTable.js}"></script>
-  <script th:src="@{/vendors/datatables.net-responsive/js/dataTables.responsive.js}"></script>
-  <script th:src="@{/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js}"></script>
-  <script th:src="@{/vendors/datatables.net-scroller/js/dataTables.scroller.js}"></script>
-  <script th:src="@{/vendors/jszip/dist/jszip.js}"></script>
-  <script th:src="@{/vendors/pdfmake/build/pdfmake.js}"></script>
-  <script th:src="@{/vendors/pdfmake/build/vfs_fonts.js}"></script>
 
   <!-- Custom Theme Scripts -->
   <script th:src="@{/build/js/custom.js}"></script>
 
+  <!-- 모달-->
+  <!-- JQUERY -->
+  <!-- <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script> -->
+
+  <!-- JQUERY-UI -->
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+  <!-- bootstrap-theme.min.css -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+
+  <script src="/vendors/datatables.net/js/jquery.dataTables.js"></script>
+  <script src="/vendors/datatables.net-bs/js/dataTables.bootstrap.js"></script>
+  <script src="/vendors/datatables.net-buttons/js/dataTables.buttons.js"></script>
+  <script src="/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.js"></script>
+  <script src="/vendors/datatables.net-buttons/js/buttons.flash.js"></script>
+  <script src="/vendors/datatables.net-buttons/js/buttons.html5.js"></script>
+  <script src="/vendors/datatables.net-buttons/js/buttons.print.js"></script>
+  <script src="/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.js"></script>
+  <script src="/vendors/datatables.net-keytable/js/dataTables.keyTable.js"></script>
+  <script src="/vendors/datatables.net-responsive/js/dataTables.responsive.js"></script>
+  <script src="/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+  <script src="/vendors/datatables.net-scroller/js/dataTables.scroller.js"></script>
+  <script src="/vendors/jszip/dist/jszip.js"></script>
+  <script src="/vendors/pdfmake/build/pdfmake.js"></script>
+  <script src="/vendors/pdfmake/build/vfs_fonts.js"></script>
 
 </body>
 
