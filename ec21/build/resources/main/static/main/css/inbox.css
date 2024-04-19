@@ -59,9 +59,20 @@
 	text-align: center;
 }
 
+.table.shopping-summery td {
+	background-color: #efefef;
+	border-bottom: 1px solid #444;
+}
 .table.shopping-summery td.inquiryTitle {
 	width: 600px;
 	text-align: start;
+	cursor: pointer;
+}
+
+.table.shopping-summery td.inquiryTitle a:hover {
+	font-weight: bolder;
+	color: #999;
+	text-decoration: underline;
 }
 
 .table.shopping-summery td.saved-icon{
@@ -84,6 +95,10 @@
 	padding-bottom: 15px;
 }
 
+.shopping-cart.section .paging {
+	display: flex;
+	justify-content: center;
+}
 
 /*======================================
 	End Inquiry CSS
