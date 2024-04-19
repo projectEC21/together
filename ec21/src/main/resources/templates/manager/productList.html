@@ -51,12 +51,17 @@
         let modalProductDesc = $(this).data("productdesc");
         let modalPrice = $(this).data("price");
         let modalOrigin = $(this).data("origin");
-        let modalQuantity = $(this).data("quantity");
+        let modalMoq = $(this).data("moq");
+        let modalunit = $(this).data("unit");
         $("#myModal2").modal('show'); // 두 번째 모달을 엽니다.
 
         $("#modalProductName").html(modalProductName);
         $("#modalProductCategory").html(modalProductCategory);
         $("#modalProductDesc").html(modalProductDesc);
+        $("#modalPrice").html(modalPrice);
+        $("#modalOrigin").html(modalOrigin);
+        $("#modalMoq").html(modalMoq);
+        $("#modalunit").html(modalunit);
       });
     })
 
