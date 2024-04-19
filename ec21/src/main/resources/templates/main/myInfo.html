@@ -48,14 +48,11 @@
 	<link rel="stylesheet" th:href="@{/main/css/responsive.css}">
 
 	<!-- Color CSS -->
-	<!-- <link rel="stylesheet" href="css/color/color1.css"> -->
 	<link rel="stylesheet" th:href="@{/main/css/color/color2.css}">
 
-	<link rel="stylesheet" href="#" id="colors">
-
-	<!-- 240417 dy : JQuery 파일 추가 및 ajax 작업 -->
+	<!-- 240420 iy : 수정버튼 클릭 시 readonly, disable 속성 삭제/ 수정완료 후 alert창 / 수정버튼 클릭 시 취소버튼 추가 -->
 	<script th:src="@{/script/jquery-3.7.1.min.js}"></script>
-	<!-- 240417 dy : 검색어 입력 후 돋보기 클릭 시 /main/list 요청-->
+
 
 	<script>
 		document.addEventListener('DOMContentLoaded', function () {
@@ -533,8 +530,6 @@
 	<script th:src="@{/main/js/finalcountdown.min.js}"></script>
 	<!-- Nice Select JS -->
 	<script th:src="@{/main/js/nicesellect.js}"></script>
-	<!-- Ytplayer JS -->
-	<!-- <script th:src="@{/main/js/ytplayer.min.js}"></script> -->
 	<!-- Flex Slider JS -->
 	<script th:src="@{/main/js/flex-slider.js}"></script>
 	<!-- ScrollUp JS -->
