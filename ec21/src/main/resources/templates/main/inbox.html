@@ -13,9 +13,7 @@
 	<!-- Favicon -->
 	<link rel="icon" type="image/png" th:href="@{/main/images/ec21logo.png}">
 	<!-- Web Font -->
-	<link
-		href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap"
-		rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap" rel="stylesheet">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap" rel="stylesheet">
 
@@ -25,7 +23,9 @@
 	<!-- Magnific Popup -->
 	<link rel="stylesheet" th:href="@{/main/css/magnific-popup.min.css}">
 	<!-- Font Awesome -->
-	<link rel="stylesheet" th:href="@{/main/css/font-awesome.css}">
+	<!-- <link rel="stylesheet" th:href="@{/main/css/font-awesome.css}"> -->
+	<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"> -->
+	<link th:href="@{../vendors/font-awesome/css/font-awesome.min.css}" rel="stylesheet">
 	<!-- Fancybox -->
 	<link rel="stylesheet" th:href="@{/main/css/jquery.fancybox.min.css}">
 	<!-- Themify Icons -->
@@ -45,7 +45,7 @@
 	<link rel="stylesheet" th:href="@{/main/css/reset.css}">
 	<link rel="stylesheet" th:href="@{/main/css/style.css}">
 	<link rel="stylesheet" th:href="@{/main/css/responsive.css}">
-	<link rel="stylesheet" th:href="@{/main/css/inbox.css}"
+	<link rel="stylesheet" th:href="@{/main/css/inbox.css}">
 
 	<!-- Color CSS -->
 	<link rel="stylesheet" th:href="@{/main/css/color/color2.css}">
@@ -77,7 +77,9 @@
 						<div class="top-left">
 							<!-- logo -->
 							<div class="logo">
-								<a th:href="@{/}"><img th:src="@{/main/images/ec21logo.png}" alt="logo"></a>
+								<a th:href="@{/}">
+									<img th:src="@{/main/images/ec21logo.png}" alt="logo" style="width: 100px; height: 30px;">
+								</a>
 							</div>
 						</div>
 						<!--/ End Top Left -->
@@ -89,7 +91,8 @@
 								<li><i class="ti-power-off"></i><a th:href="@{/main/login}">Login</a></li>
 								<li><i class="ti-user"></i><a th:href="@{/main/register}">Sign up</a></li>
 								<li><i class="ti-power-off"></i><a th:href="@{/main/logout}">Logout</a></li>
-								<li><i class="fa fa-user-circle-o" th:href="@{/main/myproducts}" aria-hidden="true"></i></li>
+								<li><a th:href="@{/main/myproducts}" class="single-icon"><i class="fa fa-user-circle-o"
+									aria-hidden="true"></i></a></li>
 								</li>
 							</ul>
 						</div>
@@ -117,109 +120,77 @@
 
 	<!-- 인콰이어리 목록 -->
 	<section class="inquiry-area inquiry-list">
-			<div class="row">
-				<div class="col-md-2 col-12">
-					<aside class="shop-sidebar">
-						<!-- Single Widget -->
-						<div class="single-widget category">
-							<h3 Inquiry class="title">My Inquiry</h3>
-							<ul class="categor-list">
-								<li><a href="/main/inbox(customerId=${customerId})">Received</a></li>
-								<li><a href="/main/myproducts(customerId=${customerId})" >Sended</a></li>
-								<li><a href="/main/myproducts(customerId=${customerId})" >Saved</a></li>
-								<li><a href="/main/myproducts(customerId=${customerId})" >Spam</a></li>
-								<li><a href="/main/myproducts(customerId=${customerId})" >Block</a></li>
-								<li><a href="/main/myproducts(customerId=${customerId})" >Trash</a></li>
-							</ul>
-						</div>
-						<!--/ End Single Widget -->
-					</aside>
-				</div>
-
-				<main class="col-lg-10 col-12">
-					<div class="row">
-						<!-- My products List -->
-						<div class="shopping-cart section">
-							<div class="container">
-								<div class="row">
-									<div class="col-12">
-										<!-- Shop Top -->
-										<div class="shop-top">
-											<div class="submitBtn">
-												<a href="" class="btn">Delete</a>
-												<a href="" class="btn">Spam</a>
-											</div>
-											<a></a>
-											<div class="shop-shorter">
-												<div class="single-shorter">
-													<label>Show :<span> [[${#lists.size(productList)}]]</span></label>
-												</div>
-											</div>
-											<div class="single-slider">
-											</div>
-										</div>
-
-										<!-- 올린 상품 리스트 -->
-										<table class="table shopping-summery">
-											<thead>
-												<tr class="main-hading">
-													<th class="text-center">NO</th>
-													<th class="text-center">NAME</th>
-													<th class="text-center" colspan="2">TITLE</th>
-													<th class="text-center">DATE</th>
-													<th class="text-center"><i class="ti-trash remove-icon"></i></th>
-													<th class="text-center"><i class="fa fa-envelope-open"></i></th>
-												</tr>
-											</thead>
-											<tbody>
-												<!-- 240418 dy : 회원의 상품 목록 출력 -->
-												<tr th:if="${productList != null and !#lists.isEmpty(productList)}" th:each="product, i : ${productList}">
-													<td class="no"><span>[[${i.count}]]</span></td>
-													<!-- 이미지 우선 임시 링크 -->
-													<td class="image" data-title="No"><img
-															src="https://via.placeholder.com/100x100" alt="#"></td>
-													<td class="product-info" data-title="Description">
-														<p class="product-name"><a th:href="@{/main/productsDetail(productId=${product.productId})}">[[${product.productName}]]</a></p>
-														<p class="product-desc">[[${product.productDesc}]]</p>
-													</td>
-													<td class="price" data-title="Price"><span>$[[${product.price}]]</span></td>
-													<td class="qty" data-title="Qty">
-														<span th:if="${product.moq >= 1000}" th:text="${#numbers.formatInteger(product.moq, 3, 'COMMA')} + ' ' + ${product.unit}"> </span>
-														<span th:unless="${product.moq >= 1000}" th:text="${product.moq} + ' ' + ${product.unit}"></span>
-													</td>
-													<!-- <td class="total-amount" data-title="Total"><span>$220.88</span></td> -->
-													<td class="createDate" data-title="date"><span>[[${#temporals.format(product.createDate, 'yyyy-MM-dd')}]]</span>
-													</td>
-													<td class="action" data-title="Remove"><a th:href="@{/main/myproducts/delete(productId=${product.productId})}"><i class="ti-trash remove-icon"></i></a></td>
-												</tr>
-												<!-- <tr th:if="${productList != null and !#lists.isEmpty(productList)}" th:each="product, i : ${productList}">
-														<td class="no"><span>[[${i.count}]]</span></td>
-														<td class="contactName" data-title="contactName">
-															<p class="contactName"><a th:href="@{/main/productsDetail(productId=${product.productId})}">[[$product.productName]]</a></p>
-														</td>
-														<td class="InquiryTitle" data-title="InquiryTitle" colspan="2"> 
-															<p class="InquiryTitle"><a th:href="@{/main/productsDetail(productId=${product.productId})}">[[${product.productName}]]</a></p>
-														</td>
-														<td class="sendDate" data-title="sendDate"><span>[[${#temporals.format(product.createDate, 'yyyy-MM-dd')}]]</span>
-														</td>
-														<td class="action" data-title="Remove"><a th:href="@{/main/myproducts/delete(productId=${product.productId})}"><i class="ti-trash remove-icon"></i></a></td>
-														<td class="action" data-title="Spam"><a th:href="@{/main/myproducts/delete(productId=${product.productId})}"><i class="fa fa-envelope-open"></i></a></td>
-												</tr> -->
-											</tbody>
-										</table>
-										<!--/ End Shopping Summery -->
-									</div>
-									<!-- 페이징 -->
-								</div>
-							</div>
-						</div>
-						<!--/ End Shopping Cart -->
+			<div class="main-container">
+				<aside class="shop-sidebar">
+					<!-- Single Widget -->
+					<div class="single-widget inquiry-category">
+						<h3 Inquiry class="inquiry-title">My Inquiry</h3>
+						<ul class="categor-list">
+							<li><a href="/main/inbox(customerId=${customerId})">Received</a></li>
+							<li><a href="/main/myproducts(customerId=${customerId})" >Sended</a></li>
+							<li><a href="/main/myproducts(customerId=${customerId})" >Saved</a></li>
+							<li><a href="/main/myproducts(customerId=${customerId})" >Spam</a></li>
+							<li><a href="/main/myproducts(customerId=${customerId})" >Block</a></li>
+							<li><a href="/main/myproducts(customerId=${customerId})" >Trash</a></li>
+						</ul>
 					</div>
-					<span class="paging"> << < 1 2 3 4 5 > >> </span>
+					<!--/ End Single Widget -->
+				</aside>
+				<!-- My products List -->
+				<div class="shopping-cart section">
+					<div class="container">
+								<!-- Shop Top -->
+								<div class="shop-top">
+									<div class="shop-shorter">
+										<div class="single-shorter">
+											<label>Show :<span> [[${#lists.size(productList)}]]</span></label>
+										</div>
+									</div>
+								</div>
+
+								<!-- 인콰이어리 목록 -->
+								<table class="table shopping-summery">
+									<thead>
+										<tr class="main-hading">
+											<th class="saved-icon"></th>
+											<th class="no">NO</th>
+											<th class="contactName">NAME</th>
+											<th class="inquiryTitle" colspan="2">TITLE</th>
+											<th class="sendData">DATE</th>
+											<th class="spam">SPAM</th>
+											<th class="delete"><i class="ti-trash remove-icon"></i></th>
+										</tr>
+									</thead>
+									<tbody>
+										<!-- 240418 dy : 회원의 상품 목록 출력 -->
+										<tr th:if="${productList != null and !#lists.isEmpty(productList)}" th:each="product, i : ${productList}">
+											<td class="saved-icon"><a href="#" id="saved-icon"><i class="ti-star"></i></a></td>
+											<td class="no"><span>[[${i.count}]]</span></td>
+											<td class="contactName" data-title="contactName"><span class="contactName">[[${product.category}]]</span></td>
+											<td class="inquiryTitle" data-title="inquiryTitle" colspan="2">
+												<span class="inquiryTitle" th:href="@{/main/productsDetail(productId=${product.productId})}">[[${product.productName}]]</span>
+											</td>
+											<td class="sendDate" data-title="sendDate"><span>[[${#temporals.format(product.createDate, 'yyyy-MM-dd')}]]</span>
+											</td>
+											<td class="action" data-title="spam"><a th:href="@{/main/myproducts/delete(productId=${product.productId})}"><i class="fa fa-refresh"></i></a></td>
+											<td class="action" data-title="delete"><a th:href="@{/main/myproducts/delete(productId=${product.productId})}"><i class="ti-trash remove-icon"></i></a></td>
+										</tr>
+									</tbody>
+								</table>
+								<!--/ End Shopping Summery -->
+							</div>
+							<!-- 페이징 -->
+							<span class="paging"> << < 1 2 3 4 5 > >> </span>
+						</div>
+					</div>
+				</div>
+				<!--/ End Shopping Cart -->
 				</div>
 			</div>
-	</section>
-	<!--/ End Product Style 1  -->
+		</div>
+</section>
+<!--/ End Product Style 1  -->
+			</div>
 
 
 	<!-- Jquery -->
@@ -258,6 +229,9 @@
 	<script th:src="@{/main/js/easing.js}"></script>
 	<!-- Active JS -->
 	<script th:src="@{/main/js/active.js}"></script>
+	<!-- myFunction JS : 필요한 자바 스크립트 이리로 넣어서 사용하면 됩니다 -->
+	<script th:src="@{/main/js/myFunction.js}"></script>
+
 </body>
 
 </html>
