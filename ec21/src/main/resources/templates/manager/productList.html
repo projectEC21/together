@@ -52,7 +52,7 @@
         let modalPrice = $(this).data("price");
         let modalOrigin = $(this).data("origin");
         let modalMoq = $(this).data("moq");
-        let modalunit = $(this).data("unit");
+        let modalUnit = $(this).data("unit");
         $("#myModal2").modal('show'); // 두 번째 모달을 엽니다.
 
         $("#modalProductName").html(modalProductName);
@@ -61,9 +61,47 @@
         $("#modalPrice").html(modalPrice);
         $("#modalOrigin").html(modalOrigin);
         $("#modalMoq").html(modalMoq);
-        $("#modalunit").html(modalunit);
+        $("#modalUnit").html(modalUnit);
       });
-    })
+    });
+
+    function productNormal() {
+      let productId = $(this).data("id");
+      if (confirm("정상 상품으로 처리하겠습니까?")) {
+        $.ajax({
+          url: "/modelPredict/productNormal",
+          data: { "productId": productId },
+          method: "GET",
+          success: function (resp) {
+            // resp의 타입 : Boolean
+            if (resp) {
+              alert("정상 상품으로 등록되었습니다.");
+              // 페이지 새로고침
+              window.location.reload();
+            }
+          }
+        });
+      }
+    }
+
+    function productWeird() {
+      let productId = $(this).data("id");
+      if (confirm("이상 상품으로 처리하겠습니까?")) {
+        $.ajax({
+          url: "/modelPredict/productWeird",
+          data: { "productId": productId },
+          method: "GET",
+          success: function (resp) {
+            // resp의 타입 : Boolean
+            if (resp) {
+              alert("이상 상품으로 등록되었습니다.");
+              // 페이지 새로고침
+              window.location.reload();
+            }
+          }
+        });
+      }
+    }
 
     function search() {
       let category = $("#category").val();
