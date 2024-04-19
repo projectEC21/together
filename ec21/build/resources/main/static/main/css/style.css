@@ -3749,8 +3749,10 @@ body {
 	start Inquiry CSS
 ========================================*/
 .header.shop .top-left .logo {
-	width: 100px;
+	width: 90px;
 	height: auto;
+    float: left;
+	margin-top: -2px;
 } 
 
 /*======================================
