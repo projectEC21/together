@@ -13,8 +13,8 @@
 
   <!-- Web Font -->
   <link
-  href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap"
-  rel="stylesheet">
+    href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap"
+    rel="stylesheet">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap" rel="stylesheet">
 
@@ -39,12 +39,12 @@
 
   <!-- 240414 dy : JQuery 파일 추가 및 ajax 추가 -->
   <script th:src="@{/script/jquery-3.7.1.min.js}"></script>
-  
+
   <!-- 240417 dy : 카테고리, 검색어에 따른 list 가져오기 및 정상버튼 활성화-->
   <script>
     $(function () {
-      $("#category").on("change",search);
-      $("#searchWord").on("keyup",search);
+      $("#category").on("change", search);
+      $("#searchWord").on("keyup", search);
       init();
     })
 
@@ -54,7 +54,7 @@
       let blacklistId = $("#blacklistId").val();
       $.ajax({
         url: "/manager/blackList/getList",
-        data: { "blacklistId": blacklistId, "category": category, "searchWord": searchWord},
+        data: { "blacklistId": blacklistId, "category": category, "searchWord": searchWord },
         method: "GET",
         success: function (list) {
           $("#result").replaceWith(list);
@@ -70,8 +70,8 @@
       console.log(category);
       console.log(searchWord);
       $.ajax({
-        url:"/manager/blackList/getList",
-        data: {"category": category, "searchWord": searchWord },
+        url: "/manager/blackList/getList",
+        data: { "category": category, "searchWord": searchWord },
         method: "GET",
         success: function (list) {
           $("#result").replaceWith(list);
@@ -141,7 +141,7 @@
                 </li>
                 <li><a><i class="fa fa-users"></i> 회원관리 <span class="fa fa-chevron-down"></span></a>
                   <ul class="nav child_menu">
-                    <li><a th:href="@{/manager/customerList}">정상회원</a></li>
+                    <li><a th:href="@{/manager/customerList}">전체회원</a></li>
                     <li><a th:href="@{/manager/reportedCustomerList}">신고당한회원</a></li>
                     <li><a th:href="@{/manager/blackList}">블랙리스트회원</a></li>
                   </ul>
