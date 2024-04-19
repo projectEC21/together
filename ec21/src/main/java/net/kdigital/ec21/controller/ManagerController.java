@@ -116,23 +116,57 @@ public class ManagerController {
 
 		return "/manager/modelPredict::#result";
 	}
+	
+	/**
+	 * ajax - 전달받은 상품ID에 해당하는 (금지어 유사단어, 금지어 단어, 금지어 카테고리) 정보 리스트로 반환
+	 * @param productId
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/manager/modelPredict/getProhibitSimilarWordDTOs", method = RequestMethod.GET)
+	public String getProhibitSimilarWordDTOs(@RequestParam(name = "productId") String productId, Model model) {
+		List<ModelPredictModalDTO> result = managerService.getProhibitSimilarWordDTOs(productId);
+		model.addAttribute("list", result);
+		return "/manager/modelPredict::#modalTable";
+	}
 
 	/**
-	 * 전달받은 상품 ID에 해당하는 금지어유사도 결과 리스트를 JSON 데이터로 반환
-	 * @param productId
+	 * 금지어 목록에 새로운 단어 추가 요청
+	 * @param similarWord
+	 * @param prohibitReason
 	 * @return
-	 * @throws JsonProcessingException
 	 */
 	@ResponseBody
-	@GetMapping("/manager/modelPredict/getProhibitSimilarWordDTOs")
-	public String getProhibitSimilarWordDTOs(@RequestParam(name = "productId") String productId) throws JsonProcessingException {
-		List<ModelPredictModalDTO>result = managerService.getProhibitSimilarWordDTOs(productId);
-		if (result==null) {
-			return null;
-		}
-		ObjectMapper mapper = new ObjectMapper();
-		return mapper.writeValueAsString(result);
+	@GetMapping("modelPredict/wordPlus")
+	public Boolean getMethodName(@RequestParam(name = "similarWord") String similarWord, 
+								@RequestParam(name = "prohibitReason")String prohibitReason) {
+		return managerService.insertProhibitWord(similarWord, prohibitReason);
 	}
+
+	/**
+	 * 정상상품 요청 시 상품의 judge를 Y 즉, 정상으로 변경
+	 * @param productId
+	 * @return
+	 */
+	@ResponseBody
+	@GetMapping("modelPredict/productNormal")
+	public Boolean productNormal(@RequestParam(name = "productId") String productId){
+		log.info("지금 정상 버튼 눌러서 컨트롤러왔어");
+		return managerService.updateProductJudgeNormal(productId);
+	}
+
+	/**
+	 * 이상상품 요청 시 상품의 judge를 N 즉, 이상으로 변경
+	 * @param productId
+	 * @return
+	 */
+	@ResponseBody
+	@GetMapping("modelPredict/productWeird")
+	public Boolean productWeird(@RequestParam(name = "productId") String productId){
+		log.info("지금 블랙 버튼 눌러서 컨트롤러왔어");
+		return managerService.updateProductJudgeWeird(productId);
+	}
+	
 	
 
 
