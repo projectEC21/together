@@ -28,11 +28,16 @@
 	font-size: 22px;
 }
 
+.shop-sidebar .single-widget.inquiry-category ul>li {
+	font-size: 14px;
+	color: #fff;
+}
+
 .shopping-cart .container {
 	flex: 4; /* 메인 콘텐츠가 차지할 공간 비율 설정 */
 }
 
-.inquiry-list .shopping-cart {
+.inquiry-area .shopping-cart {
 	background: #444;
 	padding: 10px;
 }
