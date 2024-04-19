@@ -101,7 +101,40 @@
 						<div class="logo">
 							<a th:href="@{/}"><img th:src="@{/main/images/ec21logo.png}" alt="logo"></a>
 						</div>
+						<!--/ End Logo -->
+						<!-- Search Form -->
+						<div class="search-top">
+							<div class="top-search"><a href="#"><i class="ti-search"></i></a></div>
+							<!-- Search Form -->
+							<div class="search-top">
+								<form class="search-form">
+									<input type="text" placeholder="Search here..." name="search">
+									<button value="search" type="submit"><i class="ti-search"></i></button>
+								</form>
+							</div>
+							<!--/ End Search Form -->
+						</div>
+						<!--/ End Search Form -->
 						<div class="mobile-nav"></div>
+					</div>
+					<div class="col-lg-8 col-md-7 col-12">
+						<div class="search-bar-top">
+							<div class="search-bar">
+								<!-- 240418 dy : 카테고리 선택 시 상품 리스트로 가기 위한 요청 걸어줌 -->
+								<select id="category" name="category">
+									<option value="total" selected="selected">All Category</option>
+									<option value="FOOD_BEVERAGE">Food & Beverage</option>
+									<option value="CHEMICAL">Chemical</option>
+									<option value="HEALTH_MEDICAL">Health & Medical</option>
+									<option value="ELECTRONIC">Electronics</option>
+									<option value="COSMETIC">Cosmetic</option>
+								</select>
+								<form>
+									<input name="search" placeholder="What are you searching for?" type="search" id="searchWord">
+									<button class="btnn"><i class="ti-search" id="searchBtn"></i></button>
+								</form>
+							</div>
+						</div>
 					</div>
 					<div class="col-lg-2 col-md-3 col-12">
 						<div class="right-bar">
@@ -110,11 +143,70 @@
 								<a th:href="@{/main/myproducts}" class="single-icon"><i class="fa fa-user-circle-o"
 										aria-hidden="true"></i></a>
 							</div>
+
+							<!-- 검색창 옆 부분 인콰이어리 new 로만 보이게 하고 인콰이어리 페이지로 넘어가게 하기 -->
+							<div class="sinlge-bar inquiry">
+								<a th:href="@{/main/inbox}" class="single-icon"><i class="fa fa-envelope-o"></i> <span
+										class="total-count">NEW</span></a>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
+
+		<!-- Header Inner -->
+		<div class="header-inner">
+			<div class="container">
+				<div class="cat-nav-head">
+					<div class="row">
+					</div>
+					<div class="col-lg-9 col-12">
+						<div class="menu-area">
+
+							<!-- Main Menu -->
+							<nav class="navbar navbar-expand-lg">
+								<div class="navbar-collapse">
+									<div class="nav-inner">
+										<!-- 240418 dy : 카테고리 별 상품 목록 요청(검색어X) -->
+										<ul class="nav main-menu menu navbar-nav">
+											<li><a th:href="@{/main/list(category=total)}">All</a></li>
+											<li><a th:href="@{/main/list(category=FOOD_BEVERAGE)}">Food & Beverage</a></li>
+											<li><a th:href="@{/main/list(category=CHEMICAL)}">Chemical</a></li>
+											<li><a th:href="@{/main/list(category=HEALTH_MEDICAL)}">Health & Medical</a></li>
+											<li><a th:href="@{/main/list(category=ELECTRONIC)}">Electronics</a></li>
+											<li><a th:href="@{/main/list(category=COSMETIC)}">Cosmetic</a></li>
+										</ul>
+									</div>
+								</div>
+							</nav>
+							<!--/ End Main Menu -->
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		</div>
+		<!--/ End Header Inner -->
+	</header>
+	<!--/ End Header -->
+
+	<!-- Breadcrumbs : 사이트 내 경로 -->
+	<div class="breadcrumbs">
+		<div class="container">
+			<div class="row">
+				<div class="col-12">
+					<div class="bread-inner">
+						<ul class="bread-list">
+							<li><a th:href="@{/}">Home<i class="ti-arrow-right"></i></a></li>
+							<li class="active"><a th:href="@{/main/myinfo}">My Page</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- End Breadcrumbs -->
 
 	<!-- 
 			Product Style 1 
