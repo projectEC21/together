@@ -25,12 +25,20 @@
     height: 100vh;
 	padding: 10px;
 	color: #fff;
+	width: 200px;
 }
 
 
 .shop-sidebar .single-widget.inquiry-category h3 {
 	font-size: 22px;
 	margin: 10px;
+	text-align: justify;
+    border-bottom: 1px solid;
+    padding-bottom: 15px;
+}
+
+.shop-sidebar .single-widget.inquiry-category .categor-list li {
+	text-align: justify;
 }
 
 .shop-sidebar .single-widget.inquiry-category .categor-list li a {
@@ -39,7 +47,7 @@
     font-weight: 400;
     font-size: 16px;
     text-transform: uppercase;
-	margin: 10px 20px;
+	margin: 10px 10px;
 }
 
 .shop-sidebar .single-widget.inquiry-category .categor-list li a:hover {
@@ -102,6 +110,55 @@
 .shopping-cart.section .paging {
 	display: flex;
 	justify-content: center;
+}
+
+#inquiryDetail .modal-dialog .modal-content .modal-body {
+	overflow-y: auto;
+    max-height: 510px;
+    height: 350px;
+	margin: 0 15px;
+}
+
+@media (min-width: 700px) {
+    .modal-dialog {
+        margin-top: 30px; /* 태블릿 이상의 화면 크기에 적용될 값 */
+    }
+}
+
+#inquiryDetail th{
+	text-align: -webkit-left;
+    line-height: 0px;
+    width: 10px;
+}
+#inquiryDetail td {
+    text-align: start;
+    padding: 10px 10px;
+    width: 320px;
+}
+
+#inquiryDetail .modal-header {
+	color: #fff;
+	background-color: #333;
+}
+
+#inquiryDetail .modal-body tr {
+	margin: 15px;
+	text-align: start
+}
+
+#inquiryDetail  .modal-body th.text-center>span {
+	color: #222;
+	display: inline-block;
+	position: sticky;
+	right: -12px;
+	top: 4px;
+	font-size: 16px;
+}
+
+#inquiryDetail  .modal-body textarea {
+	resize: none;
+	width: 80%;    
+	height: 120px;
 }
 
 /*======================================
