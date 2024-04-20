@@ -18,7 +18,6 @@ import net.kdigital.ec21.dto.ModelPredictModalDTO;
 import net.kdigital.ec21.dto.ProductDTO;
 import net.kdigital.ec21.dto.ReportedCustomerWithInfoDTO;
 import net.kdigital.ec21.service.ManagerService;
-import net.kdigital.ec21.service.ProductService;
 
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -32,7 +31,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Slf4j
 public class ManagerController {
 	private final ManagerService managerService;
-	private final ProductService productService;
 
 	// ============================= 메인보드 =============================
 	/**
@@ -205,6 +203,28 @@ public class ManagerController {
 	}
 
 	/**
+	 * 전달받은 customerId에 해당하는 회원 블랙리스트 처리 요청
+	 * @param customerId
+	 * @param blackReason
+	 * @param etcReason
+	 * @return
+	 */
+	@ResponseBody
+	@GetMapping("/manager/customerList/toBlack")
+	public Boolean getMethodName(@RequestParam(name = "customerId") String customerId,
+			@RequestParam(name = "blackReason") String blackReason,
+			@RequestParam(name = "etcReason") String etcReason) {
+		log.info("======= 블랙으로 변경");
+		log.info("=======  {}", customerId);
+		log.info("=======  {}", blackReason);
+		log.info("=======  {}", etcReason);
+		return managerService.insertToBlacklist(customerId,blackReason,etcReason);
+	}
+	
+
+
+
+	/**
 	 * 신고당한 회원 리스트 화면 요청
 	 * 
 	 * @return
@@ -282,7 +302,7 @@ public class ManagerController {
 			@RequestParam(name = "searchWord", defaultValue = "") String searchWord, Model model) {
 
 		if (blacklistId != -100) {
-			// 정상버튼 : 블랙리스트 테이블에서 해당 블랙리스트ID(일련번호) 삭제
+			// 정상버튼 : 블랙리스트 테이블에서 해당 블랙리스트ID(일련번호) 삭제 및 해당 customerId blacklistCheck값 변경
 			managerService.deleteFromBalcklist(blacklistId);
 		}
 		List<ReportedCustomerWithInfoDTO> dtoList = managerService.selectblackListBySearch(category, searchWord);
