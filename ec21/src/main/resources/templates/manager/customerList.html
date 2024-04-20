@@ -213,13 +213,13 @@
           let blackReason = $('input[name="reason"]:checked').val();
           let etcReason = $("#etcReasonInput").val();
 
-          if (confirm(customerId+"를 블랙회원으로 처리하시겠습니까? ")) {
+          if (confirm(customerId + "를 블랙회원으로 처리하시겠습니까? ")) {
             // customerId를 블랙리스트 DB에 등록하는 요청
             $.ajax({
-              url:"/manager/customerList/toBlack",
-              data:{"customerId":customerId, "blackReason":blackReason,"etcReason": etcReason },
-              method:"GET",
-              success:function(resp){
+              url: "/manager/customerList/toBlack",
+              data: { "customerId": customerId, "blackReason": blackReason, "etcReason": etcReason },
+              method: "GET",
+              success: function (resp) {
                 if (resp) {
                   alert("블랙회원으로 처리되었습니다.");
                   // 모달창 닫기
@@ -329,7 +329,8 @@
                 </a>
                 <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
                   <a class="dropdown-item" th:href=@{/}><i class="fa fa-home pull-right"></i> Home</a>
-                  <a class="dropdown-item" th:href="@{/main/login}"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
+                  <a class="dropdown-item" th:href="@{/main/login}"><i class="fa fa-sign-out pull-right"></i> Log
+                    Out</a>
                 </div>
               </li>
 
@@ -377,7 +378,7 @@
 
                 <div class="x_content">
 
-                  <table id="datatable" class="table table-striped jambo_table table-bordered dataTable no-footer"
+                  <table id="" class="table table-striped jambo_table table-bordered dataTable no-footer"
                     cellspacing="0" width="100%"> <!-- dt-responsive-->
                     <thead>
                       <tr>
