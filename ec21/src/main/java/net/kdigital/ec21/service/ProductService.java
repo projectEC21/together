@@ -196,9 +196,12 @@ public class ProductService {
      * 전달 받은 상품ID에 해당하는 상품의 productDelete 값을 Y로 변경하는 함수
      * @param productId
      */
-    public void updateDeleteCheck(String productId) {
+    @Transactional
+    public Boolean updateDeleteCheck(String productId) {
         ProductEntity entity = productRepository.findById(productId).get();
         entity.setProductDelete(YesOrNo.Y);
+        return true;
+
     }
 
     /**
