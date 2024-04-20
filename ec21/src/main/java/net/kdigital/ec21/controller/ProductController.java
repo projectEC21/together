@@ -11,10 +11,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import net.kdigital.ec21.dto.CustomerDTO;
 import net.kdigital.ec21.dto.ProductDTO;
 import net.kdigital.ec21.service.CustomerService;
 import net.kdigital.ec21.service.ProductService;
@@ -60,20 +58,26 @@ public class ProductController {
     
 
 
-    // ====================================== 상품 디테일 ========================================
-    // 관리자 : 이상 버튼 (GET:/productsDetail/updateJudgeWeird) , 정상 버튼 (GET:/productsDetail/updateJudgeNormal)
-    // 상품 등록한 사람 : edit버튼 (GET:/main/productsUpdate), delete 버튼 (GET:/main/productsDelete)
+    // =============================== 상품 상세 페이지 ===============================
+    // 상품 등록한 사람 : edit버튼 (GET:/main/productsUpdate), delete버튼 (GET:/main/productsDelete)
     /**
-     * 전달받은 상품 아이디에 해당하는 상품DTO와 해당 상품과 동일한 카테고리에 속한 상품들 최대 5개를 
-     *  model에 담아 상품 상세 정보 페이지로 보냄
+     * 전달받은 상품 아이디에 해당하는 상품DTO와 해당 상품과 동일한 카테고리에 속한 상품들 최대 5개를
+     * model에 담아 상품 상세 정보 페이지로 보냄
+     * 
      * @param productId
+     * @param category
+     * @param searchWord
+     * @param currentPage : main/myproducts or main/list 둘 중 하나임
      * @param model
      * @return
      */
     @GetMapping("main/productsDetail")
     public String productsDetail(@RequestParam(name = "productId", defaultValue = "CO00006-20240409") String productId,
                                 @RequestParam(name = "category", defaultValue = "total") String category,
-                                @RequestParam(name = "searchWord", defaultValue = "") String searchWord, Model model) {
+                                @RequestParam(name = "searchWord", defaultValue = "") String searchWord,
+                                @RequestParam(name = "currentPage", defaultValue = "myproducts")String currentPage, Model model) {
+        
+        log.info("============호출한 페이지 : {}",currentPage);
         // productId에 해당하는 Product의 hitCount 증가
         productService.updateHitCount(productId);
         
@@ -88,6 +92,7 @@ public class ProductController {
         model.addAttribute("list", dtoList);
         model.addAttribute("category", category);
         model.addAttribute("searchWord", searchWord);
+        model.addAttribute("currentPage", currentPage);
         
         return "main/productsDetail";
     }
@@ -96,7 +101,7 @@ public class ProductController {
 
     /**
      * 상품 수정 페이지 요청 (회원ID에 해당하는 회원DTO를 받아서 model에 담아 보냄)
-     * 
+     *  
      * @return
      */
     @GetMapping("main/productsUpdate")
@@ -138,12 +143,54 @@ public class ProductController {
     @GetMapping("main/productsDelete")
     @ResponseBody
     public Boolean productsDelete(@RequestParam(name = "productId", defaultValue = "CO00006-20240409") String productId) {
-        
         // 상품 삭제 여부 값 변경 (N->Y)
         return productService.updateDeleteCheck(productId);
     }
+    
+    /**
+     * 상세 페이지에서 상품 삭제 후 myproducts(mypage) 페이지 요청
+     * @param customerId
+     * @param category
+     * @param searchWord
+     * @param attr
+     * @return
+     */
+    @GetMapping("/main/myproducts/afterDelete")
+    public String myProductsAfterDelete(@RequestParam(name = "customerId", defaultValue = "jooyoungyoon") String customerId,
+            @RequestParam(name = "category", defaultValue = "total") String category,
+            @RequestParam(name = "searchWord", defaultValue = "") String searchWord, RedirectAttributes attr) {
 
+        // 회원ID에 해당하는 회원이 판매하고 있는 상품 리스트
+        List<ProductDTO> productList = productService.getCustomerProducts(customerId);
+        attr.addFlashAttribute("productList", productList);
 
+        attr.addFlashAttribute("customerId", customerId);
+        attr.addFlashAttribute("category", category);
+        attr.addFlashAttribute("searchWord", searchWord);
+
+        return "redirect:/main/myproducts";
+    }
+
+    /**
+     * 상세 페이지에서 상품 삭제 후 상품리스트(list) 페이지 요청
+     * @param category
+     * @param searchWord
+     * @param attr
+     * @return
+     */
+    @GetMapping("main/list/afterDelete")
+    public String listAfterDelete(@RequestParam(name = "category", defaultValue = "total") String category,
+            @RequestParam(name = "searchWord", defaultValue = "") String searchWord, RedirectAttributes attr) {
+        log.info("=========== 카테고리 : {}",category);
+        log.info("=========== 검색어 : {}",searchWord);
+        List<ProductDTO> dtoList = productService.getProductList(category, searchWord);
+
+        attr.addFlashAttribute("list", dtoList);
+        attr.addFlashAttribute("category", category);
+        attr.addFlashAttribute("searchWord", searchWord);
+        
+        return "redirect:/main/list";
+    }
 
     //================================= 메인화면 상품 목록(카테고리별) ===================================
     /**
@@ -158,9 +205,12 @@ public class ProductController {
             @RequestParam(name = "searchWord", defaultValue = "") String searchWord, Model model) {
         log.info("=========== 카테고리 : {}",category);
         log.info("=========== 검색어 : {}",searchWord);
-        List<ProductDTO> dtoList = productService.getProductList(category, searchWord);
-
-        model.addAttribute("list", dtoList);
+        // Flash Attribute에서 상품 리스트 가져오기
+        if (!model.containsAttribute("productList")) {
+            // Flash Attribute가 없는 경우, 기본 로직으로 상품 리스트를 가져옴
+            List<ProductDTO> productList = productService.getProductList(category, searchWord);
+            model.addAttribute("list", productList);
+        }
         model.addAttribute("category", category);
         model.addAttribute("searchWord", searchWord);
         
