@@ -1,6 +1,10 @@
 /*======================================
 	start Inquiry CSS
 ========================================*/
+.row {
+	margin-left: -85px;
+}
+
 .header.shop .top-left .logo {
 	width: 90px;
 	height: auto;
