@@ -23,9 +23,9 @@
 	<!-- Magnific Popup -->
 	<link rel="stylesheet" th:href="@{/main/css/magnific-popup.min.css}">
 	<!-- Font Awesome -->
-	<!-- <link rel="stylesheet" th:href="@{/main/css/font-awesome.css}"> -->
+	<link rel="stylesheet" th:href="@{/main/css/font-awesome.css}">
 	<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"> -->
-	<link th:href="@{../vendors/font-awesome/css/font-awesome.min.css}" rel="stylesheet">
+	<!-- <link th:href="@{../vendors/font-awesome/css/font-awesome.min.css}" rel="stylesheet"> -->
 	<!-- Fancybox -->
 	<link rel="stylesheet" th:href="@{/main/css/jquery.fancybox.min.css}">
 	<!-- Themify Icons -->
@@ -97,9 +97,7 @@
 								<li><i class="ti-power-off"></i><a th:href="@{/main/login}">Login</a></li>
 								<li><i class="ti-user"></i><a th:href="@{/main/register}">Sign up</a></li>
 								<li><i class="ti-power-off"></i><a th:href="@{/main/logout}">Logout</a></li>
-								<li><a th:href="@{/main/myproducts}" class="single-icon"><i class="fa fa-user-circle-o"
-									aria-hidden="true"></i></a></li>
-								</li>
+								<li><i class="fa fa-user-circle-o" aria-hidden="true"></i><a th:href="@{/main/myproducts}"></a></li>
 							</ul>
 						</div>
 						<!-- End Top Right -->
@@ -225,7 +223,7 @@
 									<td id="sendId"></td>
 								</tr>
 								<tr>
-									<th class="">Subject <span>*</span></th>
+									<th class="">Subject</th>
 									<td><span>..</span></td>
 								</tr>
 								<tr>
@@ -234,7 +232,7 @@
 								</tr>
 								<tr>
 									<th class="">Message</th>
-									<td><span>..</span></td>
+									<td><span><textarea readonly></textarea></span></td>
 								</tr>
 								<tr>
 									<!-- 파일 부분 다운만 가능한 건 어떻게 하는지 까먹어서 우선 패스 -->
