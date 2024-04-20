@@ -357,7 +357,6 @@
                 </div>
 
                 <div class="x_content">
-
                   <!-- start project list -->
                   <table id="" class="table table-striped jambo_table table-bordered dataTable no-footer"
                     cellspacing="0" width="100%"> <!-- dt-responsive-->
@@ -394,8 +393,10 @@
                         </td>
                         <td>
                           <!-- 이상검출도: [[${product.lstmPredictProba}]] % -->
-                          <div>이상검출도: <div
-                              th:text="${#numbers.formatDecimal(product.lstmPredictProba * 100, 1, 2)} + '%'"></div>
+                          <div>이상검출도: [[${#numbers.formatDecimal(product.lstmPredictProba * 100, 1, 2)} + '%']]
+                            <!-- <div
+                              th:text="${numbers.formatDecimal(product.lstmPredictProba * 100, 1, 2)} + '%'">
+                            </div> -->
                           </div>
 
                           <div class="progress progress_sm">
