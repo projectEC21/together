@@ -3,7 +3,6 @@ package net.kdigital.ec21.controller;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -245,6 +244,18 @@ public class ManagerController {
 		
 		return "/manager/reportedCustomerList::#result";
 	}
+
+	/**
+	 * 전달받은 회원ID가 블랙리스트 DB에 존재하는지 확인 (존재하면 false, 존재하지 않으면 true)
+	 * @param reportedId
+	 * @return
+	 */
+	@ResponseBody
+	@GetMapping("/reportedCustomerList/checkBlack")
+	public Boolean checkBlack(@RequestParam(name = "reportedId", defaultValue = "") String reportedId) {
+		return managerService.checkBlack(reportedId);
+	}
+	
 
 	/**
 	 * 블랙리스트 회원 리스트 화면 요청
