@@ -5889,14 +5889,11 @@ fieldset {
   margin: 8px;
 }
 
-.modal-body {
-  max-height: 400px;
-  overflow-y: auto;
-  /* 세로 스크롤 */
-}
+
 
 .modal-content {
   height: 700px;
+  overflow-y: auto;
 }
 
 

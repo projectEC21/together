@@ -130,13 +130,13 @@
 					<div class="single-widget inquiry-category">
 						<h3 Inquiry class="inquiry-title">My Inquiry</h3>
 						<ul class="categor-list">
-							<li><a th:href="@{/main/inbox(customerId=${customerId})}" style="
-								color: #439eff;">Received</a></li>
+							<li><a th:href="@{/main/inbox(customerId=${customerId})}">Received</a></li>
 							<li><a th:href="@{/main/inboxSended(customerId=${customerId})}" >Sended</a></li>
 							<li><a th:href="@{/main/inboxSaved(customerId=${customerId})}" >Saved</a></li>
 							<li><a th:href="@{/main/inboxSpam(customerId=${customerId})}" >Spam</a></li>
 							<li><a th:href="@{/main/inboxBlock(customerId=${customerId})}" >Block</a></li>
-							<li><a th:href="@{/main/inboxTrash(customerId=${customerId})}" >Trash</a></li>
+							<li><a th:href="@{/main/inboxTrash(customerId=${customerId})}" style="
+								color: #439eff;">Trash</a></li>
 						</ul>
 					</div>
 					<!--/ End Single Widget -->

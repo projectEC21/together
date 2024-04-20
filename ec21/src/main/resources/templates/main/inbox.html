@@ -130,12 +130,13 @@
 					<div class="single-widget inquiry-category">
 						<h3 Inquiry class="inquiry-title">My Inquiry</h3>
 						<ul class="categor-list">
-							<li><a href="/main/inbox(customerId=${customerId})">Received</a></li>
-							<li><a href="/main/myproducts(customerId=${customerId})" >Sended</a></li>
-							<li><a href="/main/myproducts(customerId=${customerId})" >Saved</a></li>
-							<li><a href="/main/myproducts(customerId=${customerId})" >Spam</a></li>
-							<li><a href="/main/myproducts(customerId=${customerId})" >Block</a></li>
-							<li><a href="/main/myproducts(customerId=${customerId})" >Trash</a></li>
+							<li><a th:href="@{/main/inbox(customerId=${customerId})}" style="
+								color: #439eff;">Received</a></li>
+							<li><a th:href="@{/main/inboxSended(customerId=${customerId})}" >Sended</a></li>
+							<li><a th:href="@{/main/inboxSaved(customerId=${customerId})}" >Saved</a></li>
+							<li><a th:href="@{/main/inboxSpam(customerId=${customerId})}" >Spam</a></li>
+							<li><a th:href="@{/main/inboxBlock(customerId=${customerId})}" >Block</a></li>
+							<li><a th:href="@{/main/inboxTrash(customerId=${customerId})}" >Trash</a></li>
 						</ul>
 					</div>
 					<!--/ End Single Widget -->
@@ -156,7 +157,6 @@
 								<thead>
 									<tr class="main-hading">
 										<th class="saved-icon"></th>
-										<th class="no">NO</th>
 										<th class="sendId">Id</th>
 										<th class="inquiryTitle" colspan="2">TITLE</th>
 										<th class="sendData">DATE</th>
@@ -169,8 +169,6 @@
 									<tr th:if="${productList != null and !#lists.isEmpty(productList)}" th:each="product, i : ${productList}">
 										<!-- 저장 여부 : 클릭하면 색상 변하게 해둠-->
 										<td class="saved-icon"><a href="#" id="saved-icon"><i class="ti-star"></i></a></td>
-										<!-- 개수 -->
-										<td class="no"><span>[[${i.count}]]</span></td>
 										<!-- 담당자명 -->
 										<td class="contactName" data-title="contactName"><span class="contactName">[[${product.category}]]</span></td>
 										<!-- 제목만 -->
