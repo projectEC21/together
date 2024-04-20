@@ -147,6 +147,7 @@
               tableContent += '</tbody>';
             }
             // 모달 컨텐츠 업데이트
+            $("#modalCustomerId").html(modalCustomerId);
             $("#modalCompName").html(modalCompName);
             $("#modalCompUrl").html(modalCompUrl);
             $("#modalEmail").html(modalEmail);
@@ -154,6 +155,7 @@
             $("#modalbusiNo").html(modalbusiNo);
             $("#modalAddress").html(modalAddress);
             $("#modalTable").html(tableContent);
+            $('#blackButton').attr('data-id', modalCustomerId); // 블랙 버튼에 회원ID 넣기
             // 모달 열기
             $("#myModal1").modal('show');
           }
@@ -205,9 +207,31 @@
           alert("기타 사유를 입력해주세요.");
         } else {
           etcReasonError.hide();
-          $('#myModal1').modal('hide');
+          // 블랙 사유 가져오기
+          let customerId = $(this).data("id");
+          console.log(customerId);
+          let blackReason = $('input[name="reason"]:checked').val();
+          let etcReason = $("#etcReasonInput").val();
+
+          if (confirm(customerId+"를 블랙회원으로 처리하시겠습니까? ")) {
+            // customerId를 블랙리스트 DB에 등록하는 요청
+            $.ajax({
+              url:"/manager/customerList/toBlack",
+              data:{"customerId":customerId, "blackReason":blackReason,"etcReason": etcReason },
+              method:"GET",
+              success:function(resp){
+                if (resp) {
+                  alert("블랙회원으로 처리되었습니다.");
+                  // 모달창 닫기
+                  $('#myModal1').modal('hide');
+                  // 페이지 새로고침
+                  window.location.reload();
+                }
+              }
+            });
+          }
         }
-      });
+      }); // -- End (블랙 클릭 이벤트) --
 
       // 모달창 나가면 초기화
       $('#myModal1').on('hidden.bs.modal', function (e) {
@@ -305,7 +329,7 @@
                 </a>
                 <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
                   <a class="dropdown-item" th:href=@{/}><i class="fa fa-home pull-right"></i> Home</a>
-                  <a class="dropdown-item" th:href="@{main/login}"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
+                  <a class="dropdown-item" th:href="@{/main/login}"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
                 </div>
               </li>
 
@@ -470,15 +494,14 @@
         <div class="modal-body">
           <!-- 기타 사유 입력 폼 -->
           <div class="modalForm">
-            <input type="radio" name="reason" value="drug">마약
-            <input type="radio" name="reason" value="intellectual_property">지적재산권 침해
-            <input type="radio" name="reason" value="spam">다발성 이메일
-            <input type="radio" name="reason" value="etc" id="etcRadio">기타
+            <input type="radio" name="reason" value="DRUG">마약
+            <input type="radio" name="reason" value="IPR">지적재산권 침해
+            <input type="radio" name="reason" value="SPAM">다발성 이메일
+            <input type="radio" name="reason" value="ETC" id="etcRadio">기타
             <input type="text" name="etcReason" id="etcReasonInput" placeholder="기타 사유 입력" style="display: none;">
             <!-- 기타 사유 입력 에러 메시지 -->
             <div id="etcReasonError" style="color: red; display: none;">기타 사유를 입력해주세요.</div>
             <input type="button" class="btn btn-hover color-8" value="블랙" id="blackButton">
-
           </div>
         </div>
 
