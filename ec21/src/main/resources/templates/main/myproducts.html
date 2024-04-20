@@ -295,7 +295,7 @@
 													<td class="image" data-title="No"><img
 															src="https://via.placeholder.com/100x100" alt="#"></td>
 													<td class="product-info" data-title="Description">
-														<p class="product-name"><a th:href="@{/main/productsDetail(productId=${product.productId})}">[[${product.productName}]]</a></p>
+														<p class="product-name"><a th:href="@{/main/productsDetail(productId=${product.productId},currentPage='myproducts')}">[[${product.productName}]]</a></p>
 														<p class="product-desc">[[${product.productDesc}]]</p>
 													</td>
 													<td class="price" data-title="Price"><span>$[[${product.price}]]</span></td>

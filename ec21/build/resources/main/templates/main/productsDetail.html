@@ -79,9 +79,8 @@
 			})
 		}
 
-	function deleteProduct() {
-		let productId = $("#deleteBtn").attr("data-product");
-		let customerId = $("#deleteBtn").attr("data-customer");
+	function deleteProduct(element,event) {
+		let productId = element.getAttribute("data-product");
 		if (confirm("정말 삭제하시겠습니까?")) {
 			$.ajax({
 				url : "/main/productsDelete",
@@ -89,13 +88,7 @@
 				success : function (resp) {
 					if(resp){
 						alert("삭제가 완료되었습니다.");
-						fetch(`/main/muproducts?customerId=${customerId}`)
-							.then(response => {
-								console.log('Request was sent successfully');
-							})
-							.catch(error => {
-								console.error('Error sending request:', error);
-							});
+						return true;
 					}
 				}
 			});
@@ -272,11 +265,18 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-12">
-						<!-- Product Edit Buttons for User and Manager -->
+						<!-- Product Edit & Delete Buttons for User and Manager -->
 						<div class="btn-edit">
 							<ul class="user-custom">
 								<li><a th:href="@{/main/productsUpdate(productId=${product.productId})}" class="btn min user">Edit</a></li>
-								<li><a href="javascript:void(0);" onclick="deleteProduct()" class="btn min user" id="deleteBtn" th:data-product="${product.productId}" th:data-customer="${product.customerId}">Delete</a></li>
+								<li>
+									<th:block th:if="${currentPage eq 'myproducts'}">
+										<a onclick="return deleteProduct(this,event)" th:href="@{/main/myproducts/afterDelete(customerId=${product.customerId},category=${category}, searchWord=${searchWord})}" class="btn min user" id="deleteBtn" th:data-product="${product.productId}">Delete</a></li>
+									</th:block>
+									<th:block th:unless="${currentPage eq 'myproducts'}">
+										<a onclick="return deleteProduct(this,event)" th:href="@{/main/list/afterDelete(category=${category}, searchWord=${searchWord})}" class="btn min user" id="deleteBtn" th:data-product="${product.productId}">Delete</a>
+									</th:block>
+								</li>
 							</ul>
 						</div>
 						<!-- Product Gallery -->
