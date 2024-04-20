@@ -114,7 +114,7 @@
   @include box-shadow($modal-content-box-shadow-xs);
   // Remove focus outline from opened modal
   outline: 0;
-  height: 700px;
+
 }
 
 // Modal background
@@ -214,6 +214,8 @@
       max-height: calc(100vh - #{$modal-dialog-margin-y-sm-up * 2});
     }
   }
+
+
 
   .modal-dialog-centered {
     min-height: calc(100% - #{$modal-dialog-margin-y-sm-up * 2});
