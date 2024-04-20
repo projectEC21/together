@@ -386,6 +386,20 @@ public class ManagerService {
     }
 
     /**
+     * 신고회원을 블랙으로 처리하기 전 해당ID가 블랙리스트DB에 존재하는지 확인하는 함수
+     * @param reportedId
+     * @return
+     */
+    public Boolean checkBlack(String reportedId) {
+        Optional<BlacklistEntity> black= blacklistRepository.findByCustomerId(reportedId);
+        if (black.isPresent()) {
+            return false;
+        }
+        return true;
+    }
+
+
+    /**
      * 신고 회원을 블랙회원으로 변경하는 함수 <br>
      * 신고회원 테이블 pk와 신고당한 회원 아이디를 입력받은 후,<br>
      * 1. 신고당한 아이디의 blacklist_check 값 변경 <br>
@@ -397,14 +411,14 @@ public class ManagerService {
      */
     @Transactional
     public void reportedIdToBlackList(Long reportCutomerId, String reportedId) {
-
         // customer의 blacklistCheck값 Y로 변경
         CustomerEntity customerEntity = customerRepository.findById(reportedId).get();
         customerEntity.setBlacklistCheck(YesOrNo.Y);
 
-        // 블랙리스트DTO 생성
+        // 신고회원엔티티 가져오기 (신고사유,카테고리 가져오기 위함)
         ReportCustomerEntity reportCustomerEntity = reportCustomerRepository.findById(reportCutomerId).get();
-
+        
+        // 블랙리스트DTO 생성
         BlacklistDTO dto = new BlacklistDTO(reportedId, customerEntity.getCompName(), customerEntity.getRemoteIp(),
                 customerEntity.getCountry(), reportCustomerEntity.getReportCategory(),
                 reportCustomerEntity.getReportReason());
