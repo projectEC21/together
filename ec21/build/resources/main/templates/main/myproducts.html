@@ -292,11 +292,14 @@
 												<tr th:if="${productList != null and !#lists.isEmpty(productList)}" th:each="product, i : ${productList}">
 													<td class="no"><span>[[${i.count}]]</span></td>
 													<!-- 이미지 우선 임시 링크 -->
-													<td class="image" data-title="No"><img
-															src="https://via.placeholder.com/100x100" alt="#"></td>
+													<td class="image" data-title="No">
+														<span th:if="${product.originalFileName}!=null">
+															<img th:src="@{/main/downloadImg(productId=${product.productId})}">
+														</span>
+													</td>
 													<td class="product-info" data-title="Description">
 														<p class="product-name"><a th:href="@{/main/productsDetail(productId=${product.productId},currentPage='myproducts')}">[[${product.productName}]]</a></p>
-														<p class="product-desc">[[${product.productDesc}]]</p>
+														<p class="product-desc" th:utext="${product.productDesc}"></p>
 													</td>
 													<td class="price" data-title="Price"><span>$[[${product.price}]]</span></td>
 													<td class="qty" data-title="Qty">

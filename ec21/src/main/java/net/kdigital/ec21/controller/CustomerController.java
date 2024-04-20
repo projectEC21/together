@@ -69,7 +69,7 @@ public class CustomerController {
         return "redirect:/";
     }
 
-    // ============== 회원 마이페이지 =================
+    // ================= 회원 마이페이지 =================
 
     /**
      * myproducts(mypage) 페이지 요청
