@@ -44,7 +44,7 @@
     $(function () {
       $("#category").on("change", search);
       $("#searchWord").on("keyup", search);
-      $("#wordPlusBtn").on("click", wordPlus);
+      $(".wordPlusBtn").on("click", wordPlus);
       init();
 
       // 240418 iy: 모달 기능 구현 
@@ -80,7 +80,7 @@
           success: function (list) {
             console.log(list);
             $("#modalTable").replaceWith(list);
-            $("#wordPlusBtn").on("click", wordPlus);
+            $(".wordPlusBtn").on("click", wordPlus);
           }
         })
         // 모달 열기
@@ -135,11 +135,10 @@
 
     // 단어 추가 버튼 클릭 시 DB에 추가하고 버튼 비활성화
     function wordPlus() {
-      let btn = $(this);
       let similarWord = $(this).data("word");
       let prohibitReason = $(this).data("reason");
       // 처리 전 확인 
-      if (confirm(similarWord+" ("+prohibitReason+")"+"를 금지어 리스트에 추가하시겠습니까? ")) {
+      if (confirm(similarWord + " (" + prohibitReason + ")" + "를 금지어 리스트에 추가하시겠습니까? ")) {
         $.ajax({
           url: "/modelPredict/wordPlus",
           data: { "similarWord": similarWord, "prohibitReason": prohibitReason },
@@ -147,10 +146,8 @@
           success: function (resp) {
             console.log(resp);
             // resp : Boolean 타입 넘어옴
-            // true인 경우 DB에 저장됨
             if (resp) {
-              // 버튼 활성화 해제
-              btn.disabled = true;
+              // true인 경우 DB에 저장됨
               alert("금지어리스트에 추가되었습니다.")
             } else {
               // false인 경우 이미 존재하다고 알려야 함
@@ -432,7 +429,7 @@
                   <tr th:each="item : ${list}" th:if="${list != null and not #lists.isEmpty(list)}">
                     <td id="similarWord">[[${item.similarWord}]]</td>
                     <td>[[${item.prohibitWord}]] ([[${item.prohibitReason}]])</td>
-                    <td><input type="button" value="단어추가" id="wordPlusBtn" th:data-word="${item.similarWord}"
+                    <td><input type="button" value="단어추가" class="wordPlusBtn" th:data-word="${item.similarWord}"
                         th:data-reason="${item.prohibitReason}"> </td>
                   </tr>
                   <tr th:unless="${list != null and not #lists.isEmpty(list)}">
