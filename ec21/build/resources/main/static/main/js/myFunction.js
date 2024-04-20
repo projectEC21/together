@@ -1,4 +1,6 @@
-// 모달과 관련된 함수
+/********************
+ * 모달과 관련된 함수
+ *************************/ 
 
 // modalControl.js
 $(document).ready(function() {
@@ -15,7 +17,9 @@ $(document).ready(function() {
     });
 });
 
-// saved-icon 을 누르면 색이 있는 별로 되게 하는 스크립트
+/*********************************************** 
+ * saved-icon 을 누르면 색이 있는 별로 되게 하는 스크립트
+/************************************************ */
 $(document).ready(function() {
 
     // 이벤트 위임하는 것
@@ -31,3 +35,18 @@ $(document).ready(function() {
     });
 });
 
+/**********************************
+ * IP 주소 뒤에 세자리만
+ ***********************************/
+
+// 문서 로딩 시 함수 실행
+document.addEventListener('DOMContentLoaded', function() {
+    maskLastThreeChars();
+});
+
+function maskLastThreeChars() {
+    var ipElement = document.getElementById('remoteIp');
+    var remoteIp = ipElement.innerText;
+    if (!remoteIp) return;  // IP 주소가 없을 경우 아무것도 하지 않음
+    ipElement.innerText = remoteIp.replace(/(\d{3})$/, '***');  // 마지막 세 자리를 ***로 대체
+}
