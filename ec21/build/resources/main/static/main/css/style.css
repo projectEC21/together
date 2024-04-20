@@ -2545,6 +2545,7 @@ body {
 
 .shop-sidebar .categor-list li a:hover {
 	color: #F7941D;
+	font-weight: 600;
 }
 
 /* Recent Post */

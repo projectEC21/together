@@ -64,6 +64,15 @@
 
       });
 
+      // 상품 설명 내의 텍스트에서 유사단어를 찾아 강조 스타일을 적용하는 함수
+      function applyHighlighting(similarWords, content) {
+        similarWords.forEach(word => {
+          const escapedWord = word.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+          const regex = new RegExp(escapedWord, 'gi');
+          content = content.replace(regex, '<span class="highlight">$&</span>');
+        });
+        return content;
+      }
       // 이벤트 위임을 사용하여 동적 요소에 이벤트 연결
       $(document).on("click", "a[id^='modalBtn']", function () {
         let productId = $(this).data("id");
@@ -73,22 +82,52 @@
         // 모달 컨텐츠 업데이트
         $("#modalName").html(modalName);
         $("#modalDesc").html(modalDesc);
+        // $.ajax({
+        //   url: "/manager/modelPredict/getProhibitSimilarWordDTOs",
+        //   data: { "productId": productId },
+        //   method: "GET",
+        //   success: function (list) {
+        //     console.log(list);
+        //     $("#modalTable").replaceWith(list);
+        //     $(".wordPlusBtn").on("click", wordPlus);
+
+        //   }
+        // })
+        // 모달 열기
+        $("#myModal").modal();
+
         $.ajax({
           url: "/manager/modelPredict/getProhibitSimilarWordDTOs",
           data: { "productId": productId },
           method: "GET",
-          success: function (list) {
-            console.log(list);
-            $("#modalTable").replaceWith(list);
-            $(".wordPlusBtn").on("click", wordPlus);
-          }
-        })
-        // 모달 열기
-        $("#myModal").modal();
+          success: function (data) {
+            $("#modalTable").replaceWith(data); // 금지어 목록 업데이트
 
+            // 'similarWord' 데이터를 배열로 추출
+            var similarWords = $("#modalTable tbody tr").map(function () {
+              return $(this).find("td[id='similarWord']").text().trim();
+            }).get();
+
+            // 상품명에서 유사단어 강조 적용
+            var modalName = $("#modalName").html();
+            modalName = applyHighlighting(similarWords, modalName);
+            $("#modalName").html(modalName);
+
+            // 상품 설명에서 유사단어 강조 적용
+            var modalDesc = $("#modalDesc").html();
+            modalDesc = applyHighlighting(similarWords, modalDesc);
+            $("#modalDesc").html(modalDesc);
+
+            // 이벤트 리스너 다시 바인딩
+            $(".wordPlusBtn").off("click").on("click", wordPlus);
+          }
+        });
       });
-      // 240418 iy: 모달 기능 구현 끝
+
+
     });
+    // 240418 iy: 모달 기능 구현 끝
+
 
 
     // 정상 버튼 클릭 시 judge Y로 변경
@@ -188,6 +227,9 @@
         }
       });
     }
+
+    // 유사단어 표시
+
   </script>
 </head>
 
@@ -317,7 +359,7 @@
                 <div class="x_content">
 
                   <!-- start project list -->
-                  <table id="datatable" class="table table-striped jambo_table table-bordered dataTable no-footer"
+                  <table id="" class="table table-striped jambo_table table-bordered dataTable no-footer"
                     cellspacing="0" width="100%"> <!-- dt-responsive-->
                     <!-- <table id="datatable" class="table table-striped jambo_table table-bordered dataTable no-footer"> -->
                     <thead>
@@ -351,16 +393,25 @@
                           아이폰 11 판매
                         </td>
                         <td>
-                          이상단어 검출: <br> [[${product.prohibitWord}]]([[${product.prohibitReason}]])</p>
-                          이상검출도: [[${product.lstmPredictProba}]] %
+                          <!-- 이상검출도: [[${product.lstmPredictProba}]] % -->
+                          <div>이상검출도: <div
+                              th:text="${#numbers.formatDecimal(product.lstmPredictProba * 100, 1, 2)} + '%'"></div>
+                          </div>
+
                           <div class="progress progress_sm">
                             <div class="progress-bar bg-green" role="progressbar"
-                              data-transitiongoal="${product.lstmPredictProba}"></div>
+                              th:attr="style=|width: ${#numbers.formatDecimal(product.lstmPredictProba * 100, 1, 2)}%|">
+                            </div>
+
                           </div>
                           이상단어유사도: [[${product.similarProba}]] %
                           <div class="progress progress_sm">
                             <div class="progress-bar bg-green" role="progressbar"
-                              data-transitiongoal="${product.similarProba}"></div>
+                              th:attr="style=|width: ${product.similarProba}%|">
+                            </div>
+
+                          </div>
+                          <div>이상단어 검출: <div> [[${product.prohibitWord}]]([[${product.prohibitReason}]])</div>
                           </div>
                         </td>
                         <td>
@@ -403,43 +454,42 @@
 
 
         <div class="modal-body">
-          <div class="info">
-            <div class="car-header">상품명</div>
-            <p id="modalName">Laptop for Gamming</p>
-            <div class="car-header">상품설명</div>
-            <p id="modalDesc">Apple mackbook pro 7th generation in sealed pack box and warranty with free delivery to
-              your home
-              address.
-              product comes with complete pack box</p>
+
+          <div class="car-header">상품명</div>
+          <p id="modalName">Laptop for Gamming</p>
+          <div class="car-header">상품설명</div>
+          <p id="modalDesc">Apple mackbook pro 7th generation in sealed pack box and warranty with free delivery to
+            your home
+            address.
+            product comes with complete pack box</p>
+
+
+          <div class="card-body">
+
+            <!-- 240419 dy : 모달html에 ajax와 thymeleaf 잘 섞어서 사용.. -->
+            <table class="table table-striped jambo_table bulk_action" id="modalTable">
+              <thead>
+                <tr>
+                  <th>유사단어</th>
+                  <th>금지어리스트 단어 (카테고리)</th>
+                  <th>금지어 사전 추가</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr th:each="item : ${list}" th:if="${list != null and not #lists.isEmpty(list)}">
+                  <td id="similarWord">[[${item.similarWord}]]</td>
+                  <td>[[${item.prohibitWord}]] ([[${item.prohibitReason}]])</td>
+                  <td><input type="button" value="단어추가" class="wordPlusBtn" th:data-word="${item.similarWord}"
+                      th:data-reason="${item.prohibitReason}"> </td>
+                </tr>
+                <tr th:unless="${list != null and not #lists.isEmpty(list)}">
+                  <td colspan="3">결과가 존재하지 않습니다.</td>
+                </tr>
+              </tbody>
+            </table>
+
           </div>
 
-          <div class="card">
-            <div class="card-body">
-
-              <!-- 240419 dy : 모달html에 ajax와 thymeleaf 잘 섞어서 사용.. -->
-              <table class="table table-striped jambo_table bulk_action" id="modalTable">
-                <thead>
-                  <tr>
-                    <th>유사단어</th>
-                    <th>금지어리스트 단어 (카테고리)</th>
-                    <th>금지어 사전 추가</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr th:each="item : ${list}" th:if="${list != null and not #lists.isEmpty(list)}">
-                    <td id="similarWord">[[${item.similarWord}]]</td>
-                    <td>[[${item.prohibitWord}]] ([[${item.prohibitReason}]])</td>
-                    <td><input type="button" value="단어추가" class="wordPlusBtn" th:data-word="${item.similarWord}"
-                        th:data-reason="${item.prohibitReason}"> </td>
-                  </tr>
-                  <tr th:unless="${list != null and not #lists.isEmpty(list)}">
-                    <td colspan="3">결과가 존재하지 않습니다.</td>
-                  </tr>
-                </tbody>
-              </table>
-
-            </div>
-          </div>
         </div>
         <!-- 모달창의 바디부분의 끝 -->
         <!-- 모달창의 푸터부분의 시작 -->

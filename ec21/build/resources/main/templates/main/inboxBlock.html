@@ -130,12 +130,12 @@
 					<div class="single-widget inquiry-category">
 						<h3 Inquiry class="inquiry-title">My Inquiry</h3>
 						<ul class="categor-list">
-							<li><a th:href="@{/main/inbox(customerId=${customerId})}" style="
-								color: #439eff;">Received</a></li>
+							<li><a th:href="@{/main/inbox(customerId=${customerId})}">Received</a></li>
 							<li><a th:href="@{/main/inboxSended(customerId=${customerId})}" >Sended</a></li>
 							<li><a th:href="@{/main/inboxSaved(customerId=${customerId})}" >Saved</a></li>
 							<li><a th:href="@{/main/inboxSpam(customerId=${customerId})}" >Spam</a></li>
-							<li><a th:href="@{/main/inboxBlock(customerId=${customerId})}" >Block</a></li>
+							<li><a th:href="@{/main/inboxBlock(customerId=${customerId})}" style="
+								color: #439eff;" >Block</a></li>
 							<li><a th:href="@{/main/inboxTrash(customerId=${customerId})}" >Trash</a></li>
 						</ul>
 					</div>
@@ -156,33 +156,31 @@
 							<table class="table shopping-summery">
 								<thead>
 									<tr class="main-hading">
-										<th class="saved-icon"></th>
-										<th class="sendId">Id</th>
-										<th class="inquiryTitle" colspan="2">TITLE</th>
-										<th class="sendData">DATE</th>
-										<th class="spam">SPAM</th>
-										<th class="delete"><i class="ti-trash remove-icon"></i></th>
+										<th class="blockedId">Blocked Member ID</th>
+										<th class="country">Country</th>
+										<th class="remoteIp">Remote ip</th>
+										<th class="unblock">Unblock</th>
 									</tr>
 								</thead>
 								<tbody>
 									<!-- 240418 dy : 회원의 상품 목록 출력 -->
 									<tr th:if="${productList != null and !#lists.isEmpty(productList)}" th:each="product, i : ${productList}">
-										<!-- 저장 여부 : 클릭하면 색상 변하게 해둠-->
-										<td class="saved-icon"><a href="#" id="saved-icon"><i class="ti-star"></i></a></td>
-										<!-- 담당자명 -->
-										<td class="contactName" data-title="contactName"><span class="contactName">[[${product.category}]]</span></td>
-										<!-- 제목만 -->
-										<td class="inquiryTitle" data-title="inquiryTitle" colspan="2">
-											<span class="inquiryTitle" th:href="@{/main/productsDetail(productId=${product.productId})}">
-												<a id="inquiryTitle" data-toggle="modal" data-target="#inquiryDetail">[[${product.productName}]]</a>
-											</span>
+										<!-- 블락 회원 아이디 -->
+										<td class="blockedId" data-title="blockedId">
+											<span class="blockedId" th:text="${customer.customerId}">customerId</span>
 										</td>
-										<!-- 보낸 날짜 -->
-										<td class="sendDate" data-title="sendDate"><span>[[${#temporals.format(product.createDate, 'yyyy-MM-dd')}]]</span></td>
-										<!-- 누르면 삭제 되면서 스팸함으로 -->
-										<td class="action" data-title="spam"><a th:href="@{/main/myproducts/delete(productId=${product.productId})}"><i class="fa fa-refresh"></i></a></td>
-										<!-- 누르면 삭제 되면서 쓰통으로 -->
-										<td class="action" data-title="delete"><a th:href="@{/main/myproducts/delete(productId=${product.productId})}"><i class="ti-trash remove-icon"></i></a></td>
+										<!-- 국가 -->
+										<td class="country" data-title="country">
+											<span class="country" th:text="${customer.country}"></span>
+										</td>
+										<!-- ip 주소인데 뒷자리 3개는 * 표 표시 -->
+										<td class="remoteIp" id="remoteIp" data-title="remoteIp">
+											<span th:text="${customer.remoteIp}"></span>
+										</td>
+										<!-- 누르면 사라지게 -->
+										<td class="action" data-title="unblock">
+											<a th:href="@{/main/myproducts/delete(productId=${product.productId})}"><i class="fa fa-refresh"></i></a>
+										</td>
 									</tr>
 								</tbody>
 							</table>

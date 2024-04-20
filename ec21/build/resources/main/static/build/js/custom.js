@@ -10,7 +10,7 @@
     // debouncing function from John Hann
     // http://unscriptable.com/index.php/2009/03/20/debouncing-javascript-methods/
     var debounce = function (func, threshold, execAsap) {
-      var timeout;
+        var timeout;
 
         return function debounced () {
             var obj = this, args = arguments;
@@ -202,7 +202,7 @@ $(document).ready(function () {
 });
 // /Switchery
 
-// iCheck
+// iCheck: 선택박스 
 $(document).ready(function () {
     if ($("input.flat")[0]) {
         $(document).ready(function () {

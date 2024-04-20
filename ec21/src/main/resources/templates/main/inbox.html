@@ -23,9 +23,9 @@
 	<!-- Magnific Popup -->
 	<link rel="stylesheet" th:href="@{/main/css/magnific-popup.min.css}">
 	<!-- Font Awesome -->
-	<!-- <link rel="stylesheet" th:href="@{/main/css/font-awesome.css}"> -->
+	<link rel="stylesheet" th:href="@{/main/css/font-awesome.css}">
 	<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"> -->
-	<link th:href="@{../vendors/font-awesome/css/font-awesome.min.css}" rel="stylesheet">
+	<!-- <link th:href="@{../vendors/font-awesome/css/font-awesome.min.css}" rel="stylesheet"> -->
 	<!-- Fancybox -->
 	<link rel="stylesheet" th:href="@{/main/css/jquery.fancybox.min.css}">
 	<!-- Themify Icons -->
@@ -97,9 +97,7 @@
 								<li><i class="ti-power-off"></i><a th:href="@{/main/login}">Login</a></li>
 								<li><i class="ti-user"></i><a th:href="@{/main/register}">Sign up</a></li>
 								<li><i class="ti-power-off"></i><a th:href="@{/main/logout}">Logout</a></li>
-								<li><a th:href="@{/main/myproducts}" class="single-icon"><i class="fa fa-user-circle-o"
-									aria-hidden="true"></i></a></li>
-								</li>
+								<li><a th:href="@{/main/myproducts}"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a></li>
 							</ul>
 						</div>
 						<!-- End Top Right -->
@@ -132,12 +130,13 @@
 					<div class="single-widget inquiry-category">
 						<h3 Inquiry class="inquiry-title">My Inquiry</h3>
 						<ul class="categor-list">
-							<li><a href="/main/inbox(customerId=${customerId})">Received</a></li>
-							<li><a href="/main/myproducts(customerId=${customerId})" >Sended</a></li>
-							<li><a href="/main/myproducts(customerId=${customerId})" >Saved</a></li>
-							<li><a href="/main/myproducts(customerId=${customerId})" >Spam</a></li>
-							<li><a href="/main/myproducts(customerId=${customerId})" >Block</a></li>
-							<li><a href="/main/myproducts(customerId=${customerId})" >Trash</a></li>
+							<li><a th:href="@{/main/inbox(customerId=${customerId})}" style="
+								color: #439eff;">Received</a></li>
+							<li><a th:href="@{/main/inboxSended(customerId=${customerId})}" >Sended</a></li>
+							<li><a th:href="@{/main/inboxSaved(customerId=${customerId})}" >Saved</a></li>
+							<li><a th:href="@{/main/inboxSpam(customerId=${customerId})}" >Spam</a></li>
+							<li><a th:href="@{/main/inboxBlock(customerId=${customerId})}" >Block</a></li>
+							<li><a th:href="@{/main/inboxTrash(customerId=${customerId})}" >Trash</a></li>
 						</ul>
 					</div>
 					<!--/ End Single Widget -->
@@ -158,7 +157,6 @@
 								<thead>
 									<tr class="main-hading">
 										<th class="saved-icon"></th>
-										<th class="no">NO</th>
 										<th class="sendId">Id</th>
 										<th class="inquiryTitle" colspan="2">TITLE</th>
 										<th class="sendData">DATE</th>
@@ -171,8 +169,6 @@
 									<tr th:if="${productList != null and !#lists.isEmpty(productList)}" th:each="product, i : ${productList}">
 										<!-- 저장 여부 : 클릭하면 색상 변하게 해둠-->
 										<td class="saved-icon"><a href="#" id="saved-icon"><i class="ti-star"></i></a></td>
-										<!-- 개수 -->
-										<td class="no"><span>[[${i.count}]]</span></td>
 										<!-- 담당자명 -->
 										<td class="contactName" data-title="contactName"><span class="contactName">[[${product.category}]]</span></td>
 										<!-- 제목만 -->
@@ -225,7 +221,7 @@
 									<td id="sendId"></td>
 								</tr>
 								<tr>
-									<th class="">Subject <span>*</span></th>
+									<th class="">Subject</th>
 									<td><span>..</span></td>
 								</tr>
 								<tr>
@@ -234,7 +230,7 @@
 								</tr>
 								<tr>
 									<th class="">Message</th>
-									<td><span>..</span></td>
+									<td><span><textarea readonly></textarea></span></td>
 								</tr>
 								<tr>
 									<!-- 파일 부분 다운만 가능한 건 어떻게 하는지 까먹어서 우선 패스 -->
