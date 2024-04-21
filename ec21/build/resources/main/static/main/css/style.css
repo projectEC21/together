@@ -798,7 +798,7 @@ body {
 .header.shop .search-bar {
 	width: 535px;
 	height: 50px;
-	display: inline-block;
+	display: inline-flex;
 	background: #fff;
 	position: relative;
 	margin: 0;
@@ -2348,7 +2348,7 @@ body {
 }
 
 .single-product .product-content {
-	margin-top: 20px;
+	margin-top: 10px;
 }
 
 .single-product .product-img:hover.default-overlay::before {
@@ -2376,13 +2376,20 @@ body {
 }
 
 .single-product .product-content h3 {
-	line-height: 22px;
+	line-height: 20px;
+	display: -webkit-box;  /* 웹킷 레이아웃 */
+    -webkit-box-orient: vertical;  /* 수직 방향 */
+    -webkit-line-clamp: 2;  /* 최대 3줄까지 표시 */
+    overflow: hidden;  /* 넘치는 텍스트 숨김 */
+    text-overflow: ellipsis;  /* 생략 표시 */
+	max-width: 180px;
 }
+
+
 
 .single-product .product-content h3 a {
 	font-size: 15px;
-	font-weight: 700;
-	margin: 0;
+	font-weight: 600;
 }
 
 .single-product .product-content h3 a:hover {
@@ -3114,6 +3121,7 @@ textarea {
 	width: 120px;
 	text-align: center;
 	background-color: #fff;
+	color: #333;
 }
 
 .shop.single .btn-edit .user-custom a.btn:hover {
