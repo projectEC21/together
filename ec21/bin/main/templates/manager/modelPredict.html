@@ -129,6 +129,10 @@
             // 이벤트 리스너 다시 바인딩
             $(".wordPlusBtn").off("click").on("click", wordPlus);
           }
+          ,
+          error: function (jqXHR, textStatus, errorThrown) {
+            console.log('AJAX call failed: ', textStatus, errorThrown);
+          }
         });
       });
 
