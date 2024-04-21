@@ -25,8 +25,7 @@ public class CustomerController {
     private final CustomerService customerService;
     private final ProductService productService;
 
-    // =================================== 회원가입, 로그인, 로그아웃
-    // ===============================
+    // ================== 회원가입, 로그인, 로그아웃 ====================
     /**
      * register(회원가입) 페이지 요청
      * 
@@ -70,8 +69,7 @@ public class CustomerController {
         return "redirect:/";
     }
 
-    // ======================== 회원 마이페이지
-    // =================================
+    // ============== 회원 마이페이지 =================
 
     /**
      * myproducts(mypage) 페이지 요청
@@ -81,18 +79,26 @@ public class CustomerController {
      */
     @GetMapping("/main/myproducts")
     public String myProducts(@RequestParam(name = "customerId", defaultValue = "jooyoungyoon") String customerId,
-            Model model) {
+            @RequestParam(name = "category", defaultValue = "total") String category,
+            @RequestParam(name = "searchWord", defaultValue = "") String searchWord, Model model) {
 
-        // 회원ID에 해당하는 회원이 판매하고 있는 상품 리스트
-        List<ProductDTO> productList = productService.getCustomerProducts(customerId);
+        // Flash Attribute를 통해 전달받은 상품 목록이 없는 경우 
+        if (!model.containsAttribute("productList")) {
+            // 회원ID에 해당하는 회원이 판매하고 있는 상품 리스트
+            List<ProductDTO> productList = productService.getCustomerProducts(customerId);
+            model.addAttribute("productList", productList);
+        }
 
         model.addAttribute("customerId", customerId);
-        model.addAttribute("productList", productList);
-
+        model.addAttribute("category", category);
+        model.addAttribute("searchWord", searchWord);
+        
         return "main/myproducts";
     }
 
+
     /**
+     * [마이페이지 > 나의 상품 목록 화면에서 delete]
      * 전달 받은 상품ID에 해당하는 상품의 삭제 요청 및
      * 다시 마이페이지의 자신이 판매하는 상품목록 화면 재요청 처리 (상품페이지에서 delete 버튼 클릭시는 다른 요청의 형태로 만들 것임)
      * 
@@ -110,9 +116,10 @@ public class CustomerController {
 
         // 회원ID가 판매하는 상품 목록
         List<ProductDTO> productList = productService.getCustomerProducts(customerId);
+        // 리다이렉트 시 Flash Attributes에 상품 목록 저장
+        attributes.addFlashAttribute("productList", productList);
 
         attributes.addAttribute("customerId", customerId);
-        attributes.addAttribute("productList", productList);
 
         return "redirect:/main/myproducts";
     }

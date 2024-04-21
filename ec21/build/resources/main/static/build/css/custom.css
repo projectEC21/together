@@ -1,10 +1,10 @@
 @charset "UTF-8";
 
-/* @font-face {
-  font-family: 'Glyphicons Halflings';
-  src: url("https://netdna.bootstrapcdn.com/bootstrap/3.0.0/fonts/glyphicons-halflings-regular.eot");
-  src: url("https://netdna.bootstrapcdn.com/bootstrap/3.0.0/fonts/glyphicons-halflings-regular.eot?#iefix") format("embedded-opentype"), url("https://netdna.bootstrapcdn.com/bootstrap/3.0.0/fonts/glyphicons-halflings-regular.woff") format("woff"), url("https://netdna.bootstrapcdn.com/bootstrap/3.0.0/fonts/glyphicons-halflings-regular.ttf") format("truetype"), url("https://netdna.bootstrapcdn.com/bootstrap/3.0.0/fonts/glyphicons-halflings-regular.svg#glyphicons-halflingsregular") format("svg"); } */
+/* latin */
+
+
 * {
+  font-family: "IBM Plex Sans KR", sans-serif;
   box-sizing: border-box;
 }
 
@@ -1121,6 +1121,7 @@
   margin: 13px 0 0 3px;
 }
 
+
 .site_title i {
   border: 1px solid #EAEAEA;
   padding: 5px 6px;
@@ -1173,7 +1174,7 @@
   top: 0;
   width: 210px;
   z-index: 4000;
-  background: #3E5367;
+  background: #0072ab;
   display: none;
 }
 
@@ -1382,9 +1383,30 @@ body .container.body .right_col {
     padding-right: 0;
   }
 
-  .right_col {
+  .right_col .x_panel {
     padding: 10px !important;
+    overflow-x: auto;
+    /* 화면이 작아질 때 스크롤바 생성 */
   }
+
+  .right_col .x_panel table {
+    width: 100%;
+    max-width: 100%;
+    /* 테이블의 최대 너비를 right_col의 너비로 제한 */
+    margin-bottom: 1rem;
+    /* 필요하다면 여백 추가 */
+    border-collapse: collapse;
+    /* 테이블 셀 사이의 간격을 없앰 */
+  }
+
+  /* 화면 크기에 따른 반응형 디자인 */
+  @media screen and (max-width: 768px) {
+    .right_col table {
+      /* 화면이 768px 이하일 때 적용될 스타일 */
+      overflow-x: auto;
+    }
+  }
+
 
   .item {
     display: block;
@@ -1564,6 +1586,8 @@ span.dtr-title {
 .navbar-nav>li>a {
   color: #fff !important;
 }
+
+
 
 body {
   color: #73879C;
@@ -1878,7 +1902,7 @@ a:focus {
 }
 
 .nav-md ul.nav.child_menu li:before {
-  background: #425668;
+  background: #0072A2;
   bottom: auto;
   content: "";
   height: 8px;
@@ -1892,7 +1916,7 @@ a:focus {
 }
 
 .nav-md ul.nav.child_menu li:after {
-  border-left: 1px solid #425668;
+  border-left: 1px solid #0072A2;
   bottom: 0;
   content: "";
   left: 27px;
@@ -1949,8 +1973,8 @@ a:focus {
 
 .nav.side-menu>li.active>a {
   text-shadow: rgba(0, 0, 0, 0.25) 0 -1px 0;
-  background: -webkit-gradient(linear, left top, left bottom, from(#334556), to(#2C4257)), #333;
-  background: linear-gradient(#334556, #2C4257), #333;
+  background: -webkit-gradient(linear, left top, left bottom, from(#0072ab), to(#278bbc)), #333;
+  background: linear-gradient(#0072ab, #278bbc), #333;
   -webkit-box-shadow: rgba(0, 0, 0, 0.25) 0 1px 0, inset rgba(255, 255, 255, 0.16) 0 1px 0;
   box-shadow: rgba(0, 0, 0, 0.25) 0 1px 0, inset rgba(255, 255, 255, 0.16) 0 1px 0;
 }
@@ -5865,11 +5889,19 @@ fieldset {
   margin: 8px;
 }
 
-/* .modal-content {
 
+
+.modal-content {
   height: 700px;
-} */
+  overflow-y: auto;
+}
 
+
+/* 유사단어 표시 */
+.highlight {
+  color: red;
+  font-weight: bold;
+}
 
 
 /** /Cropper **/
