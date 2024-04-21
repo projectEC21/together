@@ -1110,6 +1110,8 @@
 
 .nav-sm .navbar.nav_title {
   width: 70px;
+  text-align: center;
+  margin: 0 auto;
 }
 
 .nav-sm .navbar.nav_title a span {
@@ -1363,6 +1365,8 @@ body .container.body .right_col {
   border-radius: 0;
   height: 57px;
   padding: 0px;
+  text-align: center;
+  margin: 0 auto;
 }
 
 @media (max-width: 991px) {
@@ -1396,6 +1400,10 @@ body .container.body .right_col {
     /* 필요하다면 여백 추가 */
     border-collapse: collapse;
     /* 테이블 셀 사이의 간격을 없앰 */
+  }
+
+  .headings {
+    text-align: center !important;
   }
 
   /* 화면 크기에 따른 반응형 디자인 */
@@ -2587,6 +2595,13 @@ table.jambo_table {
 table.jambo_table thead {
   background: #0072ab;
   color: #ECF0F1;
+
+}
+
+table.jambo_table thead .column-title {
+  text-align: center;
+  vertical-align: middle;
+
 }
 
 table.jambo_table tbody tr:hover td {
@@ -2687,7 +2702,7 @@ table.display thead td:active {
 }
 
 .dataTables_scrollBody {
-  *margin-top: -1px;
+  margin-top: -1px;
   -webkit-overflow-scrolling: touch;
 }
 
@@ -5888,11 +5903,23 @@ fieldset {
   margin: 8px;
 }
 
+.image_resized {
+  display: flex;
+  width: auto !important;
+  justify-content: center;
+}
+
+.image_resized img {
+  text-align: center;
+  width: 560px;
+  height: 406px;
+}
 
 
 .modal-content {
   height: 700px;
   overflow-y: auto;
+  padding: 20px 20px
 }
 
 

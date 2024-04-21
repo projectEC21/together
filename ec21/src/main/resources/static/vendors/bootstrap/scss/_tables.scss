@@ -16,11 +16,11 @@
   }
 
   thead th {
-    vertical-align: bottom;
+    vertical-align: middle;
     border-bottom: (2 * $table-border-width) solid $table-border-color;
   }
 
-  tbody + tbody {
+  tbody+tbody {
     border-top: (2 * $table-border-width) solid $table-border-color;
   }
 }
@@ -31,6 +31,7 @@
 //
 
 .table-sm {
+
   th,
   td {
     padding: $table-cell-padding-sm;
@@ -51,6 +52,7 @@
   }
 
   thead {
+
     th,
     td {
       border-bottom-width: 2 * $table-border-width;
@@ -59,10 +61,11 @@
 }
 
 .table-borderless {
+
   th,
   td,
   thead th,
-  tbody + tbody {
+  tbody+tbody {
     border: 0;
   }
 }
@@ -176,7 +179,7 @@
         -webkit-overflow-scrolling: touch;
 
         // Prevent double border on horizontal scroll due to use of `display: block;`
-        > .table-bordered {
+        >.table-bordered {
           border: 0;
         }
       }

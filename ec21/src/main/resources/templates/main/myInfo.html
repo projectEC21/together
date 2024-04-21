@@ -80,10 +80,18 @@
 				});
 
 				cancelButton.addEventListener('click', function () {
-					toggleFields(true);
-					editButton.textContent = 'Edit My Account';
-					cancelButton.style.display = 'none';
+					// confirm 함수의 반환값을 변수에 저장
+					var confirmCancel = confirm("Do you want to cancel the member modification?");
+
+					// 사용자가 'OK'를 클릭했을 때만 아래 코드를 실행
+					if (confirmCancel) {
+						toggleFields(true);
+						editButton.textContent = 'Edit My Account';
+						cancelButton.style.display = 'none';
+					}
+					// 사용자가 'Cancel'을 클릭하면 아무 것도 하지 않음
 				});
+
 			} else {
 				console.log('Buttons not found');
 			}
