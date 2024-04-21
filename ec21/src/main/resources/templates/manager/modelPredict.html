@@ -101,17 +101,25 @@
           data: { "productId": productId },
           method: "GET",
           success: function (data) {
+            // 서버에서 받은 데이터 로깅
+            console.log("Received data:", data);
             $("#modalTable").replaceWith(data); // 금지어 목록 업데이트
+
+            // 금지어 목록을 업데이트하고 로깅
+            $("#modalTable").replaceWith(data);
+            console.log("Updated prohibited words list.");
 
             // 'similarWord' 데이터를 배열로 추출
             var similarWords = $("#modalTable tbody tr").map(function () {
               return $(this).find("td[id='similarWord']").text().trim();
             }).get();
+            console.log("Similar words:", similarWords);
 
             // 상품명에서 유사단어 강조 적용
             var modalName = $("#modalName").html();
             modalName = applyHighlighting(similarWords, modalName);
             $("#modalName").html(modalName);
+
 
             // 상품 설명에서 유사단어 강조 적용
             var modalDesc = $("#modalDesc").html();
@@ -120,6 +128,10 @@
 
             // 이벤트 리스너 다시 바인딩
             $(".wordPlusBtn").off("click").on("click", wordPlus);
+          }
+          ,
+          error: function (jqXHR, textStatus, errorThrown) {
+            console.log('AJAX call failed: ', textStatus, errorThrown);
           }
         });
       });
@@ -357,21 +369,20 @@
                 </div>
 
                 <div class="x_content">
-
                   <!-- start project list -->
-                  <table id="" class="table table-striped jambo_table table-bordered dataTable no-footer"
-                    cellspacing="0" width="100%"> <!-- dt-responsive-->
+                  <table id="" class="table table-striped jambo_table table-bordered " cellspacing="0" width="100%">
+                    <!-- dt-responsive-->
                     <!-- <table id="datatable" class="table table-striped jambo_table table-bordered dataTable no-footer"> -->
                     <thead>
                       <!-- <button id="modalBtn">모달 열기</button> -->
-                      <tr>
+                      <tr class="headings">
                         <th style="width: 10%">회원 ID</th>
-                        <th style="width: 10%">상품 ID</th>
+                        <th style="width: 15%">상품 ID</th>
                         <!-- <th style="width: 10%">카테고리</th> -->
-                        <th style="width: 20%">상품명</th>
-                        <th style="width: 20%">상품내용</th>
-                        <th>예측값</th>
-                        <th style="width: 20%">#Edit</th>
+                        <th>상품명</th>
+                        <th>상품내용</th>
+                        <th style="width: 20%;">예측값</th>
+                        <th style="width: 15%">#Edit</th>
                       </tr>
                     </thead>
 
@@ -394,8 +405,10 @@
                         </td>
                         <td>
                           <!-- 이상검출도: [[${product.lstmPredictProba}]] % -->
-                          <div>이상검출도: <div
-                              th:text="${#numbers.formatDecimal(product.lstmPredictProba * 100, 1, 2)} + '%'"></div>
+                          <div>이상검출도: [[${#numbers.formatDecimal(product.lstmPredictProba * 100, 1, 2)} + '%']]
+                            <!-- <div
+                              th:text="${numbers.formatDecimal(product.lstmPredictProba * 100, 1, 2)} + '%'">
+                            </div> -->
                           </div>
 
                           <div class="progress progress_sm">
