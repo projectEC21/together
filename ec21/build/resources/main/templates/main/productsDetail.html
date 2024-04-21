@@ -285,9 +285,12 @@
 								<div class="product-gallery">
 									<div class="flexslider-thumbnails">
 										<ul class="slides">
-											<li data-thumb="https://via.placeholder.com/600x500">
+											<span th:if="${product.originalFileName}!=null">
+												<img th:src="@{/main/downloadImg(productId=${product.productId})}">
+											</span>
+											<!-- <li data-thumb="https://via.placeholder.com/600x500">
 												<img src="https://via.placeholder.com/600x500" alt="#">
-											</li>
+											</li> -->
 										</ul>
 									</div>
 								</div>
@@ -381,7 +384,7 @@
 											<div class="row">
 												<div class="col-12">
 													<div class="single-des">
-														<span class="productDesc" th:text="${product.productDesc}">Lorem Ipsum dummy text.</span>
+														<span class="productDesc" th:utext="${product.productDesc}">Lorem Ipsum dummy text.</span>
 													</div>
 												</div>
 											</div>

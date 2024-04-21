@@ -1,9 +1,15 @@
 package net.kdigital.ec21.controller;
 
+import java.io.FileInputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import jakarta.servlet.ServletOutputStream;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.kdigital.ec21.dto.ProductDTO;
@@ -25,7 +33,7 @@ import net.kdigital.ec21.service.ProductService;
 public class ProductController {
     private final ProductService productService;
     private final CustomerService customerService;
-    
+
     // ====================================== 상품 등록 ========================================
     /**
      * main/myproducts에서 상품 등록 페이지 productsWrite 요청 (회원ID를 받아서 model에 담아 보냄)
@@ -42,18 +50,18 @@ public class ProductController {
      * @param entity
      * @return
      */
-    @PostMapping("main/productInsert")
-    public String productInsert(@ModelAttribute ProductDTO productDTO, Model model) {
-        
+    @PostMapping("main/productsInsert")
+    public String productsInsert(@ModelAttribute ProductDTO productDTO, RedirectAttributes attr) {
+        // python Server -> DB 저장까지
         productService.insertProduct(productDTO);
 
         // 회원ID가 판매하는 상품 목록
         List<ProductDTO> productList = productService.getCustomerProducts(productDTO.getCustomerId());
 
-        model.addAttribute("customerId", productDTO.getCustomerId());
-        model.addAttribute("productList", productList);
+        attr.addFlashAttribute("customerId", productDTO.getCustomerId());
+        attr.addFlashAttribute("productList", productList);
         
-        return "main/myproducts";
+        return "redirect:/main/myproducts";
     }
     
 
@@ -67,7 +75,7 @@ public class ProductController {
      * @param productId
      * @param category
      * @param searchWord
-     * @param currentPage : main/myproducts or main/list 둘 중 하나임
+     * @param currentPage : main/myproducts or main/list 둘 중 하나임(productsDetail을 요청할 수 있는 페이지)
      * @param model
      * @return
      */
@@ -77,7 +85,6 @@ public class ProductController {
                                 @RequestParam(name = "searchWord", defaultValue = "") String searchWord,
                                 @RequestParam(name = "currentPage", defaultValue = "myproducts")String currentPage, Model model) {
         
-        log.info("============호출한 페이지 : {}",currentPage);
         // productId에 해당하는 Product의 hitCount 증가
         productService.updateHitCount(productId);
         
@@ -219,6 +226,55 @@ public class ProductController {
 
     
     
+    //========================= 첨부파일 다운로드 ======================
 
+    @Value("${spring.servlet.multipart.location}")
+    String uploadPath;
+
+    /**
+     * productId에 해당하는 Product의 업로드 이미지 다운로드 요청
+     * @param productId
+     * @return
+     */
+    @GetMapping("main/downloadImg")
+    public String download(@RequestParam(name = "productId") String productId, HttpServletResponse response) {
+
+        ProductDTO productDTO = productService.getProduct(productId);
+
+        String originalFileName = productDTO.getOriginalFileName();
+        String savedFileName = productDTO.getSavedFileName();
+
+        try {
+            String tempName = URLEncoder.encode(originalFileName, StandardCharsets.UTF_8.toString()); // 파일명에 한글이 섞여있을
+                                                                                                      // 때를 대비하기 위함
+            response.setHeader("Content-Disposition", "attachment;filename=" + tempName);
+            // 위 코드가 없을 경우 브라우저가 실행 가능한 파일(이미지 파일이 대표적인 예임)인 경우 브라우저 자체에서 오픈함
+            // 즉, 위 코드는 브라우저 자체에서 실행되도록 하지 않고 다운로드 받게 하기 위한 코드임
+        } catch (UnsupportedEncodingException e) { // encoding 하지 못할 경우 에러 처리
+            e.printStackTrace();
+        }
+
+        String fullPath = uploadPath + "/" + savedFileName;
+
+        // 스트림 설정 (실제 다운로드)
+        FileInputStream filein = null;
+        ServletOutputStream fileout = null; // 원격지의 장소에 데이터를 쏠 떄
+
+        // local에 있는 파일을 메모리로 끌어와야 함
+        try {
+            filein = new FileInputStream(fullPath); // 하드디스크->메모리에 올림 (서버입장에서의 로컬이기 떄문에 input 작업임)
+            fileout = response.getOutputStream(); // 웹에서 원격지의 데이터를 쏴주는 것. 로컬에서 벗어난 다른 쪽으로 데이터를 쏘는 역할
+
+            FileCopyUtils.copy(filein, fileout); // copy(원본, 내보낼 객체) : 원본을 읽어서 내보냄
+
+            fileout.close(); // 연 순서의 반대로 닫아야 함
+            filein.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
 
 }
