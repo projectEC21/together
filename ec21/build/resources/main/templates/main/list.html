@@ -303,6 +303,10 @@
 										<span th:if="${product.originalFileName}!=null">
 											<img th:src="@{/main/downloadImg(productId=${product.productId})}">
 										</span>
+										<span th:unless="${product.originalFileName}!=null">
+											<img class="default-img" src="https://via.placeholder.com/550x750" alt="#">
+											<img class="hover-img" src="https://via.placeholder.com/550x750" alt="#">
+										</span>
 									</a>
 								</div>
 								<div class="product-content">

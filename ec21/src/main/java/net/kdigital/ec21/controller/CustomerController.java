@@ -1,7 +1,7 @@
 package net.kdigital.ec21.controller;
 
 import java.util.List;
-
+ 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +17,8 @@ import net.kdigital.ec21.service.CustomerService;
 import net.kdigital.ec21.service.ProductService;
 
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 @Controller
 @Slf4j
@@ -124,7 +126,7 @@ public class CustomerController {
         return "redirect:/main/myproducts";
     }
 
-    /**
+    /** 
      * myinfo(mypage) 페이지 요청
      * 마이페이지에서 Info 버튼 클릭 시 전달받은 or 로그인한 회원ID의 회원 정보가 채워진 상태의 화면 요청
      * 
@@ -133,10 +135,26 @@ public class CustomerController {
     @GetMapping("/main/myinfo")
     public String myinfo(@RequestParam(name = "customerId", defaultValue = "jooyoungyoon") String customerId,
             Model model) {
-        CustomerDTO customerDTO = customerService.getCustomer(customerId);
-        model.addAttribute("customer", customerDTO);
+        if (!model.containsAttribute("customerDTO")){
+            CustomerDTO customerDTO = customerService.getCustomer(customerId);
+            model.addAttribute("customer", customerDTO);
+        }
         return "main/myinfo";
     }
+
+    /**
+     * 수정된 customerDTO를 전달받아 해당 customer의 정보를 수정하는 요청
+     * @param dto
+     * @param attr
+     * @return
+     */
+    @PostMapping("/main/myinfo/updateCustomer")
+    public String updateCustomer(@ModelAttribute CustomerDTO dto, RedirectAttributes attr) {
+        CustomerDTO customerDTO =  customerService.updateCustomer(dto);
+        attr.addFlashAttribute("customer", customerDTO);
+        return "redirect:/my/info";
+    }
+    
 
     /**
      * inbox (inquiry) 페이지 요청
