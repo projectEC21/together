@@ -68,19 +68,19 @@
 		function confirmId() {
 			let customerId = $(this).val();
 			$.ajax({
-				url:"/main/register/confirmId",
-				data:{"customerId": customerId},
-				success:function(resp){
+				url: "/main/register/confirmId",
+				data: { "customerId": customerId },
+				success: function (resp) {
 					if (resp) {
 						$("#confirmID").css("color", "red");
 						$("#confirmID").html("사용 중인 아이디");
-					}else{
+					} else {
 						$("#confirmID").css("color", "blue");
 						$("#confirmID").html("사용가능한 아이디");
 					}
 				}
 			});
-			
+
 		}
 
 		// 회원 가입 유효성 검사 - 미완료
@@ -177,14 +177,20 @@
 								<form th:action="@{/main/list}" method="get">
 									<select id="category" name="category">
 										<option value="total" th:selected="${category eq 'total'}">All Category</option>
-										<option value="FOOD_BEVERAGE" th:selected="${category eq 'FOOD_BEVERAGE'}">Food & Beverage</option>
-										<option value="CHEMICAL" th:selected="${category eq 'CHEMICAL'}">Chemical</option>
-										<option value="HEALTH_MEDICAL" th:selected="${category eq 'HEALTH_MEDICAL'}">Health & Medical</option>
-										<option value="ELECTRONIC" th:selected="${category eq 'ELECTRONIC'}">Electronics</option>
-										<option value="COSMETIC" th:selected="${category eq 'COSMETIC'}">Cosmetic</option>
+										<option value="FOOD_BEVERAGE" th:selected="${category eq 'FOOD_BEVERAGE'}">Food
+											& Beverage</option>
+										<option value="CHEMICAL" th:selected="${category eq 'CHEMICAL'}">Chemical
+										</option>
+										<option value="HEALTH_MEDICAL" th:selected="${category eq 'HEALTH_MEDICAL'}">
+											Health & Medical</option>
+										<option value="ELECTRONIC" th:selected="${category eq 'ELECTRONIC'}">Electronics
+										</option>
+										<option value="COSMETIC" th:selected="${category eq 'COSMETIC'}">Cosmetic
+										</option>
 									</select>
-									<input name="search" id="searchWord" placeholder="What are you searching for?" type="search"
-										th:value="${searchWord}" th:attr="placeholder=${searchWord eq null ? 'What are you searching for?' : null}" />
+									<input name="search" id="searchWord" placeholder="What are you searching for?"
+										type="search" th:value="${searchWord}"
+										th:attr="placeholder=${searchWord eq null ? 'What are you searching for?' : null}" />
 									<button type="submit" class="btnn"> <i class="ti-search"></i></button>
 								</form>
 							</div>
@@ -220,21 +226,23 @@
 
 							<!-- Main Menu -->
 							<nav class="navbar navbar-expand-lg">
-								<div class="navbar-collapse">	
-									<div class="nav-inner">	
+								<div class="navbar-collapse">
+									<div class="nav-inner">
 										<!-- 240417 dy : 카테고리 별 상품 목록 요청(검색어X) -->
 										<ul class="nav main-menu menu navbar-nav">
 											<li><a th:href="@{/main/list(category=total)}">All</a></li>
-											<li><a th:href="@{/main/list(category=FOOD_BEVERAGE)}">Food & Beverage</a></li>
+											<li><a th:href="@{/main/list(category=FOOD_BEVERAGE)}">Food & Beverage</a>
+											</li>
 											<li><a th:href="@{/main/list(category=CHEMICAL)}">Chemical</a></li>
-											<li><a th:href="@{/main/list(category=HEALTH_MEDICAL)}">Health & Medical</a></li>
+											<li><a th:href="@{/main/list(category=HEALTH_MEDICAL)}">Health & Medical</a>
+											</li>
 											<li><a th:href="@{/main/list(category=ELECTRONIC)}">Electronics</a></li>
 											<li><a th:href="@{/main/list(category=COSMETIC)}">Cosmetic</a></li>
 										</ul>
 									</div>
 								</div>
 							</nav>
-							<!--/ End Main Menu -->	
+							<!--/ End Main Menu -->
 						</div>
 					</div>
 				</div>
@@ -279,48 +287,49 @@
 							<div class="row">
 
 								<!-- 회원 개인 정보 -->
-								
+
 								<div class="col-12">
 									<div class="form-group title">
 										<label>Enter Your Email Address & Create Your Account</label>
 									</div>
 								</div>
-								
+
 								<div class="col-12">
 									<div class="form-group">
 										<label>ID<span>*</span></label>
-										<input type="text" id="customerId" name="customerId"  required="required" >
+										<input type="text" id="customerId" name="customerId" required="required">
 										<br><span id="confirmID" style="font-size: 0.7em;"></span>
 										<!-- <span>4-10 characters long in lowercase.</span> -->
 									</div>
 								</div>
-								
+
 								<div class="col-12">
 									<div class="form-group">
 										<label>Password<span>*</span></label>
-										<input type="password" id="customerPw" name="customerPw"  required="required" >
+										<input type="password" id="customerPw" name="customerPw" required="required">
 										<span>6-10 characters long.</span>
 									</div>
 								</div>
-								
+
 								<div class="col-12">
 									<div class="form-group">
 										<label>Confirm Password<span>*</span></label>
-										<input type="password" id="confirmPw" name="password" placeholder="" required="required" >
+										<input type="password" id="confirmPw" name="password" placeholder=""
+											required="required">
 									</div>
 								</div>
 
 								<div class="col-12">
 									<div class="form-group">
 										<label>Name<span>*</span></label>
-										<input type="text" name="customerName"  required="required" >
+										<input type="text" name="customerName" required="required">
 									</div>
 								</div>
 
 								<div class="col-12">
 									<div class="form-group">
 										<label>Email<span>*</span></label>
-										<input type="text" name="email" required="required" >
+										<input type="text" name="email" required="required">
 										<span>You may login with either your assigned username or your e-mail
 											address.</span>
 									</div>
@@ -329,8 +338,7 @@
 								<div class="col-12">
 									<div class="form-group">
 										<label>Department<span>*</span></label> <br>
-										<input type="text" name="customerDepartment" required="required"
-											>
+										<input type="text" name="customerDepartment" required="required">
 									</div>
 								</div>
 
@@ -339,12 +347,10 @@
 									<div class="form-group">
 										<label class="gubun">I am a<span>*</span></label>
 										<div>
-											<input type="radio" class="gubun" name="customerGubun"
-												value="B"> Buyer
-											<input type="radio" class="gubun" name="customerGubun"
-												value="S"> Seller
-											<input type="radio" class="gubun" name="customerGubun"
-												value="A"> Seller & Buyer
+											<input type="radio" class="gubun" name="customerGubun" value="B"> Buyer
+											<input type="radio" class="gubun" name="customerGubun" value="S"> Seller
+											<input type="radio" class="gubun" name="customerGubun" value="A"> Seller &
+											Buyer
 										</div>
 									</div>
 								</div>
@@ -360,7 +366,7 @@
 								<div class="col-12">
 									<div class="form-group">
 										<label>Company Name<span>*</span></label> <br>
-										<input type="text" name="compName"  required="required" >
+										<input type="text" name="compName" required="required">
 										<span>Please enter your company name exactly. To modify company name after
 											registration, you need to send us a business license and further information
 											to be re-approved.</span>
@@ -370,14 +376,14 @@
 								<div class="col-12">
 									<div class="form-group">
 										<label>Company Address<span>*</span></label> <br>
-										<input type="text" name="address"  required="required" >
+										<input type="text" name="address" required="required">
 									</div>
 								</div>
 
 								<div class="col-12">
 									<div class="form-group">
 										<label>Zip No<span>*</span></label> <br>
-										<input type="text" name="zipNo"  required="required" >
+										<input type="text" name="zipNo" required="required">
 									</div>
 								</div>
 
@@ -391,7 +397,7 @@
 										<button class="btn" id="submitBtn" type="button">Create My Account</button>
 									</div>
 								</div>
-								
+
 							</div>
 						</form>
 						<!--/ End Form -->

@@ -94,10 +94,10 @@
 
         let tableContent = `<thead>
                               <tr>
-                                <th>상품ID</th>
-                                <th>상품카테고리</th>
+                                <th style="width: 25%;">상품ID</th>
+                                <th style="width: 20%;">상품카테고리</th>
                                 <th>상품명</th>
-                                <th>현상태</th>
+                                <th style="width: 10%;">현상태</th>
                               </tr>
                             </thead> 
                             <tbody>`;
@@ -126,7 +126,7 @@
                     label = '미처리'; // item.judge가 null이거나 다른 값인 경우
                   }
                   tableContent += `<tr>
-                                      <td>${item.productId}</td>
+                                      <td >${item.productId}</td>
                                       <td>${item.category}</td>
                                       <td>
                                         <a href="#" id ="productList" class="productLink"
@@ -140,7 +140,7 @@
                                         ${item.productName}
                                         </a>
                                       </td>
-                                      <td>${label}</td>
+                                      <td >${label}</td>
                                     </tr>`;
                 });
               }
