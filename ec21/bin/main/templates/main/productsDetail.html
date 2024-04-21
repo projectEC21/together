@@ -152,12 +152,11 @@
 						<!-- Search Form -->
 						<div class="search-top">
 							<!-- 클릭하면 자바스크립트 함수로 해서 검색어 설정하게 하기 -->
-							<div class="top-search"><a href="javascript:funct()"><i class="ti-search"></i></a></div>
+							<div class="top-search"><a href=""><i class="ti-search"></i></a></div>
 							<!-- Search Form -->
 							<div class="search-top">
 									<input type="text" placeholder="Search here..." name="search">
 									<button value="search" type="submit"><i class="ti-search"></i></button>
-								</form>
 							</div>
 							<!--/ End Search Form -->
 						</div>
@@ -165,11 +164,11 @@
 						<div class="mobile-nav"></div>
 					</div>
 					<div class="col-lg-8 col-md-7 col-12">
+						<form th:action="@{/main/list}" method="get">
 						<div class="search-bar-top">
 							<div class="search-bar">
 								<!-- CSS가 왕창 깨져요ㅠㅠ 증말 죄송합니다아ㅠㅠㅠ -->
 								<!-- 240420 dy : 카테고리 선택 & 검색어 입력 시 form 태그로 상품 리스트로의 요청 걸어줌 -->
-								<form th:action="@{/main/list}" method="get">
 									<select id="category" name="category">
 										<option value="total" th:selected="${category eq 'total'}">All Category</option>
 										<option value="FOOD_BEVERAGE" th:selected="${category eq 'FOOD_BEVERAGE'}">Food & Beverage</option>
@@ -181,22 +180,24 @@
 									<input name="search" id="searchWord" placeholder="What are you searching for?" type="search" th:value="${searchWord}"
 										th:attr="placeholder=${searchWord eq null ? 'What are you searching for?' : null}" />
 									<button type="submit" class="btnn"> <i class="ti-search"></i></button>
-								</form>
+								</div>
 							</div>
-						</div>
+						</form>
 					</div>
 					<div class="col-lg-2 col-md-3 col-12">
 						<div class="right-bar">
 							<!-- Search Form -->
 							<div class="sinlge-bar">
-								<a th:href="@{/main/myproducts}" class="single-icon"><i class="fa fa-user-circle-o"
-										aria-hidden="true"></i></a>
+								<a th:href="@{/main/myproducts}" class="single-icon">
+									<i class="fa fa-user-circle-o"aria-hidden="true"></i>
+								</a>
 							</div>
 
 							<!-- 검색창 옆 부분 인콰이어리 new 로만 보이게 하고 인콰이어리 페이지로 넘어가게 하기 -->
 							<div class="sinlge-bar inquiry">
-								<a th:href="@{/main/inbox}" class="single-icon"><i class="fa fa-envelope-o"></i> <span
-										class="total-count">new</span></a>
+								<a th:href="@{/main/inbox}" class="single-icon">
+									<i class="fa fa-envelope-o"></i><span class="total-count">new</span>
+								</a>
 							</div>
 						</div>
 					</div>
@@ -285,9 +286,12 @@
 								<div class="product-gallery">
 									<div class="flexslider-thumbnails">
 										<ul class="slides">
-											<li data-thumb="https://via.placeholder.com/600x500">
+											<span th:if="${product.originalFileName}!=null">
+												<img th:src="@{/main/downloadImg(productId=${product.productId})}">
+											</span>
+											<!-- <li data-thumb="https://via.placeholder.com/600x500">
 												<img src="https://via.placeholder.com/600x500" alt="#">
-											</li>
+											</li> -->
 										</ul>
 									</div>
 								</div>
@@ -381,7 +385,7 @@
 											<div class="row">
 												<div class="col-12">
 													<div class="single-des">
-														<span class="productDesc" th:text="${product.productDesc}">Lorem Ipsum dummy text.</span>
+														<span class="productDesc" th:utext="${product.productDesc}">Lorem Ipsum dummy text.</span>
 													</div>
 												</div>
 											</div>
