@@ -21,7 +21,6 @@ import net.kdigital.ec21.dto.CustomerListModalDTO;
 import net.kdigital.ec21.dto.ModelPredictDTO;
 import net.kdigital.ec21.dto.ModelPredictModalDTO;
 import net.kdigital.ec21.dto.ProductDTO;
-import net.kdigital.ec21.dto.ProhibitSimilarWordDTO;
 import net.kdigital.ec21.dto.ReportedCustomerWithInfoDTO;
 import net.kdigital.ec21.dto.check.ProductCategory;
 import net.kdigital.ec21.dto.check.ProhibitReason;
