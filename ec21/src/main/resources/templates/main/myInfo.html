@@ -337,9 +337,12 @@
 
 								<div class="col-12">
 									<div class="form-group">
-										<label class="customerGubun">I am a<span>*</span></label>
-										<div>
-											<input type="radio" class="customerGubun" name="customerGubun" value="B"
+										<label class="gubun">I am a<span>*</span></label>
+										<div> 
+											<input type="radio" class="gubun" th:checked="${customer.customerGubun.name() == 'B'}" name="customerGubun" value="B"> Buyer
+											<input type="radio" class="gubun" th:checked="${customer.customerGubun.name() == 'S'}" name="customerGubun" value="S"> Seller
+											<input type="radio" class="gubun" th:checked="${customer.customerGubun.name() == 'A'}" name="customerGubun" value="A"> Seller & Buyer
+											<!-- <input type="radio" class="customerGubun" name="customerGubun" value="B"
 												th:checked="${customer.customerGubun.name() == 'B'}" disabled>
 											Buyer
 											<input type="radio" class="customerGubun" name="customerGubun" value="S"
@@ -347,7 +350,7 @@
 											Seller
 											<input type="radio" class="customerGubun" name="customerGubun" value="A"
 												th:checked="${customer.customerGubun.name() == 'A'}" disabled>
-											Buyer & Seller
+											Buyer & Seller -->
 										</div>
 									</div>
 								</div>
@@ -380,7 +383,7 @@
 								<div class="col-12">
 									<div class="form-group">
 										<label>Company Url<span>*</span></label> <br>
-										<input type="text" name="compUrl" th:value="${customer.compDesc}" required="required" readonly>
+										<input type="text" name="compUrl" th:value="${customer.compUrl}" required="required" readonly>
 									</div>
 								</div>
 								

@@ -36,7 +36,7 @@ $(document).ready(function() {
 });
 
 /**********************************
- * IP 주소 뒤에 세자리만 _________ 아직 안 됨
+ * IP 주소 마지막 주소 * 처리
  ***********************************/
 
 // 문서 로딩 시 함수 실행
@@ -45,8 +45,17 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function maskLastThreeChars() {
-    var ipElement = document.getElementById('remoteIp');
-    var remoteIp = ipElement.innerText;
-    if (!remoteIp) return;  // IP 주소가 없을 경우 아무것도 하지 않음
-    ipElement.innerText = remoteIp.replace(/(\d{3})$/, '***');  // 마지막 세 자리를 ***로 대체
+    var ipElements = document.querySelectorAll('.remoteIp'); // 'remoteIp' 클래스를 가진 모든 요소 선택
+    ipElements.forEach(function(ipElement) { // 선택한 모든 요소에 대해 반복
+        var remoteIp = ipElement.innerText; // 각 요소의 텍스트 가져오기
+        if (!remoteIp) return; // IP 주소가 없을 경우 건너뛰기
+        
+        if (remoteIp.length <= 3) {
+            // IP 주소가 3자리 이하일 경우 전부 ***로 마스킹
+            ipElement.innerText = '***';
+        } else {
+            // IP 주소의 마지막 세 자리를 ***로 마스킹
+            ipElement.innerText = remoteIp.slice(0, -3) + '.***';
+        }
+    });
 }
