@@ -84,16 +84,8 @@ public class CustomerController {
         return "main/login";
     }
 
-    /**
-     * 로그아웃 요청 (처리 후 메인페이지로)
-     * 
-     * @param param
-     * @return
-     */
-    @GetMapping("/main/logout")
-    public String logout(@RequestParam String param) {
-        return "redirect:/";
-    }
+    // 로그인 처리 & 로그아웃은 Security에서..!!!
+    
 
     // ================= 회원 마이페이지 =================
 
