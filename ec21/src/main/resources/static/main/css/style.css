@@ -5019,7 +5019,7 @@ td {
 	margin-top: 20px;
 }
 
-.shop.myinfo .form .form-group .gubun[type="checkbox"] {
+.shop.myinfo .form .form-group .gubun[type="radio"] {
 	display: inline-block;
 	width: 10px;
 	margin: 0 10px;
