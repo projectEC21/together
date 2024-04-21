@@ -394,10 +394,10 @@
 
                 <div class="x_content">
 
-                  <table id="" class="table table-striped jambo_table table-bordered dataTable no-footer"
-                    cellspacing="0" width="100%"> <!-- dt-responsive-->
+                  <table id="" class="table table-striped jambo_table table-bordered " cellspacing="0" width="100%">
+
                     <thead>
-                      <tr>
+                      <tr class="headings">
                         <th></th>
                         <th>구분</th>
                         <th>회원ID</th>
@@ -407,8 +407,8 @@
                         <th>국가IP</th>
                       </tr>
                     </thead>
-                    <tbody>
-                      <tr th:each="customer: ${list}">
+                    <tbody id="result">
+                      <tr class="even pointer" th:each="customer: ${list}">
                         <input type="hidden" name="" id="customerId" th:value="${customer.customerId}">
                         <td>
                           <button th:id="'modalBtn' + ${customer.customerId}" class="modalBtn"
