@@ -92,6 +92,7 @@ public class ProductService {
     }
     
     // ================= main/productWrite ========================
+    
     @Value("${spring.servlet.multipart.location}")
     String uploadPath;
 
@@ -101,14 +102,17 @@ public class ProductService {
      * @param productDTO
      */
     public void insertProduct(ProductDTO productDTO) {
-        // 상품 등록하는 회원
+        // default 값 세팅
+        productDTO.setProductDelete(YesOrNo.N);
+        
+        // customerId에 해당하는 회원
         CustomerEntity customerEntity = customerRepository.findById(productDTO.getCustomerId()).get();
 
         // prodId 생성
         String categoryCode = productDTO.getCategory().getCategoryCode();
         String prodId = ProductService.generateId(categoryCode);
         productDTO.setProductId(prodId);
-        log.info("============ 상품 아이디 생성 : {}", prodId);
+        log.info("============ productId 생성 : {}", prodId);
 
         // 대표 이미지 저장을 위한 경로
         String originalFileName = null;
@@ -122,29 +126,25 @@ public class ProductService {
             productDTO.setOriginalFileName(originalFileName);
             productDTO.setSavedFileName(savedFileName); // entity로 변환 전 dto의 savedFileName 변경해주기
         }
-        log.info("============ 파일 저장해써 : origin-{}", originalFileName);
+        log.info("============ 파일 저장 완료 : origin - {}", originalFileName);
 
         // lstm
         Lstm lstm = new Lstm(productDTO.getProductName(), productDTO.getProductDesc()); // lstm 객체 생성
 
         List<Map<String, Object>> result = modelService.predictLSTM(lstm);
-        log.info("============ {}", result);
-        log.info("============ {}", result.get(0).get("lstm_predict"));
+        log.info("============ python 서버 결과 : {}", result);
+        log.info("============ lstmPredict : {}", result.get(0).get("lstm_predict"));
 
         Boolean lstmPredict = false;
         Double lstmPredictProba = 0.0;
 
+        lstmPredict = String.valueOf(result.get(0).get("lstm_predict")).equals("1") ? true : false;
+        lstmPredictProba = Double.parseDouble(String.valueOf(result.get(0).get("lstm_predict_proba")));
         // 리스트 사이즈 == 1 : lstm 값이 1인 경우 , lstm 값이 0인데 금지어 유사도가 결과가 나오지 않은 경우
-        if (result.size() == 1) {
-            lstmPredict = String.valueOf(result.get(0).get("lstm_predict")).equals("1") ? true : false;
-            lstmPredictProba = Double.parseDouble(String.valueOf(result.get(0).get("lstm_predict_proba")));
-        } // 리스트 사이즈 >= 1 : lstm 값이 0이고 금지어 유사도 결과가 1개 이상 나온 경우
-        else {
-            lstmPredict = String.valueOf(result.get(0).get("lstm_predict")).equals("1") ? true : false;
-            lstmPredictProba = Double.parseDouble(String.valueOf(result.get(0).get("lstm_predict_proba")));
+        // 리스트 사이즈 >= 1 : lstm 값이 0이고 금지어 유사도 결과가 1개 이상 나온 경우
+        if (result.size() >= 1) {
 
             result.remove(0);
-
             // 중복제거
             // LinkedHashSet을 사용하여 중복 제거하면서 순서 유지
             Set<Map<String, Object>> resultSet = new LinkedHashSet<>(result);
@@ -152,38 +152,32 @@ public class ProductService {
             result.addAll(resultSet);
 
             for (int i = 0; i < result.size(); i++) {
-
                 String similarWord = String.valueOf(result.get(i).get("Similar_Word"));
                 String prohibitWord = String.valueOf(result.get(i).get("Prohibited_Word"));
                 Double similarProba = Double.parseDouble(String.valueOf(result.get(i).get("Similarity_Score")));
 
                 ProhibitSimilarWordDTO prohibitDTO = new ProhibitSimilarWordDTO(null, similarWord, similarProba,
                         prohibitWord, productDTO.getProductId());
-                log.info("{}", prohibitDTO);
+                log.info("======= prohibitDTO :{}", prohibitDTO);
 
                 // 여기서 prohibitSmilarDB에 save하면 될 듯
                 ProhibitWordEntity prohibitWordEntity = prohibitWordRepository.findById(prohibitWord).get();
                 ProductEntity productEntity = ProductEntity.toEntity(productDTO, customerEntity);
                 prohibitSimilarWordRepository
                         .save(ProhibitSimilarWordEntity.toEntity(prohibitDTO, prohibitWordEntity, productEntity));
-
             }
         }
 
+        // lstm 결과 세팅
         productDTO.setLstmPredict(lstmPredict);
         productDTO.setLstmPredictProba(lstmPredictProba);
         // lstmPredict가 1이면 judge를 Y로.. 0이면 null로
         if (lstmPredict) {
             productDTO.setJudge(YesOrNo.Y);
         }
-        // 디폴트가 안먹힘.. 그래서 일단 여기 코드 넣어 놓음
-        productDTO.setProductDelete(YesOrNo.N);
-
-        log.info("============ dto에 저장해써 : {}", lstmPredict);
 
         // productDTO -> productEntity 변환 후 DB에 저장
         productRepository.save(ProductEntity.toEntity(productDTO, customerEntity));
-
     }
 
 

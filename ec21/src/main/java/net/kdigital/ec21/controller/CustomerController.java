@@ -7,13 +7,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.kdigital.ec21.dto.CustomerDTO;
 import net.kdigital.ec21.dto.ProductDTO;
-import net.kdigital.ec21.dto.check.CustomerGubun;
+import net.kdigital.ec21.dto.check.YesOrNo;
 import net.kdigital.ec21.service.CustomerService;
 import net.kdigital.ec21.service.ProductService;
 
@@ -34,9 +35,26 @@ public class CustomerController {
      * @return
      */
     @GetMapping("/main/register")
-    public String register() {
+    public String register(@RequestParam(name = "category", defaultValue = "total") String category,
+            @RequestParam(name = "searchWord", defaultValue = "") String searchWord, Model model) {
+        
+        model.addAttribute("category", category);
+        model.addAttribute("searchWord", searchWord);
+        
         return "main/register";
     }
+
+    /**
+     * 전달받은 id가 DB에 존재하는지 확인
+     * @param param
+     * @return
+     */
+    @ResponseBody
+    @GetMapping("/main/register/confirmId")
+    public Boolean confirmId(@RequestParam(name = "customerId") String customerId) {
+        return customerService.isExistId(customerId);
+    }
+    
 
     /**
      * 회원가입 처리 요청
@@ -46,7 +64,13 @@ public class CustomerController {
      */
     @PostMapping("/main/registerProc")
     public String registerProc(@ModelAttribute CustomerDTO customerDTO) {
-        customerService.insertCustomer(customerDTO);
+        
+        // default 세팅
+        customerDTO.setEnabled(YesOrNo.N);
+        customerDTO.setBlacklistCheck(YesOrNo.N);
+        customerDTO.setRoles("ROLE_USER");
+
+        customerService.registerProc(customerDTO);
         return "redirect:/";
     }
 
@@ -60,16 +84,8 @@ public class CustomerController {
         return "main/login";
     }
 
-    /**
-     * 로그아웃 요청 (처리 후 메인페이지로)
-     * 
-     * @param param
-     * @return
-     */
-    @GetMapping("/main/logout")
-    public String logout(@RequestParam String param) {
-        return "redirect:/";
-    }
+    // 로그인 처리 & 로그아웃은 Security에서..!!!
+    
 
     // ================= 회원 마이페이지 =================
 
