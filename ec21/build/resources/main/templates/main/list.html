@@ -30,7 +30,7 @@
 	<!-- Font Awesome -->
 	<link rel="stylesheet" th:href="@{/main/css/font-awesome.css}">
 	<!-- Fancybox -->
-	<link rel="stylesheet" th:href="@{/main/css/jquery.fancybox.min.css}">
+	<link rel="stylesheet" th:href="@{/main/css/jquery.fancybox.css}">
 	<!-- Themify Icons -->
 	<link rel="stylesheet" th:href="@{/main/css/themify-icons.css}">
 	<!-- Nice Select CSS -->
@@ -312,8 +312,8 @@
 									<div class="product-price">
 										<span>$[[${product.price}]]</span>
 									</div>
-									<div class="product-seller">
-										<img src="#" alt="국가">
+									<div class="product-seller" th:data-country="${product.country}">
+										<img id="countryFlag" src="#" alt="" style="width:20px; height:20px;">
 										<span>[[${product.customerId}]]</span>
 									</div>
 								</div>
@@ -420,7 +420,7 @@
 					</div>
 					<div class="col-lg-6 col-12">
 						<div class="right">
-							<img th:src="@{/images/payments.png}" alt="#">
+							<img th:src="@{/main/images/payments.png}" alt="#">
 						</div>
 					</div>
 				</div>
@@ -455,7 +455,7 @@
 <!-- Nice Select JS -->
 <script th:src="@{/main/js/nicesellect.js}"></script>
 <!-- Ytplayer JS -->
-<script th:src="@{/main/js/ytplayer.min.js}"></script>
+<!-- <script th:src="@{/main/js/ytplayer.min.js}"></script> -->
 <!-- Flex Slider JS -->
 <script th:src="@{/main/js/flex-slider.js}"></script>
 <!-- ScrollUp JS -->
@@ -466,7 +466,8 @@
 <script th:src="@{/main/js/easing.js}"></script>
 <!-- Active JS -->
 <script th:src="@{/main/js/active.js}"></script>
+<!-- myFunction JS : 필요한 자바 스크립트 이리로 넣어서 사용하면 됩니다 -->
+<script th:src="@{/main/js/myFunction.js}"></script>
 
 </body>
-
 </html>

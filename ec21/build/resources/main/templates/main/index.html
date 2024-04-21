@@ -29,7 +29,7 @@
 	<!-- Font Awesome -->
 	<link rel="stylesheet" th:href="@{/main/css/font-awesome.css}">
 	<!-- Fancybox -->
-	<link rel="stylesheet" th:href="@{/main/css/jquery.fancybox.min.css}">
+	<link rel="stylesheet" th:href="@{/main/css/jquery.fancybox.css}">
 	<!-- Themify Icons -->
 	<link rel="stylesheet" th:href="@{/main/css/themify-icons.css}">
 	<!-- Nice Select CSS -->
@@ -63,43 +63,11 @@
 
 	
 	<script>
-		$(document).ready(function() {
+		$(document).ready(function(){
 
-			// .product-seller 요소 선택
-			let productSeller = $(".product-seller");
 
-			// 각 요소에 대해 반복
-			productSeller.each(function() {
-				// 데이터 속성 읽기
-				let $element = $(this);  // 각 요소를 jQuery 객체로 지정
-				let countryName = $element.data("country");
-				// let countryName = $(this).data("country");
-				console.log("====================="+countryName);
-
-				// 데이터가 없을 때 처리
-				if (!countryName) {
-					console.error("Country data is missing.");
-					return;
-				}
-
-				// AJAX 요청을 통해 국가 데이터를 가져옴
-				$.ajax({
-					url: `https://restcountries.com/v3.1/name/${countryName}`,
-					method: 'GET',
-					success: function (data) {
-						let countryCode = data[0].cca2; // 국가 코드
-						let flagImageUrl = `https://flagsapi.com/${countryCode}/flat/64.png`;
-						$("#countryFlag").attr("src", flagImageUrl);
-						$("#countryFlag").attr("alt", `${countryName} Flag`);
-						console.log(countryCode);
-					},
-					error: function () {
-						console.log("Error retrieving country data");
-					}
-				});
-			});
 		});
-
+	
 	</script>
 </head>
 
@@ -200,6 +168,7 @@
 							</div>
 
 							<!-- 검색창 옆 부분 인콰이어리 new 로만 보이게 하고 인콰이어리 페이지로 넘어가게 하기 -->
+							<!-- ++ 0이 아닐때만 파란색으로 뜨게 하기 ! === 아직 안됨 -->
 							<div class="sinlge-bar inquiry">
 								<a th:href="@{/main/inbox}" class="single-icon"><i class="fa fa-envelope-o"></i> <span
 										class="total-count">new</span></a>
@@ -312,9 +281,8 @@
 															<span>$ [[${product.price}]]</span>
 														</div>
 														<div class="product-seller" th:data-country =${product.country}>
-															<img id="countryFlag" src="" alt="Country Flag" style="width:20px; height:20px;">
+															<img id="countryFlag" src="" alt="" style="width:20px; height:20px;">
 															<span>[[${product.customerId}]]</span>
-															<span th:text="${product.country}"></span>
 														</div>
 													</div>
 												</div>
@@ -604,7 +572,7 @@
 	<!-- Nice Select JS -->
 	<script th:src="@{/main/js/nicesellect.js}"></script>
 	<!-- Ytplayer JS -->
-	<script th:src="@{/main/js/ytplayer.min.js}"></script>
+	<!-- <script th:src="@{/main/js/ytplayer.min.js}"></script> -->
 	<!-- Flex Slider JS -->
 	<script th:src="@{/main/js/flex-slider.js}"></script>
 	<!-- ScrollUp JS -->
@@ -615,6 +583,8 @@
 	<script th:src="@{/main/js/easing.js}"></script>
 	<!-- Active JS -->
 	<script th:src="@{/main/js/active.js}"></script>
+	<!-- myFunction JS : 필요한 자바 스크립트 이리로 넣어서 사용하면 됩니다 -->
+	<script th:src="@{/main/js/myFunction.js}"></script>
 
 </body>
 </html>
