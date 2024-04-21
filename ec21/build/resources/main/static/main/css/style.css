@@ -2377,11 +2377,16 @@ body {
 
 .single-product .product-content h3 {
 	line-height: 20px;
-	display: -webkit-box;  /* 웹킷 레이아웃 */
-    -webkit-box-orient: vertical;  /* 수직 방향 */
-    -webkit-line-clamp: 2;  /* 최대 3줄까지 표시 */
-    overflow: hidden;  /* 넘치는 텍스트 숨김 */
-    text-overflow: ellipsis;  /* 생략 표시 */
+	display: -webkit-box;
+	/* 웹킷 레이아웃 */
+	-webkit-box-orient: vertical;
+	/* 수직 방향 */
+	-webkit-line-clamp: 2;
+	/* 최대 3줄까지 표시 */
+	overflow: hidden;
+	/* 넘치는 텍스트 숨김 */
+	text-overflow: ellipsis;
+	/* 생략 표시 */
 	max-width: 180px;
 }
 
@@ -4939,6 +4944,103 @@ td {
 /*======================================
   End Team CSS
 ========================================*/
+
+
+/*======================================
+	MyInfo CSS
+======================================*/
+.shop.myinfo h2 {
+	position: relative;
+	font-size: 40px;
+	color: #333;
+	font-weight: 400;
+	text-transform: uppercase;
+	margin: 12px 0 0 -100px;
+	padding-bottom: 20px;
+	text-align: center;
+}
+
+.myinfo {
+	background: #f6f6f6;
+	padding: 50px 0;
+}
+
+
+
+.shop.myinfo h2:before {
+	position: absolute;
+	content: "";
+	left: 50%;
+	bottom: 0;
+	height: 2px;
+	width: 50px;
+	background: #0072ab;
+	margin-left: -25px;
+}
+
+
+.shop.myinfo p {
+	font-size: 14px;
+	color: #333;
+	font-weight: 400;
+	text-align: center;
+	margin: 12px 0 50px -100px;
+}
+
+.shop.myinfo .form .form-group input {
+	width: 90%;
+	height: 45px;
+	line-height: 50px;
+	padding: 0 20px;
+	border-radius: 3px;
+	/* border-radius: 0px; */
+	color: #333 !important;
+	border: none;
+
+	display: inline-block;
+}
+
+.shop.myinfo .form .form-group label {
+	color: #333;
+	position: relative;
+	font-size: 20px;
+	padding-top: 15px;
+}
+
+.shop.myinfo .form .form-group {
+	margin-bottom: 22px;
+	font-size: 15px;
+}
+
+.shop.myinfo .form .form-group.title label {
+	color: #222;
+	position: relative;
+	font-size: 28px;
+	margin-top: 20px;
+}
+
+.shop.myinfo .form .form-group .gubun[type="radio"] {
+	display: inline-block;
+	width: 10px;
+	margin: 0 10px;
+	height: 10px;
+}
+
+
+.shop.myinfo .form .btn {
+	display: inline-block;
+	height: 46px;
+	width: auto;
+	border: none;
+	color: #fff;
+	line-height: 20px;
+	margin: 0 auto;
+}
+
+/*======================================
+	End MyInfo CSS
+======================================*/
+
 
 /*======================================
    Start Shop Blog CSS
