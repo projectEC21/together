@@ -54,7 +54,7 @@
 
       // 첫번째 모달 닫기
       // 닫기 버튼 이벤트
-      $("#closeBtn").on("click", function (event) {
+      $("#closeBtn1").on("click", function (event) {
         modal1.hide();
       });
 
@@ -132,7 +132,7 @@
                                         <a href="#" id ="productList" class="productLink"
                                         data-product-name="${item.productName}"  
                                         data-product-category="${item.category}" 
-                                        data-productDesc="${item.productDesc}"
+                                        data-productDesc='${item.productDesc}'
                                         data-price="${item.price}"
                                         data-moq="${item.moq}"
                                         data-unit="${item.unit}"
@@ -179,6 +179,22 @@
           $("#modalOrigin").html(modalOrigin);
           $("#modalMoq").html(modalMoq);
           $("#modalUnit").html(modalUnit);
+          $("#displayMoqUnit").html(`${modalMoq} ${modalUnit}`);
+
+          $.ajax({
+            url: `https://restcountries.com/v3.1/name/${modalOrigin}`,
+            method: 'GET',
+            success: function (data) {
+              let countryCode = data[0].cca2; // 국가 코드
+              let flagImageUrl = `https://flagsapi.com/${countryCode}/shiny/64.png`;
+              $("#countryFlag").attr("src", flagImageUrl);
+              $("#countryFlag").attr("alt", `${modalOrigin} Flag`);
+              console.log(countryCode);
+            },
+            error: function () {
+              console.log("Error retrieving country data");
+            }
+          });
         });
 
       });
@@ -378,10 +394,10 @@
 
                 <div class="x_content">
 
-                  <table id="" class="table table-striped jambo_table table-bordered dataTable no-footer"
-                    cellspacing="0" width="100%"> <!-- dt-responsive-->
+                  <table id="" class="table table-striped jambo_table table-bordered " cellspacing="0" width="100%">
+
                     <thead>
-                      <tr>
+                      <tr class="headings">
                         <th></th>
                         <th>구분</th>
                         <th>회원ID</th>
@@ -391,8 +407,8 @@
                         <th>국가IP</th>
                       </tr>
                     </thead>
-                    <tbody>
-                      <tr th:each="customer: ${list}">
+                    <tbody id="result">
+                      <tr class="even pointer" th:each="customer: ${list}">
                         <input type="hidden" name="" id="customerId" th:value="${customer.customerId}">
                         <td>
                           <button th:id="'modalBtn' + ${customer.customerId}" class="modalBtn"
@@ -508,7 +524,7 @@
 
         <!-- 모달 푸터 -->
         <div class="modal-footer">
-          <button type="button" class="btn btn-danger btn-xs" id="closeBtn" data-dismiss="modal">닫기</button>
+          <button type="button" class="btn btn-danger btn-xs" id="closeBtn1" data-dismiss="modal">닫기</button>
         </div>
       </div>
     </div>
@@ -521,48 +537,47 @@
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
 
-        <div class="modal-header">
-          <h4 class="modal-title">상세 페이지</h4>
-        </div>
+        <h2 id="modalProductCategory"></h2>
+        <h4 class="modalProductName" id="modalProductName"></h4>
 
         <div class="modal-body">
           <div class="info">
             <ol>
-              <li>
-                <span class="dtr-title">Product Name:</span>
-                <span id="modalProductName">-</span>
-              </li>
+              <!-- <li>
+                <span class="dtr-title">Category:</span>
+                <span id="modalProductCategory">-</span>
+              </li> -->
               <li>
                 <span class="dtr-title">Price:</span>
                 <span id="modalPrice">-</span>
               </li>
+              <!-- <li>
+                <span class="dtr-title">Origin:</span>
+                <span id="modalOrigin">-</span>
+              </li> -->
               <li>
                 <span class="dtr-title">Origin:</span>
                 <span id="modalOrigin">-</span>
+                <img id="countryFlag" src="" alt="Country Flag" style="width:20px; height:20px;">
               </li>
+
               <li>
-                <span class="dtr-title">Category:</span>
-                <span id="modalProductCategory">-</span>
+                <span class="dtr-title">Minimum Order Quantity:</span>
+                <span id="displayMoqUnit">-</span>
               </li>
               <li>
                 <span class="dtr-title">Product Details:</span>
                 <span id="modalProductDesc">-</span>
               </li>
-              <li>
-                <span class="dtr-title">Unit:</span>
-                <span id="modalUnit"></span>
-              </li>
-              <li>
-                <span class="dtr-title">MOQ:</span>
-                <span id="modalMoq"></span>
-              </li>
             </ol>
           </div>
         </div>
+
         <!-- 모달 푸터 -->
         <div class="modal-footer">
-          <button type="button" class="btn btn-danger btn-xs" id="closeBtn" data-dismiss="modal">닫기</button>
+          <button type="button" class="btn btn-danger btn-xs" id="closeBtn2" data-dismiss="modal">닫기</button>
         </div>
+
       </div>
     </div>
   </div>

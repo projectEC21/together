@@ -53,20 +53,20 @@
       let searchWord = $("#searchWord").val();
       let reportCutomerId = $(".reportCustomerId").val();
       let reportedId = $(".reportedId").val();
-      
+
       let reportCategory = $(this).data("report-category");
       let reportReason = $(this).data("report-reason");
-      
+
       // 블랙 리스트에 존재하는지 확인
       $.ajax({
-        url:"/reportedCustomerList/checkBlack",
-        data:{ "reportedId": reportedId },
-        method : "GET",
+        url: "/reportedCustomerList/checkBlack",
+        data: { "reportedId": reportedId },
+        method: "GET",
         success: function (resp) {
           // boolean타입 반환 : false이면 블랙리스트에 존재 O, true이면 블랙리스트에 존재 X 
           if (!resp) {
             alert("이미 블랙 회원입니다.");
-          }else{
+          } else {
             // 확인 창을 띄우고, 확인 시 블랙리스트로 이동
             let data = `'${reportedId}' 를 블랙으로 처리하시겠습니까?
             블랙 카테고리 : ${reportCategory}
@@ -87,7 +87,7 @@
           }
         }
       })
-      
+
     }
 
     // 정상 버튼 클릭 시
@@ -281,15 +281,15 @@
                     <table class="table table-striped jambo_table bulk_action">
                       <thead>
                         <tr class="headings">
-                          <th class="column-title">신고당한 횟수</th>
+                          <th class="column-title">신고횟수</th>
                           <th class="column-title">구분</th>
-                          <th class="column-title">신고당한 회원 ID </th>
+                          <th class="column-title">회원 ID </th>
                           <th class="column-title">담당자명</th>
                           <th class="column-title">회사명</th>
                           <th class="column-title">부서명</th>
                           <th class="column-title">국가IP</th>
-                          <th class="column-title">신고카테고리</th>
                           <th class="column-title">신고사유</th>
+                          <th class="column-title">상세사유</th>
                           <th class="column-title no-link last">
                             <span class="nobr">버튼</span>
                           </th>
@@ -317,15 +317,13 @@
                               th:value="${reportedCustomer.reportCustomerId}">
                             <input type="hidden" name="" class="reportedId" th:value="${reportedCustomer.reportedId}">
                             <!--블랙 버튼 클릭 시 팝업창? (신고 테이블의 관리자 처리 여부 변경 , 블랙리스트로 변경할 고객ID )-->
-                            <input class="btn btn-hover color-8 blackBtn" type="button" 
-                                  th:data-report-category="${reportedCustomer.reportCategory}" 
-                                  th:data-report-reason="${reportedCustomer.reportReason}" 
-                                  value="블랙">
-                                  <!--정상 버튼 클릭 시 (신고 테이블의 관리자 처리 여부 변경) -->
-                            <input class="btn btn-hover color-9 normalBtn" type="button" 
-                                  th:data-report-category="${reportedCustomer.reportCategory}" 
-                                  th:data-report-reason="${reportedCustomer.reportReason}" 
-                                  value="정상">
+                            <input class="btn btn-hover color-8 blackBtn" type="button"
+                              th:data-report-category="${reportedCustomer.reportCategory}"
+                              th:data-report-reason="${reportedCustomer.reportReason}" value="블랙">
+                            <!--정상 버튼 클릭 시 (신고 테이블의 관리자 처리 여부 변경) -->
+                            <input class="btn btn-hover color-9 normalBtn" type="button"
+                              th:data-report-category="${reportedCustomer.reportCategory}"
+                              th:data-report-reason="${reportedCustomer.reportReason}" value="정상">
                           </td>
                         </tr>
                       </tbody>
