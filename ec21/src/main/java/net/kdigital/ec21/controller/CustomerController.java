@@ -13,11 +13,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.kdigital.ec21.dto.CustomerDTO;
 import net.kdigital.ec21.dto.ProductDTO;
+import net.kdigital.ec21.dto.check.CustomerGubun;
 import net.kdigital.ec21.service.CustomerService;
 import net.kdigital.ec21.service.ProductService;
 
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 
 @Controller
@@ -139,8 +139,9 @@ public class CustomerController {
             CustomerDTO customerDTO = customerService.getCustomer(customerId);
             model.addAttribute("customer", customerDTO);
         }
-        return "main/myinfo";
+        return "main/myInfo";
     }
+
 
     /**
      * 수정된 customerDTO를 전달받아 해당 customer의 정보를 수정하는 요청
@@ -152,7 +153,7 @@ public class CustomerController {
     public String updateCustomer(@ModelAttribute CustomerDTO dto, RedirectAttributes attr) {
         CustomerDTO customerDTO =  customerService.updateCustomer(dto);
         attr.addFlashAttribute("customer", customerDTO);
-        return "redirect:/my/info";
+        return "redirect:/main/myinfo";
     }
     
 
