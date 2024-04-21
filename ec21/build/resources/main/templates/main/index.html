@@ -57,8 +57,53 @@
 	<!-- 240417 dy : JQuery 파일 추가 및 ajax 작업 -->
 	<script th:src="@{/script/jquery-3.7.1.min.js}"></script>
 	<!-- 240417 dy : 검색어 입력 후 돋보기 클릭 시 /main/list 요청-->
-	
 
+	<!-- jQuery 라이브러리 로드 -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+	
+	<script>
+		$(document).ready(function() {
+
+			// .product-seller 요소 선택
+			let productSeller = $(".product-seller");
+
+			// 각 요소에 대해 반복
+			productSeller.each(function() {
+				// 데이터 속성 읽기
+				let $element = $(this);  // 각 요소를 jQuery 객체로 지정
+				let countryName = $element.data("country");
+				// let countryName = $(this).data("country");
+				console.log("====================="+countryName);
+				let encodedCountryName = encodeURIComponent(countryName);  // 인코딩
+
+				// 데이터가 없을 때 처리
+				if (!countryName) {
+					console.error("Country data is missing.");
+					return;
+				}
+
+				// AJAX 요청을 통해 국가 데이터를 가져옴
+				$.ajax({
+					url: `https://restcountries.com/v3.1/name/${countryName}`,
+					method: 'GET',
+					success: function (data) {
+						let countryCode = data[0].cca2; // 국가 코드
+						let flagImageUrl = `https://flagsapi.com/${countryCode}/flat/64.png`;
+						$("#countryFlag").attr("src", flagImageUrl);
+						$("#countryFlag").attr("alt", `${countryName} Flag`);
+						console.log(countryCode);
+					},
+					error: function () {
+						console.log("Error retrieving country data");
+					}
+				});
+			});
+		});
+
+
+
+	</script>
 </head>
 
 <body class="js">
@@ -269,8 +314,8 @@
 														<div class="product-price">
 															<span>$ [[${product.price}]]</span>
 														</div>
-														<div class="product-seller">
-															<img src="#" alt="국가">
+														<div class="product-seller" th:data-country =${product.country}>
+															<img id="countryFlag" src="" alt="Country Flag" style="width:20px; height:20px;">
 															<span>[[${product.customerId}]]</span>
 														</div>
 													</div>
