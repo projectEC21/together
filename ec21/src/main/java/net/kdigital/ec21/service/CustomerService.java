@@ -3,6 +3,7 @@ package net.kdigital.ec21.service;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import net.kdigital.ec21.dto.CustomerDTO;
 import net.kdigital.ec21.dto.ProductDTO;
@@ -32,6 +33,33 @@ public class CustomerService {
     public void insertCustomer(CustomerDTO customerDTO) {
         CustomerEntity entity = CustomerEntity.toEntity(customerDTO);
         customerRepository.save(entity);
+    }
+
+    /**
+     * 회원 정보 수정 - 전달받은 회원DTO의 내용으로 정보 수정
+     * @param dto
+     * @return
+     */
+    @Transactional
+    public CustomerDTO updateCustomer(CustomerDTO dto) {
+        CustomerEntity entity = customerRepository.findById(dto.getCustomerId()).get();
+
+        // 바꿀수 없는 값 : ID
+        entity.setCustomerPw(dto.getCustomerPw());
+        entity.setCustomerName(dto.getCustomerName());
+        entity.setEmail(dto.getEmail());
+        entity.setCustomerDepartment(dto.getCustomerDepartment());
+        entity.setCustomerGubun(dto.getCustomerGubun());
+        entity.setCompName(dto.getCompName());
+        entity.setCompDesc(dto.getCompDesc());
+        entity.setCompUrl(dto.getCompUrl());
+        entity.setAddress(dto.getAddress());
+        entity.setZipNo(dto.getZipNo());
+        entity.setFaxNo(dto.getFaxNo());
+        entity.setBusiNo(dto.getBusiNo());
+        entity.setTradeNo(dto.getTradeNo());
+
+        return CustomerDTO.toDTO(entity);
     }
 
     
