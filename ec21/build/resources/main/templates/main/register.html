@@ -56,144 +56,120 @@
 
 	<!-- 240421 dy : JQuery 및 ajax - IP 및 국가  -->
 	<!-- 240421 dy : 유효성 검사 미완료 -->
-	<!-- 240422 iy: 유효성 검사 진행중 -->
+	<!-- 240422 iy: 유효성 검사 완성 -->
 	<script th:src="@{/script/jquery-3.7.1.min.js}"></script>
 	<script>
-		$(function () {
-			// 실시간 유효성 검사를 위한 키업 이벤트 핸들러 연결
+		$(document).ready(function () {
+			$("#submitBtn").click(function (e) {
+				e.preventDefault(); // 기본 폼 제출 방지
+
+				// 빈 필드 검사
+				var firstEmptyInput = findFirstEmptyInput();
+				if (firstEmptyInput) {
+					alert("Please fill in the " + firstEmptyInput.label + " field.");
+					$('#' + firstEmptyInput.id).focus(); // 정확한 id 사용하여 포커스 설정
+					return;
+				}
+
+				// 라디오 버튼 검사
+				if (!validateRadioButtons()) {
+					alert("Please select an option for the role.");
+					$('.gubun').first().focus();
+					return;
+				}
+
+				// 유효성 검사
+				var firstInvalidFieldId = validateAllFieldsAndFindFirstInvalid();
+				if (firstInvalidFieldId) {
+					$('#' + firstInvalidFieldId).focus();
+					alert("Please correct the errors in the form before submitting.");
+					return;
+				}
+
+				if (confirm("Are you sure you want to register?")) {
+					$("#registerForm").submit();
+				}
+			});
+
+			function findFirstEmptyInput() {
+				var firstEmptyInput = null;
+				$('input[required], textarea[required], select[required]').each(function () {
+					if (!$(this).val()) {
+						firstEmptyInput = {
+							id: $(this).attr('id'), // id를 직접 가져옴
+							label: $(this).closest('.form-group').find('label').text().trim() // 연관된 라벨의 텍스트를 가져옴
+						};
+						return false; // 루프 탈출
+					}
+				});
+				return firstEmptyInput;
+			}
+
+			function validateRadioButtons() {
+				// 'customerGubun' 이름을 가진 라디오 버튼 그룹의 선택 여부 확인
+				return $('input[type="radio"][name="customerGubun"]:checked').length > 0;
+			}
+
+
+			// 모든 필드 유효성 검사 및 첫 번째 유효하지 않은 필드 찾기
+			function validateAllFieldsAndFindFirstInvalid() {
+				if (!validateCustomerId()) return "customerId";
+				if (!validatePassword()) return "customerPw";
+				if (!validateConfirmPassword()) return "confirmPw";
+				if (!validateEmail()) return "email";
+				return null; // 모든 검사 통과
+			}
+
+			// 키업 이벤트에 대한 유효성 검사 핸들러 연결
 			$("#customerId").on('keyup', validateCustomerId);
 			$("#customerPw").on('keyup', validatePassword);
 			$("#confirmPw").on('keyup', validateConfirmPassword);
 			$("#email").on('keyup', validateEmail);
 
-			// 제출 버튼 클릭 시 이벤트
-			$("#submitBtn").click(function (e) {
-				e.preventDefault(); // 폼의 기본 제출 동작 방지
+			// 각 필드 유효성 검사 함수 구현
+			function validateCustomerId() {
+				var id = $("#customerId").val();
+				var isValid = /^[a-zA-Z0-9]{4,10}$/.test(id);
+				$("#confirmID").text(isValid ? "This ID is available." : "ID must be 4-10 characters long, consisting of letters and numbers only.")
+					.css("color", isValid ? "green" : "red");
+				return isValid;
+			}
 
-				// 모든 필수 필드의 유효성 검사 실행
-				var idValid = validateCustomerId();
-				var pwValid = validatePassword();
-				var confirmPwValid = validateConfirmPassword();
-				var emailValid = validateEmail();
-				var allFieldsValid = validateAllFields();
+			function validatePassword() {
+				var password = $("#customerPw").val();
+				var isValid = /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,10}$/.test(password);
+				$("#passwordHelp").text(isValid ? "Your password is valid." : "Password must include 6-10 characters with letters, numbers, and special characters.")
+					.css("color", isValid ? "green" : "red");
+				return isValid;
+			}
 
-				if (idValid && pwValid && confirmPwValid && emailValid && allFieldsValid) {
-					if (confirm("Are you sure you want to register?")) {
-						$("#registerForm").submit();
-					}
-				} else {
-					if (!idValid) {
-						alert("Please verify your ID");
-					}
-					if (!pwValid) {
-						alert("Please verify your password");
-					}
-					if (!pwValid) {
-						alert("Please verify your email. ");
-					}
+			function validateConfirmPassword() {
+				var password = $("#customerPw").val();
+				var confirmPassword = $("#confirmPw").val();
+				var isValid = password === confirmPassword;
+				$("#confirmPasswordHelp").text(isValid ? "Passwords match." : "Passwords do not match.")
+					.css("color", isValid ? "green" : "red");
+				return isValid;
+			}
+
+			function validateEmail() {
+				var email = $("#email").val();
+				var isValid = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/.test(email);
+				$("#emailHelp").text(isValid ? "Valid email address." : "Invalid email address.")
+					.css("color", isValid ? "green" : "red");
+				return isValid;
+			}
+
+			function validateRadioButtons() {
+				var radios = $('input[type="radio"][name="customerGubun"]');
+				if (radios.filter(':checked').length === 0) {
+					radios.first().focus(); // 첫 번째 라디오 버튼에 포커스 설정
+					return false;
 				}
-
-			});
+				return true;
+			}
 		});
-
-		// 모든 필수 필드를 검증 -- alert 두번뜨는 문제 해결중
-		function validateAllFields() {
-			var isValid = true;
-			// ID 유효성 검사
-
-			$('input[required], select[required], textarea[required]').each(function () {
-				if (!$(this).val()) {
-					var fieldId = $(this).attr('id'); // 필드의 ID를 가져옵니다.
-					var label = $("label[for='" + fieldId + "']").text(); // for 속성을 이용하여 연결된 레이블을 찾습니다.
-					if (!label.length) label = $(this).closest('.form-group').find('label').text(); // for 속성이 없는 경우, 가까운 .form-group에서 레이블을 찾습니다.
-					alert("Please enter " + label); // 누락된 필드의 레이블을 알림으로 보여줍니다.
-					$(this).focus(); // 해당 필드로 포커스를 이동합니다.
-					isValid = false;
-					return false; // 더 이상 반복하지 않습니다.
-				}
-			});
-			// 라디오 버튼 검사
-			if (!$("input[name='customerGubun']:checked").length) {
-				alert("Please select your role.");
-				$("input[name='customerGubun']").first().focus();
-				isValid = false;
-			}
-			return isValid;
-		}
-
-		// ID 유효성 검사
-		function validateCustomerId(callback) {
-			var id = $("#customerId").val();
-			if (!/^[a-zA-Z0-9]{4,10}$/.test(id)) {
-				$("#confirmID").text("ID must be 4-10 characters long, consisting of letters and numbers only.").css("color", "red");
-				callback(false);
-			} else {
-				// 서버에 ID 중복 검사 요청
-				$.ajax({
-					url: "/main/register/confirmId",
-					data: { "customerId": id },
-					success: function (resp) {
-						if (resp) {
-							$("#confirmID").text("This ID is already in use.").css("color", "red");
-							callback(false);
-						} else {
-							$("#confirmID").text("This ID is available.").css("color", "green");
-							callback(true);
-						}
-					}
-				});
-			}
-		}
-
-		// 비밀번호 유효성 검사
-		function validatePassword() {
-			var password = $("#customerPw").val();
-			if (!/^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,10}$/.test(password)) {
-				$("#passwordHelp").text("Password must be 6-10 characters long, including at least one letter, one number, and one special character.").css("color", "red");
-				return isValid = false;
-			} else {
-				$("#passwordHelp").text("Your password is valid.").css("color", "green");
-				return isValid = true;
-			}
-		}
-
-		// 비밀번호 확인 유효성 검사
-		function validateConfirmPassword() {
-			var password = $("#customerPw").val();
-			var confirmPassword = $("#confirmPw").val();
-			if (password !== confirmPassword) {
-				$("#confirmPasswordHelp").text("Passwords do not match.").css("color", "red");
-				return isValid = false;
-			} else {
-				$("#confirmPasswordHelp").text("Passwords match.").css("color", "green");
-				return isValid = true;
-			}
-		}
-
-		// 이메일 유효성 검사
-		function validateEmail() {
-			var email = $("#email").val();
-			if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/.test(email)) {
-				$("#emailHelp").text("Invalid email address.").css("color", "red");
-				return isValid = false;
-			} else {
-				$("#emailHelp").text("Valid email address.").css("color", "green");
-				return isValid = true;
-			}
-		}
-
-		function init() {
-			$.ajax({
-				url: "https://api.ip.pe.kr/json"
-			}).done(function (api) {
-				$("#remoteIp").val(api.ip);
-				$("#country").val(api.country_name.en);
-			}).fail(function () {
-				alert("로딩하는데 실패하였습니다.");
-			});
-		}
 	</script>
-
 
 </head>
 
@@ -415,7 +391,7 @@
 								<div class="col-12">
 									<div class="form-group">
 										<label>Name<span>*</span></label>
-										<input type="text" name="customerName" required="required">
+										<input type="text" id="customerName" name="customerName" required="required">
 									</div>
 								</div>
 
@@ -432,7 +408,8 @@
 								<div class="col-12">
 									<div class="form-group">
 										<label>Department<span>*</span></label> <br>
-										<input type="text" name="customerDepartment" required="required">
+										<input type="text" id="customerDepartment" name="customerDepartment"
+											required="required">
 									</div>
 								</div>
 
@@ -446,6 +423,7 @@
 											<input type="radio" class="gubun" name="customerGubun" value="A"> Seller &
 											Buyer
 										</div>
+										<span id="customerGubunHelp"></span>
 									</div>
 								</div>
 
@@ -460,7 +438,7 @@
 								<div class="col-12">
 									<div class="form-group">
 										<label>Company Name<span>*</span></label> <br>
-										<input type="text" name="compName" required="required">
+										<input type="text" id="compName" name="compName" required="required">
 										<span>Please enter your company name exactly. To modify company name after
 											registration, you need to send us a business license and further information
 											to be re-approved.</span>
@@ -470,14 +448,14 @@
 								<div class="col-12">
 									<div class="form-group">
 										<label>Company Address<span>*</span></label> <br>
-										<input type="text" name="address" required="required">
+										<input type="text" id="address" name="address" required="required">
 									</div>
 								</div>
 
 								<div class="col-12">
 									<div class="form-group">
 										<label>Zip No<span>*</span></label> <br>
-										<input type="text" name="zipNo" required="required">
+										<input type="text" id="zipNo" name="zipNo" required="required">
 									</div>
 								</div>
 
