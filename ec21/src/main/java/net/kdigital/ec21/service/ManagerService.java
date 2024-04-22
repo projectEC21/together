@@ -217,7 +217,8 @@ public class ManagerService {
         entityList.forEach((entity) -> {
             ModelPredictModalDTO dto = new ModelPredictModalDTO(productId, entity.getSimilarWord(),
                     entity.getProhibitWordEntity().getProhibitWord(),
-                    entity.getProhibitWordEntity().getProhibitReason());
+                    entity.getProhibitWordEntity().getProhibitReason(),
+                    entity.getSimilarProba());
             modalDTOs.add(dto);
         });
         return modalDTOs;
@@ -311,29 +312,29 @@ public class ManagerService {
     }
 
     /**
-     * 전달받은 customerId의 blackCheck 값을 Y로 변경하고, 
+     * 전달받은 customerId의 blackCheck 값을 Y로 변경하고,
      * 해당 회원의 정보와 전달받은 블랙 사유 및 설명으로 블랙리스트 entity 생성 후 DB에 저장
+     * 
      * @param customerId
      * @param blackReason
      * @param etcReason
      * @return
      */
-	public Boolean insertToBlacklist(String customerId, String blackReason, String etcReason) {
+    public Boolean insertToBlacklist(String customerId, String blackReason, String etcReason) {
         CustomerEntity customer = customerRepository.findById(customerId).get();
         // 1) 회원의 블랙 체크값 변경
         customer.setBlacklistCheck(YesOrNo.Y);
         // 2) 블랙 사유 타입 변경 : String->Enum
         ReportCategory blackCategory = ReportCategory.valueOf(blackReason);
         // 3) 블랙리스트 객체 생성
-        BlacklistDTO blackDTO = new BlacklistDTO(customerId, customer.getCompName(), 
-                            customer.getRemoteIp(), customer.getCountry(), 
-                            blackCategory, etcReason);
+        BlacklistDTO blackDTO = new BlacklistDTO(customerId, customer.getCompName(),
+                customer.getRemoteIp(), customer.getCountry(),
+                blackCategory, etcReason);
         // 4) 블랙리스트 DB에 저장
         blacklistRepository.save(BlacklistEntity.toEntity(blackDTO));
-        
+
         return true;
     }
-
 
     /**
      * 관리자가 처리하지 않은 신고당한 회원 DTO를 반환하고자 하는데 회원의 기본적인 정보를 같이 담기 위해 새로운 DTO에 담아 리스트를
@@ -384,7 +385,8 @@ public class ManagerService {
             // 블랙이 아니고, 관리자가 처리하지 않은 데이터 중에 전달받은 카테고리와 검색어에 해당하는 신고받은 회원 (최신 신고날짜 순으로) 가져오기
             ReportCategory targetCategory = ReportCategory.valueOf(category);
             reportCustomerEntities = reportCustomerRepository
-                    .findByCategoryAndSearchWordWithManagerCheckNAndBlacklistCheckNOrderByReportDateDesc(targetCategory, searchWord);
+                    .findByCategoryAndSearchWordWithManagerCheckNAndBlacklistCheckNOrderByReportDateDesc(targetCategory,
+                            searchWord);
         }
 
         reportCustomerEntities.forEach((entity) -> {
@@ -410,17 +412,17 @@ public class ManagerService {
 
     /**
      * 신고회원을 블랙으로 처리하기 전 해당ID가 블랙리스트DB에 존재하는지 확인하는 함수
+     * 
      * @param reportedId
      * @return
      */
     public Boolean checkBlack(String reportedId) {
-        Optional<BlacklistEntity> black= blacklistRepository.findByCustomerId(reportedId);
+        Optional<BlacklistEntity> black = blacklistRepository.findByCustomerId(reportedId);
         if (black.isPresent()) {
             return false;
         }
         return true;
     }
-
 
     /**
      * 신고 회원을 블랙회원으로 변경하는 함수 <br>
@@ -440,7 +442,7 @@ public class ManagerService {
 
         // 신고회원엔티티 가져오기 (신고사유,카테고리 가져오기 위함)
         ReportCustomerEntity reportCustomerEntity = reportCustomerRepository.findById(reportCutomerId).get();
-        
+
         // 블랙리스트DTO 생성
         BlacklistDTO dto = new BlacklistDTO(reportedId, customerEntity.getCompName(), customerEntity.getRemoteIp(),
                 customerEntity.getCountry(), reportCustomerEntity.getReportCategory(),
@@ -530,7 +532,5 @@ public class ManagerService {
 
         return result;
     }
-
-    
 
 }

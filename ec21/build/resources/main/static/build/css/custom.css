@@ -2619,6 +2619,8 @@ table.jambo_table tbody tr.selected td {
   border-bottom: 1px solid rgba(38, 185, 154, 0.4);
 }
 
+
+
 .dataTables_paginate a {
   background: #ff0000;
 }
@@ -5037,12 +5039,16 @@ ul.project_files li a i {
 
 .view p {
   font-family: "Fontawesome";
-  font-style: italic;
-  font-size: 13px;
-  position: relative;
-  color: #fff;
-  padding: 10px 20px 20px;
-  text-align: center;
+
+
+
+  font-size: 1rem;
+  color: #666 !important;
+  display: -webkit-inline-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .view a.info {

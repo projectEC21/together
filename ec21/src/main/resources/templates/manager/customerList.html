@@ -96,7 +96,7 @@
                               <tr>
                                 <th style="width: 25%;">상품ID</th>
                                 <th style="width: 20%;">상품카테고리</th>
-                                <th>상품명</th>
+                                <th class="project_progress">상품명</th>
                                 <th style="width: 10%;">현상태</th>
                               </tr>
                             </thead> 
@@ -132,13 +132,15 @@
                                         <a href="#" id ="productList" class="productLink"
                                         data-product-name="${item.productName}"  
                                         data-product-category="${item.category}" 
-                                        data-productDesc='${item.productDesc}'
+                                        data-product-desc="${item.escapedProductDesc}"
                                         data-price="${item.price}"
                                         data-moq="${item.moq}"
                                         data-unit="${item.unit}"
                                         data-origin="${item.origin}">
                                         ${item.productName}
                                         </a>
+
+                                        
                                       </td>
                                       <td >${label}</td>
                                     </tr>`;
@@ -163,9 +165,10 @@
 
         // 두 번째 모달 열기 버튼 클릭 이벤트
         $(document).on("click", "a[id^='productList']", function () {
+          let modalProductDesc = $(this).data("product-desc");  // 데이터 속성에서 설명 읽기
+
           let modalProductName = $(this).data("product-name");
           let modalProductCategory = $(this).data("product-category");
-          let modalProductDesc = $(this).data("productdesc");
           let modalPrice = $(this).data("price");
           let modalOrigin = $(this).data("origin");
           let modalUnit = $(this).data("unit");
