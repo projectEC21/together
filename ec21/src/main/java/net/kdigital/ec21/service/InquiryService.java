@@ -318,6 +318,86 @@ public class InquiryService {
         
         return resultDtos;
     }
+
+    /**
+     * saved 화면에서 요청된 saved 해제 요청에 따라 Y->N으로 변경하는 함수
+     */
+    @Transactional
+    public void updateSavedNo(String inquiryId, String customerId) {
+        Long id = Long.parseLong(inquiryId);
+        Optional<InquiryEntity> inquiryEntity = inquiryRepository.findById(id);
+        if (inquiryEntity.isPresent()) {
+            InquiryEntity entity = inquiryEntity.get();
+            if (entity.getSaved() == InquiryEnum.NY) {
+                entity.setSaved(InquiryEnum.NN);
+                return;
+            } else if (entity.getSaved() == InquiryEnum.YN) {
+                entity.setSaved(InquiryEnum.NN);
+                return;
+            }else {
+                if (customerId.equals(entity.getReceiverId())) {
+                    entity.setSaved(InquiryEnum.YN);
+                    return;
+                }else{
+                    entity.setSaved(InquiryEnum.NY);
+                    return;
+                }
+            }
+        }
+    }
+
+
+    /**
+     * saved 화면에서 요청된 spam 작업. 이미 리스트에는 trash, spam에 해당하지 않는 데이터들이기 떄문에 값만 변경하면 될 듯
+     */
+    @Transactional
+    public void savedToSpam(String inquiryId, String customerId) {
+        Long id = Long.parseLong(inquiryId);
+        Optional<InquiryEntity> inquiryEntity = inquiryRepository.findById(id);
+        if (inquiryEntity.isPresent()) {
+            InquiryEntity entity = inquiryEntity.get();
+            if (entity.getReceiverId().equals(customerId)) {
+                if(entity.getSpam()==InquiryEnum.NN) {entity.setSpam(InquiryEnum.NY);}
+                else{
+                    entity.setSpam(InquiryEnum.YY);
+                }
+            }else{
+                if(entity.getSpam()==InquiryEnum.NN) {entity.setSpam(InquiryEnum.YN);}
+                else{
+                    entity.setSpam(InquiryEnum.YY);
+                }
+                
+            }
+        }
+    }
+
+    /**
+     * saved 화면에서 요청된 trash 작업. 이미 리스트에는 trash, spam에 해당하지 않는 데이터들이기 떄문에 값만 변경하면 될 듯
+     * @param inquiryId
+     * @param customerId
+     */
+    @Transactional
+    public void savedToTrash(String inquiryId, String customerId) {
+        Long id = Long.parseLong(inquiryId);
+        Optional<InquiryEntity> inquiryEntity = inquiryRepository.findById(id);
+        if (inquiryEntity.isPresent()) {
+            InquiryEntity entity = inquiryEntity.get();
+            if (entity.getReceiverId().equals(customerId)) {
+                if(entity.getTrash()==InquiryEnum.NN) {entity.setTrash(InquiryEnum.NY);}
+                else{
+                    entity.setTrash(InquiryEnum.YY);
+                }
+            }else{
+                if(entity.getTrash()==InquiryEnum.NN) {entity.setTrash(InquiryEnum.YN);}
+                else{
+                    entity.setTrash(InquiryEnum.YY);
+                }
+                
+            }
+        }
+    }
+
+
     
 
 

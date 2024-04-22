@@ -272,7 +272,7 @@
 								th:each="inquiry : ${inquiryList}">
 								<!-- 저장 여부 : 클릭하면 색상 변하게 해둠-->
 								<td class="saved-icon"><a href="#" id="saved-icon"><i th:data-id="${inquiry.inquiryId}"
-											th:class="${inquiry.saved.name() == 'NY' or inquiry.saved.name() == 'YY'  ? 'fa fa-star' : 'ti-star'}"></i></a>
+											th:class="${inquiry.saved.name() == 'YN' or inquiry.saved.name() == 'YY'  ? 'fa fa-star' : 'ti-star'}"></i></a>
 								</td>
 								<!-- 담당자명-> receiverId -->
 								<td class="receiverId" data-title="receiverId"><span

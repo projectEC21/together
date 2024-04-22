@@ -218,13 +218,45 @@ public class InquiryController {
         @RequestParam(name = "customerId", defaultValue = "jooyoungyoon") String customerId,
             Model model ){
 
-        List<InquiryDTO> dtos = inquiryService.getSavedInquiry(customerId);
+        // List<InquiryDTO> dtos = inquiryService.getSavedInquiry(customerId);
+
         model.addAttribute("customerId", customerId);
-        model.addAttribute("inquiryList", dtos);
+        // model.addAttribute("inquiryList", dtos);
         
         return "main/inboxSaved";
     }
 
+    /**
+     * customerId에 해당하는 회원이 saved한 인콰이어리 보내기
+     * @param customerId
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "/inbox/saved/getList", method=RequestMethod.GET)
+    public String requestMethodName(@RequestParam(name = "customerId", defaultValue = "jooyoungyoon") String customerId, 
+                                    @RequestParam(name = "inquiryId", defaultValue = "no") String inquiryId,
+                                    @RequestParam(name = "what", defaultValue = "no") String what,
+                                    Model model) {
+        // 인콰이어리 아이디가 넘어온 경우, 저장/스팸/휴지통 중에 선택해 (N->Y)
+        if(!inquiryId.equals("no")){
+            if (what.equals("saved")) {
+                inquiryService.updateSavedNo(inquiryId, customerId);
+            }else if(what.equals("spam")){
+                inquiryService.savedToSpam(inquiryId,customerId);
+            }else{
+                inquiryService.savedToTrash(inquiryId,customerId);
+            }
+        }
+        List<InquiryDTO> dtos = inquiryService.getSavedInquiry(customerId);
+        model.addAttribute("customerId", customerId);
+        model.addAttribute("inquiryList", dtos);
+        
+        return "/main/inboxSaved::#result";
+    }
+
+
+    
+    
 
 
 
