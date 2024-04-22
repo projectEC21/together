@@ -131,4 +131,5 @@ public class CustomerEntity {
                 .blacklistCheck(customerDTO.getBlacklistCheck())
                 .build();
     }
+    
 }
