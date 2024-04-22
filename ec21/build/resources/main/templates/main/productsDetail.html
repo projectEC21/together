@@ -78,7 +78,23 @@
 				method : "GET"
 			})
 		}
+
+	function deleteProduct(element,event) {
+		let productId = element.getAttribute("data-product");
+		if (confirm("정말 삭제하시겠습니까?")) {
+			$.ajax({
+				url : "/main/productsDelete",
+				data : { "productId": productId},
+				success : function (resp) {
+					if(resp){
+						alert("삭제가 완료되었습니다.");
+						return true;
+					}
+				}
+			});
+		}
 		
+	}
 	</script>
 	
 </head>
@@ -136,49 +152,52 @@
 						<!-- Search Form -->
 						<div class="search-top">
 							<!-- 클릭하면 자바스크립트 함수로 해서 검색어 설정하게 하기 -->
-							<div class="top-search"><a href="javascript:funct()"><i class="ti-search"></i></a></div>
+							<div class="top-search"><a href=""><i class="ti-search"></i></a></div>
 							<!-- Search Form -->
 							<div class="search-top">
 									<input type="text" placeholder="Search here..." name="search">
 									<button value="search" type="submit"><i class="ti-search"></i></button>
-								</form>
 							</div>
 							<!--/ End Search Form -->
 						</div>
 						<!--/ End Search Form -->
 						<div class="mobile-nav"></div>
 					</div>
-					<!-- 240416 dy : 카테고리 선택 & 검색어 입력 후 버튼 누르면, 해당 카테고리의 목록이 보이도록 -->
 					<div class="col-lg-8 col-md-7 col-12">
+						<form th:action="@{/main/list}" method="get">
 						<div class="search-bar-top">
 							<div class="search-bar">
-								<select id="category" name="category">
-									<option value="total" selected="selected">All Category</option>
-									<option value="FOOD_BEVERAGE">Food & Beverage</option>
-									<option value="CHEMICAL">Chemical</option>
-									<option value="HEALTH_MEDICAL">Health & Medical</option>
-									<option value="ELECTRONIC">Electronics</option>
-									<option value="COSMETIC">Cosmetic</option>
-								</select>
-								<form>
-									<input name="search" id="searchWord" placeholder="What are you searching for?" type="search">
-									<button class="btnn" id="searchBtn"><i class="ti-search"></i></button>
-								</form>
+								<!-- CSS가 왕창 깨져요ㅠㅠ 증말 죄송합니다아ㅠㅠㅠ -->
+								<!-- 240420 dy : 카테고리 선택 & 검색어 입력 시 form 태그로 상품 리스트로의 요청 걸어줌 -->
+									<select id="category" name="category">
+										<option value="total" th:selected="${category eq 'total'}">All Category</option>
+										<option value="FOOD_BEVERAGE" th:selected="${category eq 'FOOD_BEVERAGE'}">Food & Beverage</option>
+										<option value="CHEMICAL" th:selected="${category eq 'CHEMICAL'}">Chemical</option>
+										<option value="HEALTH_MEDICAL" th:selected="${category eq 'HEALTH_MEDICAL'}">Health & Medical</option>
+										<option value="ELECTRONIC" th:selected="${category eq 'ELECTRONIC'}">Electronics</option>
+										<option value="COSMETIC" th:selected="${category eq 'COSMETIC'}">Cosmetic</option>
+									</select>
+									<input name="search" id="searchWord" placeholder="What are you searching for?" type="search" th:value="${searchWord}"
+										th:attr="placeholder=${searchWord eq null ? 'What are you searching for?' : null}" />
+									<button type="submit" class="btnn"> <i class="ti-search"></i></button>
+								</div>
 							</div>
-						</div>
+						</form>
 					</div>
 					<div class="col-lg-2 col-md-3 col-12">
 						<div class="right-bar">
 							<!-- Search Form -->
 							<div class="sinlge-bar">
-								<a th:href="@{/main/myproducts}" class="single-icon"><i class="fa fa-user-circle-o"
-										aria-hidden="true"></i></a>
+								<a th:href="@{/main/myproducts}" class="single-icon">
+									<i class="fa fa-user-circle-o"aria-hidden="true"></i>
+								</a>
 							</div>
 
 							<!-- 검색창 옆 부분 인콰이어리 new 로만 보이게 하고 인콰이어리 페이지로 넘어가게 하기 -->
 							<div class="sinlge-bar inquiry">
-								<a th:href="@{/main/inbox}" class="single-icon"><i class="fa fa-envelope-o"></i> <span
-										class="total-count">new</span></a>
+								<a th:href="@{/main/inbox}" class="single-icon">
+									<i class="fa fa-envelope-o"></i><span class="total-count">new</span>
+								</a>
 							</div>
 						</div>
 					</div>
@@ -247,13 +266,18 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-12">
-						<!-- Product Edit Buttons for User and Manager -->
+						<!-- Product Edit & Delete Buttons for User and Manager -->
 						<div class="btn-edit">
 							<ul class="user-custom">
-								<li><a href="#" class="btn min user">Edit</a></li>
-								<li><a href="#" class="btn min user">Delete</a></li>
-								<li><a href="#" class="btn min manager">정상</a></li>
-								<li><a href="#" class="btn min manager">이상</a></li>
+								<li><a th:href="@{/main/productsUpdate(productId=${product.productId})}" class="btn min user">Edit</a></li>
+								<li>
+									<th:block th:if="${currentPage eq 'myproducts'}">
+										<a onclick="return deleteProduct(this,event)" th:href="@{/main/myproducts/afterDelete(customerId=${product.customerId},category=${category}, searchWord=${searchWord})}" class="btn min user" id="deleteBtn" th:data-product="${product.productId}">Delete</a></li>
+									</th:block>
+									<th:block th:unless="${currentPage eq 'myproducts'}">
+										<a onclick="return deleteProduct(this,event)" th:href="@{/main/list/afterDelete(category=${category}, searchWord=${searchWord})}" class="btn min user" id="deleteBtn" th:data-product="${product.productId}">Delete</a>
+									</th:block>
+								</li>
 							</ul>
 						</div>
 						<!-- Product Gallery -->
@@ -262,9 +286,12 @@
 								<div class="product-gallery">
 									<div class="flexslider-thumbnails">
 										<ul class="slides">
-											<li data-thumb="https://via.placeholder.com/600x500">
+											<span th:if="${product.originalFileName}!=null">
+												<img th:src="@{/main/downloadImg(productId=${product.productId})}">
+											</span>
+											<!-- <li data-thumb="https://via.placeholder.com/600x500">
 												<img src="https://via.placeholder.com/600x500" alt="#">
-											</li>
+											</li> -->
 										</ul>
 									</div>
 								</div>
@@ -358,7 +385,7 @@
 											<div class="row">
 												<div class="col-12">
 													<div class="single-des">
-														<span class="productDesc" th:text="${product.productDesc}">Lorem Ipsum dummy text.</span>
+														<span class="productDesc" th:utext="${product.productDesc}">Lorem Ipsum dummy text.</span>
 													</div>
 												</div>
 											</div>

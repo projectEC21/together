@@ -47,41 +47,67 @@
       init();
     })
 
+    // 블랙 버튼 클릭 시
     function toBlacklist() {
-      // 확인 창을 띄우고, 확인 시 블랙리스트로 이동
-      if (confirm("정말 블랙으로 처리하시겠습니까?")) {
-        let category = $("#category").val();
-        let searchWord = $("#searchWord").val();
-        let reportCutomerId = $("#reportCustomerId").val();
-        let reportedId = $("#reportedId").val();
-        $.ajax({
-          url: "/manager/reportedCustomerList/getList",
-          data: { "reportCustomerId": reportCutomerId, "reportedId": reportedId, "category": category, "searchWord": searchWord },
-          method: "GET",
-          success: function (list) {
-            $("#result").replaceWith(list);
-            $("#blackBtn").on("click", toBlacklist);
-            $("#normalBtn").on("click", toNormal);
+      let category = $("#category").val();
+      let searchWord = $("#searchWord").val();
+      let reportCutomerId = $(".reportCustomerId").val();
+      let reportedId = $(".reportedId").val();
+
+      let reportCategory = $(this).data("report-category");
+      let reportReason = $(this).data("report-reason");
+
+      // 블랙 리스트에 존재하는지 확인
+      $.ajax({
+        url: "/reportedCustomerList/checkBlack",
+        data: { "reportedId": reportedId },
+        method: "GET",
+        success: function (resp) {
+          // boolean타입 반환 : false이면 블랙리스트에 존재 O, true이면 블랙리스트에 존재 X 
+          if (!resp) {
+            alert("이미 블랙 회원입니다.");
+          } else {
+            // 확인 창을 띄우고, 확인 시 블랙리스트로 이동
+            let data = `'${reportedId}' 를 블랙으로 처리하시겠습니까?
+            블랙 카테고리 : ${reportCategory}
+            블랙 사유 : ${reportReason}`;
+            if (confirm(data)) {
+              $.ajax({
+                url: "/manager/reportedCustomerList/getList",
+                data: { "reportCustomerId": reportCutomerId, "reportedId": reportedId, "category": category, "searchWord": searchWord },
+                method: "GET",
+                success: function (list) {
+                  alert("블랙으로 처리되었습니다.");
+                  $("#result").replaceWith(list);
+                  $(".blackBtn").on("click", toBlacklist);
+                  $(".normalBtn").on("click", toNormal);
+                }
+              });
+            }
           }
-        });
-      }
+        }
+      })
+
     }
 
     // 정상 버튼 클릭 시
     function toNormal() {
       let category = $("#category").val();
       let searchWord = $("#searchWord").val();
-      let reportCutomerId = $("#reportCustomerId").val();
-      $.ajax({
-        url: "/manager/reportedCustomerList/getList",
-        data: { "reportCustomerId": reportCutomerId, "reportedId": "", "category": category, "searchWord": searchWord },
-        method: "GET",
-        success: function (list) {
-          $("#result").replaceWith(list);
-          $("#blackBtn").on("click", toBlacklist);
-          $("#normalBtn").on("click", toNormal);
-        }
-      });
+      let reportCutomerId = $(".reportCustomerId").val();
+      if (confirm("정상 회원으로 처리하시겠습니까? ")) {
+        $.ajax({
+          url: "/manager/reportedCustomerList/getList",
+          data: { "reportCustomerId": reportCutomerId, "reportedId": "", "category": category, "searchWord": searchWord },
+          method: "GET",
+          success: function (list) {
+            alert("정상 회원으로 처리되었습니다.");
+            $("#result").replaceWith(list);
+            $(".blackBtn").on("click", toBlacklist);
+            $(".normalBtn").on("click", toNormal);
+          }
+        });
+      }
     }
 
     // 카테고리 및 검색어 상태 변경 시 
@@ -96,8 +122,8 @@
         method: "GET",
         success: function (list) {
           $("#result").replaceWith(list);
-          $("#blackBtn").on("click", toBlacklist);
-          $("#normalBtn").on("click", toNormal);
+          $(".blackBtn").on("click", toBlacklist);
+          $(".normalBtn").on("click", toNormal);
         }
       })
 
@@ -109,10 +135,9 @@
         data: { "reportCustomerId": -100, "reportedId": "", "category": "total", "searchWord": "" },
         method: "GET",
         success: function (list) {
-          console.log("ajax 돾어");
           $("#result").replaceWith(list);
-          $("#blackBtn").on("click", toBlacklist);
-          $("#normalBtn").on("click", toNormal);
+          $(".blackBtn").on("click", toBlacklist);
+          $(".normalBtn").on("click", toNormal);
         }
       });
     }
@@ -129,7 +154,7 @@
         <div class="left_col scroll-view">
           <div class="navbar nav_title" style="border: 0; text-align: center;">
             <a th:href="@{/manager/manager_index}" class="site_title">
-              <img th:src="@{/production/images/ec21logo.png}" alt="" height="30px">
+              <img th:src="@{/production/images/ec21logo.png}" alt="">
             </a>
           </div>
 
@@ -165,7 +190,7 @@
                 </li>
                 <li><a><i class="fa fa-users"></i> 회원관리 <span class="fa fa-chevron-down"></span></a>
                   <ul class="nav child_menu">
-                    <li><a th:href="@{/manager/customerList}">정상회원</a></li>
+                    <li><a th:href="@{/manager/customerList}">전체회원</a></li>
                     <li><a th:href="@{/manager/reportedCustomerList}">신고당한회원</a></li>
                     <li><a th:href="@{/manager/blackList}">블랙리스트회원</a></li>
                   </ul>
@@ -193,8 +218,7 @@
                 </a>
                 <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
                   <a class="dropdown-item" th:href=@{/}><i class="fa fa-home pull-right"></i> Home</a>
-                  <a class="dropdown-item" th:href="@{/main/login}"><i class="fa fa-sign-out pull-right"></i> Log
-                    Out</a>
+                  <a class="dropdown-item" th:href="@{main/login}"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
                 </div>
               </li>
 
@@ -253,66 +277,70 @@
                   </div>
                 </div>
                 <div class="x_content">
-                  <div class="table-responsive">
-                    <table class="table table-striped jambo_table bulk_action">
-                      <thead>
-                        <tr class="headings">
-                          <th class="column-title">신고당한 횟수</th>
-                          <th class="column-title">구분</th>
-                          <th class="column-title">신고당한 회원 ID </th>
-                          <th class="column-title">담당자명</th>
-                          <th class="column-title">회사명</th>
-                          <th class="column-title">부서명</th>
-                          <th class="column-title">국가IP</th>
-                          <th class="column-title">신고카테고리</th>
-                          <th class="column-title">신고사유</th>
-                          <th class="column-title no-link last"><span class="nobr">버튼</span>
-                          </th>
-                          <th class="bulk-actions" colspan="7">
-                            <a class="antoo" style="color:#fff; font-weight:500;">Bulk Actions ( <span
-                                class="action-cnt"> </span> ) <i class="fa fa-chevron-down"></i></a>
-                          </th>
-                        </tr>
-                      </thead>
-                      <tbody id="result">
-                        <tr class="even pointer" th:each="reportedCustomer : ${list}">
 
-                          <td class=" " th:text="${reportedCustomer.reportedCount}">#</td>
-                          <td class=" " th:text="${reportedCustomer.customerGubun}">셀러</td>
-                          <td class=" " th:text="${reportedCustomer.reportedId}">121000040</td>
-                          <!--회원정보 보게 하고 싶음 여기 a태그 걸고 파라미터로 reportedId 보내면 될 듯 -->
-                          <td class=" " th:text="${reportedCustomer.customerName}">john</td>
-                          <td class=" " th:text="${reportedCustomer.customerComp}">식품회사</td>
-                          <td class=" " th:text="${reportedCustomer.customerDepartment}">해외영업</td>
-                          <td class=" " th:text="${reportedCustomer.remoteIp}"> 121.172.252.00</td>
-                          <td class="a-right a-right " th:text="${reportedCustomer.reportCategory}">마약</td>
-                          <td class="a-right a-right " th:text="${reportedCustomer.reportReason}">마약을 판매하는 업체입니다</td>
-                          <td class=" last">
-                            <input type="hidden" name="" id="reportCustomerId"
-                              th:value="${reportedCustomer.reportCustomerId}">
-                            <input type="hidden" name="" id="reportedId" th:value="${reportedCustomer.reportedId}">
-                            <!--블랙 버튼 클릭 시 팝업창? (신고 테이블의 관리자 처리 여부 변경 , 블랙리스트로 변경할 고객ID )-->
+                  <table id="" class="table table-striped jambo_table table-bordered " cellspacing="0" width="100%">
+                    <thead>
+                      <tr class="headings">
+                        <th class="column-title">신고횟수</th>
+                        <th class="column-title">구분</th>
+                        <th class="column-title">회원 ID </th>
+                        <th class="column-title">담당자명</th>
+                        <th class="column-title">회사명</th>
+                        <th class="column-title">부서명</th>
+                        <th class="column-title">국가IP</th>
+                        <th class="column-title">신고사유</th>
+                        <th class="column-title" style="width: 35%;">상세사유</th>
+                        <th class="column-title no-link last" style="width: 13%;">
+                          <span class="nobr">버튼</span>
+                        </th>
+                        <th class="bulk-actions" colspan="7">
+                          <a class="antoo" style="color:#fff; font-weight:500;">Bulk Actions ( <span class="action-cnt">
+                            </span> ) <i class="fa fa-chevron-down"></i></a>
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody id="result">
+                      <tr class="even pointer" th:each="reportedCustomer : ${list}">
 
-                            <input class="btn btn-hover color-8" type="button" id="blackBtn" value="블랙">
-                            <!--정상 버튼 클릭 시 (신고 테이블의 관리자 처리 여부 변경) -->
-                            <input class="btn btn-hover color-9" type="button" id="normalBtn" value="정상">
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-
-
+                        <td class=" " th:text="${reportedCustomer.reportedCount}">#</td>
+                        <td class=" " th:text="${reportedCustomer.customerGubun}">셀러</td>
+                        <td class=" " th:text="${reportedCustomer.reportedId}">121000040</td>
+                        <!--회원정보 보게 하고 싶음 여기 a태그 걸고 파라미터로 reportedId 보내면 될 듯 -->
+                        <td class=" " th:text="${reportedCustomer.customerName}">john</td>
+                        <td class=" " th:text="${reportedCustomer.customerComp}">식품회사</td>
+                        <td class=" " th:text="${reportedCustomer.customerDepartment}">해외영업</td>
+                        <td class=" " th:text="${reportedCustomer.remoteIp}"> 121.172.252.00</td>
+                        <td class="a-right a-right " th:text="${reportedCustomer.reportCategory}">마약</td>
+                        <td class="a-right a-right " th:text="${reportedCustomer.reportReason}">마약을 판매하는 업체입니다</td>
+                        <td class=" last">
+                          <input type="hidden" name="" class="reportCustomerId"
+                            th:value="${reportedCustomer.reportCustomerId}">
+                          <input type="hidden" name="" class="reportedId" th:value="${reportedCustomer.reportedId}">
+                          <!--블랙 버튼 클릭 시 팝업창? (신고 테이블의 관리자 처리 여부 변경 , 블랙리스트로 변경할 고객ID )-->
+                          <input class="btn btn-hover color-8 blackBtn" type="button"
+                            th:data-report-category="${reportedCustomer.reportCategory}"
+                            th:data-report-reason="${reportedCustomer.reportReason}" value="블랙">
+                          <!--정상 버튼 클릭 시 (신고 테이블의 관리자 처리 여부 변경) -->
+                          <input class="btn btn-hover color-9 normalBtn" type="button"
+                            th:data-report-category="${reportedCustomer.reportCategory}"
+                            th:data-report-reason="${reportedCustomer.reportReason}" value="정상">
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </div>
+
+
               </div>
             </div>
           </div>
         </div>
       </div>
-      <!-- /page content -->
-
     </div>
+    <!-- /page content -->
+
   </div>
+
 
   <!-- jQuery -->
   <script th:src="@{/vendors/jquery/dist/jquery.min.js}"></script>
@@ -324,8 +352,6 @@
   <script th:src="@{/vendors/nprogress/nprogress.js}"></script>
   <!-- iCheck -->
   <script th:src="@{/vendors/iCheck/icheck.min.js}"></script>
-  <!-- Datatables -->
-  <script th:src="@{/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js}"></script>
 
   <!-- Custom Theme Scripts -->
   <script th:src="@{/build/js/custom.min.js}"></script>

@@ -50,10 +50,30 @@
 	<link rel="stylesheet" th:href="@{/main/css/color/color2.css}">
 	<link rel="stylesheet" href="" id="colors">
 
+
+	<!-- 240420 dy : JQuery 파일 추가 및 ajax 작업 -->
+	<script th:src="@{/script/jquery-3.7.1.min.js}"></script>
+	<script>
+		// 삭제 버튼 클릭 시 확인
+		function confirmDelete(element, event) {
+			let productName = element.getAttribute("data-name");
+			// 'confirm' 대화상자로 사용자 확인 받기
+			var result = confirm(`상품명 : ${productName}\n▷ 정말 삭제하시겠습니까?`);
+			if (!result) {
+				// 사용자가 '취소'를 선택한 경우, 링크 동작 중지
+				event.preventDefault();
+				return false;
+			}
+			// 사용자가 '확인'을 선택한 경우, 링크 동작 계속 (기본 동작 허용)
+			return true;
+		}
+
+	</script>
+
 </head>
 
 <body class="js">
-
+	<input type="hidden" name="customerId" id="customerId" th:value="${customerId}">
 	<!-- Preloader -->
 	<div class="preloader">
 		<div class="preloader-inner">
@@ -118,23 +138,25 @@
 						<div class="mobile-nav"></div>
 					</div>
 					<div class="col-lg-8 col-md-7 col-12">
+						<form th:action="@{/main/list}" method="get">
 						<div class="search-bar-top">
 							<div class="search-bar">
-								<!-- 240418 dy : 카테고리 선택 시 상품 리스트로 가기 위한 요청 걸어줌 -->
-								<select id="category" name="category">
-									<option value="total" selected="selected">All Category</option>
-									<option value="FOOD_BEVERAGE">Food & Beverage</option>
-									<option value="CHEMICAL">Chemical</option>
-									<option value="HEALTH_MEDICAL">Health & Medical</option>
-									<option value="ELECTRONIC">Electronics</option>
-									<option value="COSMETIC">Cosmetic</option>
-								</select>
-								<form>
-									<input name="search" placeholder="What are you searching for?" type="search" id="searchWord">
-									<button class="btnn"><i class="ti-search" id="searchBtn"></i></button>
-								</form>
+								<!-- CSS가 왕창 깨져요ㅠㅠ 증말 죄송합니다아ㅠㅠㅠ -->
+								<!-- 240420 dy : 카테고리 선택 & 검색어 입력 시 form 태그로 상품 리스트로의 요청 걸어줌 -->
+									<select id="category" name="category">
+										<option value="total" th:selected="${category eq 'total'}">All Category</option>
+										<option value="FOOD_BEVERAGE" th:selected="${category eq 'FOOD_BEVERAGE'}">Food & Beverage</option>
+										<option value="CHEMICAL" th:selected="${category eq 'CHEMICAL'}">Chemical</option>
+										<option value="HEALTH_MEDICAL" th:selected="${category eq 'HEALTH_MEDICAL'}">Health & Medical</option>
+										<option value="ELECTRONIC" th:selected="${category eq 'ELECTRONIC'}">Electronics</option>
+										<option value="COSMETIC" th:selected="${category eq 'COSMETIC'}">Cosmetic</option>
+									</select>
+									<input name="search" id="searchWord" placeholder="What are you searching for?" type="search" th:value="${searchWord}"
+										th:attr="placeholder=${searchWord eq null ? 'What are you searching for?' : null}" />
+									<button type="submit" class="btnn"> <i class="ti-search"></i></button>
+								</div>
 							</div>
-						</div>
+						</form>
 					</div>
 					<div class="col-lg-2 col-md-3 col-12">
 						<div class="right-bar">
@@ -199,145 +221,13 @@
 					<div class="bread-inner">
 						<ul class="bread-list">
 							<li><a th:href="@{/}">Home<i class="ti-arrow-right"></i></a></li>
-							<li class="active"><a th:href="@{/main/myinfo}">My Page</a></li>
+							<li class="active"><a th:href="@{/main/myproducts(customerId=${customerId})}">My Page</a></li>
 						</ul>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-	<!-- End Breadcrumbs -->
-
-	
-
-	<!-- My products List-->
-
-	</div>
-	</div>
-	</div>
-	</div>
-	</section>
-	<!-- End Shop Newsletter -->
-
-
-	<!-- Modal -->
-	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span class="ti-close"
-							aria-hidden="true"></span></button>
-				</div>
-				<div class="modal-body">
-					<div class="row no-gutters">
-						<div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
-							<!-- Product Slider -->
-							<div class="product-gallery">
-								<div class="quickview-slider-active">
-									<div class="single-slider">
-										<img src="https://via.placeholder.com/569x528" alt="#">
-									</div>
-									<div class="single-slider">
-										<img src="https://via.placeholder.com/569x528" alt="#">
-									</div>
-									<div class="single-slider">
-										<img src="https://via.placeholder.com/569x528" alt="#">
-									</div>
-									<div class="single-slider">
-										<img src="https://via.placeholder.com/569x528" alt="#">
-									</div>
-								</div>
-							</div>
-							<!-- End Product slider -->
-						</div>
-						<div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
-							<div class="quickview-content">
-								<h2>Flared Shift Dress</h2>
-								<div class="quickview-ratting-review">
-									<div class="quickview-ratting-wrap">
-										<div class="quickview-ratting">
-											<i class="yellow fa fa-star"></i>
-											<i class="yellow fa fa-star"></i>
-											<i class="yellow fa fa-star"></i>
-											<i class="yellow fa fa-star"></i>
-											<i class="fa fa-star"></i>
-										</div>
-										<a href="#"> (1 customer review)</a>
-									</div>
-									<div class="quickview-stock">
-										<span><i class="fa fa-check-circle-o"></i> in stock</span>
-									</div>
-								</div>
-								<h3>$29.00</h3>
-								<div class="quickview-peragraph">
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia iste laborum
-										ad impedit pariatur esse optio tempora sint ullam autem deleniti nam in quos qui
-										nemo ipsum numquam.</p>
-								</div>
-								<div class="size">
-									<div class="row">
-										<div class="col-lg-6 col-12">
-											<h5 class="title">Size</h5>
-											<select>
-												<option selected="selected">s</option>
-												<option>m</option>
-												<option>l</option>
-												<option>xl</option>
-											</select>
-										</div>
-										<div class="col-lg-6 col-12">
-											<h5 class="title">Color</h5>
-											<select>
-												<option selected="selected">orange</option>
-												<option>purple</option>
-												<option>black</option>
-												<option>pink</option>
-											</select>
-										</div>
-									</div>
-								</div>
-								<div class="quantity">
-									<!-- Input Order -->
-									<div class="input-group">
-										<div class="button minus">
-											<button type="button" class="btn btn-primary btn-number" disabled="disabled"
-												data-type="minus" data-field="quant[1]">
-												<i class="ti-minus"></i>
-											</button>
-										</div>
-										<input type="text" name="quant[1]" class="input-number" data-min="1"
-											data-max="1000" value="1">
-										<div class="button plus">
-											<button type="button" class="btn btn-primary btn-number" data-type="plus"
-												data-field="quant[1]">
-												<i class="ti-plus"></i>
-											</button>
-										</div>
-									</div>
-									<!--/ End Input Order -->
-								</div>
-								<div class="add-to-cart">
-									<a href="#" class="btn">Add to cart</a>
-									<a href="#" class="btn min"><i class="ti-heart"></i></a>
-									<a href="#" class="btn min"><i class="fa fa-compress"></i></a>
-								</div>
-								<div class="default-social">
-									<h4 class="share-now">Share:</h4>
-									<ul>
-										<li><a class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
-										<li><a class="twitter" href="#"><i class="fa fa-twitter"></i></a></li>
-										<li><a class="youtube" href="#"><i class="fa fa-pinterest-p"></i></a></li>
-										<li><a class="dribbble" href="#"><i class="fa fa-google-plus"></i></a></li>
-									</ul>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- Modal end -->
 	<!-- End Breadcrumbs -->
 
 	<!-- 
@@ -385,7 +275,7 @@
 										</div>
 
 										<!-- 올린 상품 리스트 -->
-										<table class="table shopping-summery">
+										<table class="table shopping-summery" id="result">
 											<thead>
 												<tr class="main-hading">
 													<th class="text-center">no</th>
@@ -403,21 +293,29 @@
 												<tr th:if="${productList != null and !#lists.isEmpty(productList)}" th:each="product, i : ${productList}">
 													<td class="no"><span>[[${i.count}]]</span></td>
 													<!-- 이미지 우선 임시 링크 -->
-													<td class="image" data-title="No"><img
-															src="https://via.placeholder.com/100x100" alt="#"></td>
+													<td class="image" data-title="No">
+														<span th:if="${product.originalFileName}!=null">
+															<img th:src="@{/main/downloadImg(productId=${product.productId})}">
+														</span>
+													</td>
 													<td class="product-info" data-title="Description">
-														<p class="product-name"><a th:href="@{/main/productsDetail(productId=${product.productId})}">[[${product.productName}]]</a></p>
-														<p class="product-desc">[[${product.productDesc}]]</p>
+														<p class="product-name"><a th:href="@{/main/productsDetail(productId=${product.productId},currentPage='myproducts')}">[[${product.productName}]]</a></p>
+														<p class="product-desc" th:utext="${product.productDesc}"></p>
 													</td>
 													<td class="price" data-title="Price"><span>$[[${product.price}]]</span></td>
 													<td class="qty" data-title="Qty">
 														<span th:if="${product.moq >= 1000}" th:text="${#numbers.formatInteger(product.moq, 3, 'COMMA')} + ' ' + ${product.unit}"> </span>
 														<span th:unless="${product.moq >= 1000}" th:text="${product.moq} + ' ' + ${product.unit}"></span>
 													</td>
-													<!-- <td class="total-amount" data-title="Total"><span>$220.88</span></td> -->
 													<td class="createDate" data-title="date"><span>[[${#temporals.format(product.createDate, 'yyyy-MM-dd')}]]</span>
 													</td>
-													<td class="action" data-title="Remove"><a th:href="@{/main/myproducts/delete(productId=${product.productId})}"><i class="ti-trash remove-icon"></i></a></td>
+													<td class="action" data-title="Remove">
+														<a onclick="return confirmDelete(this, event)" 
+															th:href="@{/main/myproducts/delete(productId=${product.productId},customerId=${customerId})}"
+															class="deleteBtn" th:data-name="${product.productName}">
+															<i class="ti-trash remove-icon"></i>
+														</a>
+													</td>
 												</tr>
 											</tbody>
 										</table>

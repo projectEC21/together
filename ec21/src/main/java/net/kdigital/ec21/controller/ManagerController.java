@@ -3,7 +3,6 @@ package net.kdigital.ec21.controller;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,7 +18,6 @@ import net.kdigital.ec21.dto.ModelPredictModalDTO;
 import net.kdigital.ec21.dto.ProductDTO;
 import net.kdigital.ec21.dto.ReportedCustomerWithInfoDTO;
 import net.kdigital.ec21.service.ManagerService;
-import net.kdigital.ec21.service.ProductService;
 
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -33,7 +31,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Slf4j
 public class ManagerController {
 	private final ManagerService managerService;
-	private final ProductService productService;
 
 	// ============================= 메인보드 =============================
 	/**
@@ -116,23 +113,57 @@ public class ManagerController {
 
 		return "/manager/modelPredict::#result";
 	}
+	
+	/**
+	 * ajax - 전달받은 상품ID에 해당하는 (금지어 유사단어, 금지어 단어, 금지어 카테고리) 정보 리스트로 반환
+	 * @param productId
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/manager/modelPredict/getProhibitSimilarWordDTOs", method = RequestMethod.GET)
+	public String getProhibitSimilarWordDTOs(@RequestParam(name = "productId") String productId, Model model) {
+		List<ModelPredictModalDTO> result = managerService.getProhibitSimilarWordDTOs(productId);
+		model.addAttribute("list", result);
+		return "/manager/modelPredict::#modalTable";
+	}
 
 	/**
-	 * 전달받은 상품 ID에 해당하는 금지어유사도 결과 리스트를 JSON 데이터로 반환
-	 * @param productId
+	 * 금지어 목록에 새로운 단어 추가 요청
+	 * @param similarWord
+	 * @param prohibitReason
 	 * @return
-	 * @throws JsonProcessingException
 	 */
 	@ResponseBody
-	@GetMapping("/manager/modelPredict/getProhibitSimilarWordDTOs")
-	public String getProhibitSimilarWordDTOs(@RequestParam(name = "productId") String productId) throws JsonProcessingException {
-		List<ModelPredictModalDTO>result = managerService.getProhibitSimilarWordDTOs(productId);
-		if (result==null) {
-			return null;
-		}
-		ObjectMapper mapper = new ObjectMapper();
-		return mapper.writeValueAsString(result);
+	@GetMapping("modelPredict/wordPlus")
+	public Boolean getMethodName(@RequestParam(name = "similarWord") String similarWord, 
+								@RequestParam(name = "prohibitReason")String prohibitReason) {
+		return managerService.insertProhibitWord(similarWord, prohibitReason);
 	}
+
+	/**
+	 * 정상상품 요청 시 상품의 judge를 Y 즉, 정상으로 변경
+	 * @param productId
+	 * @return
+	 */
+	@ResponseBody
+	@GetMapping("modelPredict/productNormal")
+	public Boolean productNormal(@RequestParam(name = "productId") String productId){
+		log.info("지금 정상 버튼 눌러서 컨트롤러왔어");
+		return managerService.updateProductJudgeNormal(productId);
+	}
+
+	/**
+	 * 이상상품 요청 시 상품의 judge를 N 즉, 이상으로 변경
+	 * @param productId
+	 * @return
+	 */
+	@ResponseBody
+	@GetMapping("modelPredict/productWeird")
+	public Boolean productWeird(@RequestParam(name = "productId") String productId){
+		log.info("지금 블랙 버튼 눌러서 컨트롤러왔어");
+		return managerService.updateProductJudgeWeird(productId);
+	}
+	
 	
 
 
@@ -170,6 +201,28 @@ public class ManagerController {
 		ObjectMapper mapper = new ObjectMapper();
 		return mapper.writeValueAsString(result);
 	}
+
+	/**
+	 * 전달받은 customerId에 해당하는 회원 블랙리스트 처리 요청
+	 * @param customerId
+	 * @param blackReason
+	 * @param etcReason
+	 * @return
+	 */
+	@ResponseBody
+	@GetMapping("/manager/customerList/toBlack")
+	public Boolean getMethodName(@RequestParam(name = "customerId") String customerId,
+			@RequestParam(name = "blackReason") String blackReason,
+			@RequestParam(name = "etcReason") String etcReason) {
+		log.info("======= 블랙으로 변경");
+		log.info("=======  {}", customerId);
+		log.info("=======  {}", blackReason);
+		log.info("=======  {}", etcReason);
+		return managerService.insertToBlacklist(customerId,blackReason,etcReason);
+	}
+	
+
+
 
 	/**
 	 * 신고당한 회원 리스트 화면 요청
@@ -213,6 +266,18 @@ public class ManagerController {
 	}
 
 	/**
+	 * 전달받은 회원ID가 블랙리스트 DB에 존재하는지 확인 (존재하면 false, 존재하지 않으면 true)
+	 * @param reportedId
+	 * @return
+	 */
+	@ResponseBody
+	@GetMapping("/reportedCustomerList/checkBlack")
+	public Boolean checkBlack(@RequestParam(name = "reportedId", defaultValue = "") String reportedId) {
+		return managerService.checkBlack(reportedId);
+	}
+	
+
+	/**
 	 * 블랙리스트 회원 리스트 화면 요청
 	 * 
 	 * @return
@@ -237,7 +302,7 @@ public class ManagerController {
 			@RequestParam(name = "searchWord", defaultValue = "") String searchWord, Model model) {
 
 		if (blacklistId != -100) {
-			// 정상버튼 : 블랙리스트 테이블에서 해당 블랙리스트ID(일련번호) 삭제
+			// 정상버튼 : 블랙리스트 테이블에서 해당 블랙리스트ID(일련번호) 삭제 및 해당 customerId blacklistCheck값 변경
 			managerService.deleteFromBalcklist(blacklistId);
 		}
 		List<ReportedCustomerWithInfoDTO> dtoList = managerService.selectblackListBySearch(category, searchWord);

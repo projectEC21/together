@@ -142,7 +142,8 @@ def predictLstm(lstm:Lstm):
     print(x_new_nm)
 
     # Step 2 : 모델 로드 
-    model = load_model("02-0.805.hdf5")
+    # model = load_model("02-0.805.hdf5")
+    model = load_model("../../../fastAPI/lstm/LstmServer/02-0.805.hdf5")
     # model = load_model("01-0.803.hdf5")
 
     # Step 3 : 예측 
@@ -167,7 +168,8 @@ def predictLstm(lstm:Lstm):
         return JSONResponse(result)
     else:
         # 상품 데이터, 금지어사전 원본
-        ori_prohibited_words = pd.read_csv('IPR리스트_231218.csv')
+        # ori_prohibited_words = pd.read_csv('IPR리스트_231218.csv')
+        ori_prohibited_words = pd.read_csv('../../../fastAPI/lstm/LstmServer/IPR리스트_231218.csv')
 
         # 금지어사전 하나의 리스트로 변환
         prohibited_words_list = ori_prohibited_words['KEYWORD'].str.lower().tolist()
@@ -178,10 +180,10 @@ def predictLstm(lstm:Lstm):
         # 상품 설명만 사용 (데이터 클랜징된 데이터)
         # 선택한 상품 설명에 대해 처리
         # 상품 설명의 문장을 단어로 분리
-        words_in_desc = cleansingData['CATALOG_DESC'][0]
+        words_in_title_and_desc = cleansingData['CATALOG_NM'][0].lower().split() + cleansingData['CATALOG_DESC'][0].lower().split()
 
         # 각 상품 설명의 단어와 금지어 사전의 모든 단어 비교
-        for desc_word in words_in_desc:
+        for desc_word in words_in_title_and_desc:
             for prohibited_word in prohibited_words_list:
                 similarity_score = np.round(fuzz.ratio(prohibited_word, desc_word),2)
                 if similarity_score >= 80:
@@ -197,5 +199,5 @@ def predictLstm(lstm:Lstm):
     
 
 if __name__=='__main__':
-    uvicorn.run(app, host="127.0.0.1", port=8090)
+    uvicorn.run(app, host="127.0.0.1", port=8092)
     # 구동 코드 : uvicorn main:app --reload

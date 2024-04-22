@@ -52,9 +52,51 @@
 
 	<link rel="stylesheet" href="#" id="colors">
 
+	<!-- 240420 dy : JQuery 파일 추가 및 ajax 작업 -->
+	<script th:src="@{/script/jquery-3.7.1.min.js}"></script>
 	<!-- CK Editor -->
-	<script src="https://cdn.ckeditor.com/ckeditor5/41.3.0/classic/ckeditor.js"></script>
-	
+	<script th:src="@{/script/ckeditor.js}"></script>
+	<script>
+
+		$(function () {
+			// CKEditor 초기화 및 인스턴스 생성
+			let ckEditorInstance;
+			ClassicEditor.create(document.querySelector("#ckeditor"), {
+				language: "ko"
+			}).then(editor => {
+				// 에디터 인스턴스를 저장
+				ckEditorInstance = editor;
+				
+			}).catch(error => {
+				console.error(error);
+			});
+
+			$("#insertBtn").on("click", function () {
+				let contents = ckEditorInstance.getData().trim();
+				// DB에 저장하기 위해 CK editor에 값 넣기
+				$("#productDesc").val(contents);
+				// submit 요청
+				$("#insertForm").submit();
+
+			});
+
+			init();
+		});
+
+		function init() {
+			$.ajax({
+				url: "https://api.ip.pe.kr/json"
+			}).done(function (api) {
+				$("#remoteIp").val(api.ip);
+				$("#country").val(api.country_name.en);
+			}).fail(function () {
+				alert("로딩하는데 실패하였습니다.");
+			});
+		}
+
+	</script>
+			
+
 </head>
 
 <body class="js">
@@ -177,19 +219,19 @@
 						<!-- productsWrite 시작 -->
 						<div class="write-form">
 							<!-- Form -->
-							<form class="form" method="post" action="#">
+							<form class="form" id="insertForm" method="post" th:action="@{/main/productsInsert}" enctype="multipart/form-data">
 							<table>
 								<div class="row">
 									<tr>
 										<th class="form-group">Category<span>*</span></th>
 										<td>
-											<select class="category">
+											<select name="category" class="category">
 												<option selected="selected">----------------</option>
-												<option value="Food_Beverage">Food & Beverage</option>
-												<option value="Chemical">Chemical</option>
-												<option value="Health_Medical">Health & Medical</option>
-												<option value="Electronics">Electronics</option>
-												<option value="Cosmetic">Cosmetic</option>
+												<option value="FOOD_BEVERAGE">Food & Beverage</option>
+												<option value="CHEMICAL">Chemical</option>
+												<option value="HEALTH_MEDICAL">Health & Medical</option>
+												<option value="ELECTRONIC">Electronics</option>
+												<option value="COSMETIC">Cosmetic</option>
 											</select>
 										</td>
 									</tr>
@@ -209,34 +251,54 @@
 										<!-- 가격 & 단위 -->
 										<th class="form-group">Price<span>*</span></th>
 										<td>
-											$ <input type="text" class="price" id="price" name="price" value="">
+											$ <input type="number" step="0.001" class="price" id="price" name="price" value="">
 											<!-- <input type="text" class="unit" id="unit" name="unit" value=""> -->
+										</td>
+									</tr>
+									<tr>
+										<!-- 단위 -->
+										<th class="form-group">Unit<span>*</span></th>
+										<td>
+											<input type="text" class="unit" id="unit" name="unit" value="">
 										</td>
 									</tr>
 									<!-- 최소 주문 수량 -->
 									<tr>
 										<th class="form-group">Quantity<span>*</span></th>
 										<td>
-											<input type="text" class="moq" id="moq" name="moq" value="">
+											<input type="number" class="moq" id="moq" name="moq" value="">
 											<p>Minimum Order</p>
+										</td>	
+									</tr>
+									<tr>
+										<th class="form-group">Representative image<span>*</span></th>
+										<td>
+											<input type="file" class="uploadImg" id="uploadImg" name="uploadImg">
+										</td>	
 									</tr>
 								<!-- / 무역 정보 작성 -->
 
 								<!-- 상품 정보 작성 -->
+
 									<tr>
 										<th colspan="2" class="form-group editor">Product Details<span>*</span></th>
 									</tr>
 									<tr>
 										<td colspan="2">
-											<div name="editor" id="editor"></div>
+											<div name="editor" id="ckeditor"></div>
+											<input type="hidden" name="productDesc" id="productDesc">
 										</td>
 									</tr>
 								<!-- / 상품 정보 작성 -->
 								</div>
+								<!-- 회원ID -->
+								<input type="hidden" name="customerId" value="jooyoungyoon">
+								<input type="hidden" name="remoteIp" id="remoteIp">
+								<input type="hidden" name="country" id="country">
 							</table>
 								<div class="col-12">
 									<div class=" form-group submit-btn">
-										<button class="btn" type="submit">Submit</button>
+										<button class="btn" id="insertBtn" type="button">Submit</button>
 									</div>
 
 								</div>
