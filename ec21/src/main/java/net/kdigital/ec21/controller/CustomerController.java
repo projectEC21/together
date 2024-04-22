@@ -172,29 +172,4 @@ public class CustomerController {
         return "redirect:/main/myinfo";
     }
     
-
-    /**
-     * inbox (inquiry) 페이지 요청
-     * 전달받은 or 로그인한 회원 ID에 해당하는 DTO를 model에 담아 인콰이어리 화면 요청
-     * 
-     * @return
-     */
-    @GetMapping("/main/inbox")
-    public String inbox(@RequestParam(name = "customerId", defaultValue = "jooyoungyoon") String customerId,
-            Model model) {
-        CustomerDTO customerDTO = customerService.getCustomer(customerId);
-        model.addAttribute("customer", customerDTO);
-
-        // ==================================================================================================================
-        // 수정 예정 : 지금 일단 myproducts와 동일한 html 쓰고 있어서!!!! 일단 myproduct에서 필요한 애들 model에
-        // 담아서 보냄
-        // 회원ID에 해당하는 회원이 판매하고 있는 상품 리스트
-        List<ProductDTO> productList = productService.getCustomerProducts(customerId);
-        model.addAttribute("customerId", customerId);
-        model.addAttribute("productList", productList);
-        // ==================================================================================================================
-
-        return "main/inbox";
-    }
-
 }
