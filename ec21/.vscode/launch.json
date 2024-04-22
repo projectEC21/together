@@ -9,6 +9,16 @@
             "projectName": "ec21",
             "args": "",
             "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-Ec21Application<ec21_jy>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "net.kdigital.ec21.Ec21Application",
+            "projectName": "ec21_jy",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
         }
     ]
 }

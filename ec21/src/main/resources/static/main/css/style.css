@@ -4966,7 +4966,7 @@ td {
 	color: #333;
 	font-weight: 400;
 	text-transform: uppercase;
-	margin: 12px 0 0 -100px;
+	margin: 12px 0 50px -100px;
 	padding-bottom: 20px;
 	text-align: center;
 }
@@ -4974,6 +4974,7 @@ td {
 .myinfo {
 	background: #f6f6f6;
 	padding: 50px 0;
+	width: 95%;
 }
 
 
@@ -5004,11 +5005,9 @@ td {
 	line-height: 50px;
 	padding: 0 20px;
 	border-radius: 3px;
-	/* border-radius: 0px; */
 	color: #333 !important;
 	border: none;
-
-	display: inline-block;
+	display: block;
 }
 
 .shop.myinfo .form .form-group label {

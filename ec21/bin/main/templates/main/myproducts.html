@@ -27,7 +27,7 @@
 	<!-- Font Awesome -->
 	<link rel="stylesheet" th:href="@{/main/css/font-awesome.css}">
 	<!-- Fancybox -->
-	<link rel="stylesheet" th:href="@{/main/css/jquery.fancybox.css}">
+	<link rel="stylesheet" th:href="@{/main/css/jquery.fancybox.min.css}">
 	<!-- Themify Icons -->
 	<link rel="stylesheet" th:href="@{/main/css/themify-icons.css}">
 	<!-- Nice Select CSS -->
@@ -292,8 +292,13 @@
 												<!-- 240418 dy : 회원의 상품 목록 출력 -->
 												<tr th:if="${productList != null and !#lists.isEmpty(productList)}" th:each="product, i : ${productList}">
 													<td class="no"><span>[[${i.count}]]</span></td>
-													<td class="product-info" data-title="Description" colspan="2">
-														<span class="image" th:if="${product.originalFileName}!=null"><img th:src="@{/main/downloadImg(productId=${product.productId})}"></span>
+													<!-- 이미지 우선 임시 링크 -->
+													<td class="image" data-title="No">
+														<span th:if="${product.originalFileName}!=null">
+															<img th:src="@{/main/downloadImg(productId=${product.productId})}">
+														</span>
+													</td>
+													<td class="product-info" data-title="Description">
 														<p class="product-name"><a th:href="@{/main/productsDetail(productId=${product.productId},currentPage='myproducts')}">[[${product.productName}]]</a></p>
 														<p class="product-desc" th:utext="${product.productDesc}"></p>
 													</td>
@@ -455,7 +460,7 @@
 	<!-- Nice Select JS -->
 	<script th:src="@{/main/js/nicesellect.js}"></script>
 	<!-- Ytplayer JS -->
-	<!-- <script th:src="@{/main/js/ytplayer.min.js}"></script> -->
+	<script th:src="@{/main/js/ytplayer.min.js}"></script>
 	<!-- Flex Slider JS -->
 	<script th:src="@{/main/js/flex-slider.js}"></script>
 	<!-- ScrollUp JS -->

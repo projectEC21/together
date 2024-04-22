@@ -29,7 +29,7 @@
 	<!-- Font Awesome -->
 	<link rel="stylesheet" th:href="@{/main/css/font-awesome.css}">
 	<!-- Fancybox -->
-	<link rel="stylesheet" th:href="@{/main/css/jquery.fancybox.css}">
+	<link rel="stylesheet" th:href="@{/main/css/jquery.fancybox.min.css}">
 	<!-- Themify Icons -->
 	<link rel="stylesheet" th:href="@{/main/css/themify-icons.css}">
 	<!-- Nice Select CSS -->
@@ -57,18 +57,8 @@
 	<!-- 240417 dy : JQuery 파일 추가 및 ajax 작업 -->
 	<script th:src="@{/script/jquery-3.7.1.min.js}"></script>
 	<!-- 240417 dy : 검색어 입력 후 돋보기 클릭 시 /main/list 요청-->
-
-	<!-- jQuery 라이브러리 로드 -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-
 	
-	<script>
-		$(document).ready(function(){
 
-
-		});
-	
-	</script>
 </head>
 
 <body class="js">
@@ -168,7 +158,6 @@
 							</div>
 
 							<!-- 검색창 옆 부분 인콰이어리 new 로만 보이게 하고 인콰이어리 페이지로 넘어가게 하기 -->
-							<!-- ++ 0이 아닐때만 파란색으로 뜨게 하기 ! === 아직 안됨 -->
 							<div class="sinlge-bar inquiry">
 								<a th:href="@{/main/inbox}" class="single-icon"><i class="fa fa-envelope-o"></i> <span
 										class="total-count">new</span></a>
@@ -280,8 +269,8 @@
 														<div class="product-price">
 															<span>$ [[${product.price}]]</span>
 														</div>
-														<div class="product-seller" th:data-country =${product.country}>
-															<img id="countryFlag" src="" alt="" style="width:20px; height:20px;">
+														<div class="product-seller">
+															<img src="#" alt="국가">
 															<span>[[${product.customerId}]]</span>
 														</div>
 													</div>
@@ -572,7 +561,7 @@
 	<!-- Nice Select JS -->
 	<script th:src="@{/main/js/nicesellect.js}"></script>
 	<!-- Ytplayer JS -->
-	<!-- <script th:src="@{/main/js/ytplayer.min.js}"></script> -->
+	<script th:src="@{/main/js/ytplayer.min.js}"></script>
 	<!-- Flex Slider JS -->
 	<script th:src="@{/main/js/flex-slider.js}"></script>
 	<!-- ScrollUp JS -->
@@ -583,8 +572,6 @@
 	<script th:src="@{/main/js/easing.js}"></script>
 	<!-- Active JS -->
 	<script th:src="@{/main/js/active.js}"></script>
-	<!-- myFunction JS : 필요한 자바 스크립트 이리로 넣어서 사용하면 됩니다 -->
-	<script th:src="@{/main/js/myFunction.js}"></script>
 
 </body>
 </html>
