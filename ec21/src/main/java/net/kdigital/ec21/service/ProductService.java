@@ -140,10 +140,25 @@ public class ProductService {
 
         lstmPredict = String.valueOf(result.get(0).get("lstm_predict")).equals("1") ? true : false;
         lstmPredictProba = Double.parseDouble(String.valueOf(result.get(0).get("lstm_predict_proba")));
+        
+        // lstm 결과 세팅
+        productDTO.setLstmPredict(lstmPredict);
+        productDTO.setLstmPredictProba(lstmPredictProba);
+        // lstmPredict가 1이면 judge를 Y로.. 0이면 null로
+        if (lstmPredict) {
+            productDTO.setJudge(YesOrNo.Y);
+        }
+
+        // productDTO -> productEntity 변환 후 DB에 저장
+        ProductEntity resultDB = productRepository.save(ProductEntity.toEntity(productDTO, customerEntity));
+        if (resultDB!=null) {
+            log.info("====== product DB에 저장했어용 ");
+        }
+        // product DB에 저장됨
+        
         // 리스트 사이즈 == 1 : lstm 값이 1인 경우 , lstm 값이 0인데 금지어 유사도가 결과가 나오지 않은 경우
         // 리스트 사이즈 >= 1 : lstm 값이 0이고 금지어 유사도 결과가 1개 이상 나온 경우
         if (result.size() >= 1) {
-
             result.remove(0);
             // 중복제거
             // LinkedHashSet을 사용하여 중복 제거하면서 순서 유지
@@ -159,25 +174,20 @@ public class ProductService {
                 ProhibitSimilarWordDTO prohibitDTO = new ProhibitSimilarWordDTO(null, similarWord, similarProba,
                         prohibitWord, productDTO.getProductId());
                 log.info("======= prohibitDTO :{}", prohibitDTO);
+                log.info("======= prohibitDTO :{}", prohibitWord);
 
                 // 여기서 prohibitSmilarDB에 save하면 될 듯
                 ProhibitWordEntity prohibitWordEntity = prohibitWordRepository.findById(prohibitWord).get();
                 ProductEntity productEntity = ProductEntity.toEntity(productDTO, customerEntity);
-                prohibitSimilarWordRepository
+                ProhibitSimilarWordEntity similarDB = prohibitSimilarWordRepository
                         .save(ProhibitSimilarWordEntity.toEntity(prohibitDTO, prohibitWordEntity, productEntity));
+                if (similarDB!=null) {
+                    log.info("====== prohibitSimilarWord DB에 저장했어용 ");
+                }
             }
         }
 
-        // lstm 결과 세팅
-        productDTO.setLstmPredict(lstmPredict);
-        productDTO.setLstmPredictProba(lstmPredictProba);
-        // lstmPredict가 1이면 judge를 Y로.. 0이면 null로
-        if (lstmPredict) {
-            productDTO.setJudge(YesOrNo.Y);
-        }
-
-        // productDTO -> productEntity 변환 후 DB에 저장
-        productRepository.save(ProductEntity.toEntity(productDTO, customerEntity));
+        
     }
 
 
