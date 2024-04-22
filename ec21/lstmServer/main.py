@@ -180,7 +180,7 @@ def predictLstm(lstm:Lstm):
         # 상품 설명만 사용 (데이터 클랜징된 데이터)
         # 선택한 상품 설명에 대해 처리
         # 상품 설명의 문장을 단어로 분리
-        words_in_title_and_desc = cleansingData['CATALOG_NM'][0].lower().split() + cleansingData['CATALOG_DESC'][0].lower().split()
+        words_in_title_and_desc =  cleansingData['CATALOG_NM'][0] + cleansingData['CATALOG_DESC'][0]
 
         # 각 상품 설명의 단어와 금지어 사전의 모든 단어 비교
         for desc_word in words_in_title_and_desc:

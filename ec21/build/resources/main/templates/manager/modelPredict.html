@@ -82,17 +82,7 @@
         // 모달 컨텐츠 업데이트
         $("#modalName").html(modalName);
         $("#modalDesc").html(modalDesc);
-        // $.ajax({
-        //   url: "/manager/modelPredict/getProhibitSimilarWordDTOs",
-        //   data: { "productId": productId },
-        //   method: "GET",
-        //   success: function (list) {
-        //     console.log(list);
-        //     $("#modalTable").replaceWith(list);
-        //     $(".wordPlusBtn").on("click", wordPlus);
 
-        //   }
-        // })
         // 모달 열기
         $("#myModal").modal();
 
@@ -377,9 +367,9 @@
                       <!-- <button id="modalBtn">모달 열기</button> -->
                       <tr class="headings">
                         <th class="column-title" style="width: 10%">회원 ID</th>
-                        <th class="column-title" style="width: 15%">상품 ID</th>
+                        <th class="column-title" style="width: 10%">상품 ID</th>
                         <!-- <th style="width: 10%">카테고리</th> -->
-                        <th class="column-title">상품명</th>
+                        <th class="column-title" style="width: 20%">상품명</th>
                         <th class="column-title">상품내용</th>
                         <th class="column-title" style="width: 20%;">예측값</th>
                         <th class="column-title" style="width: 15%">#Edit</th>
@@ -400,15 +390,14 @@
                             th:data-id="${product.productId}">iphone</a>
                         </td>
                         <!-- 나중에 th:utext로 바꿔야 함 -->
-                        <td class="project_progress" th:text="${product.productDesc}">
+                        <td class="project_progress" th:utext="${product.productDesc}">
                           아이폰 11 판매
                         </td>
                         <td>
                           <!-- 이상검출도: [[${product.lstmPredictProba}]] % -->
-                          <div>이상검출도: [[${#numbers.formatDecimal(product.lstmPredictProba * 100, 1, 2)} + '%']]
-                            <!-- <div
-                              th:text="${numbers.formatDecimal(product.lstmPredictProba * 100, 1, 2)} + '%'">
-                            </div> -->
+                          <div>이상검출도: [[${#numbers.formatDecimal(product.lstmPredictProba * 100, 1, 2)} + ' %']] <!--
+                          <div th:text="${numbers.formatDecimal(product.lstmPredictProba * 100, 1, 2)} + '%'">
+                </div> -->
                           </div>
 
                           <div class="progress progress_sm">
@@ -485,6 +474,7 @@
                 <tr>
                   <th>유사단어</th>
                   <th>금지어리스트 단어 (카테고리)</th>
+                  <th>유사도</th>
                   <th>금지어 사전 추가</th>
                 </tr>
               </thead>
@@ -492,6 +482,7 @@
                 <tr th:each="item : ${list}" th:if="${list != null and not #lists.isEmpty(list)}">
                   <td id="similarWord">[[${item.similarWord}]]</td>
                   <td>[[${item.prohibitWord}]] ([[${item.prohibitReason}]])</td>
+                  <td>[[${item.similarProba}]]%</td>
                   <td><input type="button" value="단어추가" class="wordPlusBtn" th:data-word="${item.similarWord}"
                       th:data-reason="${item.prohibitReason}"> </td>
                 </tr>

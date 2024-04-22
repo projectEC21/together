@@ -3,6 +3,8 @@ package net.kdigital.ec21.service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.springframework.stereotype.Service;
 
@@ -24,12 +26,12 @@ public class InquiryService {
     private final InquiryBlockRepository inquiryBlockRepository;
     private final ProductRepository productRepository;
     
-    // =============== 인콰이어리 등록 ===============
+    // ============================= 인콰이어리 등록 ==============================
 
 
 
     
-    //===================================== Received ===============================
+    //===================================== Received Page ===============================
     
     /**
      * receiverId가 customerId와 일치하는 모든 인콰이어리들을 리스트로 반환하는 함수
@@ -94,7 +96,7 @@ public class InquiryService {
      * @return
      */
     @Transactional
-    public Boolean savedNo(String inquiryId) {
+    public Boolean receiverSavedNo(String inquiryId) {
         Long id = Long.parseLong(inquiryId);
         Optional<InquiryEntity> inquiryEntity = inquiryRepository.findById(id);
 
@@ -119,7 +121,7 @@ public class InquiryService {
      * @return
      */
     @Transactional
-    public Boolean savedYes(String inquiryId) {
+    public Boolean receiverSavedYes(String inquiryId) {
         Long id = Long.parseLong(inquiryId);
         Optional<InquiryEntity> inquiryEntity = inquiryRepository.findById(id);
 
@@ -148,7 +150,7 @@ public class InquiryService {
      * @return
      */
     @Transactional
-    public Boolean toSpam(String inquiryId) {
+    public Boolean receiverToSpam(String inquiryId) {
         Long id = Long.parseLong(inquiryId);
         Optional <InquiryEntity> inquiryEntity = inquiryRepository.findById(id);
 
@@ -175,7 +177,7 @@ public class InquiryService {
      * @return
      */
     @Transactional
-    public Boolean toTrash(String inquiryId) {
+    public Boolean receiverToTrash(String inquiryId) {
         Long id = Long.parseLong(inquiryId);
         Optional<InquiryEntity> inquiryEntity = inquiryRepository.findById(id);
 
@@ -191,8 +193,131 @@ public class InquiryService {
         return true;
     }
 
+    // ================================= Sent Page ===================================
 
+    /**
+     * senderId가 전달받은 customerId와 일치하는 인콰이어리 반환 (trash==NY or trash==NN)
+     * @param customerId
+     * @return
+     */
+    public List<InquiryDTO> getSentInquiry(String customerId) {
+        List<InquiryEntity> inquiryEntities = inquiryRepository.findInquiriesByCustomerIdAndTrashStatus(customerId);
+        List<InquiryDTO> dtos = new ArrayList<>();
+
+        inquiryEntities.forEach((entity)->{
+            dtos.add(InquiryDTO.toDTO(entity, entity.getCustomerEntity().getCustomerId(), entity.getProductEntity().getProductId()));
+        });
+        
+        return dtos;
+    }
+
+    /************************
+     * Sender의 saved 관련
+     *************************/
+
+    /**
+     * 전달받은 인콰이어리ID에 해당하는 인콰이어리의 sender의 saved 값을 N으로 변경하는 함수
+     * @param inquiryId
+     * @return
+     */
+    @Transactional
+    public Boolean senderSavedNo(String inquiryId) {
+        Long id = Long.parseLong(inquiryId);
+        Optional<InquiryEntity> inquiryEntity = inquiryRepository.findById(id);
+
+        if (!inquiryEntity.isPresent()) {
+            return false;
+        }
+        InquiryEntity entity = inquiryEntity.get();
+
+        // saved 상태 변경
+        if (entity.getSaved() == InquiryEnum.YN) {
+            entity.setSaved(InquiryEnum.NN);
+        } else if (entity.getSaved() == InquiryEnum.YY) {
+            entity.setSaved(InquiryEnum.NY);
+        }
+
+        return true;
+    }
+
+    /**
+     * 전달받은 인콰이어리ID에 해당하는 인콰이어리의 sender의 saved 값을 N으로 변경하는 함수
+     * @param inquiryId
+     * @return
+     */
+    @Transactional
+    public Boolean senderSavedYes(String inquiryId) {
+        Long id = Long.parseLong(inquiryId);
+        Optional<InquiryEntity> inquiryEntity = inquiryRepository.findById(id);
+
+        if (!inquiryEntity.isPresent()) {
+            return false;
+        }
+        InquiryEntity entity = inquiryEntity.get();
+
+        // saved 상태 변경
+        if (entity.getSaved() == InquiryEnum.NN) {
+            entity.setSaved(InquiryEnum.YN);
+        } else if (entity.getSaved() == InquiryEnum.NY) {
+            entity.setSaved(InquiryEnum.YY);
+        }
+
+        return true;
+    }
+
+
+    /************************
+     * Sender의 trash 관련
+     *************************/
     
+    /**
+      * 전달받은 인콰이어리Id를 Long형으로 바꾸고 sender의 trash값 Y로 변환하는 함수
+      * @param inquiryId
+      * @return
+      */
+    @Transactional
+    public Boolean senderToTrash(String inquiryId) {
+        Long id = Long.parseLong(inquiryId);
+        Optional<InquiryEntity> inquiryEntity = inquiryRepository.findById(id);
+
+        if (!inquiryEntity.isPresent()) {
+            return false;
+        }
+        InquiryEntity entity = inquiryEntity.get();
+        if (entity.getTrash() == InquiryEnum.NN) {
+            entity.setTrash(InquiryEnum.YN);
+        } else if(entity.getTrash() == InquiryEnum.NY){
+            entity.setTrash(InquiryEnum.YY);
+        }
+        return true;
+    }
+
+    //=========================== Saved Page ==========================
+
+
+    /**
+     * 인콰이어리의 receiverId 또는 senderId와 전달받은 회원ID가 일치하는 
+     * 모든 인콰이어리들 중에 saved값이 Y인 인콰이어리들 반환하는 함수  
+     * @param customerId
+     * @return
+     */
+    public List<InquiryDTO> getSavedInquiry(String customerId) {
+        // 두 쿼리 결과를 각각 조회
+        List<InquiryEntity> inquiriesByReceiver = inquiryRepository.findValidInquiries(customerId);
+        List<InquiryEntity> inquiriesBySender = inquiryRepository.findInquiriesBySender(customerId);
+
+        // 두 리스트를 스트림으로 합치고 sendDate로 내림차순 정렬
+        List<InquiryEntity> resultEntities = Stream.concat(inquiriesByReceiver.stream(), inquiriesBySender.stream())
+                .sorted((i1, i2) -> i2.getSendDate().compareTo(i1.getSendDate()))
+                .collect(Collectors.toList());
+
+        List<InquiryDTO> resultDtos = new ArrayList<>();
+        resultEntities.forEach((entity)->{
+            resultDtos.add(InquiryDTO.toDTO(entity, entity.getCustomerEntity().getCustomerId(),entity.getProductEntity().getProductId()));
+        });
+        
+        return resultDtos;
+    }
     
 
 
