@@ -3495,6 +3495,11 @@ textarea {
 .shopping-cart .table p {
 	font-size: 13px;
 	color: #666;
+	display: -webkit-inline-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 
@@ -3538,8 +3543,8 @@ textarea {
 
 .shopping-summery tbody .price span {}
 
-
 .shopping-summery tbody .qty span {}
+
 
 .shopping-cart .qty .button {
 	display: inline-block;
@@ -4083,11 +4088,10 @@ textarea {
 	line-height: 50px;
 	padding: 0 20px;
 	border-radius: 3px;
-	/* border-radius: 0px; */
 	color: #333 !important;
 	border: none;
 	background: #F6F7FB;
-	display: inline-block;
+	display: block;
 }
 
 .shop.login .form .form-group .short-input {
@@ -4097,8 +4101,15 @@ textarea {
 	line-height: 50px;
 	padding: 0 20px;
 	color: #333 !important;
-	border: none;
 	background: #F6F7FB;
+}
+
+
+.shop.login .form .form-group .gubun {
+    display: -webkit-inline-box;
+    max-width: 10%;
+    height: auto;
+    margin-right: -50px;
 }
 
 .shop.login .form .form-group.title label {

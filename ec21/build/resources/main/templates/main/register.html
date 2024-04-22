@@ -29,7 +29,7 @@
 	<!-- Font Awesome -->
 	<link rel="stylesheet" th:href="@{/main/css/font-awesome.css}">
 	<!-- Fancybox -->
-	<link rel="stylesheet" th:href="@{/main/css/jquery.fancybox.min.css}">
+	<link rel="stylesheet" th:href="@{/main/css/jquery.fancybox.css}">
 	<!-- Themify Icons -->
 	<link rel="stylesheet" th:href="@{/main/css/themify-icons.css}">
 	<!-- Nice Select CSS -->
@@ -74,7 +74,7 @@
 					if (resp) {
 						$("#confirmID").css("color", "red");
 						$("#confirmID").html("사용 중인 아이디");
-					} else {
+					}else{
 						$("#confirmID").css("color", "blue");
 						$("#confirmID").html("사용가능한 아이디");
 					}
@@ -171,10 +171,11 @@
 						<div class="mobile-nav"></div>
 					</div>
 					<div class="col-lg-8 col-md-7 col-12">
+						<form th:action="@{/main/list}" method="get">
 						<div class="search-bar-top">
 							<div class="search-bar">
-								<!-- 240421 dy : 카테고리 선택 & 검색어 입력 시 form 태그로 상품 리스트로의 요청 걸어줌 -->
-								<form th:action="@{/main/list}" method="get">
+								<!-- CSS가 왕창 깨져요ㅠㅠ 증말 죄송합니다아ㅠㅠㅠ -->
+								<!-- 240420 dy : 카테고리 선택 & 검색어 입력 시 form 태그로 상품 리스트로의 요청 걸어줌 -->
 									<select id="category" name="category">
 										<option value="total" th:selected="${category eq 'total'}">All Category</option>
 										<option value="FOOD_BEVERAGE" th:selected="${category eq 'FOOD_BEVERAGE'}">Food
@@ -192,9 +193,9 @@
 										type="search" th:value="${searchWord}"
 										th:attr="placeholder=${searchWord eq null ? 'What are you searching for?' : null}" />
 									<button type="submit" class="btnn"> <i class="ti-search"></i></button>
-								</form>
+								</div>
 							</div>
-						</div>
+						</form>
 					</div>
 					<div class="col-lg-2 col-md-3 col-12">
 						<div class="right-bar">
@@ -275,7 +276,7 @@
 	<section class="shop login section">
 		<div class="container">
 			<div class="row">
-				<div class="col-lg-12 offset-lg-1 col-12">
+				<div class="col-lg-12 col-12">
 					<h2>Register</h2>
 					<p>
 						Start Your Online Business with EC21.com <br>
@@ -302,6 +303,7 @@
 										<!-- <span>4-10 characters long in lowercase.</span> -->
 									</div>
 								</div>
+
 
 								<div class="col-12">
 									<div class="form-group">
@@ -345,7 +347,7 @@
 
 								<div class="col-12">
 									<div class="form-group">
-										<label class="gubun">I am a<span>*</span></label>
+										<label>I am a<span>*</span></label>
 										<div>
 											<input type="radio" class="gubun" name="customerGubun" value="B"> Buyer
 											<input type="radio" class="gubun" name="customerGubun" value="S"> Seller
@@ -376,7 +378,7 @@
 								<div class="col-12">
 									<div class="form-group">
 										<label>Company Address<span>*</span></label> <br>
-										<input type="text" name="address" required="required">
+										<input type="text" name="address"  required="required" >
 									</div>
 								</div>
 
@@ -500,7 +502,7 @@
 						</div>
 						<div class="col-lg-6 col-12">
 							<div class="right">
-								<img th:src="@{/images/payments.png}" alt="#">
+								<img th:src="@{/main/images/payments.png}" alt="#">
 							</div>
 						</div>
 					</div>
@@ -535,7 +537,7 @@
 	<!-- Nice Select JS -->
 	<script th:src="@{/main/js/nicesellect.js}"></script>
 	<!-- Ytplayer JS -->
-	<script th:src="@{/main/js/ytplayer.min.js}"></script>
+	<!-- <script th:src="@{/main/js/ytplayer.min.js}"></script> -->
 	<!-- Flex Slider JS -->
 	<script th:src="@{/main/js/flex-slider.js}"></script>
 	<!-- ScrollUp JS -->
