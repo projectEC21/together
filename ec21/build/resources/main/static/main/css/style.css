@@ -4089,7 +4089,7 @@ textarea {
 	padding: 0 20px;
 	border-radius: 3px;
 	color: #333 !important;
-	border: none;
+	border: 1px solid #333;
 	background: #F6F7FB;
 	display: block;
 }
