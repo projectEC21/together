@@ -29,10 +29,11 @@ public class InquiryService {
 
 
     
-    //====================== Received ===================
+    //===================================== Received ===============================
     
     /**
      * receiverId가 customerId와 일치하는 모든 인콰이어리들을 리스트로 반환하는 함수
+     * (조건 : span==N, trash ==N, senderId != blackId)
      * @param customerId
      * @return
      */
@@ -46,6 +47,7 @@ public class InquiryService {
         
         return dtos;
     }
+
 
     /**
      * inquiryId에 해당하는 인콰이어리 정보들과 productId에 해당하는 상품 정보들 중
@@ -69,6 +71,7 @@ public class InquiryService {
         return dto;
 	}
 
+
     /**
      * 전달받은 인콰이어리ID에 해당하는 인콰이어리DTO 반환하는 함수
      * @param id
@@ -80,9 +83,13 @@ public class InquiryService {
         return InquiryDTO.toDTO(entity, entity.getCustomerEntity().getCustomerId(), entity.getProductEntity().getProductId());
     }
 
+
+    /************************
+     * Receiver의 saved 관련
+    *************************/
+
     /**
-     * 전달받은 inquiryId에 해당하는 인콰이어리의 saved 값을 NN혹은 YN으로 변경
-     * 
+     * 저장 X : 전달받은 inquiryId에 해당하는 인콰이어리의 receiver의 saved 값을 NN혹은 YN으로 변경
      * @param inquiryId
      * @return
      */
@@ -95,17 +102,19 @@ public class InquiryService {
             return false;
         }
         InquiryEntity entity = inquiryEntity.get();
+
+        // saved 상태 변경
         if (entity.getSaved() == InquiryEnum.NY) {
             entity.setSaved(InquiryEnum.NN);
-        } else {
+        } else if (entity.getSaved() == InquiryEnum.YY) {
             entity.setSaved(InquiryEnum.YN);
         }
+
         return true;
     }
 
     /**
-     * 전달받은 inquiryId에 해당하는 인콰이어리의 saved 값을 NY혹은 YY로 변경
-     * 
+     * 저장 O : 전달받은 inquiryId에 해당하는 인콰이어리의 receiver의 saved 값을 NY혹은 YY로 변경
      * @param inquiryId
      * @return
      */
@@ -118,17 +127,23 @@ public class InquiryService {
             return false;
         }
         InquiryEntity entity = inquiryEntity.get();
+
+        // saved 상태 변경
         if (entity.getSaved() == InquiryEnum.NN) {
             entity.setSaved(InquiryEnum.NY);
-        } else {
+        } else if(entity.getSaved() == InquiryEnum.YN){
             entity.setSaved(InquiryEnum.YY);
         }
+
         return true;
     }
     
+    /************************
+     * Receiver의 spam 관련
+     *************************/
     
     /**
-     * 입력받은 인콰이어리 ID를 Long형으로 변경한 후 trash 값을 N->Y로 변경하는 함수
+     * 입력받은 인콰이어리 ID를 Long형으로 변경한 후 spam 값을 N->Y로 변경하는 함수
      * @param inquiryId
      * @return
      */
@@ -149,8 +164,12 @@ public class InquiryService {
         return true;
     }
 
+    /************************
+     * Receiver의 trash 관련
+     *************************/
+
     /**
-     * 입력받은 인콰이어리 ID를 Long형으로 변경한 후 spam의 값을 N->Y로 변경하는 함수
+     * 입력받은 인콰이어리 ID를 Long형으로 변경한 후 trash 값을 N->Y로 변경하는 함수
      * 
      * @param inquiryId
      * @return
@@ -171,6 +190,8 @@ public class InquiryService {
         }
         return true;
     }
+
+
     
     
 

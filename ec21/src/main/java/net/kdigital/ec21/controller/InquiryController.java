@@ -14,7 +14,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -26,7 +25,6 @@ import net.kdigital.ec21.dto.CustomerDTO;
 import net.kdigital.ec21.dto.InquiryDTO;
 import net.kdigital.ec21.dto.InquiryModalDTO;
 import net.kdigital.ec21.dto.ProductDTO;
-import net.kdigital.ec21.repository.InquiryRepository;
 import net.kdigital.ec21.service.CustomerService;
 import net.kdigital.ec21.service.InquiryService;
 import net.kdigital.ec21.service.ProductService;
@@ -64,11 +62,12 @@ public class InquiryController {
     @GetMapping("/inbox/receiver/updateSaved")
     public Boolean updateSaved(@RequestParam(name = "inquiryId") String inquiryId,
             @RequestParam(name = "how") String how) {
-        if (how.equals("unsaved")) {
+        if (how.equals("savedNo")) {
             return inquiryService.savedNo(inquiryId);
         }
         return inquiryService.savedYes(inquiryId);
     }
+
 
     /**
      * receiver의 인콰이어리 스팸처리 요청
@@ -92,7 +91,7 @@ public class InquiryController {
         return inquiryService.toTrash(inquiryId);
     }
     
-
+    //============= 인콰이어리 모달창 =================
 
     /**
      * inquiry모달창에 필요한 데이터를 새로운 DTO에 담아 모달창에 데이터를 꽂기 위한 요청
@@ -159,26 +158,30 @@ public class InquiryController {
     
 
 
+    //========================= Sent ============================
     /**
      *  보낸 인콰이어리
      * @param customerId
      * @param model
      * @return
      */ 
-    @GetMapping("/main/inboxSended")
-    public String inboxSended(
+    @GetMapping("/main/inboxSent")
+    public String inboxSent(
         @RequestParam(name = "customerId", defaultValue = "jooyoungyoon") String customerId,
-            Model model ){
-
-                CustomerDTO customerDTO = customerService.getCustomer(customerId);
-                model.addAttribute("customer", customerDTO);
-                
-                List<ProductDTO> productList = productService.getCustomerProducts(customerId);
-                model.addAttribute("customerId", customerId);
-                model.addAttribute("productList", productList);
+        Model model ){
+            
+        CustomerDTO customerDTO = customerService.getCustomer(customerId);
+        model.addAttribute("customer", customerDTO);
+        
+        List<ProductDTO> productList = productService.getCustomerProducts(customerId);
+        model.addAttribute("customerId", customerId);
+        model.addAttribute("productList", productList);
         
         return "main/inboxSended";
     }
+
+
+    //========================= Saved ============================
 
     /**
      * 저장된 메세지
@@ -201,6 +204,9 @@ public class InquiryController {
         return "main/inboxSaved";
     }
 
+
+    // ========================= Spam ============================
+
     /**
      * 스팸 메세지
      * @param customerId
@@ -222,6 +228,7 @@ public class InquiryController {
         return "main/inboxSpam";
     }
 
+    // ========================= Block ============================
     /**
      * 차단한 메세지
      * @param customerId
@@ -242,6 +249,8 @@ public class InquiryController {
         
         return "main/inboxBlock";
     }
+
+    // ========================= Trash ============================
     
     /**
      * 쓰레기통으로 보낸 메세지

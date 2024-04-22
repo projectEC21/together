@@ -60,8 +60,28 @@
 	<script th:src="@{/script/jquery-3.7.1.min.js}"></script>
 	<script>
 		$(function () {
-			// $("#spamBtn").on("click", toSpam);
-			// $("#trashBtn").on("click", toTrash);
+
+			// saved 처리
+			$(document).on('click', '.saved-icon', function(event){
+				event.preventDefault();
+				var icon = $(this).find('i');
+				var inquiryId = $(icon).attr("data-id");
+				var how = "";
+
+				if (icon.hasClass('ti-star')) {
+					icon.removeClass('ti-star').addClass('fa fa-star');
+					how = "savedYes";
+				} else {
+					icon.removeClass('fa fa-star').addClass('ti-star');
+					how = "savedNo";
+				}
+
+				$.ajax({
+					url: "/inbox/receiver/updateSaved",
+					data: { "inquiryId": inquiryId, "how": how },
+					method: "GET"
+				});
+			});
 
 			// 모달 변수 초기화
 			var modal = $("#inquiryDetail");
@@ -76,6 +96,7 @@
 				}
 			});
 
+			// 모달창 값 채우기 & 모달창 열기
 			$(document).on("click","a[id^='modalBtn']", function () {
 				let inquiryId = $(this).attr("data-id");
 				$.ajax({
@@ -111,25 +132,6 @@
 
 		});
 
-		// 저장 처리하는 함수
-		function toSaved(element) {
-			let inquiryId = element.getAttribute("data-id");
-			let className = $(element.firstChild).attr("class");
-			console.log(className);
-			let how="";
-
-			// 저장 해제
-			if (className=="ti-star") {
-				how = "unsaved"
-			}else{ // 저장
-				how="saved"
-			}
-			$.ajax({
-				url:"/inbox/receiver/updateSaved",
-				data:{"inquiryId": inquiryId, "how":how},
-				method:"GET",
-			});
-		}
 
 
 		// 스팸으로 처리하는 함수
@@ -251,7 +253,7 @@
 						<ul class="categor-list">
 							<li><a th:href="@{/main/inbox(customerId=${customerId})}" style="
 								color: #439eff;">Received</a></li>
-							<li><a th:href="@{/main/inboxSended(customerId=${customerId})}" >Sended</a></li>
+							<li><a th:href="@{/main/inboxSent(customerId=${customerId})}" >Sent</a></li>
 							<li><a th:href="@{/main/inboxSaved(customerId=${customerId})}" >Saved</a></li>
 							<li><a th:href="@{/main/inboxSpam(customerId=${customerId})}" >Spam</a></li>
 							<li><a th:href="@{/main/inboxBlock(customerId=${customerId})}" >Block</a></li>
@@ -287,8 +289,13 @@
 									<!-- 240421 dy : 받은 인콰이어리 목록 출력 -->
 									<tr th:if="${inquiryList != null and !#lists.isEmpty(inquiryList)}" th:each="inquiry : ${inquiryList}">
 										<!-- 저장 여부 : 클릭하면 색상 변하게 해둠-->
-										<td class="saved-icon"><a class="savedChange" href="javascript:void(0);" th:data-id="${inquiry.inquiryId}" id="saved-icon" onclick="toSaved(this)">
-											<i class="ti-star"></i></a></td>
+										<td class="saved-icon"><a href="#" id="saved-icon"><i th:data-id="${inquiry.inquiryId}" th:class="${inquiry.saved.name() == 'NY' or inquiry.saved.name() == 'YY'  ? 'fa fa-star' : 'ti-star'}"></i></a></td>
+										<!-- <td class="saved-icon">
+											<a class="savedChange" href="javascript:void(0);" th:data-id="${inquiry.inquiryId}" th:data-saved="${inquiry.saved.name()}"
+												id="saved-icon-${inquiry.inquiryId}" onclick="toggleSaved(this)">
+												<i th:class="${inquiry.saved.name() == 'NY' or inquiry.saved.name() == 'YY'  ? 'fa fa-star' : 'ti-star'}"></i>
+											</a>
+										</td> -->
 										<!-- 담당자명-> senderId -->
 										<td class="senderId" data-title="senderId"><span class="senderId">[[${inquiry.senderId}]]</span></td>
 										<!-- 인콰이어리 제목 -->
