@@ -37,7 +37,7 @@ public class InquiryController {
     private final ProductService productService;
     private final InquiryService inquiryService;
 
-
+    //============================ Received Page ============================
     /**
      * inbox 페이지 요청 -> Received 인콰이어리 리스트 화면
      * receiverId == customerId 조건에 해당하는 인콰이어리들을 model에 담아 화면 요청
@@ -60,12 +60,12 @@ public class InquiryController {
      */
     @ResponseBody
     @GetMapping("/inbox/receiver/updateSaved")
-    public Boolean updateSaved(@RequestParam(name = "inquiryId") String inquiryId,
+    public Boolean updateReceiverSaved(@RequestParam(name = "inquiryId") String inquiryId,
             @RequestParam(name = "how") String how) {
         if (how.equals("savedNo")) {
-            return inquiryService.savedNo(inquiryId);
+            return inquiryService.receiverSavedNo(inquiryId);
         }
-        return inquiryService.savedYes(inquiryId);
+        return inquiryService.receiverSavedYes(inquiryId);
     }
 
 
@@ -77,7 +77,7 @@ public class InquiryController {
     @ResponseBody
     @GetMapping("/inbox/receiver/toSpam")
     public Boolean toSpam(@RequestParam(name = "inquiryId") String inquiryId) {
-        return inquiryService.toSpam(inquiryId);
+        return inquiryService.receiverToSpam(inquiryId);
     }
     
     /**
@@ -88,7 +88,7 @@ public class InquiryController {
     @ResponseBody
     @GetMapping("/inbox/receiver/toTrash")
     public Boolean toTrash(@RequestParam(name = "inquiryId") String inquiryId) {
-        return inquiryService.toTrash(inquiryId);
+        return inquiryService.receiverToTrash(inquiryId);
     }
     
     //============= 인콰이어리 모달창 =================
@@ -158,7 +158,7 @@ public class InquiryController {
     
 
 
-    //========================= Sent ============================
+    //========================= Sent Page ============================
     /**
      *  보낸 인콰이어리
      * @param customerId
@@ -170,21 +170,45 @@ public class InquiryController {
         @RequestParam(name = "customerId", defaultValue = "jooyoungyoon") String customerId,
         Model model ){
             
-        CustomerDTO customerDTO = customerService.getCustomer(customerId);
-        model.addAttribute("customer", customerDTO);
-        
-        List<ProductDTO> productList = productService.getCustomerProducts(customerId);
+        List<InquiryDTO> dtos = inquiryService.getSentInquiry(customerId);
         model.addAttribute("customerId", customerId);
-        model.addAttribute("productList", productList);
+        model.addAttribute("inquiryList", dtos);
         
-        return "main/inboxSended";
+        return "main/inboxSent";
     }
 
-
-    //========================= Saved ============================
+    /**
+     * 보낸 메일함에서 saved 처리 요청
+     * @param inquiryId
+     * @param how
+     * @return
+     */
+    @ResponseBody
+    @GetMapping("/inbox/sender/updateSaved")
+    public Boolean updateSenderSaved(@RequestParam(name = "inquiryId") String inquiryId,
+            @RequestParam(name = "how") String how) {
+        if (how.equals("savedNo")) {
+            return inquiryService.senderSavedNo(inquiryId);
+        }
+        return inquiryService.senderSavedYes(inquiryId);
+    }
 
     /**
-     * 저장된 메세지
+     * 
+     * @param param
+     * @return
+     */
+    @ResponseBody
+    @GetMapping("/inbox/sender/toTrash")
+    public Boolean sender(@RequestParam(name = "inquiryId") String inquiryId) {
+        return inquiryService.senderToTrash(inquiryId);
+    }
+    
+
+    //========================= Saved Page ============================
+
+    /**
+     * 
      * @param customerId
      * @param model
      * @return
@@ -194,15 +218,19 @@ public class InquiryController {
         @RequestParam(name = "customerId", defaultValue = "jooyoungyoon") String customerId,
             Model model ){
 
-                CustomerDTO customerDTO = customerService.getCustomer(customerId);
-                model.addAttribute("customer", customerDTO);
-                
-                List<ProductDTO> productList = productService.getCustomerProducts(customerId);
-                model.addAttribute("customerId", customerId);
-                model.addAttribute("productList", productList);
+        List<InquiryDTO> dtos = inquiryService.getSavedInquiry(customerId);
+        model.addAttribute("customerId", customerId);
+        model.addAttribute("inquiryList", dtos);
         
         return "main/inboxSaved";
     }
+
+
+
+
+    
+
+
 
 
     // ========================= Spam ============================
