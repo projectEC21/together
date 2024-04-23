@@ -51,70 +51,152 @@
 	<link rel="stylesheet" th:href="@{/main/css/color/color2.css}">
 
 	<!-- 240420 iy : 수정버튼 클릭 시 readonly, disable 속성 삭제/ 수정완료 후 alert창 / 수정버튼 클릭 시 취소버튼 추가 -->
+	<!--240423 iy: 유효성 검사 진행중-->
 	<script th:src="@{/script/jquery-3.7.1.min.js}"></script>
 	<script>
 		$(document).ready(function () {
+			// 원본 데이터 저장
+			var originalData = {};
+			$('input, select, textarea').each(function () {
+				var id = $(this).attr('id');
+				originalData[id] = $(this).val();
+			});
+
+			// Edit 버튼 클릭 이벤트
 			$("#editButton").click(function () {
-				// 무조건 필드를 활성화
-				$('input, textarea').not('#customerId').prop('readonly', false);
+				// 필드 활성화
+				$('input, select, textarea').not('#customerId').prop('readonly', false);
 				$('input[type="radio"]').prop('disabled', false);
-				$("#cancelButton").show(); // 취소 버튼 보이기
-
-				// 버튼 텍스트 변경
-				if ($(this).text().trim() === "Edit My Account") {
-					$(this).text("Modify Account");
-				} else {
-					// 유효성 검사 후 폼 제출
-					if (validateAllFields()) {
-						if (confirm("Are you sure you want to modify your account?")) {
-							$("#updateForm").submit();
-						}
-					}
-				}
+				// 버튼 상태 변경
+				$(this).hide();
+				$("#modifyButton").show();
+				$("#cancelButton").show();
+				// 유효성 검사 활성화
+				activateValidation();
 			});
 
-			$("#cancelButton").click(function () {
-				if (confirm("Do you want to cancel the modifications?")) {
-					resetForm();
-					$("#editButton").text("Edit My Account");
-					$(this).hide();
-				}
-			});
-
-			// 유효성 검사
-			function validateAllFields() {
+			// 유효성 검사 활성화 함수
+			function activateValidation() {
+				$('#customerPw, #confirmPw, #email').on('keyup', function () {
+					validateField($(this));
+				});
+			}
+			// 각 필드의 유효성 검사
+			function validateField($field) {
+				var fieldId = $field.attr('id');
+				var value = $field.val();
 				var isValid = true;
-				$('input[required], textarea[required]').each(function () {
-					if (!validateField(this)) {
-						isValid = false;
+				var message = '';
+
+				switch (fieldId) {
+					case 'customerPw':
+						isValid = /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,10}$/.test(value);
+						message = isValid ? 'Valid password' : 'Password must be at least 8 characters long and include at least one letter and one number';
+						break;
+					case 'confirmPw':
+						isValid = (value === $('#customerPw').val());
+						message = isValid ? 'Passwords match' : 'Passwords do not match';
+						break;
+					case 'email':
+						isValid = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/.test(value);
+						message = isValid ? 'Valid email' : 'Invalid email format';
+						break;
+				}
+
+				// 메시지 표시
+				$field.next('.validation-message').text(message).css('color', isValid ? 'green' : 'red');
+				return isValid; // 유효성 검사 결과 반환
+			}
+
+			$("#modifyButton").click(function () {
+				// 필수 필드가 비어 있는지 확인
+				var isEmptyFieldPresent = false;
+				$('#customerPw, #confirmPw, #customerName, #email, #customerDepartment, #compName').each(function () {
+					if (!$(this).val()) {
+						alert('Please fill out this field: ' + $(this).prev('label').text());
+						$(this).focus();
+						isEmptyFieldPresent = true;
+						return false; // 빈 필드가 있으면 더 이상 검사하지 않고 중단
 					}
 				});
-				return isValid;
-			}
 
-			function validateField(input) {
-				var value = $(input).val();
-				var pattern = $(input).data('pattern');
-				var isValid = pattern ? new RegExp(pattern).test(value) : true;
-
-				if (!isValid) {
-					$(input).addClass('invalid').next('span.help').text("Invalid input").css('color', 'red');
-				} else {
-					$(input).removeClass('invalid').next('span.help').text("Valid input").css('color', 'green');
+				if (isEmptyFieldPresent) {
+					return; // 빈 필드가 있으면 여기서 처리 중단
 				}
-				return isValid;
+
+				// 빈 필드가 없으면 유효성 검사 수행
+				var isValidationPassed = true;
+				$('#customerPw, #confirmPw, #email').each(function () {
+					var isValid = validateField($(this)); // validateField 함수는 true/false를 반환해야 함
+					if (!isValid) {
+						$(this).focus();
+						isValidationPassed = false;
+						return false; // 유효성 검사를 통과하지 못하면 반복 중단
+					}
+				});
+
+				if (!isValidationPassed) {
+					return; // 유효성 검사를 통과하지 못하면 여기서 처리 중단
+				}
+
+				// 모든 검사를 통과했다면, 사용자에게 최종 확인을 요청
+				if (confirm("Are you sure you want to modify your account?")) {
+					$("#updateForm").submit(); // 폼 제출
+				}
+			});
+
+
+
+			// 필수 필드 검사
+			function checkRequiredFields() {
+				var isAllValid = true;
+				$('input[required]').each(function () {
+					if (!$(this).val()) {
+						alert('Please fill out this field: ' + $(this).prev('label').text());
+						$(this).focus();
+						isAllValid = false;
+						return false; // loop 탈출
+					}
+				});
+				return isAllValid;
 			}
 
-			// 폼 리셋
+			// 개별 유효성 검사 메시지 확인
+			function checkValidationMessages() {
+				var isAllValid = true;
+				$('.validation-message').each(function () {
+					if ($(this).text() !== '') {
+						alert("Please correct the errors before submitting.");
+						$(this).prev('input').focus();
+						isAllValid = false;
+						return false; // loop 탈출
+					}
+				});
+				return isAllValid;
+			}
+
+			// Cancel 버튼 클릭 이벤트
+			$("#cancelButton").click(function () {
+				if (confirm("Are you sure you want to cancel the modifications?")) {
+					resetForm();
+				}
+			});
+
+			// 폼 리셋 함수
 			function resetForm() {
-				$('input, textarea').prop('readonly', true).removeClass('invalid').next('span.help').text("");
+				$('input, select, textarea').each(function () {
+					var id = $(this).attr('id');
+					$(this).val(originalData[id]).prop('readonly', true);
+					$(this).next('.validation-message').text('');
+				});
 				$('input[type="radio"]').prop('disabled', true);
-				$("#updateForm")[0].reset();
-				$("#editButton").text("Edit My Account");
+				$("#modifyButton").hide();
+				$("#editButton").show();
 				$("#cancelButton").hide();
 			}
 		});
 	</script>
+
 
 </head>
 
@@ -316,41 +398,42 @@
 
 												<div class="form-group">
 													<label>ID</label>
-													<input type="text" name="customerId"
+													<input type="text" name="customerId" id="customerId"
 														th:value="${customer.customerId}" required="required" readonly>
 												</div>
 
 												<div class="form-group">
-													<label>Password</label>
+													<label for="customerPw">Password</label>
 													<input type="password" id="customerPw" name="customerPw"
-														required="required" th:value="${customer.customerPw}"
-														data-pattern="^(?=.*[a-zA-Z])(?=.*[0-9]).{6,}$" readonly>
-													<span id="passwordHelp">6 characters minimum with letters and
-														numbers.</span>
+														th:value="${customer.customerPw}" required="required" readonly>
+													<span class="validation-message"></span>
 												</div>
 
+
 												<div class="form-group">
-													<label>Confirm
-														Password</label>
-													<input type="password" name="password" placeholder=""
+													<label>Confirm Password</label>
+													<input type="password" id="confirmPw" name="confirmPw"
 														required="required" readonly>
+													<span class="validation-message"></span>
 												</div>
 
 												<div class="form-group">
 													<label>Name</label>
-													<input type="text" name="customerName"
+													<input type="text" id="customerName" name="customerName"
 														th:value="${customer.customerName}" required="required"
 														readonly>
 												</div>
+
 												<div class="form-group">
 													<label>Email</label>
-													<input type="text" name="email" th:value="${customer.email}"
-														required="required" readonly>
+													<input type="text" id="email" name="email"
+														th:value="${customer.email}" required="required" readonly>
+													<span class="validation-message"></span>
 												</div>
 
 												<div class="form-group">
-													<label>Department<span>*</span></label> <br>
-													<input type="text" name="customerDepartment"
+													<label>Department<span>*</span></label>
+													<input type="text" id="customerDepartment" name="customerDepartment"
 														th:value="${customer.customerDepartment}" required="required"
 														readonly>
 												</div>
@@ -384,36 +467,36 @@
 
 												<div class="form-group">
 													<label>Company Name</label>
-													<br>
-													<input type="text" name="compName" th:value="${customer.compName}"
-														required="required" readonly>
+
+													<input type="text" id="compName" name="compName"
+														th:value="${customer.compName}" required="required" readonly>
 												</div>
 
 												<div class="form-group">
 													<label>Company
 														Description</label> <br>
-													<input type="textarea" name="compDesc"
+													<input type="textarea" id="compDesc" name="compDesc"
 														th:value="${customer.compDesc}" required="required" readonly>
 												</div>
 
 												<div class="form-group">
 													<label>Company Url</label>
 													<br>
-													<input type="text" name="compUrl" th:value="${customer.compUrl}"
-														required="required" readonly>
+													<input type="text" id="compUrl" name="compUrl"
+														th:value="${customer.compUrl}" required="required" readonly>
 												</div>
 
 												<div class="form-group">
 													<label>Company Address</label>
 													<br>
-													<input type="text" name="address" th:value="${customer.address}"
-														required="required" readonly>
+													<input type="text" id="address" name="address"
+														th:value="${customer.address}" required="required" readonly>
 												</div>
 
 												<div class="form-group">
 													<label>Zip No</label> <br>
-													<input type="text" name="zipNo" th:value="${customer.zipNo}"
-														required="required" readonly>
+													<input type="text" id="zipNo" name="zipNo"
+														th:value="${customer.zipNo}" required="required" readonly>
 												</div>
 
 												<div class="form-group">
@@ -440,6 +523,10 @@
 
 												<div class="form-group info-btn">
 													<button class="btn" type="button" id="editButton">Edit My Account
+													</button>
+													<button class="btn" type="button" id="modifyButton"
+														style="display: none;">Modify My
+														Account
 													</button>
 													<button class="btn" type="button" id="cancelButton"
 														style="display: none;">Cancel</button>
