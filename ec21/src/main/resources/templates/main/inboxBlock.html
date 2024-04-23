@@ -90,21 +90,20 @@
 			init();
 		});
 
+		// 신고 내용 GET 방식으로 보내기
 		function submitReport() {
 			let reportedId =$("#modalBlockedId").text();
-			let reportCategory = $(".modalReportCategory").val();
-			let reportReason = $("#modalReportReason").text();
+			let reportCategory = document.querySelector('input[name="reportCategory"]:checked').value;
+			let reportReason = $("#modalReportReason").val();
 			let managerCheck = 'N';
 
-			if (confirm("신고합니다.")){
-
+			if (confirm("신고!")){
 				$.ajax({
 					url:"/inbox/report",
 					data: {"reportedId":reportedId, "reportCategory":reportCategory,"reportReason":reportReason, "managerCheck":managerCheck},
 					method:"get",
 					success:function(resp){
 						if (resp) {
-							alert("신고 완료!");
 							$("#closeBtn").click();
 						}
 					}
@@ -315,7 +314,7 @@
 		aria-hidden="true">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
-				<form class="form" th:action="@{/inbox/report}" method="post" id="reportForm">
+				<form class="form" action="#" method="post" id="reportForm">
 					<!-- Modal Header -->
 					<div class="modal-header">
 						<h4 class="modal-title" id="modalInquiryTitle">Report</h4>
@@ -333,15 +332,15 @@
 							<tr>
 								<th class="">사유</th>
 								<td >
-									<input type="radio" name="reportCategory" class="modalReportCategory" value="DRUG"> 마약
-									<input type="radio" name="reportCategory" class="modalReportCategory" value="IPR"> 지식재산권 침해
-									<input type="radio" name="reportCategory" class="modalReportCategory" value="SPAM"> 다발성 이메일
-									<input type="radio" name="reportCategory" class="modalReportCategory" value="ETC"> 기타
+									<input type="radio" name="reportCategory" value="DRUG"> 마약
+									<input type="radio" name="reportCategory" value="IPR"> 지식재산권 침해
+									<input type="radio" name="reportCategory" value="SPAM"> 다발성 이메일
+									<input type="radio" name="reportCategory" value="ETC"> 기타
 								</td>
 							</tr>
 							<tr>
 								<th class=""></th>
-								<td><textarea name="reportReason" id="modlaReportReason"  cols="30" rows="10"></textarea> </td>
+								<td><textarea name="reportReason" id="modalReportReason"  cols="30" rows="10"></textarea> </td>
 							</tr>
 							<input type="hidden" name="managerCheck" value="N">
 						</table>

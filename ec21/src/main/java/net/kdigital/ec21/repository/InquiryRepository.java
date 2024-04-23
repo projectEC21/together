@@ -30,11 +30,7 @@ public interface InquiryRepository extends JpaRepository<InquiryEntity, Long>{
                 "AND i.spam IN ('NN', 'YN') " +
                 "AND i.trash IN ('NN', 'YN') " +
                 "AND i.deleted IN ('NN', 'YN') " +
-                "AND NOT EXISTS ( " +
-                "  SELECT 1 FROM InquiryBlockEntity ib " +
-                "  WHERE ib.customerEntity.customerId = i.customerEntity.customerId " +
-                "  AND ib.blockedId = i.customerEntity.customerId" +
-                ") ORDER BY i.sendDate DESC")
+                "AND NOT EXISTS (SELECT b FROM InquiryBlockEntity b WHERE b.customerEntity.customerId = i.receiverId AND b.blockedId = i.customerEntity.customerId) ORDER BY i.sendDate DESC")
         List<InquiryEntity> findValidInquiries(@Param("receiverId") String customerId);
 
         // 보낸 인콰이어리 중 saved한 인콰이어리들 리스트로 반환

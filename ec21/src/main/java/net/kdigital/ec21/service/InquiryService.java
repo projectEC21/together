@@ -613,10 +613,11 @@ public class InquiryService {
             return false;
         }
         CustomerEntity reportedCustomer = customerEntity.get();
+        
+        reportCustomerRepository.save(ReportCustomerEntity.toEntity(reportCustomerDTO, reportedCustomer));
+        
         // 신고횟수 +1
         reportedCustomer.setReportedCnt(reportedCustomer.getReportedCnt()+1);
-
-        reportCustomerRepository.save(ReportCustomerEntity.toEntity(reportCustomerDTO, reportedCustomer));
         
         return true;
     }
