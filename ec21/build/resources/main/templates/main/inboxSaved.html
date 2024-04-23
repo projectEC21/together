@@ -71,10 +71,16 @@
 
 				$.ajax({
 					url: "/inbox/saved/getList",
-					data: { "inquiryId": inquiryId, "customerId": customerId, "what":"saved"},
+					data: { "inquiryId": inquiryId, "customerId": customerId, "change":"saved"},
 					method: "GET",
 					success:function(inquiryList){
 						$("#result").replaceWith(inquiryList);
+						// 리스트 사이즈 
+						var htmlString = inquiryList;
+						var parser = new DOMParser();
+						var doc = parser.parseFromString(htmlString, 'text/html');
+						var trCount = doc.querySelectorAll('tr').length;
+						$("#listSize").text(trCount - 1); // thead의 tr도 포함된 개수이기 때문에 -1해줌
 					}
 				});
 			});
@@ -108,6 +114,7 @@
 						$("#modalProductName").text(dto.productName);
 						$("#modalCategory").text(dto.category);
 						$("#modalQuantity").text(dto.quantity);
+						$("#modalUnit").text(dto.unit);
 						$("#modalInquiryContent").text(dto.inquiryContent);
 						if (dto.originalFileName != null) {
 							$("#modalFile").text(dto.originalFileName);
@@ -135,11 +142,17 @@
 			let customerId = $("#hiddenCustomerId").val();
 			if(confirm("스팸으로 처리하시겠습니까?")){
 				$.ajax({
-					url:"/inbox/receiver/toSpam",
-					data: { "customerId":customerId, "inquiryId": inquiryId, "what":"spam" },
+					url:"/inbox/getInquiryModalDTO",
+					data: { "customerId":customerId, "inquiryId": inquiryId, "change":"spam" },
 					method:"GET",
 					success: function (inquiryList) {
 						$("#result").replaceWith(inquiryList);
+						// 리스트 사이즈 
+						var htmlString = inquiryList;
+						var parser = new DOMParser();
+						var doc = parser.parseFromString(htmlString, 'text/html');
+						var trCount = doc.querySelectorAll('tr').length;
+						$("#listSize").text(trCount - 1); // thead의 tr도 포함된 개수이기 때문에 -1해줌
 					}
 				});
 			}
@@ -153,10 +166,16 @@
 			if (confirm("쓰레기통으로 보내시겠습니까?")) {
 				$.ajax({
 					url: "/inbox/saved/getList",
-					data: { "customerId":customerId, "inquiryId": inquiryId, "what":"trash" },
+					data: { "customerId":customerId, "inquiryId": inquiryId, "change":"trash" },
 					method: "GET",
 					success: function (inquiryList) {
 						$("#result").replaceWith(inquiryList);
+						// 리스트 사이즈 
+						var htmlString = inquiryList;
+						var parser = new DOMParser();
+						var doc = parser.parseFromString(htmlString, 'text/html');
+						var trCount = doc.querySelectorAll('tr').length;
+						$("#listSize").text(trCount - 1); // thead의 tr도 포함된 개수이기 때문에 -1해줌
 					}
 				});
 			}
@@ -171,8 +190,14 @@
 				method:"GET",
 				data : {"customerId":customerId},
 				success:function(inquiryList){
-					console.log(inquiryList);
 					$("#result").replaceWith(inquiryList);
+
+					// 리스트 사이즈 
+					var htmlString = inquiryList;
+					var parser = new DOMParser();
+					var doc = parser.parseFromString(htmlString, 'text/html');
+					var trCount = doc.querySelectorAll('tr').length;
+					$("#listSize").text(trCount-1); // thead의 tr도 포함된 개수이기 때문에 -1해줌
 				}
 			})
 		}
@@ -273,7 +298,7 @@
 					<div class="shop-top">
 						<div class="shop-shorter">
 							<div class="single-shorter">
-								<label>Show :<span> </span></label>
+								<label>Show : <span id="listSize"></span></label>
 							</div>
 						</div>
 					</div>
@@ -285,6 +310,7 @@
 								<th class="state"></th>
 								<th class="inquiryTitle" colspan="2">TITLE</th>
 								<th class="sendDate">DATE</th>
+								<th class="spam">SPAM</th>
 								<th class="delete"><i class="ti-trash remove-icon"></i></th>
 							</tr>
 						</thead>
@@ -315,7 +341,10 @@
 								</td>
 								<!-- 보낸 날짜 -->
 								<td class="sendDate" data-title="sendDate"><span>[[${inquiry.sendDate}]]</span></td>
-									
+								<!-- 누르면 삭제 되면서 스팸함으로 -->
+								<!-- <td class="action" data-title="spam"><a href="#" class="spamBtn" th:data-id="${inquiry.inquiryId}"><i class="fa fa-refresh"></i></a></td> -->
+								<td data-title="spam"><a href="javascript:void(0);" class="spamBtn" th:data-id="${inquiry.inquiryId}"
+										onclick="toSpam(this)"><i class="fa fa-refresh"></i></a></td>
 								<!-- 누르면 삭제 되면서 쓰통으로 -->
 								<!-- <td class="action" data-title="delete"><a href="#" class="trashBtn" th:data-id="${inquiry.inquiryId}"><i class="ti-trash remove-icon"></i></a></td> -->
 								<td data-title="delete"><a href="javascript:void(0)" class="trashBtn"
@@ -369,7 +398,7 @@
 							</tr>
 							<tr>
 								<th class="">Quantity</th>
-								<td><span id="modalQuantity"></span> <span id="modalUnit"></span> </td>
+								<td><span id="modalQuantity"></span> (<span id="modalUnit"></span>) </td>
 							</tr>
 							<tr>
 								<th class="">Message</th>

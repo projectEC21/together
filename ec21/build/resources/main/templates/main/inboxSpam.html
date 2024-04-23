@@ -9,11 +9,13 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<!-- Title Tag  -->
-	<title>EC21, Global B2B Marketplace</title> 
+	<title>EC21, Global B2B Marketplace</title>
 	<!-- Favicon -->
 	<link rel="icon" type="image/png" th:href="@{/main/images/ec21logo.png}">
 	<!-- Web Font -->
-	<link href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap" rel="stylesheet">
+	<link
+		href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap"
+		rel="stylesheet">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap" rel="stylesheet">
 
@@ -55,11 +57,179 @@
 	<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
-	
+
+	<!-- 240422 dy : ajax.. -->
 	<script th:src="@{/script/jquery-3.7.1.min.js}"></script>
+	<script>
+		$(function () {
+			// saved 처리
+			$(document).on('click', '.saved-icon', function (event) {
+				event.preventDefault();
+				var icon = $(this).find('i');
+				var inquiryId = $(icon).attr("data-id");
+				var how = "";
+
+				if (icon.hasClass('ti-star')) {
+					icon.removeClass('ti-star').addClass('fa fa-star');
+					how = "savedYes";
+				} else {
+					icon.removeClass('fa fa-star').addClass('ti-star');
+					how = "savedNo";
+				}
+
+				$.ajax({
+					url: "/inbox/receiver/updateSaved",
+					data: { "inquiryId": inquiryId, "how": how },
+					method: "GET"
+				});
+			});
+
+			// 모달 변수 초기화
+			var modal = $("#inquiryDetail");
+			// 닫기 버튼 이벤트
+			$("#closeBtn").on("click", function (event) {
+				modal.hide();
+			});
+			// 모달 백그라운드 클릭 이벤트
+			$(window).on("click", function (event) {
+				if ($(event.target).is(modal)) {
+					modal.hide();
+				}
+			});
+
+			// 모달창 값 채우기 & 모달창 열기
+			$(document).on("click", "a[id^='modalBtn']", function () {
+				let inquiryId = $(this).attr("data-id");
+				$.ajax({
+					url: "/inbox/getInquiryModalDTO",
+					data: { "inquiryId": inquiryId },
+					method: "GET",
+					success: function (dto) {
+						console.log(dto);
+						// 모달 값 채우기
+						$("#modalInquiryTitle").text(dto.inquiryTitle);
+						$("#modalReceiverId").text(dto.receiverId);
+						$("#modalSenderId").text(dto.senderId);
+						$("#modalProductName").text(dto.productName);
+						$("#modalCategory").text(dto.category);
+						$("#modalQuantity").text(dto.quantity);
+						$("#modalUnit").text(dto.unit);
+						$("#modalInquiryContent").text(dto.inquiryContent);
+						if (dto.originalFileName != null) {
+							$("#modalFile").text(dto.originalFileName);
+							// 클릭 시 다운로드 
+							$("#modalFile").on("click", function () {
+								$.ajax({
+									url: "/inquiry/downloadFile",
+									data: { "indquiryId": dto.inquiryId },
+									method: "GET"
+								});
+							});
+						}
+						// 모달열기
+						$("#inquiryDetail").modal();
+					}
+				}); // End ajax
+			}); // End 모달 클릭 이벤트
+
+			init();
+		});
+
+		// 스팸해제 처리하는 함수
+		function toUnSpam(element) {
+			let inquiryId = element.getAttribute("data-id");
+			let customerId = $("#hiddenCustomerId").val();
+			if (confirm("스팸 해제하시겠습니까?")) {
+				$.ajax({
+					url: "/inbox/spam/getList",
+					data: { "customerId": customerId, "inquiryId": inquiryId, "change": "unspam" },
+					method: "GET",
+					success: function (inquiryList) {
+						$("#result").replaceWith(inquiryList);
+						// 리스트 사이즈 
+						var htmlString = inquiryList;
+						var parser = new DOMParser();
+						var doc = parser.parseFromString(htmlString, 'text/html');
+						var trCount = doc.querySelectorAll('tr').length;
+						$("#listSize").text(trCount - 1); // thead의 tr도 포함된 개수이기 때문에 -1해줌
+					}
+				});
+			}
+		}
+		
+		// senderId 블락으로 처리하는 함수
+		function toBlock(element) {
+			let inquiryId = element.getAttribute("data-id");
+			let senderId = element.getAttribute("data-sender");
+			let customerId = $("#hiddenCustomerId").val();
+			if (confirm("["+senderId + "] 블락 처리하시겠습니까?")) {
+				$.ajax({
+					url: "/inbox/spam/getList",
+					data: { "customerId": customerId, "inquiryId": inquiryId, "change": "block", "senderId":senderId},
+					method: "GET",
+					success: function (inquiryList) {
+						$("#result").replaceWith(inquiryList);
+						// 리스트 사이즈 
+						var htmlString = inquiryList;
+						var parser = new DOMParser();
+						var doc = parser.parseFromString(htmlString, 'text/html');
+						var trCount = doc.querySelectorAll('tr').length;
+						$("#listSize").text(trCount - 1); // thead의 tr도 포함된 개수이기 때문에 -1해줌
+					}
+				});
+			}
+		}
+		
+
+
+		// 쓰레기통으로 처리하는 함수
+		function toTrash(element) {
+			let inquiryId = element.getAttribute("data-id");
+			let customerId = $("#hiddenCustomerId").val();
+			if (confirm("쓰레기통으로 보내시겠습니까?")) {
+				$.ajax({
+					url: "/inbox/spam/getList",
+					data: { "customerId": customerId, "inquiryId": inquiryId, "change": "trash" },
+					method: "GET",
+					success: function (inquiryList) {
+						$("#result").replaceWith(inquiryList);
+						// 리스트 사이즈 
+						var htmlString = inquiryList;
+						var parser = new DOMParser();
+						var doc = parser.parseFromString(htmlString, 'text/html');
+						var trCount = doc.querySelectorAll('tr').length;
+						$("#listSize").text(trCount - 1); // thead의 tr도 포함된 개수이기 때문에 -1해줌
+					}
+				});
+			}
+		}
+
+		// 초기에 spam 리스트 꽂아주기 위한 함수
+		function init() {
+			let customerId = $("#hiddenCustomerId").val();
+			console.log(customerId);
+			$.ajax({
+				url: "/inbox/spam/getList",
+				method: "GET",
+				data: { "customerId": customerId },
+				success: function (inquiryList) {
+					$("#result").replaceWith(inquiryList);
+
+					// 리스트 사이즈 
+					var htmlString = inquiryList;
+					var parser = new DOMParser();
+					var doc = parser.parseFromString(htmlString, 'text/html');
+					var trCount = doc.querySelectorAll('tr').length;
+					$("#listSize").text(trCount - 1); // thead의 tr도 포함된 개수이기 때문에 -1해줌
+				}
+			})
+		}
+
+	</script>
 </head>
 
 <body class="js">
+	<input type="hidden" id="hiddenCustomerId" th:value="${customerId}">
 
 	<!-- Preloader -->
 	<div class="preloader">
@@ -84,7 +254,8 @@
 							<!-- logo -->
 							<div class="logo">
 								<a th:href="@{/}">
-									<img th:src="@{/main/images/ec21logo.png}" alt="logo" style="width: 100px; height: 30px;">
+									<img th:src="@{/main/images/ec21logo.png}" alt="logo"
+										style="width: 100px; height: 30px;">
 								</a>
 							</div>
 						</div>
@@ -97,7 +268,8 @@
 								<li><i class="ti-power-off"></i><a th:href="@{/main/login}">Login</a></li>
 								<li><i class="ti-user"></i><a th:href="@{/main/register}">Sign up</a></li>
 								<li><i class="ti-power-off"></i><a th:href="@{/main/logout}">Logout</a></li>
-								<li><a th:href="@{/main/myproducts}"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a></li>
+								<li><a th:href="@{/main/myproducts}"><i class="fa fa-user-circle-o"
+											aria-hidden="true"></i></a></li>
 							</ul>
 						</div>
 						<!-- End Top Right -->
@@ -124,131 +296,160 @@
 
 	<!-- 인콰이어리 목록 -->
 	<section class="inquiry-area">
-			<div class="main-container">
-				<aside class="shop-sidebar">
-					<!-- Single Widget 인콰이어리 카테고리 -->
-					<div class="single-widget inquiry-category">
-						<h3 Inquiry class="inquiry-title">My Inquiry</h3>
-						<ul class="categor-list">
-							<li><a th:href="@{/main/inbox(customerId=${customerId})}">Received</a></li>
-							<li><a th:href="@{/main/inboxSended(customerId=${customerId})}" >Sended</a></li>
-							<li><a th:href="@{/main/inboxSaved(customerId=${customerId})}" >Saved</a></li>
-							<li><a th:href="@{/main/inboxSpam(customerId=${customerId})}" style="
+		<div class="main-container">
+			<aside class="shop-sidebar">
+				<!-- Single Widget 인콰이어리 카테고리 -->
+				<div class="single-widget inquiry-category">
+					<h3 Inquiry class="inquiry-title">My Inquiry</h3>
+					<ul class="categor-list">
+						<li><a th:href="@{/main/inbox(customerId=${customerId})}">Received</a></li>
+						<li><a th:href="@{/main/inboxSent(customerId=${customerId})}">Sent</a></li>
+						<li><a th:href="@{/main/inboxSaved(customerId=${customerId})}">Saved</a></li>
+						<li><a th:href="@{/main/inboxSpam(customerId=${customerId})}" style="
 								color: #439eff;">Spam</a></li>
-							<li><a th:href="@{/main/inboxBlock(customerId=${customerId})}" >Block</a></li>
-							<li><a th:href="@{/main/inboxTrash(customerId=${customerId})}" >Trash</a></li>
-						</ul>
-					</div>
-					<!--/ End Single Widget -->
-				</aside>
+						<li><a th:href="@{/main/inboxBlock(customerId=${customerId})}">Block</a></li>
+						<li><a th:href="@{/main/inboxTrash(customerId=${customerId})}">Trash</a></li>
+					</ul>
+				</div>
+				<!--/ End Single Widget -->
+			</aside>
 
-				<!-- My inquiry List -->
-				<div class="shopping-cart section">
-					<div class="container">
-						<!-- Shop Top -->
-						<div class="shop-top">
-							<div class="shop-shorter">
-								<div class="single-shorter">
-									<label>Show :<span> [[${#lists.size(productList)}]]</span></label>
-								</div>
+			<!-- My inquiry List -->
+			<div class="shopping-cart section">
+				<div class="container">
+					<!-- Shop Top -->
+					<div class="shop-top">
+						<div class="shop-shorter">
+							<div class="single-shorter">
+								<label>Show : <span id="listSize"></span></label>
 							</div>
 						</div>
-							<table class="table shopping-summery">
-								<thead>
-									<tr class="main-hading">
-										<th class="saved-icon"></th>
-										<th class="sendId">Id</th>
-										<th class="inquiryTitle" colspan="2">TITLE</th>
-										<th class="sendData">DATE</th>
-										<th class="spam">SPAM</th>
-										<th class="delete"><i class="ti-trash remove-icon"></i></th>
-									</tr>
-								</thead>
-								<tbody>
-									<!-- 240418 dy : 회원의 상품 목록 출력 -->
-									<tr th:if="${productList != null and !#lists.isEmpty(productList)}" th:each="product, i : ${productList}">
-										<!-- 저장 여부 : 클릭하면 색상 변하게 해둠-->
-										<td class="saved-icon"><a href="#" id="saved-icon"><i class="ti-star"></i></a></td>
-										<!-- 담당자명 -->
-										<td class="contactName" data-title="contactName"><span class="contactName">[[${product.category}]]</span></td>
-										<!-- 제목만 -->
-										<td class="inquiryTitle" data-title="inquiryTitle" colspan="2">
-											<span class="inquiryTitle" th:href="@{/main/productsDetail(productId=${product.productId})}">
-												<a id="inquiryTitle" data-toggle="modal" data-target="#inquiryDetail">[[${product.productName}]]</a>
-											</span>
-										</td>
-										<!-- 보낸 날짜 -->
-										<td class="sendDate" data-title="sendDate"><span>[[${#temporals.format(product.createDate, 'yyyy-MM-dd')}]]</span></td>
-										<!-- 누르면 삭제 되면서 스팸함으로 -->
-										<td class="action" data-title="spam"><a th:href="@{/main/myproducts/delete(productId=${product.productId})}"><i class="fa fa-refresh"></i></a></td>
-										<!-- 누르면 삭제 되면서 쓰통으로 -->
-										<td class="action" data-title="delete"><a th:href="@{/main/myproducts/delete(productId=${product.productId})}"><i class="ti-trash remove-icon"></i></a></td>
-									</tr>
-								</tbody>
-							</table>
-							<!--/ End inquiry List -->
-							<!-- 페이징 -->
-							<span class="paging"> 
-								<< < 1 2 3 4 5 > >> 
-							</span>
-						</div>
 					</div>
-				<!--/ End Shopping Cart -->
-			</div>
-		</section>
+					<table class="table shopping-summery" id="result">
+						<thead>
+							<tr class="main-hading">
+								<th class="saved-icon"></th>
+								<th class="">ID</th>
+								<th class="inquiryTitle" colspan="2">TITLE</th>
+								<th class="sendDate">DATE</th>
+								<th class="unspam">UNSPAM</th>
+								<th class="block">BLOCK</th>
+								<th class="delete"><i class="ti-trash remove-icon"></i></th>
+							</tr>
+						</thead>
+						<tbody>
+							<!-- 240422 dy : 보낸 인콰이어리 목록 출력 -->
+							<tr th:if="${inquiryList != null and !#lists.isEmpty(inquiryList)}"
+								th:each="inquiry : ${inquiryList}">
+								<!-- 저장 여부 : 클릭하면 리스트 사라짐-->
+								<td class="saved-icon"><a href="#" id="saved-icon"><i th:data-id="${inquiry.inquiryId}"
+											th:class="${inquiry.saved.name() == 'NY' or inquiry.saved.name() == 'YY'  ? 'fa fa-star' : 'ti-star'}"></i></a>
+								</td>
+								<!-- 보낸 회원 ID -->
+								<td class="" data-title="">
+									<span class="" th:text="${inquiry.senderId}"></span>
+								</td>
 
-		<!-- Inquiry Modal -->
-		<div class="modal fade" id="inquiryDetail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-					<form class="form" th:action="@{/main/inbox}" method="post">
-						<!-- Modal Header -->
-						<div class="modal-header">
-							<h4 class="modal-title">인콰이어리 제목</h4>
-							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-							</button>
-						</div>
-						<!-- Modal Body -->
-						<div class="modal-body">
-							<table>
-								<tr>
-									<th class="col-md-2">To</th>
-									<td id="receivedId">zettlernb (Ningbo Zettler Electronics Co., Ltd.)</td>
-								</tr>
-								<tr>
-									<th class="">From</th>
-									<td id="sendId"></td>
-								</tr>
-								<tr>
-									<th class="">Subject</th>
-									<td><span>..</span></td>
-								</tr>
-								<tr>
-									<th class="">Category</th>
-									<td><span>..</span></td>
-								</tr>
-								<tr>
-									<th class="">Message</th>
-									<td><span><textarea readonly></textarea></span></td>
-								</tr>
-								<tr>
-									<!-- 파일 부분 다운만 가능한 건 어떻게 하는지 까먹어서 우선 패스 -->
-									<th class="">Attach File</th>
-									<td><input type="file" name="attachment" id="" value="Upload File"></td>
-								</tr>
-							</table>
-						</div>
-						<!-- Modal Footer -->
-						<div class="modal-footer">
-							<button type="button" class="btn" data-dismiss="modal">Close</button>
-						</div>
-					</form>
+								<!-- 인콰이어리 제목 -->
+								<td data-title="inquiryTitle" colspan="2">
+									<span>
+										<!-- <a id="inquiryTitle" data-toggle="modal" data-target="#inquiryDetail" th:data-id="${inquiry.inquiryId}">[[${inquiry.inquiryTitle}]]</a> -->
+										<a th:id="'modalBtn'+${inquiry.inquiryId}"
+											th:data-id="${inquiry.inquiryId}">[[${inquiry.inquiryTitle}]]</a>
+									</span>
+								</td>
+								<!-- 보낸 날짜 -->
+								<td class="sendDate" data-title="sendDate"><span>[[${inquiry.sendDate}]]</span></td>
+								<!-- 누르면 스팸 해제 후 삭제 되면서 스팸함에서 사라짐 -->
+								<!-- <td class="action" data-title="unspam"><a href="#" class="spamBtn" th:data-id="${inquiry.inquiryId}"><i class="fa fa-refresh"></i></a></td> -->
+								<td data-title="unspam"><a href="javascript:void(0);" class="spamBtn"
+										th:data-id="${inquiry.inquiryId}" onclick="toUnSpam(this)"><i
+											class="fa fa-refresh"></i></a></td>
+								<!-- 누르면 블락 처리 후 삭제 되면서 스팸함에서 사라짐 -->
+								<!-- <td class="action" data-title="block"><a href="#" class="blockBtn" th:data-id="${inquiry.inquiryId}"><i class="fa fa-refresh"></i></a></td> -->
+								<td data-title="block"><a href="javascript:void(0);" class="blockBtn"
+										th:data-id="${inquiry.inquiryId}" th:data-sender="${inquiry.senderId}" onclick="toblock(this)"><i
+											class="fa fa-refresh"></i></a></td>
+								<!-- 누르면 삭제 되면서 쓰통으로 -->
+								<!-- <td class="action" data-title="delete"><a href="#" class="trashBtn" th:data-id="${inquiry.inquiryId}"><i class="ti-trash remove-icon"></i></a></td> -->
+								<td data-title="delete"><a href="javascript:void(0)" class="trashBtn"
+										th:data-id="${inquiry.inquiryId}" onclick="toTrash(this)"><i
+											class="ti-trash remove-icon"></i></a></td>
+							</tr>
+						</tbody>
+					</table>
+					<!--/ End inquiry List -->
+					<!-- 페이징 -->
+					<span class="paging">
+						<< < 1 2 3 4 5> >>
+					</span>
 				</div>
+			</div>
+			<!--/ End Shopping Cart -->
+		</div>
+	</section>
+
+	<!-- Inquiry Modal -->
+	<div class="modal fade" id="inquiryDetail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<form class="form" action="#" method="post">
+					<!-- Modal Header -->
+					<div class="modal-header">
+						<h4 class="modal-title" id="modalInquiryTitle">인콰이어리 제목</h4>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<!-- Modal Body -->
+					<div class="modal-body">
+						<table>
+							<tr>
+								<th class="col-md-2">To</th>
+								<td id="modalReceiverId">zettlernb (Ningbo Zettler Electronics Co., Ltd.)</td>
+							</tr>
+							<tr>
+								<th class="">From</th>
+								<td id="modalSenderId"></td>
+							</tr>
+							<tr>
+								<th class="">Subject</th>
+								<td><span id="modalProductName">..</span></td>
+							</tr>
+							<tr>
+								<th class="">Category</th>
+								<td><span id="modalCategory">..</span></td>
+							</tr>
+							<tr>
+								<th class="">Quantity</th>
+								<td><span id="modalQuantity"></span> (<span id="modalUnit"></span>) </td>
+							</tr>
+							<tr>
+								<th class="">Message</th>
+								<td><span><textarea id="modalInquiryContent" readonly></textarea></span></td>
+							</tr>
+							<tr>
+								<!-- 파일 부분 다운만 가능한 건 어떻게 하는지 까먹어서 우선 패스 -->
+								<th class="">Attach File</th>
+								<td>
+									<span>
+										<a href="#" id="modalFile">bts.jpg</a>
+									</span>
+								</td>
+							</tr>
+						</table>
+					</div>
+					<!-- Modal Footer -->
+					<div class="modal-footer">
+						<button type="button" id="closeBtn" class="btn" data-dismiss="modal">Close</button>
+					</div>
+				</form>
 			</div>
 		</div>
 	</div>
-		<!--/ End Product Style 1  -->
+	</div>
+	<!--/ End Product Style 1  -->
 
 
 	<!-- Jquery -->

@@ -219,56 +219,45 @@ public class InquiryController {
             Model model ){
 
         // List<InquiryDTO> dtos = inquiryService.getSavedInquiry(customerId);
+        // model.addAttribute("inquiryList", dtos);
 
         model.addAttribute("customerId", customerId);
-        // model.addAttribute("inquiryList", dtos);
         
         return "main/inboxSaved";
     }
 
     /**
-     * customerId에 해당하는 회원이 saved한 인콰이어리 보내기
+     * customerId에 해당하는 회원이 saved한 인콰이어리 리스트 반환
      * @param customerId
      * @param model
      * @return
      */
     @RequestMapping(value = "/inbox/saved/getList", method=RequestMethod.GET)
-    public String requestMethodName(@RequestParam(name = "customerId", defaultValue = "jooyoungyoon") String customerId, 
+    public String getSavedList(@RequestParam(name = "customerId", defaultValue = "jooyoungyoon") String customerId, 
                                     @RequestParam(name = "inquiryId", defaultValue = "no") String inquiryId,
-                                    @RequestParam(name = "what", defaultValue = "no") String what,
+                                    @RequestParam(name = "change", defaultValue = "no") String change,
                                     Model model) {
         // 인콰이어리 아이디가 넘어온 경우, 저장/스팸/휴지통 중에 선택해 (N->Y)
         if(!inquiryId.equals("no")){
-            if (what.equals("saved")) {
+            if (change.equals("saved")) {
                 inquiryService.updateSavedNo(inquiryId, customerId);
-            }else if(what.equals("spam")){
+            }else if(change.equals("spam")){
                 inquiryService.savedToSpam(inquiryId,customerId);
             }else{
                 inquiryService.savedToTrash(inquiryId,customerId);
             }
         }
         List<InquiryDTO> dtos = inquiryService.getSavedInquiry(customerId);
-        model.addAttribute("customerId", customerId);
         model.addAttribute("inquiryList", dtos);
         
         return "/main/inboxSaved::#result";
     }
-
-
     
     
-
-
-
-    
-
-
-
-
     // ========================= Spam ============================
-
+    
     /**
-     * 스팸 메세지
+     * 스팸 인콰이어리 화면 요청
      * @param customerId
      * @param model
      * @return
@@ -276,17 +265,42 @@ public class InquiryController {
     @GetMapping("/main/inboxSpam")
     public String inboxSpam(
         @RequestParam(name = "customerId", defaultValue = "jooyoungyoon") String customerId,
-            Model model ){
-
-                CustomerDTO customerDTO = customerService.getCustomer(customerId);
-                model.addAttribute("customer", customerDTO);
-                
-                List<ProductDTO> productList = productService.getCustomerProducts(customerId);
-                model.addAttribute("customerId", customerId);
-                model.addAttribute("productList", productList);
-        
-        return "main/inboxSpam";
+        Model model ){
+            
+            model.addAttribute("customerId", customerId);
+            
+            return "main/inboxSpam";
     }
+        
+    /**
+     * customerId에 해당하는 회원이 spam처리한 인콰이어리 리스트 반환
+     * @param customerId
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "/inbox/spam/getList", method=RequestMethod.GET)
+    public String getSpamList(@RequestParam(name = "customerId", defaultValue = "jooyoungyoon") String customerId, 
+                                    @RequestParam(name = "inquiryId", defaultValue = "no") String inquiryId,
+                                    @RequestParam(name = "change", defaultValue = "no") String change,
+                                    @RequestParam(name = "senderId", defaultValue = "") String senderId,
+                                    Model model) {
+        // 인콰이어리 아이디가 넘어온 경우, 스팸 해제(Y->N)/블락(회원블락)/휴지통(Y->N)
+        if(!inquiryId.equals("no")){
+            if (change.equals("unspam")) {
+                inquiryService.updateSpamNo(inquiryId);
+            }else if(change.equals("block")){
+                inquiryService.senderToBlock(customerId,senderId);
+            }else{
+                inquiryService.savedToTrash(inquiryId,customerId);
+            }
+        }
+        List<InquiryDTO> dtos = inquiryService.getSpamInquiry(customerId);
+        model.addAttribute("inquiryList", dtos);
+        
+        return "/main/inboxSpam::#result";
+    }
+
+
 
     // ========================= Block ============================
     /**

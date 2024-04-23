@@ -112,6 +112,7 @@
 						$("#modalProductName").text(dto.productName);
 						$("#modalCategory").text(dto.category);
 						$("#modalQuantity").text(dto.quantity);
+						$("#modalUnit").text(dto.unit);
 						$("#modalInquiryContent").text(dto.inquiryContent);
 						if(dto.originalFileName!=null){
 							$("#modalFile").text(dto.originalFileName);
@@ -355,7 +356,7 @@
 								</tr>
 								<tr>
 									<th class="">Quantity</th>
-									<td><span id="modalQuantity"></span> <span id="modalUnit"></span> </td>
+									<td><span id="modalQuantity"></span> (<span id="modalUnit"></span>) </td>
 								</tr>
 								<tr>
 									<th class="">Message</th>
