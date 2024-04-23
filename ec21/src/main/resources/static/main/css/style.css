@@ -3450,31 +3450,27 @@ textarea {
 	padding: 50px 0;
 }
 
-.shopping-summery thead .main-hading {
-	padding: 0px 50px;
+
+.shopping-summery tbody {
+	border-bottom:none;
 }
 
-.shopping-summery thead {
-	background: #F7941D;
+.shopping-summery th {
 	color: #fff;
-}
-
-.shopping-summery thead tr th {
-	border: none;
-	font-weight: 600;
-	color: #fff;
+	width: auto;
 	text-align: center;
 }
 
-.shopping-summery tbody tr {
-	border-bottom: 1px solid #F7941D;
-	margin-top: 20px;
-}
+.shopping-summery th.product-title, 
+.shopping-summery td.product-info {
+	width: 60%;
+} 
 
-.shopping-summery tbody tr img {
+.shopping-summery .product-info img {
 	border-radius: 0;
 	width: 80px;
 	height: 80px;
+	display: block;
 }
 
 .shopping-summery tbody tr:last-child {
@@ -3482,11 +3478,15 @@ textarea {
 }
 
 
-.shopping-summery tbody .product-name a {
+.shopping-summery .product-info .product-name a {
 	color: #282828;
 	font-weight: 500;
 	font-size: 17px;
-	display: block;
+	display: -webkit-inline-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .shopping-summery .product-name a:hover {
@@ -3499,12 +3499,13 @@ textarea {
 	display: block;
 } 
 
+
 .shopping-summery .product-desc p>span {
 	font-size: 13px;
 	color: #666!important;
 	display: -webkit-inline-box;
     -webkit-box-orient: vertical;
-    -webkit-line-clamp: 3;
+    -webkit-line-clamp: 2;
     overflow: hidden;
     text-overflow: ellipsis;
 }
@@ -3563,6 +3564,11 @@ textarea {
 
 .shopping-summery tbody .qty span {}
 
+span.paging {
+	display: flex;
+	justify-content: center;
+	padding: 40px;
+}
 
 
 .shopping-cart .qty .button {
