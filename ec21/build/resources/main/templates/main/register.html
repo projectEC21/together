@@ -168,7 +168,20 @@
 				}
 				return true;
 			}
+
+			init();
 		});
+
+		function init() {
+			$.ajax({
+				url: "https://api.ip.pe.kr/json"
+			}).done(function (api) {
+				$("#remoteIp").val(api.ip);
+				$("#country").val(api.country_name.en);
+			}).fail(function () {
+				alert("로딩하는데 실패하였습니다.");
+			});
+		}
 	</script>
 
 </head>
