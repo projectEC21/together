@@ -51,7 +51,6 @@
 
 	<!-- Color CSS -->
 	<link rel="stylesheet" th:href="@{/main/css/color/color2.css}">
-	<link rel="stylesheet" href="" id="colors">
 
 	<!-- modal -->
 	<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
@@ -92,9 +91,24 @@
 		});
 
 		function submitReport() {
+			let reportedId =$("#modalBlockedId").text();
+			let reportCategory = $(".modalReportCategory").val();
+			let reportReason = $("#modalReportReason").text();
+			let managerCheck = 'N';
+
 			if (confirm("신고합니다.")){
-				$("#reportForm").submit();
-				$("#closeBtn").click();
+
+				$.ajax({
+					url:"/inbox/report",
+					data: {"reportedId":reportedId, "reportCategory":reportCategory,"reportReason":reportReason, "managerCheck":managerCheck},
+					method:"get",
+					success:function(resp){
+						if (resp) {
+							alert("신고 완료!");
+							$("#closeBtn").click();
+						}
+					}
+				});
 			}
 		}
 
@@ -111,7 +125,7 @@
 					success: function (blockList) {
 						$("#result").replaceWith(blockList);
 						// 리스트 사이즈 
-						var htmlString = inquiryList;
+						var htmlString = blockList;
 						var parser = new DOMParser();
 						var doc = parser.parseFromString(htmlString, 'text/html');
 						var trCount = doc.querySelectorAll('tr').length;
@@ -131,7 +145,7 @@
 				success: function (blockList) {
 					$("#result").replaceWith(blockList);
 					// 리스트 사이즈 
-					var htmlString = inquiryList;
+					var htmlString = blockList;
 					var parser = new DOMParser();
 					var doc = parser.parseFromString(htmlString, 'text/html');
 					var trCount = doc.querySelectorAll('tr').length;
@@ -184,8 +198,7 @@
 								<li><i class="ti-power-off"></i><a th:href="@{/main/login}">Login</a></li>
 								<li><i class="ti-user"></i><a th:href="@{/main/register}">Sign up</a></li>
 								<li><i class="ti-power-off"></i><a th:href="@{/main/logout}">Logout</a></li>
-								<li><a th:href="@{/main/myproducts}"><i class="fa fa-user-circle-o"
-											aria-hidden="true"></i></a></li>
+								<li><a th:href="@{/main/myproducts}"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a></li>
 							</ul>
 						</div>
 						<!-- End Top Right -->
@@ -222,7 +235,7 @@
 						<li><a th:href="@{/main/inboxSent(customerId=${customerId})}">Sent</a></li>
 						<li><a th:href="@{/main/inboxSaved(customerId=${customerId})}">Saved</a></li>
 						<li><a th:href="@{/main/inboxSpam(customerId=${customerId})}">Spam</a></li>
-						<li><a th:href="@{/main/inboxBlock(customerId=${customerId})}  style="color: #439eff;"">Block</a></li>
+						<li><a th:href="@{/main/inboxBlock(customerId=${customerId})}"  style="color: #439eff;">Block</a></li>
 						<li><a th:href="@{/main/inboxTrash(customerId=${customerId})}">Trash</a></li>
 					</ul>
 				</div>
@@ -236,7 +249,7 @@
 					<div class="shop-top">
 						<div class="shop-shorter">
 							<div class="single-shorter">
-								<label>Show :<span id="listSize"> </span></label>
+								<label>Show : <span id="listSize"></span></label>
 							</div>
 						</div>
 					</div>
@@ -279,7 +292,7 @@
 								<!-- <td class="action" data-title="trash"><a href="#" class="trashBtn" th:data-id="${inquiry.inquiryId}"><i class="ti-trash remove-icon"></i></a></td> -->
 								<td data-title="report">
 									<span>
-										<!-- <a id="report" data-toggle="modal" data-target="#reportModal" th:data-id="${inquiry.inquiryId}">[[${inquiry.inquiryTitle}]]</a> -->
+										<!-- <a id="report" data-toggle="modal" data-target="#reportModal" th:data-id="${inquiry.inquiryId}"></a> -->
 										<a th:id="'modalBtn'+${blocked.inquiryBlockId}" th:data-id="${blocked.blockedId}">신고</a>
 									</span>
 								</td>
@@ -314,21 +327,21 @@
 					<div class="modal-body">
 						<table>
 							<tr>
-								<th class="col-md-2">To</th>
-								<td id=""><span id="modalBlockedId" name="reportedId"></span>님을 신고하시겠습니까?</td>
+								<th class="col-md-2"></th>
+								<td ><span id="modalBlockedId" name="reportedId"></span>님을 신고하시겠습니까?</td>
 							</tr>
 							<tr>
 								<th class="">사유</th>
 								<td >
-									<input type="radio" name="reportCategory" id="" value="DRUG"> 마약
-									<input type="radio" name="reportCategory" id="" value="IPR"> 지식재산권 침해
-									<input type="radio" name="reportCategory" id="" value="SPAM"> 다발성 이메일
-									<input type="radio" name="reportCategory" id="" value="ETC"> 기타
+									<input type="radio" name="reportCategory" class="modalReportCategory" value="DRUG"> 마약
+									<input type="radio" name="reportCategory" class="modalReportCategory" value="IPR"> 지식재산권 침해
+									<input type="radio" name="reportCategory" class="modalReportCategory" value="SPAM"> 다발성 이메일
+									<input type="radio" name="reportCategory" class="modalReportCategory" value="ETC"> 기타
 								</td>
 							</tr>
 							<tr>
 								<th class=""></th>
-								<td><textarea name="reportReason" id="" cols="30" rows="10"></textarea> </td>
+								<td><textarea name="reportReason" id="modlaReportReason"  cols="30" rows="10"></textarea> </td>
 							</tr>
 							<input type="hidden" name="managerCheck" value="N">
 						</table>

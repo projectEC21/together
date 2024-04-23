@@ -29,6 +29,8 @@ import net.kdigital.ec21.dto.InquiryModalDTO;
 import net.kdigital.ec21.dto.InquiryPlusCustomerIdDTO;
 import net.kdigital.ec21.dto.ProductDTO;
 import net.kdigital.ec21.dto.ReportCustomerDTO;
+import net.kdigital.ec21.dto.check.ReportCategory;
+import net.kdigital.ec21.dto.check.YesOrNo;
 import net.kdigital.ec21.service.CustomerService;
 import net.kdigital.ec21.service.InquiryService;
 import net.kdigital.ec21.service.ProductService;
@@ -354,9 +356,13 @@ public class InquiryController {
      * @return
      */
     @ResponseBody
-    @PostMapping("/inbox/report")
-    public Boolean postMethodName(@ModelAttribute ReportCustomerDTO reportCustomerDTO) {
-        return inquiryService.insertReportCustomer(reportCustomerDTO);
+    @GetMapping("/inbox/report")
+    public Boolean insertReportCustomer(@RequestParam(name="reportedId")String reportedId,
+                @RequestParam(name = "reportCategory")String reportCategory, 
+                @RequestParam(name = "reportReason")String reportReason,
+                @RequestParam(name = "managerCheck")String managerCheck) {
+                ReportCustomerDTO dto = new ReportCustomerDTO(null, reportedId,ReportCategory.valueOf(reportCategory),reportReason,null,YesOrNo.valueOf(managerCheck));
+        return inquiryService.insertReportCustomer(dto);
     }
     
 
