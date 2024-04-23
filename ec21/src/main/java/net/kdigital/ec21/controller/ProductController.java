@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -52,7 +54,18 @@ public class ProductController {
      * @return
      */
     @PostMapping("main/productsInsert")
-    public String productsInsert(@ModelAttribute ProductDTO productDTO, RedirectAttributes attr) {
+    public String productsInsert(
+        @ModelAttribute ProductDTO productDTO
+        // , BindingResult bindingResult
+        , RedirectAttributes attr
+        ) {
+            // if (bindingResult.hasErrors()) {
+            //     // 유효성 검사 실패 시 리다이렉트
+            //     return "redirect:/main/productsWrite"; // 유효성 검사 실패 시 리다이렉트
+            // }
+        
+
+
         // python Server -> DB 저장까지
         productService.insertProduct(productDTO);
 

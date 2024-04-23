@@ -2749,10 +2749,12 @@ body {
 	background-color: #333;
 }
 
-.shop.single .modal-body tr {
-	margin: 15px;
-	text-align: start
+.shop.single .modal-body th, td {
+	display: flex;
+    margin-top: 10px;
+    margin-left: 20px;
 }
+
 
 .shop.single .modal-body th.text-center>span {
 	color: #ff2c18;
@@ -2776,9 +2778,9 @@ textarea {
 
 
 .shop.single .modal-body .agree-check {
-	margin: 50px;
-	font-style: italic;
-	font-size: 14px;
+	margin-top: 50px;
+    font-style: italic;
+    font-size: 11px;
 }
 
 .shop.single .modal-body .agree-check input {

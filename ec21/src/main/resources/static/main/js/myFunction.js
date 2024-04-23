@@ -9,6 +9,49 @@ $(document).ready(function () {
     });
 });
 
+$(document).ready(function () {
+    $("#submitBtn").click(function (e) {
+        e.preventDefault(); // 기본 폼 제출 방지
+
+        // 필수 입력 필드 검사
+        var firstEmptyInput = findFirstEmptyInput();
+        if (firstEmptyInput) {
+            alert("Please fill in the " + firstEmptyInput.label + " field."); // 경고 메시지
+            $('#' + firstEmptyInput.id).focus(); // 해당 필드에 포커스
+            return; // 폼 제출 중단
+        }
+
+        // 체크박스 검사
+        if (!$("#termsAgreement").is(":checked")) { // 체크박스가 체크되었는지 확인
+            $("#termsAgreement").focus();
+            return; // 폼 제출 중단
+        }
+
+        // 모든 검사를 통과하면 폼 제출
+        $("#myForm").submit(); // 폼 제출
+    });
+});
+
+// 빈 필드 검사 함수
+function findFirstEmptyInput() {
+    var requiredFields = $("#myForm").find("input[required], textarea[required]");
+    var firstEmpty = null;
+
+    requiredFields.each(function () {
+        var value = $(this).val().trim(); // 공백 제거
+        if (!value) {
+            firstEmpty = {
+                id: $(this).attr("id"),
+                label: $(this).closest("tr").find("th").text() // 필드의 라벨
+            };
+            return false; // 반복 중단
+        }
+    });
+
+    return firstEmpty; // 첫 번째 빈 필드 반환
+}
+
+
 
 // inquiry modalControl.js
 $(document).ready(function () {
@@ -208,15 +251,21 @@ $(document).ready(function () {
         let countryName = originContainer.find('.seller-country').text();
         let flagContainer = originContainer.find('.seller-flag');
 
+        console.log('나라는?' +countryName);
+        console.log(originContainer.find('.seller-country'));
         // 국가 이름을 기반으로 AJAX 요청을 통해 국가 정보를 가져옵니다.
         if (countryName) {
+            console.log('아냥ㅇ');
             $.ajax({
                 url: `https://restcountries.com/v3.1/name/${countryName}`,
                 method: 'GET',
                 success: function (data) {
                     if (data && data.length > 0) {
+                        console.log(data);
                         let countryCode = data[0].cca2.toLowerCase();
+                        console.log("===================="+countryCode);
                         let flagImageUrl = `https://flagcdn.com/${countryCode}.svg`; // 변경된 API 사용
+                        console.log("===================="+flagImageUrl);
                         flagContainer.html(`<img src="${flagImageUrl}" alt="${countryName} Flag" style="width:20px; height:20px;">`);
                     } else {
                         console.warn("Country data not found.");
