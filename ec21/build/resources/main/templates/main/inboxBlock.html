@@ -97,8 +97,6 @@
 			let reportReason = $("#modalReportReason").val();
 			let managerCheck = 'N';
 
-			console.log(reportReason);
-
 			if (confirm("신고!")){
 				$.ajax({
 					url:"/inbox/report",
