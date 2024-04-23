@@ -21,6 +21,7 @@ import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import net.kdigital.ec21.dto.CustomerDTO;
 import net.kdigital.ec21.dto.ProductDTO;
 import net.kdigital.ec21.service.CustomerService;
 import net.kdigital.ec21.service.ProductService;
@@ -90,6 +91,7 @@ public class ProductController {
         
         // productId에 해당하는 Product 가져오기
         ProductDTO dto = productService.getProduct(productId);
+        CustomerDTO customerDTO = customerService.getCustomer(dto.getCustomerId());
         
         // productId에 해당하는 Product와 동일한 카테고리의 상품들 최대 5개 가져오기
         List<ProductDTO> dtoList = productService.getSameCategoryProducts(dto.getCategory(), productId);
@@ -100,6 +102,8 @@ public class ProductController {
         model.addAttribute("category", category);
         model.addAttribute("searchWord", searchWord);
         model.addAttribute("currentPage", currentPage);
+        model.addAttribute("customer",customerDTO);
+
         
         return "main/productsDetail";
     }

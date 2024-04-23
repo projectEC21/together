@@ -20,6 +20,7 @@
 	<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap" rel="stylesheet">
 
 	<!-- StyleSheet -->
+
 	<!-- Bootstrap -->
 	<link rel="stylesheet" th:href="@{/main/css/bootstrap.css}">
 	<!-- Magnific Popup -->
@@ -27,7 +28,7 @@
 	<!-- Font Awesome -->
 	<link rel="stylesheet" th:href="@{/main/css/font-awesome.css}">
 	<!-- Fancybox -->
-	<link rel="stylesheet" th:href="@{/main/css/jquery.fancybox.css}">
+	<link rel="stylesheet" th:href="@{/main/css/fancybox.css}">
 	<!-- Themify Icons -->
 	<link rel="stylesheet" th:href="@{/main/css/themify-icons.css}">
 	<!-- Nice Select CSS -->
@@ -230,12 +231,7 @@
 	</div>
 	<!-- End Breadcrumbs -->
 
-	<!-- 
-			Product Style 1 
-			Products 페이지가 myAccount 디폴트 화면!
-			옆 사이드 바
-		-->
-	<section class="product-area shop-sidebar product-list shop section">
+	<section class="product shop-sidebar shop section">
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-2 col-md-4 col-12">
@@ -253,12 +249,12 @@
 					</div>
 				</div>
 
-				<div class="col-lg-10 col-md-8 col-12">
+				<div class="col-lg-9 col-md-8 col-12">
 					<div class="row">
 						<!-- My products List -->
 						<div class="shopping-cart section">
 							<div class="container">
-								<div class="row">
+								<div class="row" style="margin: -10px;">
 									<div class="col-12">
 										<!-- Shop Top -->
 										<div class="shop-top">
@@ -269,7 +265,9 @@
 											</div>
 											<div class="single-slider">
 												<div class="single-slider">
-													<a th:href="@{/main/productsWrite(customerId=${customerId})}">상품 등록하기</a>
+
+													<a th:href="@{/main/productsWrite(customerId=${customerId})}">Add a new product</a>
+
 												</div>
 											</div>
 										</div>
@@ -278,31 +276,38 @@
 										<table class="table shopping-summery" id="result">
 											<thead>
 												<tr class="main-hading">
-													<th class="text-center">no</th>
-													<th colspan="2">PRODUCT</th>
-													<!-- <th>PRODUCT</th> -->
-													<th class="text-center">PRICE</th> <!-- -->
-													<th class="text-center">QUANTITY</th> <!-- 단위-->
-													<!-- <th class="text-center">TOTAL</th>  -->
-													<th class="text-center">DATE</th>
-													<th class="text-center"><i class="ti-trash remove-icon"></i></th>
+													<th>no</th>
+													<th class="product-title" colspan="2">PRODUCT</th>
+													<th>PRICE</th> <!--가격 -->
+													<th>QUANTITY</th> <!-- 단위-->
+													<th>DATE</th>
+													<th><i class="ti-trash remove-icon"></i></th>
 												</tr>
 											</thead>
 											<tbody>
 												<!-- 240418 dy : 회원의 상품 목록 출력 -->
 												<tr th:if="${productList != null and !#lists.isEmpty(productList)}" th:each="product, i : ${productList}">
-													<td class="no"><span>[[${i.count}]]</span></td>
-													<td class="product-info" data-title="Description" colspan="2">
-														<span class="image" th:if="${product.originalFileName}!=null"><img th:src="@{/main/downloadImg(productId=${product.productId})}"></span>
-														<p class="product-name"><a th:href="@{/main/productsDetail(productId=${product.productId},currentPage='myproducts')}">[[${product.productName}]]</a></p>
-														<p class="product-desc" th:utext="${product.productDesc}"></p>
+													<td class="no">
+														<span>[[${i.count}]]</span>
 													</td>
-													<td class="price" data-title="Price"><span>$[[${product.price}]]</span></td>
+													<td class="product-info" data-title="Description" colspan="2">
+														<span class="image" th:if="${product.originalFileName}!=null">
+															<img th:src="@{/main/downloadImg(productId=${product.productId})}">
+														</span>
+														<span class="product-name">
+															<a th:href="@{/main/productsDetail(productId=${product.productId},currentPage='myproducts')}">[[${product.productName}]]</a>
+														</span>
+														<span class="product-desc" th:utext="${product.productDesc}"></span>
+													</td>
+													<td class="price" data-title="Price">
+														<span>$[[${product.price}]]</span>
+													</td>
 													<td class="qty" data-title="Qty">
 														<span th:if="${product.moq >= 1000}" th:text="${#numbers.formatInteger(product.moq, 3, 'COMMA')} + ' ' + ${product.unit}"> </span>
 														<span th:unless="${product.moq >= 1000}" th:text="${product.moq} + ' ' + ${product.unit}"></span>
 													</td>
-													<td class="createDate" data-title="date"><span>[[${#temporals.format(product.createDate, 'yyyy-MM-dd')}]]</span>
+													<td class="createDate" data-title="date">
+														<span>[[${#temporals.format(product.createDate, 'yyyy-MM-dd')}]]</span>
 													</td>
 													<td class="action" data-title="Remove">
 														<a onclick="return confirmDelete(this, event)" 
@@ -322,11 +327,12 @@
 						</div>
 						<!--/ End Shopping Cart -->
 					</div>
-					<span class="paging"> << < 1 2 3 4 5 > >> </span>
+					<span class="paging"> 
+						<< < 1 2 3 4 5 > >> 
+					</span>
 				</div>
 			</div>
-		</div>
-	</section>
+		</section>
 	<!--/ End Product Style 1  -->
 
 	<!-- Start Footer Area -->

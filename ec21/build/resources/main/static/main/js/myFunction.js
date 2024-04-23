@@ -164,12 +164,49 @@ $(document).ready(function () {
 
 /**********************************
  * productsDetail -----  완성
- ***********************************/$(document).ready(function () {
+ ***********************************/
+
+$(document).ready(function () {
     // 각 제품의 원산지를 기반으로 국기 이미지를 가져옵니다.
     $('.product-desc').each(function () {
         let originContainer = $(this).find('.origin');
         let countryName = originContainer.find('.country-name').text();
         let flagContainer = originContainer.find('.flag-container');
+        
+        // 국가 이름을 기반으로 AJAX 요청을 통해 국가 정보를 가져옵니다.
+        if (countryName) {
+            $.ajax({
+                url: `https://restcountries.com/v3.1/name/${countryName}`,
+                method: 'GET',
+                success: function (data) {
+                    if (data && data.length > 0) {
+                        let countryCode = data[0].cca2.toLowerCase();
+                        let flagImageUrl = `https://flagcdn.com/${countryCode}.svg`; // 변경된 API 사용
+                        flagContainer.html(`<img src="${flagImageUrl}" alt="${countryName} Flag" style="width:20px; height:20px;">`);
+                    } else {
+                        console.warn("Country data not found.");
+                        flagContainer.html(""); // 국가 데이터가 없을 경우 플래그 컨테이너를 비웁니다.
+                    }
+                },
+                error: function () {
+                    console.error("Error retrieving country data.");
+                    flagContainer.html(""); // AJAX 요청 오류 시 플래그 컨테이너를 비웁니다.
+                }
+            });
+        }
+    });
+});
+
+
+/**********************************
+ * productsDetail : seller 국가 -----  완성
+ ***********************************/
+$(document).ready(function () {
+    // 각 제품의 원산지를 기반으로 국기 이미지를 가져옵니다.
+    $('.comp-info').each(function () {
+        let originContainer = $(this).find('.country');
+        let countryName = originContainer.find('.seller-country').text();
+        let flagContainer = originContainer.find('.seller-flag');
 
         // 국가 이름을 기반으로 AJAX 요청을 통해 국가 정보를 가져옵니다.
         if (countryName) {
