@@ -20,6 +20,7 @@
 	<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap" rel="stylesheet">
 
 	<!-- StyleSheet -->
+
 	<!-- Bootstrap -->
 	<link rel="stylesheet" th:href="@{/main/css/bootstrap.css}">
 	<!-- Magnific Popup -->
@@ -27,7 +28,7 @@
 	<!-- Font Awesome -->
 	<link rel="stylesheet" th:href="@{/main/css/font-awesome.css}">
 	<!-- Fancybox -->
-	<link rel="stylesheet" th:href="@{/main/css/jquery.fancybox.css}">
+	<link rel="stylesheet" th:href="@{/main/css/fancybox.css}">
 	<!-- Themify Icons -->
 	<link rel="stylesheet" th:href="@{/main/css/themify-icons.css}">
 	<!-- Nice Select CSS -->
@@ -230,12 +231,7 @@
 	</div>
 	<!-- End Breadcrumbs -->
 
-	<!-- 
-			Product Style 1 
-			Products 페이지가 myAccount 디폴트 화면!
-			옆 사이드 바
-		-->
-	<section class="product-area shop-sidebar product-list shop section">
+	<section class="product shop-sidebar shop section">
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-2 col-md-4 col-12">
@@ -269,7 +265,7 @@
 											</div>
 											<div class="single-slider">
 												<div class="single-slider">
-													<a th:href="@{/main/productsWrite(customerId=${customerId})}">상품 등록하기</a>
+													<a th:href="@{/main/productsWrite(customerId=${customerId})}">Add A New Product</a>
 												</div>
 											</div>
 										</div>
@@ -279,8 +275,8 @@
 											<thead>
 												<tr class="main-hading">
 													<th>no</th>
-													<th class="product" colspan="2" style="width: 50%;">PRODUCT</th>
-													<th>PRICE</th> <!-- -->
+													<th class="product-title" colspan="2">PRODUCT</th>
+													<th>PRICE</th> <!--가격 -->
 													<th>QUANTITY</th> <!-- 단위-->
 													<th>DATE</th>
 													<th><i class="ti-trash remove-icon"></i></th>
@@ -329,11 +325,12 @@
 						</div>
 						<!--/ End Shopping Cart -->
 					</div>
-					<span class="paging"> << < 1 2 3 4 5 > >> </span>
+					<span class="paging"> 
+						<< < 1 2 3 4 5 > >> 
+					</span>
 				</div>
 			</div>
-		</div>
-	</section>
+		</section>
 	<!--/ End Product Style 1  -->
 
 	<!-- Start Footer Area -->
