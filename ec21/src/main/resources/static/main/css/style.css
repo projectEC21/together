@@ -4048,6 +4048,7 @@ textarea {
 	padding: 50px 0;
 }
 
+
 .shop.login .login-form .title {
 	font-size: 25px;
 	font-style: italic;
@@ -4094,22 +4095,23 @@ textarea {
 
 .shop.login .form {
 	margin-top: 30px;
+	display: flex;
+    justify-content: center;
 }
 
 .shop.login .form .form-group {
-	margin-bottom: 22px;
 	font-size: 15px;
 }
 
 .shop.login .form .form-group input {
 	width: 90%;
-	height: 45px;
+	height: 50px;
 	line-height: 50px;
 	padding: 0 20px;
 	border-radius: 3px;
 	color: #333 !important;
-	border: 1px solid #333;
-	background: #F6F7FB;
+	border: none;
+	background: #F1F1F1;
 	display: block;
 }
 
@@ -4141,7 +4143,7 @@ textarea {
 .shop.login .form .form-group label {
 	color: #333;
 	position: relative;
-	font-size: 20px;
+	font-size: 17px;
 	padding-top: 15px;
 }
 
@@ -4174,19 +4176,17 @@ textarea {
 	color: #1308a3;
 }
 
-.shop.login .form .form-group.login-btn {
-	margin: 0;
-}
 
 .shop.login .form button {}
 
 .shop.login .form .btn {
-	display: inline-block;
-	margin: 40px 0;
-	height: 46px;
-	border: none;
-	color: #fff;
-	line-height: 20px;
+	ddisplay: inline-block;
+    margin: 20px 0;
+    height: 40px;
+    border: none;
+    color: #fff;
+    line-height: 16px;
+	align-items: center;
 }
 
 .shop.login .form .btn:hover {
@@ -4197,7 +4197,6 @@ textarea {
 .shop.login .login-form .checkbox {
 	text-align: left;
 	margin: 0;
-	margin-top: 20px;
 	display: inline-block;
 }
 
@@ -4207,7 +4206,6 @@ textarea {
 	font-style: italic;
 	color: #333;
 	position: relative;
-	margin-top: 30px;
 	padding-left: 20px;
 }
 
@@ -4297,7 +4295,7 @@ textarea {
 	color: #4e4e4e;
 	font-weight: 300;
 	text-align: left;
-	padding-bottom: 50px;
+	padding-bottom: 40px;
 }
 
 /* css ëŠ” ì¡°ê¸ˆ ë” ìƒê°í•´ë³´ê¸° */
@@ -4321,16 +4319,20 @@ textarea {
 	padding-bottom: 40px;
 }
 
-.product-list.section th,
-td {
-	padding-left: 10px;
+.product-list.section th {
+	margin-top: 20px;
 	padding-top: 20px;
-	padding-bottom: 20px;
+	display: block;
+}
+
+.product-list.section td {
+	padding-left: 10px;
+	display: block;
 }
 
 .product-list.section .nice-select.category {
-	width: 320px;
-	text-align: center;
+	width: 100%;
+	line-height: 40px;
 }
 
 .product-list.section td.form-group input[type="text"] {
@@ -4340,24 +4342,21 @@ td {
 	width: 300px;
 }
 
-.product-list.section input[type="text"] {
+.product-list.section input{
 	padding-left: 10px;
-	width: 320px;
+	width: 100%;
+	line-height: 35px;
 }
 
 /* ê°€ê²© */
 .product-list.section input.price {
 	padding-left: 10px;
-	width: 310px;
+    width: 98%;
+	line-height: 35px;
 }
 
-/* ckeditor
-.product-list.section th.form-group.editor {
-	position: relative;
-} */
-
 .ck.ck-editor {
-	max-width: 500px;
+	max-width: 99%;
 }
 
 .ck-editor__editable {
