@@ -136,28 +136,6 @@
 			init();
 		});
 
-		// 스팸으로 처리하는 함수
-		function toSpam(element) {
-			let inquiryId = element.getAttribute("data-id");
-			let customerId = $("#hiddenCustomerId").val();
-			if(confirm("스팸으로 처리하시겠습니까?")){
-				$.ajax({
-					url:"/inbox/getInquiryModalDTO",
-					data: { "customerId":customerId, "inquiryId": inquiryId, "change":"spam" },
-					method:"GET",
-					success: function (inquiryList) {
-						$("#result").replaceWith(inquiryList);
-						// 리스트 사이즈 
-						var htmlString = inquiryList;
-						var parser = new DOMParser();
-						var doc = parser.parseFromString(htmlString, 'text/html');
-						var trCount = doc.querySelectorAll('tr').length;
-						$("#listSize").text(trCount - 1); // thead의 tr도 포함된 개수이기 때문에 -1해줌
-					}
-				});
-			}
-		}
-
 
 		// 쓰레기통으로 처리하는 함수
 		function toTrash(element) {
@@ -190,14 +168,17 @@
 				method:"GET",
 				data : {"customerId":customerId},
 				success:function(inquiryList){
+					console.log(inquiryList);
 					$("#result").replaceWith(inquiryList);
-
+					
 					// 리스트 사이즈 
 					var htmlString = inquiryList;
 					var parser = new DOMParser();
 					var doc = parser.parseFromString(htmlString, 'text/html');
 					var trCount = doc.querySelectorAll('tr').length;
 					$("#listSize").text(trCount-1); // thead의 tr도 포함된 개수이기 때문에 -1해줌
+				
+									
 				}
 			})
 		}
@@ -310,8 +291,7 @@
 								<th class="state"></th>
 								<th class="inquiryTitle" colspan="2">TITLE</th>
 								<th class="sendDate">DATE</th>
-								<th class="spam">SPAM</th>
-								<th class="delete"><i class="ti-trash remove-icon"></i></th>
+								<th class="trash"><i class="ti-trash remove-icon"></i></th>
 							</tr>
 						</thead>
 						<tbody>
@@ -321,14 +301,17 @@
 								<td class="saved-icon"><a href="#" id="saved-icon"><i th:data-id="${inquiry.inquiryId}"
 											th:class="${inquiry.saved.name() == 'NY' or inquiry.saved.name() == 'YN' or inquiry.saved.name() == 'YY'  ? 'fa fa-star' : 'ti-star'}"></i></a>
 								</td>
+
 								<!-- 받은/보낸 회원 ID -->
 								<td class="" data-title="">
-									<span class="" th:text="${customerId == inquiry.senderId ? inquiry.receiverId : inquiry.senderId}"></span>
+									<span class="" th:if="${inquiry.customerId == inquiry.senderId}" th:text="${inquiry.receiverId}"></span>
+									<span class="" th:unless="${inquiry.customerId == inquiry.senderId}" th:text="${inquiry.senderId}"></span>
 								</td>
 								
 								<!-- 받은/보낸 상태-->
 								<td class="" data-title="">
-									<span class="" th:text="${customerId == inquiry.senderId ? '[sent]' : '[received]'}"></span>
+									<span class="" th:if="${inquiry.customerId == inquiry.senderId}">[sent]</span>
+									<span class="" th:unless="${inquiry.customerId == inquiry.senderId}">[received]</span>
 								</td>
 
 								<!-- 인콰이어리 제목 -->
@@ -341,13 +324,10 @@
 								</td>
 								<!-- 보낸 날짜 -->
 								<td class="sendDate" data-title="sendDate"><span>[[${inquiry.sendDate}]]</span></td>
-								<!-- 누르면 삭제 되면서 스팸함으로 -->
-								<!-- <td class="action" data-title="spam"><a href="#" class="spamBtn" th:data-id="${inquiry.inquiryId}"><i class="fa fa-refresh"></i></a></td> -->
-								<td data-title="spam"><a href="javascript:void(0);" class="spamBtn" th:data-id="${inquiry.inquiryId}"
-										onclick="toSpam(this)"><i class="fa fa-refresh"></i></a></td>
+								
 								<!-- 누르면 삭제 되면서 쓰통으로 -->
 								<!-- <td class="action" data-title="delete"><a href="#" class="trashBtn" th:data-id="${inquiry.inquiryId}"><i class="ti-trash remove-icon"></i></a></td> -->
-								<td data-title="delete"><a href="javascript:void(0)" class="trashBtn"
+								<td data-title="trash"><a href="javascript:void(0)" class="trashBtn"
 										th:data-id="${inquiry.inquiryId}" onclick="toTrash(this)"><i
 											class="ti-trash remove-icon"></i></a></td>
 							</tr>

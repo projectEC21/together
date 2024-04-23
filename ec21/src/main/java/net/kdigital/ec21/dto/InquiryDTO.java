@@ -36,6 +36,7 @@ public class InquiryDTO {
     private InquiryEnum saved;
     private InquiryEnum trash;
     private InquiryEnum spam;
+    private InquiryEnum deleted;
 
     public static InquiryDTO toDTO(InquiryEntity entity, String senderId, String productId) {
         return InquiryDTO.builder()
@@ -52,6 +53,7 @@ public class InquiryDTO {
                 .saved(entity.getSaved())
                 .trash(entity.getTrash())
                 .spam(entity.getSpam())
+                .deleted(entity.getDeleted())
                 .build();
     }
 

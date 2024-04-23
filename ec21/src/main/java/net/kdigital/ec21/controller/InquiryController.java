@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,12 +23,18 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletResponse;
 import net.kdigital.ec21.dto.CustomerDTO;
+import net.kdigital.ec21.dto.InquiryBlockedCustomerDTO;
 import net.kdigital.ec21.dto.InquiryDTO;
 import net.kdigital.ec21.dto.InquiryModalDTO;
+import net.kdigital.ec21.dto.InquiryPlusCustomerIdDTO;
 import net.kdigital.ec21.dto.ProductDTO;
+import net.kdigital.ec21.dto.ReportCustomerDTO;
 import net.kdigital.ec21.service.CustomerService;
 import net.kdigital.ec21.service.InquiryService;
 import net.kdigital.ec21.service.ProductService;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 @Controller
 @Slf4j
@@ -227,7 +234,7 @@ public class InquiryController {
     }
 
     /**
-     * customerId에 해당하는 회원이 saved한 인콰이어리 리스트 반환
+     * customerId에 해당하는 회원이 saved한 인콰이어리 리스트들을 새로운 인콰이어리 DTO 리스트로 반환
      * @param customerId
      * @param model
      * @return
@@ -241,15 +248,14 @@ public class InquiryController {
         if(!inquiryId.equals("no")){
             if (change.equals("saved")) {
                 inquiryService.updateSavedNo(inquiryId, customerId);
-            }else if(change.equals("spam")){
-                inquiryService.savedToSpam(inquiryId,customerId);
             }else{
                 inquiryService.savedToTrash(inquiryId,customerId);
             }
         }
-        List<InquiryDTO> dtos = inquiryService.getSavedInquiry(customerId);
+        // List<InquiryDTO> dtos = inquiryService.getSavedInquiry(customerId);
+        List<InquiryPlusCustomerIdDTO> dtos = inquiryService.getSavedInquiryPlusCustomerId(customerId);
         model.addAttribute("inquiryList", dtos);
-        
+
         return "/main/inboxSaved::#result";
     }
     
@@ -271,7 +277,7 @@ public class InquiryController {
             
             return "main/inboxSpam";
     }
-        
+
     /**
      * customerId에 해당하는 회원이 spam처리한 인콰이어리 리스트 반환
      * @param customerId
@@ -303,8 +309,9 @@ public class InquiryController {
 
 
     // ========================= Block ============================
+    
     /**
-     * 차단한 메세지
+     * 차단한 회원
      * @param customerId
      * @param model
      * @return
@@ -314,20 +321,52 @@ public class InquiryController {
         @RequestParam(name = "customerId", defaultValue = "jooyoungyoon") String customerId,
             Model model ){
 
-                CustomerDTO customerDTO = customerService.getCustomer(customerId);
-                model.addAttribute("customer", customerDTO);
-                
-                List<ProductDTO> productList = productService.getCustomerProducts(customerId);
-                model.addAttribute("customerId", customerId);
-                model.addAttribute("productList", productList);
-        
+            model.addAttribute("customerId", customerId);        
+
         return "main/inboxBlock";
     }
+
+    /**
+     * customerId에 해당하는 회원이 Block처리한 회원의 정보를 담은 새로운 DTO 리스트 반환
+     * 
+     * @param customerId
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "/inbox/block/getList", method = RequestMethod.GET)
+    public String getBlockList(@RequestParam(name = "customerId", defaultValue = "jooyoungyoon") String customerId,
+            @RequestParam(name = "inquiryBlockId", defaultValue = "no") String inquiryBlockId,
+            Model model) {
+        // 인콰이어리 차단 아이디가 넘어온 경우, 해당 블락 데이터 삭제
+        if (!inquiryBlockId.equals("no")) {
+            inquiryService.deleteBlocked(inquiryBlockId);
+        }
+
+        List<InquiryBlockedCustomerDTO> dtos = inquiryService.getBlockedCustomerDTO(customerId);
+        model.addAttribute("blockList", dtos);
+
+        return "/main/inboxBlock::#result";
+    }
+
+    /**
+     * 신고회원테이블에 전달받은 내용 저장
+     * @param reportCustomerDTO
+     * @return
+     */
+    @ResponseBody
+    @PostMapping("/inbox/report")
+    public Boolean postMethodName(@ModelAttribute ReportCustomerDTO reportCustomerDTO) {
+        return inquiryService.insertReportCustomer(reportCustomerDTO);
+    }
+    
+
+
+
 
     // ========================= Trash ============================
     
     /**
-     * 쓰레기통으로 보낸 메세지
+     * 쓰레기통 화면 요청
      * @param customerId
      * @param model
      * @return
@@ -337,14 +376,39 @@ public class InquiryController {
         @RequestParam(name = "customerId", defaultValue = "jooyoungyoon") String customerId,
             Model model ){
 
-                CustomerDTO customerDTO = customerService.getCustomer(customerId);
-                model.addAttribute("customer", customerDTO);
-                List<ProductDTO> productList = productService.getCustomerProducts(customerId);
                 model.addAttribute("customerId", customerId);
-                model.addAttribute("productList", productList);
         
         return "main/inboxTrash";
     }
+
+
+    /**
+     * customerId에 해당하는 회원이 trash 처리한 인콰이어리 리스트 반환
+     * 
+     * @param customerId
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "/inbox/trash/getList", method = RequestMethod.GET)
+    public String getTrashList(@RequestParam(name = "customerId", defaultValue = "jooyoungyoon") String customerId,
+            @RequestParam(name = "inquiryId", defaultValue = "no") String inquiryId,
+            @RequestParam(name = "change", defaultValue = "no") String change,
+            Model model) {
+        // 인콰이어리 아이디가 넘어온 경우, trash 해제(Y->N)/deleted(N->Y)
+        if (!inquiryId.equals("no")) {
+            if (change.equals("untrash")) {
+                inquiryService.updateTrashNo(inquiryId); 
+            }else {
+                inquiryService.trashToDeleted(inquiryId);
+            }
+        }
+        List<InquiryPlusCustomerIdDTO> dtos = inquiryService.getTrashInquiry(customerId);
+        model.addAttribute("inquiryList", dtos);
+
+        return "/main/inboxTrash::#result";
+    }
+
+
 
 
 

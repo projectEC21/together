@@ -168,6 +168,9 @@ CREATE TABLE inquiry (
     CONSTRAINT fk_inquiry_product FOREIGN KEY (product_id) REFERENCES product(product_id) ON DELETE CASCADE
 );
 
+-- deleted : 삭제 여부 확인하는 컬럼
+ALTER TABLE inquiry
+ADD (deleted CHAR(2) DEFAULT 'NN' CHECK (deleted IN ('NN', 'NY', 'YN', 'YY')));
 
 create sequence inquiry_seq;
 

@@ -9,11 +9,13 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<!-- Title Tag  -->
-	<title>EC21, Global B2B Marketplace</title> 
+	<title>EC21, Global B2B Marketplace</title>
 	<!-- Favicon -->
 	<link rel="icon" type="image/png" th:href="@{/main/images/ec21logo.png}">
 	<!-- Web Font -->
-	<link href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap" rel="stylesheet">
+	<link
+		href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap"
+		rel="stylesheet">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap" rel="stylesheet">
 
@@ -55,12 +57,96 @@
 	<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
-	
+
+	<!-- 240421 dy : ajax.. -->
 	<script th:src="@{/script/jquery-3.7.1.min.js}"></script>
+	<script>
+		$(function () {
+
+			// 모달 변수 초기화
+			var modal = $("#reportModal");
+			// 닫기 버튼 이벤트
+			$("#closeBtn").on("click", function (event) {
+				modal.hide();
+			});
+			// 모달 백그라운드 클릭 이벤트
+			$(window).on("click", function (event) {
+				if ($(event.target).is(modal)) {
+					modal.hide();
+				}
+			});
+
+			// 모달창 값 채우기 & 모달창 열기
+			$(document).on("click", "a[id^='modalBtn']", function () {
+				let blockedId = $(this).attr("data-id");
+				
+				// 모달 값 채우기
+				$("#modalBlockedId").text(blockedId);	
+				$("#submitBtn").on("click",submitReport);			
+				// 모달열기
+				$("#reportModal").modal();
+					
+			}); // End 모달 클릭 이벤트
+
+			init();
+		});
+
+		function submitReport() {
+			if (confirm("신고합니다.")){
+				$("#reportForm").submit();
+				$("#closeBtn").click();
+			}
+		}
+
+		// 블락 해제하는 함수
+		function toUnBlock(element) {
+			let customerId = $("#hiddenCustomerId").val();
+			let inquiryBlockId = element.getAttribute("data-id");
+			let blockedId = element.getAttribute("data-blockedId");
+			if (confirm("["+blockedId +"] 블락 해제하시겠습니까?")) {
+				$.ajax({
+					url: "/inbox/block/getList",
+					data: { "customerId": customerId ,"inquiryBlockId": inquiryBlockId },
+					method: "GET",
+					success: function (blockList) {
+						$("#result").replaceWith(blockList);
+						// 리스트 사이즈 
+						var htmlString = inquiryList;
+						var parser = new DOMParser();
+						var doc = parser.parseFromString(htmlString, 'text/html');
+						var trCount = doc.querySelectorAll('tr').length;
+						$("#listSize").text(trCount - 1); // thead의 tr도 포함된 개수이기 때문에 -1해줌
+					}
+				});
+			}
+		}
+		
+		// 인콰이어리 블락 회원 리스트 가져오기
+		function init() {
+			let customerId = $("#hiddenCustomerId").val();
+			$.ajax({
+				url: "/inbox/block/getList",
+				data: { "customerId": customerId },
+				method: "GET",
+				success: function (blockList) {
+					$("#result").replaceWith(blockList);
+					// 리스트 사이즈 
+					var htmlString = inquiryList;
+					var parser = new DOMParser();
+					var doc = parser.parseFromString(htmlString, 'text/html');
+					var trCount = doc.querySelectorAll('tr').length;
+					$("#listSize").text(trCount - 1); // thead의 tr도 포함된 개수이기 때문에 -1해줌
+				}
+			});
+		}
+		
+			
+
+	</script>
 </head>
 
 <body class="js">
-
+	<input type="hidden" id="hiddenCustomerId" th:value="${customerId}">
 	<!-- Preloader -->
 	<div class="preloader">
 		<div class="preloader-inner">
@@ -84,7 +170,8 @@
 							<!-- logo -->
 							<div class="logo">
 								<a th:href="@{/}">
-									<img th:src="@{/main/images/ec21logo.png}" alt="logo" style="width: 100px; height: 30px;">
+									<img th:src="@{/main/images/ec21logo.png}" alt="logo"
+										style="width: 100px; height: 30px;">
 								</a>
 							</div>
 						</div>
@@ -97,7 +184,8 @@
 								<li><i class="ti-power-off"></i><a th:href="@{/main/login}">Login</a></li>
 								<li><i class="ti-user"></i><a th:href="@{/main/register}">Sign up</a></li>
 								<li><i class="ti-power-off"></i><a th:href="@{/main/logout}">Logout</a></li>
-								<li><a th:href="@{/main/myproducts}"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a></li>
+								<li><a th:href="@{/main/myproducts}"><i class="fa fa-user-circle-o"
+											aria-hidden="true"></i></a></li>
 							</ul>
 						</div>
 						<!-- End Top Right -->
@@ -124,125 +212,138 @@
 
 	<!-- 인콰이어리 목록 -->
 	<section class="inquiry-area">
-			<div class="main-container">
-				<aside class="shop-sidebar">
-					<!-- Single Widget 인콰이어리 카테고리 -->
-					<div class="single-widget inquiry-category">
-						<h3 Inquiry class="inquiry-title">My Inquiry</h3>
-						<ul class="categor-list">
-							<li><a th:href="@{/main/inbox(customerId=${customerId})}">Received</a></li>
-							<li><a th:href="@{/main/inboxSended(customerId=${customerId})}" >Sended</a></li>
-							<li><a th:href="@{/main/inboxSaved(customerId=${customerId})}" >Saved</a></li>
-							<li><a th:href="@{/main/inboxSpam(customerId=${customerId})}" >Spam</a></li>
-							<li><a th:href="@{/main/inboxBlock(customerId=${customerId})}" style="
-								color: #439eff;" >Block</a></li>
-							<li><a th:href="@{/main/inboxTrash(customerId=${customerId})}" >Trash</a></li>
-						</ul>
-					</div>
-					<!--/ End Single Widget -->
-				</aside>
+		<div class="main-container">
+			<aside class="shop-sidebar">
+				<!-- Single Widget 인콰이어리 카테고리 -->
+				<div class="single-widget inquiry-category">
+					<h3 Inquiry class="inquiry-title">My Inquiry</h3>
+					<ul class="categor-list">
+						<li><a th:href="@{/main/inbox(customerId=${customerId})}">Received</a></li>
+						<li><a th:href="@{/main/inboxSent(customerId=${customerId})}">Sent</a></li>
+						<li><a th:href="@{/main/inboxSaved(customerId=${customerId})}">Saved</a></li>
+						<li><a th:href="@{/main/inboxSpam(customerId=${customerId})}">Spam</a></li>
+						<li><a th:href="@{/main/inboxBlock(customerId=${customerId})}  style="color: #439eff;"">Block</a></li>
+						<li><a th:href="@{/main/inboxTrash(customerId=${customerId})}">Trash</a></li>
+					</ul>
+				</div>
+				<!--/ End Single Widget -->
+			</aside>
 
-				<!-- My inquiry List -->
-				<div class="shopping-cart section">
-					<div class="container">
-						<!-- Shop Top -->
-						<div class="shop-top">
-							<div class="shop-shorter">
-								<div class="single-shorter">
-									<label>Show :<span> [[${#lists.size(productList)}]]</span></label>
-								</div>
+			<!-- My inquiry List -->
+			<div class="shopping-cart section">
+				<div class="container">
+					<!-- Shop Top -->
+					<div class="shop-top">
+						<div class="shop-shorter">
+							<div class="single-shorter">
+								<label>Show :<span id="listSize"> </span></label>
 							</div>
 						</div>
-							<table class="table shopping-summery">
-								<thead>
-									<tr class="main-hading">
-										<th>BLOCKED MEMBER ID</th>
-										<th>COUNTRY</th>
-										<th>REMOTE IP</th>
-										<th>UNBLOCK</th>
-									</tr>
-								</thead>
-								<tbody>
-									<!-- 240418 dy : 회원의 상품 목록 출력 -->
-									<tr th:if="${productList != null and !#lists.isEmpty(productList)}" th:each="product, i : ${productList}">
-										<!-- 블락 회원 아이디 -->
-										<td class="blockedId" data-title="blockedId">
-											<span class="blockedId" th:text="${customer.customerId}">customerId</span>
-										</td>
-										<!-- 국가 -->
-										<td class="country" data-title="country">
-											<span class="country" th:text="${customer.country}"></span>
-										</td>
-										<!-- ip 주소인데 뒷자리 3개는 * 표 표시 -->
-										<td class="remoteIp" id="remoteIp" data-title="remoteIp">
-											<span th:text="${customer.remoteIp}"></span>
-										</td>
-										<!-- 누르면 사라지게 -->
-										<td class="action" data-title="unblock">
-											<a th:href="@{/main/myproducts/delete(productId=${product.productId})}"><i class="fa fa-reply"></i></a>
-										</td>
-									</tr>
-								</tbody>
-							</table>
-							<!--/ End inquiry List -->
-						</div>
 					</div>
-				<!--/ End Shopping Cart -->
-			</div>
-		</section>
-
-		<!-- Inquiry Modal -->
-		<div class="modal fade" id="inquiryDetail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-					<form class="form" th:action="@{/main/inbox}" method="post">
-						<!-- Modal Header -->
-						<div class="modal-header">
-							<h4 class="modal-title">인콰이어리 제목</h4>
-							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-							</button>
-						</div>
-						<!-- Modal Body -->
-						<div class="modal-body">
-							<table>
-								<tr>
-									<th class="col-md-2">To</th>
-									<td id="receivedId">zettlernb (Ningbo Zettler Electronics Co., Ltd.)</td>
-								</tr>
-								<tr>
-									<th class="">From</th>
-									<td id="sendId"></td>
-								</tr>
-								<tr>
-									<th class="">Subject</th>
-									<td><span>..</span></td>
-								</tr>
-								<tr>
-									<th class="">Category</th>
-									<td><span>..</span></td>
-								</tr>
-								<tr>
-									<th class="">Message</th>
-									<td><span><textarea readonly></textarea></span></td>
-								</tr>
-								<tr>
-									<!-- 파일 부분 다운만 가능한 건 어떻게 하는지 까먹어서 우선 패스 -->
-									<th class="">Attach File</th>
-									<td><input type="file" name="attachment" id="" value="Upload File"></td>
-								</tr>
-							</table>
-						</div>
-						<!-- Modal Footer -->
-						<div class="modal-footer">
-							<button type="button" class="btn" data-dismiss="modal">Close</button>
-						</div>
-					</form>
+					<table class="table shopping-summery" id="result">
+						<thead>
+							<tr class="main-hading">
+								<th>BLOCKED MEMBER ID</th>
+								<th>COMPANY NAME</th>
+								<th>COUNTRY</th>
+								<th>REMOTE IP</th>
+								<th>UNBLOCK</th>
+								<th>REPORT</th>
+							</tr>
+						</thead>
+						<tbody>
+							<!-- 240423 dy : 인콰이어리 블락 회원 정보 출력 -->
+							<tr th:if="${blockList != null and !#lists.isEmpty(blockList)}" th:each="blocked : ${blockList}">
+								<!-- 블락된 회원 아이디 -->
+								<td class="blockedId" data-title="blockedId">
+									<span class="blockedId" th:text="${blocked.blockedId}"></span>
+								</td>
+								<td class="compName" data-title="compName">
+									<span class="compName" th:text="${blocked.compName}"></span>
+								</td>
+								<!-- 국가 -->
+								<td class="country" data-title="country">
+									<span class="country" th:text="${blocked.country}"></span>
+								</td>
+								<!-- ip 주소인데 뒷자리 3개는 * 표 표시 -->
+								<td class="remoteIp" id="remoteIp" data-title="remoteIp">
+									<span th:text="${blocked.remoteIp}"></span>
+								</td>
+					
+								<!-- unBlock -->
+								<!-- <td class="action" data-title="spam"><a href="#" class="spamBtn" th:data-id="${inquiry.inquiryId}"><i class="fa fa-refresh"></i></a></td> -->
+								<td data-title="unBlock"><a href="javascript:void(0);" class="unBlockBtn"
+										th:data-id="${blocked.inquiryBlockId}" th:data-blockedId="${blocked.blockedId}" onclick="toUnBlock(this)"><i class="fa fa-refresh"></i></a>
+								</td>
+								<!-- 신고버튼 -->
+								<!-- <td class="action" data-title="trash"><a href="#" class="trashBtn" th:data-id="${inquiry.inquiryId}"><i class="ti-trash remove-icon"></i></a></td> -->
+								<td data-title="report">
+									<span>
+										<!-- <a id="report" data-toggle="modal" data-target="#reportModal" th:data-id="${inquiry.inquiryId}">[[${inquiry.inquiryTitle}]]</a> -->
+										<a th:id="'modalBtn'+${blocked.inquiryBlockId}" th:data-id="${blocked.blockedId}">신고</a>
+									</span>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<!--/ End inquiry List -->
+					<!-- 페이징 -->
+					<span class="paging">
+						<< < 1 2 3 4 5> >>
+					</span>
 				</div>
+			</div>
+			<!--/ End Shopping Cart -->
+		</div>
+	</section>
+
+	<!-- Report Modal -->
+	<div class="modal fade" id="reportModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<form class="form" th:action="@{/inbox/report}" method="post" id="reportForm">
+					<!-- Modal Header -->
+					<div class="modal-header">
+						<h4 class="modal-title" id="modalInquiryTitle">Report</h4>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<!-- Modal Body -->
+					<div class="modal-body">
+						<table>
+							<tr>
+								<th class="col-md-2">To</th>
+								<td id=""><span id="modalBlockedId" name="reportedId"></span>님을 신고하시겠습니까?</td>
+							</tr>
+							<tr>
+								<th class="">사유</th>
+								<td >
+									<input type="radio" name="reportCategory" id="" value="DRUG"> 마약
+									<input type="radio" name="reportCategory" id="" value="IPR"> 지식재산권 침해
+									<input type="radio" name="reportCategory" id="" value="SPAM"> 다발성 이메일
+									<input type="radio" name="reportCategory" id="" value="ETC"> 기타
+								</td>
+							</tr>
+							<tr>
+								<th class=""></th>
+								<td><textarea name="reportReason" id="" cols="30" rows="10"></textarea> </td>
+							</tr>
+							<input type="hidden" name="managerCheck" value="N">
+						</table>
+					</div>
+					<!-- Modal Footer -->
+					<div class="modal-footer">
+						<button type="button" id="submitBtn" class="btn" data-dismiss="modal">Report</button>
+						<button type="button" id="closeBtn" class="btn" data-dismiss="modal">Close</button>
+					</div>
+				</form>
 			</div>
 		</div>
 	</div>
-		<!--/ End Product Style 1  -->
+	</div>
+	<!--/ End Product Style 1  -->
 
 
 	<!-- Jquery -->

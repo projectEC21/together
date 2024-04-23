@@ -334,7 +334,7 @@
 								<th class="sendDate">DATE</th>
 								<th class="unspam">UNSPAM</th>
 								<th class="block">BLOCK</th>
-								<th class="delete"><i class="ti-trash remove-icon"></i></th>
+								<th class="trash"><i class="ti-trash remove-icon"></i></th>
 							</tr>
 						</thead>
 						<tbody>
@@ -371,8 +371,8 @@
 										th:data-id="${inquiry.inquiryId}" th:data-sender="${inquiry.senderId}" onclick="toblock(this)"><i
 											class="fa fa-refresh"></i></a></td>
 								<!-- 누르면 삭제 되면서 쓰통으로 -->
-								<!-- <td class="action" data-title="delete"><a href="#" class="trashBtn" th:data-id="${inquiry.inquiryId}"><i class="ti-trash remove-icon"></i></a></td> -->
-								<td data-title="delete"><a href="javascript:void(0)" class="trashBtn"
+								<!-- <td class="action" data-title="trash"><a href="#" class="trashBtn" th:data-id="${inquiry.inquiryId}"><i class="ti-trash remove-icon"></i></a></td> -->
+								<td data-title="trash"><a href="javascript:void(0)" class="trashBtn"
 										th:data-id="${inquiry.inquiryId}" onclick="toTrash(this)"><i
 											class="ti-trash remove-icon"></i></a></td>
 							</tr>
