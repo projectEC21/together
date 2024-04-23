@@ -3481,20 +3481,27 @@ textarea {
 	border: none;
 }
 
-.shopping-summery .product-info {
-	display: block;
-}
 
 .shopping-summery tbody .product-name a {
-	font-weight: 600;
 	color: #282828;
 	font-weight: 500;
 	font-size: 17px;
+	display: block;
 }
 
-.shopping-cart .table p {
+.shopping-summery .product-name a:hover {
+	font-weight: bolder;
+	color: #999!important;
+	text-decoration: underline;
+}
+
+.shopping-summery span.product-desc {
+	display: block;
+} 
+
+.shopping-summery .product-desc p>span {
 	font-size: 13px;
-	color: #666;
+	color: #666!important;
 	display: -webkit-inline-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 3;
@@ -3502,10 +3509,20 @@ textarea {
     text-overflow: ellipsis;
 }
 
-
-.shopping-summery tbody .product-name a:hover {
-	color: #F7941D;
+.shopping-cart .table p {
+	font-size: 13px;
+	color: #555;
+	display: -webkit-inline-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
+
+.shopping-cart figure {
+	display: none;
+} 
+
 
 .shopping-summery tbody .product img {
 	max-width: 70px;
@@ -3521,6 +3538,7 @@ textarea {
 	-moz-transform: rotate(360deg);
 	transform: rotate(360deg);
 }
+
 
 .shopping-cart .border {}
 
@@ -3544,6 +3562,7 @@ textarea {
 .shopping-summery tbody .price span {}
 
 .shopping-summery tbody .qty span {}
+
 
 
 .shopping-cart .qty .button {
@@ -4307,7 +4326,6 @@ td {
 	padding-left: 10px;
 	padding-top: 20px;
 	padding-bottom: 20px;
-	width: 320px;
 }
 
 .product-list.section .nice-select.category {
