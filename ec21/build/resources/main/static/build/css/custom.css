@@ -4481,6 +4481,21 @@ ul.social li {
 }
 
 /* *********  /profile/social  **************************** */
+
+/* *********  chart  **************************** */
+.linechart {
+
+  width: 70%;
+}
+
+.mid {
+  display: flex;
+  justify-content: center;
+}
+
+/* *********  /chart  **************************** */
+
+
 /* *********  widgets  **************************** */
 .dashboard_graph .x_title {
   padding: 5px 5px 7px;
@@ -4490,6 +4505,8 @@ ul.social li {
   margin: 0;
   font-weight: normal;
 }
+
+
 
 .chart {
   position: relative;

@@ -29,7 +29,7 @@
 	<!-- Font Awesome -->
 	<link rel="stylesheet" th:href="@{/main/css/font-awesome.css}">
 	<!-- Fancybox -->
-	<link rel="stylesheet" th:href="@{/main/css/jquery.fancybox.min.css}">
+	<link rel="stylesheet" th:href="@{/main/css/fancybox.css}">
 	<!-- Themify Icons -->
 	<link rel="stylesheet" th:href="@{/main/css/themify-icons.css}">
 	<!-- Nice Select CSS -->
@@ -50,7 +50,6 @@
 
 	<!-- Color CSS -->
 	<link rel="stylesheet" th:href="@{/main/css/color/color2.css}">
-
 	<link rel="stylesheet" href="#" id="colors">
 
 </head>
@@ -150,7 +149,7 @@
 							<!-- 검색창 옆 부분 인콰이어리 new 로만 보이게 하고 인콰이어리 페이지로 넘어가게 하기 -->
 							<div class="sinlge-bar inquiry">
 								<a th:href="@{/main/inbox}" class="single-icon"><i class="fa fa-envelope-o"></i> <span
-										class="total-count">new</span></a>
+										class="total-count">NEW</span></a>
 							</div>
 						</div>
 					</div>
@@ -224,23 +223,21 @@
 						<!-- Form -->
 						<form class="form" method="post" th:action="@{/main/loginProc}">
 							<div class="row">
-								<div class="col-12">
+								<div class="col-md-10 col-12">
 									<div class="form-group">
-										<label>Member ID<span>*</span></label>
-										<input type="customerId" name="customerId" required="required">
+										<label>Member ID</label>
+										<input type="customerId" name="customerId" required="required" placeholder="ID">
 									</div>
-								</div>
-								<div class="col-12">
 									<div class="form-group">
-										<label>Password<span>*</span></label>
+										<label>Password</label>
 										<input type="password" name="customerPw" required="required">
 									</div>
-								</div>
-								<div class="col-12">
 									<div class="form-group login-btn">
 										<button class="btn" type="submit">Login</button>
 										<a th:href="@{/main/register}" class="btn">Sign up for free </a>
 									</div>
+								</div>
+								<div class="col-lg-9 col-md-10">
 									<div class="checkbox">
 										<label class="checkbox-inline" for="2"><input name="news" id="2"
 												type="checkbox">Keep me signed in</label>
@@ -385,7 +382,7 @@
 	<!-- Nice Select JS -->
 	<script th:src="@{/main/js/nicesellect.js}"></script>
 	<!-- Ytplayer JS -->
-	<script th:src="@{/main/js/ytplayer.min.js}"></script>
+	<!-- <script th:src="@{/main/js/ytplayer.min.js}"></script> -->
 	<!-- Flex Slider JS -->
 	<script th:src="@{/main/js/flex-slider.js}"></script>
 	<!-- ScrollUp JS -->
