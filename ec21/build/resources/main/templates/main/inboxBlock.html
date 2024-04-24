@@ -143,11 +143,6 @@
 				method: "GET",
 				success: function (blockList) {
 					$("#result").replaceWith(blockList);
-					let ipElements = $('td.remoteIp').text();
-					console.log(ipElements);
-					let position = $('span.ipElement').text();//.lastIndexOf('.');
-					console.log('======'+position);
-					let ip = $('span.ipElement').text().substr(0, position) + '***';
 					// 리스트 사이즈 
 					var htmlString = blockList;
 					var parser = new DOMParser();
@@ -290,7 +285,11 @@
 						</thead>
 						<tbody>
 							<!-- 240423 dy : 인콰이어리 블락 회원 정보 출력 -->
-							<tr th:if="${blockList != null and !#lists.isEmpty(blockList)}" th:each="blocked : ${blockList}">
+							<tr th:if="${blockList == null and #lists.isEmpty(blockList)}"> 
+								<td colspan="6">No result</td>
+							</tr>
+
+							<tr th:unless="${blockList == null and #lists.isEmpty(blockList)}" th:each="blocked : ${blockList}">
 								<!-- 블락된 회원 아이디 -->
 								<td class="blockedId" data-title="blockedId">
 									<span class="blockedId" th:text="${blocked.blockedId}"></span>
@@ -304,7 +303,7 @@
 								</td>
 								<!-- ip 주소인데 뒷자리 3개는 * 표 표시 -->
 								<td class="remoteIp" data-title="remoteIp">
-									<span class="ipElement"  th:text="${blocked.remoteIp}"></span>
+									<span th:if="${blocked.remoteIp != null}" th:text="${@stringProcessor.maskIpAddress(blocked.remoteIp)}"></span>
 								</td>
 								
 								<!-- unBlock -->
@@ -322,6 +321,7 @@
 									</span>
 								</td>
 							</tr>
+							
 						</tbody>
 					</table>
 					<!--/ End inquiry List -->

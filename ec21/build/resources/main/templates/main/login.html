@@ -232,6 +232,10 @@
 										<label>Password</label>
 										<input type="password" name="customerPw" required="required">
 									</div>
+									<!-- 240424 dy : 로그인 실패 시 나옴 -->
+									<th:block th:if="${error}">
+										<div th:text="${errMessage}" style="color: red; font-size: 0.7em; padding-bottom: 2px;"></div>
+									</th:block>
 									<div class="form-group login-btn">
 										<button class="btn" type="submit">Login</button>
 										<a th:href="@{/main/register}" class="btn">Sign up for free </a>
