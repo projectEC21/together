@@ -285,7 +285,11 @@
 						</thead>
 						<tbody>
 							<!-- 240423 dy : 인콰이어리 블락 회원 정보 출력 -->
-							<tr th:if="${blockList != null and !#lists.isEmpty(blockList)}" th:each="blocked : ${blockList}">
+							<tr th:if="${blockList == null and #lists.isEmpty(blockList)}"> 
+								<td colspan="6">No result</td>
+							</tr>
+
+							<tr th:unless="${blockList == null and #lists.isEmpty(blockList)}" th:each="blocked : ${blockList}">
 								<!-- 블락된 회원 아이디 -->
 								<td class="blockedId" data-title="blockedId">
 									<span class="blockedId" th:text="${blocked.blockedId}"></span>
@@ -317,6 +321,7 @@
 									</span>
 								</td>
 							</tr>
+							
 						</tbody>
 					</table>
 					<!--/ End inquiry List -->

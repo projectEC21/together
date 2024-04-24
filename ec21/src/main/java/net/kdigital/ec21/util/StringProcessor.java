@@ -14,7 +14,7 @@ public class StringProcessor {
             return ipAddress;
         }
 
-        String maskedIpAddress = ipAddress.substring(0, lastDotIndex + 1) + "****";
+        String maskedIpAddress = ipAddress.substring(0, lastDotIndex + 1) + "***";
         return maskedIpAddress;
     }
 }
