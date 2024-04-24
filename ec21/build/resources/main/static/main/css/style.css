@@ -2748,11 +2748,18 @@ body {
 	color: #fff;
 	background-color: #333;
 }
-
-.shop.single .modal-body tr {
-	margin: 15px;
-	text-align: start
+.shop.single .modal-body th {
+	display: flex;
+    margin-top: 10px;
+    margin-left: 20px;
 }
+
+.shop.single .modal-body td {
+	display: block;
+    margin-top: 10px;
+    margin-left: 20px;
+}
+
 
 .shop.single .modal-body th.text-center>span {
 	color: #ff2c18;
@@ -2776,9 +2783,9 @@ textarea {
 
 
 .shop.single .modal-body .agree-check {
-	margin: 50px;
-	font-style: italic;
-	font-size: 14px;
+	margin-top: 50px;
+    font-style: italic;
+    font-size: 11px;
 }
 
 .shop.single .modal-body .agree-check input {
@@ -2837,10 +2844,16 @@ textarea {
 }
 
 .shop.single .product-desc .short h4 {
-	font-size: 22px;
+	font-size: 23px;
 	font-weight: 600;
 	margin: -5px 0 20px 0;
 	line-height: 28px;
+}
+
+.shop.single .product-desc .short h6{
+	font-size: 18px;
+    font-weight: 500;
+    padding: 10px;
 }
 
 .shop.single .product-desc .short .description {
@@ -3207,6 +3220,8 @@ textarea {
 
 }
 
+
+
 .shop.single .single-des ul {}
 
 .shop.single .single-des ul li {
@@ -3293,7 +3308,25 @@ textarea {
 .shop.single .review-panel {
 	margin-top: 35px;
 }
+.shop.single .comp-info {
+	border-bottom: 1px solid #dee2e6;
+}
 
+.shop.single .comp-info th {
+	width: 100px;
+    padding: 10px;
+    text-align: end;
+}
+
+.shop.single .comp-info td {
+	padding-left: 5px;
+}
+
+.shop.single .comp-info .comp-name {
+	font-size: larger;
+	font-weight: 500;
+	text-align: start;
+}
 /*======================================
    End Shop Single CSS
 ========================================*/
@@ -3495,10 +3528,6 @@ textarea {
 	text-decoration: underline;
 }
 
-.shopping-summery span.product-desc {
-	display: block;
-} 
-
 
 .shopping-summery .product-desc p>span {
 	font-size: 13px;
@@ -3509,6 +3538,7 @@ textarea {
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
 
 .shopping-cart .table p {
 	font-size: 13px;
