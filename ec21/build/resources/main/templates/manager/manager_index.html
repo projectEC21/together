@@ -35,8 +35,6 @@
 
   <!-- Custom Theme Style -->
   <link th:href="@{/build/css/custom.css}" rel="stylesheet">
-
-  <!-- 240413 dy : JQuery 파일 추가 및 count관련 ajax 처리 -->
   <script th:src="@{/script/jquery-3.7.1.min.js}"></script>
   <script>
     $(function () {
@@ -329,69 +327,35 @@
             </div>
           </div>
 
-          <div class="col-md-12 col-sm-912 ">
-            <div class="x_panel">
-              <div class="x_title">
-                <h2>World Map</h2>
-                <div class="clearfix"></div>
-              </div>
-              <div class="x_content">
-                <div id="echart_world_map" style="height:370px;"></div>
-              </div>
-            </div>
-          </div>
         </div>
-
       </div>
     </div>
-  </div>
-  <!-- /page content -->
+    <!-- /page content -->
 
   </div>
   </div>
 
   <!-- jQuery -->
-  <script th:src="@{/vendors/jquery/dist/jquery.min.js}"></script>
+
   <!-- Bootstrap -->
   <script th:src="@{/vendors/bootstrap/dist/js/bootstrap.bundle.min.js}"></script>
   <!-- FastClick -->
   <script th:src="@{/vendors/fastclick/lib/fastclick.js}"></script>
-  <!-- NProgress -->
-  <script th:src="@{/vendors/nprogress/nprogress.js}"></script>
-  <!-- Chart.js -->
-  <!-- <script type="text/javascript"
-    src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script> -->
-  <!-- <script th:src="@{/vendors/Chart.js/dist/Chart.js}"></script> -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-  <!-- gauge.js -->
-  <script th:src="@{/vendors/gauge.js/dist/gauge.min.js}"></script>
+  <!-- Chart.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
   <!-- bootstrap-progressbar -->
   <script th:src="@{/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js}"></script>
   <!-- iCheck -->
   <script th:src="@{/vendors/iCheck/icheck.min.js}"></script>
-  <!-- Skycons -->
-  <script th:src="@{/vendors/skycons/skycons.js}"></script>
 
-  <!-- DateJS -->
-  <script th:src="@{/vendors/DateJS/build/date.js}"></script>
-  <!-- JQVMap -->
-  <script th:src="@{/vendors/jqvmap/dist/jquery.vmap.js}"></script>
-  <script th:src="@{/vendors/jqvmap/dist/maps/jquery.vmap.world.js}"></script>
-  <script th:src="@{/vendors/jqvmap/examples/js/jquery.vmap.sampledata.js}"></script>
   <!-- bootstrap-daterangepicker -->
   <script th:src="@{/vendors/moment/min/moment.min.js}"></script>
 
   <!-- Custom Theme Scripts -->
   <script th:src="@{/build/js/custom.js}"></script>
-
-
-
-  <!-- ECharts -->
-  <script th:src="@{/vendors/echarts/dist/echarts.min.js}"></script>
-  <script th:src="@{/vendors/echarts/map/js/world.js}"></script>
-
 
 </body>
 
