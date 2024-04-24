@@ -248,11 +248,19 @@ $(document).ready(function () {
     // 각 제품의 원산지를 기반으로 국기 이미지를 가져옵니다.
     $('.comp-info').each(function () {
         let originContainer = $(this).find('.country');
-        let countryName = originContainer.find('.seller-country').text();
-        let flagContainer = originContainer.find('.seller-flag');
+        let countryName = originContainer.siblings('.seller-country').text();
+        let flagContainer = originContainer.find('#seller-flag');
 
-        console.log('나라는?' +countryName);
-        console.log(originContainer.find('.seller-country'));
+        if (flagContainer.length > 0) { // 'flagContainer'가 존재하는지 검사
+            console.log("Flag container found.")
+        } else{
+            console.log("Flag container not found.")
+            
+        }
+
+        // console.log('나라는?' + originContainer.find('.seller-country').text());
+        // console.log(originContainer.find('.seller-country'));
+
         // 국가 이름을 기반으로 AJAX 요청을 통해 국가 정보를 가져옵니다.
         if (countryName) {
             console.log('아냥ㅇ');
