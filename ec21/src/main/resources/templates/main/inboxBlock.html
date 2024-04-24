@@ -29,7 +29,7 @@
 	<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"> -->
 	<!-- <link th:href="@{../vendors/font-awesome/css/font-awesome.min.css}" rel="stylesheet"> -->
 	<!-- Fancybox -->
-	<link rel="stylesheet" th:href="@{/main/css/jquery.fancybox.min.css}">
+	<link rel="stylesheet" th:href="@{/main/css/fancybox.css}">
 	<!-- Themify Icons -->
 	<link rel="stylesheet" th:href="@{/main/css/themify-icons.css}">
 	<!-- Nice Select CSS -->
@@ -149,11 +149,31 @@
 					var doc = parser.parseFromString(htmlString, 'text/html');
 					var trCount = doc.querySelectorAll('tr').length;
 					$("#listSize").text(trCount - 1); // thead의 tr도 포함된 개수이기 때문에 -1해줌
+
 				}
 			});
 		}
 		
-			
+		$(document).ready(function () {
+			$('.ipElement').each(function () { // 'ipElement' 클래스를 가진 모든 요소에 대해 반복
+				var ipElement = $(this); // 현재 반복 중인 요소
+				console.log(ipElement);
+				var remoteIp = ipElement.text().trim(); // 텍스트 가져오기 및 공백 제거
+				console.log(ipElement.text().trim()); // 각 요소의 텍스트 확인
+
+				if (!remoteIp) { // IP 주소가 없을 경우 예외 처리
+					console.log("IP 주소가 없습니다.");
+					return;
+				}
+
+				if (remoteIp.length <= 3) { // 3자리 이하일 경우 마스킹
+					ipElement.text('***');
+				} else { // 4자리 이상일 경우 마지막 세 자리를 마스킹
+					ipElement.text(remoteIp.slice(0, -3) + '***');
+				}
+			});
+		});
+					
 
 	</script>
 </head>
@@ -278,31 +298,28 @@
 									<span class="country" th:text="${blocked.country}"></span>
 								</td>
 								<!-- ip 주소인데 뒷자리 3개는 * 표 표시 -->
-								<td class="remoteIp" id="remoteIp" data-title="remoteIp">
-									<span th:text="${blocked.remoteIp}"></span>
+								<td class="remoteIp" data-title="remoteIp">
+									<span th:if="${blocked.remoteIp != null}" th:text="${@stringProcessor.maskIpAddress(blocked.remoteIp)}"></span>
 								</td>
-					
+								
 								<!-- unBlock -->
-								<!-- <td class="action" data-title="spam"><a href="#" class="spamBtn" th:data-id="${inquiry.inquiryId}"><i class="fa fa-refresh"></i></a></td> -->
-								<td data-title="unBlock"><a href="javascript:void(0);" class="unBlockBtn"
-										th:data-id="${blocked.inquiryBlockId}" th:data-blockedId="${blocked.blockedId}" onclick="toUnBlock(this)"><i class="fa fa-refresh"></i></a>
+								<td data-title="unBlock">
+									<a href="javascript:void(0);" class="unBlockBtn"
+										th:data-id="${blocked.inquiryBlockId}" th:data-blockedId="${blocked.blockedId}" onclick="toUnBlock(this)">
+										<i class="fa fa-refresh"></i>
+									</a>
 								</td>
 								<!-- 신고버튼 -->
-								<!-- <td class="action" data-title="trash"><a href="#" class="trashBtn" th:data-id="${inquiry.inquiryId}"><i class="ti-trash remove-icon"></i></a></td> -->
 								<td data-title="report">
 									<span>
-										<!-- <a id="report" data-toggle="modal" data-target="#reportModal" th:data-id="${inquiry.inquiryId}"></a> -->
-										<a th:id="'modalBtn'+${blocked.inquiryBlockId}" th:data-id="${blocked.blockedId}">신고</a>
+										<a class="report" data-toggle="modal" data-target="#reportModal" th:id="'modalBtn'+${blocked.inquiryBlockId}" th:data-id="${blocked.blockedId}">
+											report</a>
 									</span>
 								</td>
 							</tr>
 						</tbody>
 					</table>
 					<!--/ End inquiry List -->
-					<!-- 페이징 -->
-					<span class="paging">
-						<< < 1 2 3 4 5> >>
-					</span>
 				</div>
 			</div>
 			<!--/ End Shopping Cart -->
@@ -383,7 +400,7 @@
 	<!-- Nice Select JS -->
 	<script th:src="@{/main/js/nicesellect.js}"></script>
 	<!-- Ytplayer JS -->
-	<script th:src="@{/main/js/ytplayer.min.js}"></script>
+	<!-- <script th:src="@{/main/js/ytplayer.min.js}"></script> -->
 	<!-- Flex Slider JS -->
 	<script th:src="@{/main/js/flex-slider.js}"></script>
 	<!-- ScrollUp JS -->
