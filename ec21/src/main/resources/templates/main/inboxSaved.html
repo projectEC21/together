@@ -62,26 +62,26 @@
 	<script th:src="@{/script/jquery-3.7.1.min.js}"></script>
 	<script>
 		$(function () {
-
-			// saved 처리
+			// saved 처리 - 버튼 클릭 시 리스트에서 사라짐
 			$(document).on('click', '.saved-icon', function (event) {
 				event.preventDefault();
 				var icon = $(this).find('i');
 				var inquiryId = $(icon).attr("data-id");
-				var how = "";
-
-				if (icon.hasClass('ti-star')) {
-					icon.removeClass('ti-star').addClass('fa fa-star');
-					how = "savedYes";
-				} else {
-					icon.removeClass('fa fa-star').addClass('ti-star');
-					how = "savedNo";
-				}
+				let customerId = $("#hiddenCustomerId").val();
 
 				$.ajax({
-					url: "/inbox/sender/updateSaved",
-					data: { "inquiryId": inquiryId, "how": how },
-					method: "GET"
+					url: "/inbox/saved/getList",
+					data: { "inquiryId": inquiryId, "customerId": customerId, "change":"saved"},
+					method: "GET",
+					success:function(inquiryList){
+						$("#result").replaceWith(inquiryList);
+						// 리스트 사이즈 
+						var htmlString = inquiryList;
+						var parser = new DOMParser();
+						var doc = parser.parseFromString(htmlString, 'text/html');
+						var trCount = doc.querySelectorAll('tr').length;
+						$("#listSize").text(trCount - 1); // thead의 tr도 포함된 개수이기 때문에 -1해줌
+					}
 				});
 			});
 
@@ -114,6 +114,7 @@
 						$("#modalProductName").text(dto.productName);
 						$("#modalCategory").text(dto.category);
 						$("#modalQuantity").text(dto.quantity);
+						$("#modalUnit").text(dto.unit);
 						$("#modalInquiryContent").text(dto.inquiryContent);
 						if (dto.originalFileName != null) {
 							$("#modalFile").text(dto.originalFileName);
@@ -132,35 +133,61 @@
 				}); // End ajax
 			}); // End 모달 클릭 이벤트
 
+			init();
 		});
 
 
 		// 쓰레기통으로 처리하는 함수
 		function toTrash(element) {
 			let inquiryId = element.getAttribute("data-id");
+			let customerId = $("#hiddenCustomerId").val();
 			if (confirm("쓰레기통으로 보내시겠습니까?")) {
 				$.ajax({
-					url: "/inbox/sender/toTrash",
-					data: { "inquiryId": inquiryId },
+					url: "/inbox/saved/getList",
+					data: { "customerId":customerId, "inquiryId": inquiryId, "change":"trash" },
 					method: "GET",
-					success: function (resp) {
-						if (resp) {
-							if (resp) {
-								alert(" 쓰레기통으로 치우기 완료");
-								// 페이지 새로 고침
-								window.location.reload();
-							}
-						}
+					success: function (inquiryList) {
+						$("#result").replaceWith(inquiryList);
+						// 리스트 사이즈 
+						var htmlString = inquiryList;
+						var parser = new DOMParser();
+						var doc = parser.parseFromString(htmlString, 'text/html');
+						var trCount = doc.querySelectorAll('tr').length;
+						$("#listSize").text(trCount - 1); // thead의 tr도 포함된 개수이기 때문에 -1해줌
 					}
 				});
 			}
 		}
 
+		// 초기에 saved 리스트 꽂아주기 위한 함수
+		function init() {
+			let customerId = $("#hiddenCustomerId").val();
+			console.log(customerId);
+			$.ajax({
+				url:"/inbox/saved/getList",
+				method:"GET",
+				data : {"customerId":customerId},
+				success:function(inquiryList){
+					console.log(inquiryList);
+					$("#result").replaceWith(inquiryList);
+					
+					// 리스트 사이즈 
+					var htmlString = inquiryList;
+					var parser = new DOMParser();
+					var doc = parser.parseFromString(htmlString, 'text/html');
+					var trCount = doc.querySelectorAll('tr').length;
+					$("#listSize").text(trCount-1); // thead의 tr도 포함된 개수이기 때문에 -1해줌
+				
+									
+				}
+			})
+		}
 
 	</script>
 </head>
 
 <body class="js">
+	<input type="hidden" id="hiddenCustomerId" th:value="${customerId}">
 
 	<!-- Preloader -->
 	<div class="preloader">
@@ -246,37 +273,47 @@
 			</aside>
 
 			<!-- My inquiry List -->
-			<div class="shopping-cart section">
+			<div class="shopping-cart section" >
 				<div class="container">
 					<!-- Shop Top -->
 					<div class="shop-top">
 						<div class="shop-shorter">
 							<div class="single-shorter">
-								<label>Show :<span> [[${#lists.size(inquiryList)}]]</span></label>
+								<label>Show : <span id="listSize"></span></label>
 							</div>
 						</div>
 					</div>
-					<table class="table shopping-summery">
+					<table class="table shopping-summery" id="result">
 						<thead>
 							<tr class="main-hading">
 								<th class="saved-icon"></th>
-								<th class="receiverId">Receiver</th>
+								<th class="">ID</th>
+								<th class="state"></th>
 								<th class="inquiryTitle" colspan="2">TITLE</th>
-								<th class="sendData">DATE</th>
-								<th class="delete"><i class="ti-trash remove-icon"></i></th>
+								<th class="sendDate">DATE</th>
+								<th class="trash"><i class="ti-trash remove-icon"></i></th>
 							</tr>
 						</thead>
 						<tbody>
 							<!-- 240422 dy : 보낸 인콰이어리 목록 출력 -->
-							<tr th:if="${inquiryList != null and !#lists.isEmpty(inquiryList)}"
-								th:each="inquiry : ${inquiryList}">
-								<!-- 저장 여부 : 클릭하면 색상 변하게 해둠-->
+							<tr th:if="${inquiryList != null and !#lists.isEmpty(inquiryList)}" th:each="inquiry : ${inquiryList}">
+								<!-- 저장 여부 : 클릭하면 리스트 사라짐-->
 								<td class="saved-icon"><a href="#" id="saved-icon"><i th:data-id="${inquiry.inquiryId}"
-											th:class="${inquiry.saved.name() == 'NY' or inquiry.saved.name() == 'YY'  ? 'fa fa-star' : 'ti-star'}"></i></a>
+											th:class="${inquiry.saved.name() == 'NY' or inquiry.saved.name() == 'YN' or inquiry.saved.name() == 'YY'  ? 'fa fa-star' : 'ti-star'}"></i></a>
 								</td>
-								<!-- 담당자명-> receiverId -->
-								<td class="receiverId" data-title="receiverId"><span
-										class="receiverId">[[${inquiry.receiverId}]]</span></td>
+
+								<!-- 받은/보낸 회원 ID -->
+								<td class="" data-title="">
+									<span class="" th:if="${inquiry.customerId == inquiry.senderId}" th:text="${inquiry.receiverId}"></span>
+									<span class="" th:unless="${inquiry.customerId == inquiry.senderId}" th:text="${inquiry.senderId}"></span>
+								</td>
+								
+								<!-- 받은/보낸 상태-->
+								<td class="" data-title="">
+									<span class="" th:if="${inquiry.customerId == inquiry.senderId}">[sent]</span>
+									<span class="" th:unless="${inquiry.customerId == inquiry.senderId}">[received]</span>
+								</td>
+
 								<!-- 인콰이어리 제목 -->
 								<td data-title="inquiryTitle" colspan="2">
 									<span>
@@ -287,10 +324,10 @@
 								</td>
 								<!-- 보낸 날짜 -->
 								<td class="sendDate" data-title="sendDate"><span>[[${inquiry.sendDate}]]</span></td>
-
+								
 								<!-- 누르면 삭제 되면서 쓰통으로 -->
 								<!-- <td class="action" data-title="delete"><a href="#" class="trashBtn" th:data-id="${inquiry.inquiryId}"><i class="ti-trash remove-icon"></i></a></td> -->
-								<td data-title="delete"><a href="javascript:void(0)" class="trashBtn"
+								<td data-title="trash"><a href="javascript:void(0)" class="trashBtn"
 										th:data-id="${inquiry.inquiryId}" onclick="toTrash(this)"><i
 											class="ti-trash remove-icon"></i></a></td>
 							</tr>
@@ -341,7 +378,7 @@
 							</tr>
 							<tr>
 								<th class="">Quantity</th>
-								<td><span id="modalQuantity"></span> <span id="modalUnit"></span> </td>
+								<td><span id="modalQuantity"></span> (<span id="modalUnit"></span>) </td>
 							</tr>
 							<tr>
 								<th class="">Message</th>
