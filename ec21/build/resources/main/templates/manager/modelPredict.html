@@ -483,7 +483,11 @@
                   <td id="similarWord">[[${item.similarWord}]]</td>
                   <td>[[${item.prohibitWord}]] ([[${item.prohibitReason}]])</td>
                   <td>[[${item.similarProba}]]%</td>
+<<<<<<< HEAD
                   <td><input type="button" value="단어추가" class="wordPlusBtn" th:data-word="${item.similarWord}"
+=======
+                  <td><input type="button" value="금지어단어추가" class="wordPlusBtn" th:data-word="${item.similarWord}"
+>>>>>>> f5995b5d074333800011375892056f2989a11f8b
                       th:data-reason="${item.prohibitReason}"> </td>
                 </tr>
                 <tr th:unless="${list != null and not #lists.isEmpty(list)}">

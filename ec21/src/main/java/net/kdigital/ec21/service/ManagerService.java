@@ -232,14 +232,17 @@ public class ManagerService {
      * @return
      */
     public Boolean insertProhibitWord(String similarWord, String prohibitReason) {
+        // 추가할 단어 소문자로 변환
+        String lowerSimilarWord = similarWord.toLowerCase();
+
         // 금지어 테이블에 이미 단어가 존재하면 DB에 접근하지 못하고 false를 가지고 돌아감
-        Optional<ProhibitWordEntity> prohibitWord = prohibitWordRepository.findById(similarWord);
+        Optional<ProhibitWordEntity> prohibitWord = prohibitWordRepository.findById(lowerSimilarWord);
         if (prohibitWord.isPresent()) {
             return false;
         }
         // 금지어 테이블에 추가 작업
         ProhibitReason reason = ProhibitReason.valueOf(prohibitReason);
-        ProhibitWordEntity entity = new ProhibitWordEntity(similarWord, reason, new ArrayList<>());
+        ProhibitWordEntity entity = new ProhibitWordEntity(lowerSimilarWord, reason, new ArrayList<>());
         prohibitWordRepository.save(entity);
         return true;
     }

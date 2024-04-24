@@ -42,6 +42,10 @@
     $(function () {
       init();
     })
+<<<<<<< HEAD
+=======
+
+>>>>>>> f5995b5d074333800011375892056f2989a11f8b
     function init() {
       $.ajax({
         url: "/manager/count",
@@ -52,7 +56,119 @@
           $("#todayRegisteredCustomer").html(resp["todayRegisteredCustomer"]);
           $("#unprocessedReport").html(resp["unprocessedReport"]);
         }
+<<<<<<< HEAD
       })
+=======
+      });
+
+      // 일자별 등록한 상품개수 확인 
+      $.ajax({
+        url: "/manager/board/registerProductCount",
+        method: "get",
+        success: function (data) {
+          // data 출력 
+          // console.log("Received data from /manager/board/registerProductCount:", data);
+
+          // createDate만 담은 배열 생성
+          var createDates = data.map(function (item) {
+            return item.createDate;
+          });
+
+          // count만 담은 배열 생성
+          var counts = data.map(function (item) {
+            return item.count;
+          });
+
+          // createDate, count 출력
+          // console.log("Create Dates:", createDates);
+          // console.log("Counts:", counts);
+
+          new Chart(document.getElementById("registerProduct"), {
+            type: 'line',
+            data: {
+              labels: createDates,
+              datasets: [{
+                label: "My First dataset",
+                backgroundColor: "rgba(38, 185, 154, 0.31)",
+                borderColor: "rgba(38, 185, 154, 0.7)",
+                pointBorderColor: "rgba(38, 185, 154, 0.7)",
+                pointBackgroundColor: "rgba(38, 185, 154, 0.7)",
+                pointHoverBackgroundColor: "#fff",
+                pointHoverBorderColor: "rgba(220,220,220,1)",
+                pointBorderWidth: 1,
+                data: counts
+              }]
+            }
+          })
+
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+          console.error("Error fetching data from /manager/board/registerProductCount:", textStatus, errorThrown);
+        }
+      });
+
+      // 카테고리별 정상, 이상 상품 판별 개수
+      $.ajax({
+        url: "/manager/board/categoryProductCount",
+        method: "get",
+        success: function (data) {
+          // console.log("categoryProductCount:", data);
+
+          // 카테고리를 라벨로 변환
+          const labels = Object.keys(data);
+
+          // 이상과 정상 데이터셋 생성
+          const abnormalData = labels.map(label => data[label]['이상']);
+          const normalData = labels.map(label => data[label]['정상']);
+
+          // 출력
+          // console.log("labels", labels);  
+          // console.log("abnormalData", abnormalData);
+          // console.log("normalData", normalData);
+
+          // barchart
+          // 차트 데이터 설정
+          const chartData = {
+            labels: labels,
+            datasets: [
+              {
+                label: '이상',
+                data: abnormalData,
+                backgroundColor: 'rgba(255, 99, 132, 0.5)'
+              },
+              {
+                label: '정상',
+                data: normalData,
+                backgroundColor: 'rgba(54, 162, 235, 0.5)'
+              }
+            ]
+          };
+
+          // 차트 생성
+          const ctx = document.getElementById('categoryProduct').getContext('2d');
+          const myChart = new Chart(ctx, {
+            type: 'bar',
+            data: chartData,
+            options: {
+              scales: {
+                x: {
+                  stacked: true
+                },
+                y: {
+                  stacked: true
+                }
+              }
+            }
+          });
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+          console.error("Error fetching data: " + textStatus, errorThrown);
+        }
+      });
+
+
+
+>>>>>>> f5995b5d074333800011375892056f2989a11f8b
     }
   </script>
 
@@ -152,31 +268,52 @@
               <span class="count_top"><i class="fa fa-user"></i> <a th:href="@{/manager/productList}">당일 등록 상품
                   수</a></span>
               <div class="count" id="todayRegisteredProd"></div>
+<<<<<<< HEAD
               <span class="count_bottom"><i class="blue">4% </i> From last Week</span>
+=======
+              <!-- 지난 주 대비 증감률-->
+              <!-- <span class="count_bottom"><i class="blue"><i class="fa fa-sort-asc"></i>4% </i> From last Week</span> -->
+>>>>>>> f5995b5d074333800011375892056f2989a11f8b
             </div>
             <div class="col-md-3 col-sm-4  tile_stats_count">
               <span class="count_top"><i class="fa fa-clock-o"></i> <a th:href="@{/manager/modelPredict}">당일 이상상품 등록
                   수</a></span>
               <div class="count" id="todayWeirdProd"></div>
+<<<<<<< HEAD
               <span class="count_bottom"><i class="blue"><i class="fa fa-sort-asc"></i>3% </i> From last Week</span>
+=======
+              <!-- 지난 주 대비 증감률-->
+              <!-- <span class="count_bottom"><i class="blue"><i class="fa fa-sort-asc"></i>3% </i> From last Week</span> -->
+>>>>>>> f5995b5d074333800011375892056f2989a11f8b
             </div>
             <div class="col-md-3 col-sm-4  tile_stats_count">
               <span class="count_top"><i class="fa fa-user"></i><a th:href="@{/manager/customerList}">당일회원가입수</a>
               </span>
               <div class="count blue" id="todayRegisteredCustomer"></div>
+<<<<<<< HEAD
               <span class="count_bottom"><i class="blue"><i class="fa fa-sort-asc"></i>34% </i> From last Week</span>
+=======
+              <!-- 지난 주 대비 증감률-->
+              <!-- <span class="count_bottom"><i class="blue"><i class="fa fa-sort-asc"></i>34% </i> From last Week</span> -->
+>>>>>>> f5995b5d074333800011375892056f2989a11f8b
             </div>
             <div class="col-md-3 col-sm-4  tile_stats_count">
               <span class="count_top"><i class="fa fa-user"></i> <a th:href="@{/manager/reportedCustomerList}">미처리된 신고
                   개수</a></span>
               <div class="count" id="unprocessedReport"></div>
+<<<<<<< HEAD
               <span class="count_bottom"><i class="red"><i class="fa fa-sort-desc"></i>12% </i> From last Week</span>
+=======
+              <!-- 지난 주 대비 증감률-->
+              <!-- <span class="count_bottom"><i class="red"><i class="fa fa-sort-desc"></i>12% </i> From last Week</span> -->
+>>>>>>> f5995b5d074333800011375892056f2989a11f8b
             </div>
           </div>
         </div>
 
         <br />
 
+<<<<<<< HEAD
         <!-- 상품, 회원 count -->
         <div class="row">
           <div class="col-md-12 col-sm-12 ">
@@ -252,6 +389,48 @@
 
         <div class="row">
           <div class="col-md-12 col-sm-912  ">
+=======
+        <!-- 상품, 회원 count 끝 -->
+
+        <div class="row">
+          <div class="col-md-12 col-sm-912  ">
+            <div class=" x_panel">
+              <div class="x_title">
+                <h2>일자별 상품등록 개수</h2>
+                <div class="clearfix"></div>
+              </div>
+
+              <div class="">
+                <div class="x_content mid ">
+                  <div class=" linechart">
+                    <!-- linechart-->
+                    <canvas id="registerProduct"></canvas>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-12 col-sm-912  ">
+            <div class=" x_panel">
+              <div class="x_title">
+                <h2>카테고리별 이상/ 정상상품 판별 개수</h2>
+                <div class="clearfix"></div>
+              </div>
+
+              <div class="">
+                <div class="x_content mid ">
+                  <div class=" linechart">
+                    <!-- bar chart -->
+                    <canvas id="categoryProduct"></canvas>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-12 col-sm-912 ">
+>>>>>>> f5995b5d074333800011375892056f2989a11f8b
             <div class="x_panel">
               <div class="x_title">
                 <h2>World Map</h2>
@@ -262,8 +441,13 @@
               </div>
             </div>
           </div>
+<<<<<<< HEAD
 
         </div>
+=======
+        </div>
+
+>>>>>>> f5995b5d074333800011375892056f2989a11f8b
       </div>
     </div>
   </div>
@@ -281,7 +465,16 @@
   <!-- NProgress -->
   <script th:src="@{/vendors/nprogress/nprogress.js}"></script>
   <!-- Chart.js -->
+<<<<<<< HEAD
   <script th:src="@{/vendors/Chart.js/dist/Chart.min.js}"></script>
+=======
+  <!-- <script type="text/javascript"
+    src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script> -->
+  <!-- <script th:src="@{/vendors/Chart.js/dist/Chart.js}"></script> -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+>>>>>>> f5995b5d074333800011375892056f2989a11f8b
   <!-- gauge.js -->
   <script th:src="@{/vendors/gauge.js/dist/gauge.min.js}"></script>
   <!-- bootstrap-progressbar -->
@@ -290,6 +483,7 @@
   <script th:src="@{/vendors/iCheck/icheck.min.js}"></script>
   <!-- Skycons -->
   <script th:src="@{/vendors/skycons/skycons.js}"></script>
+<<<<<<< HEAD
   <!-- Flot -->
   <script th:src="@{/vendors/Flot/jquery.flot.js}"></script>
   <script th:src="@{/vendors/Flot/jquery.flot.pie.js}"></script>
@@ -300,6 +494,9 @@
   <script th:src="@{/vendors/flot.orderbars/js/jquery.flot.orderBars.js}"></script>
   <script th:src="@{/vendors/flot-spline/js/jquery.flot.spline.min.js}"></script>
   <script th:src="@{/vendors/flot.curvedlines/curvedLines.js}"></script>
+=======
+
+>>>>>>> f5995b5d074333800011375892056f2989a11f8b
   <!-- DateJS -->
   <script th:src="@{/vendors/DateJS/build/date.js}"></script>
   <!-- JQVMap -->
@@ -308,10 +505,19 @@
   <script th:src="@{/vendors/jqvmap/examples/js/jquery.vmap.sampledata.js}"></script>
   <!-- bootstrap-daterangepicker -->
   <script th:src="@{/vendors/moment/min/moment.min.js}"></script>
+<<<<<<< HEAD
   <script th:src="@{/vendors/bootstrap-daterangepicker/daterangepicker.js}"></script>
 
   <!-- Custom Theme Scripts -->
   <script th:src="@{/build/js/custom.js}"></script>
+=======
+
+  <!-- Custom Theme Scripts -->
+  <script th:src="@{/build/js/custom.js}"></script>
+
+
+
+>>>>>>> f5995b5d074333800011375892056f2989a11f8b
   <!-- ECharts -->
   <script th:src="@{/vendors/echarts/dist/echarts.min.js}"></script>
   <script th:src="@{/vendors/echarts/map/js/world.js}"></script>

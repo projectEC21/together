@@ -3450,51 +3450,69 @@ textarea {
 	padding: 50px 0;
 }
 
-.shopping-summery thead .main-hading {
-	padding: 0px 50px;
+
+.shopping-summery tbody {
+	border-bottom:none;
 }
 
-.shopping-summery thead {
-	background: #F7941D;
+.shopping-summery th {
 	color: #fff;
-}
-
-.shopping-summery thead tr th {
-	border: none;
-	font-weight: 600;
-	color: #fff;
+	width: auto;
 	text-align: center;
 }
 
-.shopping-summery tbody tr {
-	border-bottom: 1px solid #F7941D;
-	margin-top: 20px;
-}
+.shopping-summery th.product-title, 
+.shopping-summery td.product-info {
+	width: 60%;
+} 
 
-.shopping-summery tbody tr img {
+.shopping-summery .product-info img {
 	border-radius: 0;
 	width: 80px;
 	height: 80px;
+	display: block;
 }
 
 .shopping-summery tbody tr:last-child {
 	border: none;
 }
 
-.shopping-summery .product-info {
-	display: block;
-}
 
-.shopping-summery tbody .product-name a {
-	font-weight: 600;
+.shopping-summery .product-info .product-name a {
 	color: #282828;
 	font-weight: 500;
 	font-size: 17px;
+	display: -webkit-inline-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.shopping-summery .product-name a:hover {
+	font-weight: bolder;
+	color: #999!important;
+	text-decoration: underline;
+}
+
+.shopping-summery span.product-desc {
+	display: block;
+} 
+
+
+.shopping-summery .product-desc p>span {
+	font-size: 13px;
+	color: #666!important;
+	display: -webkit-inline-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .shopping-cart .table p {
 	font-size: 13px;
-	color: #666;
+	color: #555;
 	display: -webkit-inline-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 3;
@@ -3502,10 +3520,10 @@ textarea {
     text-overflow: ellipsis;
 }
 
+.shopping-cart figure {
+	display: none;
+} 
 
-.shopping-summery tbody .product-name a:hover {
-	color: #F7941D;
-}
 
 .shopping-summery tbody .product img {
 	max-width: 70px;
@@ -3521,6 +3539,7 @@ textarea {
 	-moz-transform: rotate(360deg);
 	transform: rotate(360deg);
 }
+
 
 .shopping-cart .border {}
 
@@ -3544,6 +3563,12 @@ textarea {
 .shopping-summery tbody .price span {}
 
 .shopping-summery tbody .qty span {}
+
+span.paging {
+	display: flex;
+	justify-content: center;
+	padding: 40px;
+}
 
 
 .shopping-cart .qty .button {
@@ -4029,6 +4054,7 @@ textarea {
 	padding: 50px 0;
 }
 
+
 .shop.login .login-form .title {
 	font-size: 25px;
 	font-style: italic;
@@ -4075,22 +4101,23 @@ textarea {
 
 .shop.login .form {
 	margin-top: 30px;
+	display: flex;
+    justify-content: center;
 }
 
 .shop.login .form .form-group {
-	margin-bottom: 22px;
 	font-size: 15px;
 }
 
 .shop.login .form .form-group input {
 	width: 90%;
-	height: 45px;
+	height: 50px;
 	line-height: 50px;
 	padding: 0 20px;
 	border-radius: 3px;
 	color: #333 !important;
-	border: 1px solid #333;
-	background: #F6F7FB;
+	border: none;
+	background: #F1F1F1;
 	display: block;
 }
 
@@ -4122,7 +4149,7 @@ textarea {
 .shop.login .form .form-group label {
 	color: #333;
 	position: relative;
-	font-size: 20px;
+	font-size: 17px;
 	padding-top: 15px;
 }
 
@@ -4155,19 +4182,17 @@ textarea {
 	color: #1308a3;
 }
 
-.shop.login .form .form-group.login-btn {
-	margin: 0;
-}
 
 .shop.login .form button {}
 
 .shop.login .form .btn {
-	display: inline-block;
-	margin: 40px 0;
-	height: 46px;
-	border: none;
-	color: #fff;
-	line-height: 20px;
+	ddisplay: inline-block;
+    margin: 20px 0;
+    height: 40px;
+    border: none;
+    color: #fff;
+    line-height: 16px;
+	align-items: center;
 }
 
 .shop.login .form .btn:hover {
@@ -4178,7 +4203,6 @@ textarea {
 .shop.login .login-form .checkbox {
 	text-align: left;
 	margin: 0;
-	margin-top: 20px;
 	display: inline-block;
 }
 
@@ -4188,7 +4212,6 @@ textarea {
 	font-style: italic;
 	color: #333;
 	position: relative;
-	margin-top: 30px;
 	padding-left: 20px;
 }
 
@@ -4278,7 +4301,7 @@ textarea {
 	color: #4e4e4e;
 	font-weight: 300;
 	text-align: left;
-	padding-bottom: 50px;
+	padding-bottom: 40px;
 }
 
 /* css ëŠ” ì¡°ê¸ˆ ë” ìƒê°í•´ë³´ê¸° */
@@ -4302,17 +4325,20 @@ textarea {
 	padding-bottom: 40px;
 }
 
-.product-list.section th,
-td {
-	padding-left: 10px;
+.product-list.section th {
+	margin-top: 20px;
 	padding-top: 20px;
-	padding-bottom: 20px;
-	width: 320px;
+	display: block;
+}
+
+.product-list.section td {
+	padding-left: 10px;
+	display: block;
 }
 
 .product-list.section .nice-select.category {
-	width: 320px;
-	text-align: center;
+	width: 100%;
+	line-height: 40px;
 }
 
 .product-list.section td.form-group input[type="text"] {
@@ -4322,24 +4348,27 @@ td {
 	width: 300px;
 }
 
-.product-list.section input[type="text"] {
+.product-list.section input{
 	padding-left: 10px;
-	width: 320px;
+	width: 100%;
+	line-height: 35px;
 }
 
-/* ê°€ê²© */
+.product-list.section td>span{
+	padding-left: 10px;
+	display: inline-flex;
+	align-items: center;
+	width: 100%;
+}
+
 .product-list.section input.price {
-	padding-left: 10px;
-	width: 310px;
+	padding-left: 5px;
+    width: 98%;
+	line-height: 35px;
 }
-
-/* ckeditor
-.product-list.section th.form-group.editor {
-	position: relative;
-} */
 
 .ck.ck-editor {
-	max-width: 500px;
+	max-width: 99%;
 }
 
 .ck-editor__editable {
@@ -4356,11 +4385,65 @@ td {
 }
 
 /*======================================
-	End Write CSS
+End Write CSS
 ========================================*/
 
+/*===================================
+start new Write CSS
+=====================================*/
+
+.product-list.section .product-info .title p {
+    position: relative;
+    display: block;
+    font-size: 14px;
+	color: #333;
+	font-weight: 400;
+    text-align: left;
+    padding-bottom: 40px;
+	margin: 0 20px;
+}
+
+.product-list.section .product-info .title h2 {
+	position: relative;
+	color: #333;
+	text-transform: uppercase;
+	font-size: 40px;
+	text-align: left;
+	margin: 10px 20px;
+	
+}
+
+.shop.product .title {
+	margin: 30px 0;
+}
+
+.product-info .nice-select.category {
+	width: 100%;
+    margin-left: 20px;
+	line-height: 40px;
+}
+
+.product-info input{
+	display: inline-flex;
+    margin-left: 20px;
+    justify-content: flex-start;
+    width: 300px;
+}
+
+.product-info input.price {
+	padding-left: 10px;
+    width: 98%;
+	line-height: 35px;
+}
+
+
+
+/*===================================
+nd new Write CSS
+=====================================*/
+
 /*======================================
-	start Inquiry CSS
+start Inquiry CSS
 ========================================*/
 .header.shop .top-left .logo {
 	width: 90px;

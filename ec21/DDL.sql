@@ -117,6 +117,16 @@ CREATE TABLE product
 );
 select * from product;
 
+
+-- 금지어 (prohibit_word) : pk모두 소문자로 변경함. 새로운 값을 넣을 때 소문자로 변형해서 넣어야 함
+drop table prohibit_word;
+create table prohibit_word(
+    prohibit_word varchar2(200) primary key,
+    prohibit_reason varchar2(20) not null check(prohibit_reason in ('IPR', 'drug', 'prohibited_items', 'explicit_adult'))
+);
+
+select * from prohibit_word;
+
 -- 금지어유사도 (prohibit_similar_word)
 DROP TABLE prohibit_similar_word;
 drop sequence prohibit_similar_word_seq;
@@ -158,6 +168,9 @@ CREATE TABLE inquiry (
     CONSTRAINT fk_inquiry_product FOREIGN KEY (product_id) REFERENCES product(product_id) ON DELETE CASCADE
 );
 
+-- deleted : 삭제 여부 확인하는 컬럼
+ALTER TABLE inquiry
+ADD (deleted CHAR(2) DEFAULT 'NN' CHECK (deleted IN ('NN', 'NY', 'YN', 'YY')));
 
 create sequence inquiry_seq;
 

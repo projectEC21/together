@@ -10,21 +10,34 @@ import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import net.kdigital.ec21.dto.InquiryBlockDTO;
+import net.kdigital.ec21.dto.InquiryBlockedCustomerDTO;
 import net.kdigital.ec21.dto.InquiryDTO;
 import net.kdigital.ec21.dto.InquiryModalDTO;
+import net.kdigital.ec21.dto.InquiryPlusCustomerIdDTO;
+import net.kdigital.ec21.dto.ReportCustomerDTO;
 import net.kdigital.ec21.dto.check.InquiryEnum;
+import net.kdigital.ec21.entity.CustomerEntity;
+import net.kdigital.ec21.entity.InquiryBlockEntity;
 import net.kdigital.ec21.entity.InquiryEntity;
 import net.kdigital.ec21.entity.ProductEntity;
+import net.kdigital.ec21.entity.ReportCustomerEntity;
+import net.kdigital.ec21.repository.CustomerRepository;
 import net.kdigital.ec21.repository.InquiryBlockRepository;
 import net.kdigital.ec21.repository.InquiryRepository;
 import net.kdigital.ec21.repository.ProductRepository;
+import net.kdigital.ec21.repository.ReportCustomerRepository;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class InquiryService {
     private final InquiryRepository inquiryRepository;
     private final InquiryBlockRepository inquiryBlockRepository;
+    private final ReportCustomerRepository reportCustomerRepository;
     private final ProductRepository productRepository;
+    private final CustomerRepository customerRepository;
     
     // ============================= 인콰이어리 등록 ==============================
 
@@ -318,8 +331,296 @@ public class InquiryService {
         
         return resultDtos;
     }
+
+    /**
+     * 화면에 필요한 정보만 뿌려주기 위한 새로운 DTO에 정보 담아 반환
+     * 
+     * @param customerId
+     * @return
+     */
+    public List<InquiryPlusCustomerIdDTO> getSavedInquiryPlusCustomerId(String customerId) {
+        // 두 쿼리 결과를 각각 조회
+        List<InquiryEntity> inquiriesByReceiver = inquiryRepository.findValidInquiries(customerId);
+        List<InquiryEntity> inquiriesBySender = inquiryRepository.findInquiriesBySender(customerId);
+
+        // 두 리스트를 스트림으로 합치고 sendDate로 내림차순 정렬
+        List<InquiryEntity> resultEntities = Stream.concat(inquiriesByReceiver.stream(), inquiriesBySender.stream())
+                .sorted((i1, i2) -> i2.getSendDate().compareTo(i1.getSendDate()))
+                .collect(Collectors.toList());
+
+        List<InquiryPlusCustomerIdDTO> dtos = new ArrayList<>();
+
+        resultEntities.forEach((entity) -> {
+            dtos.add(new InquiryPlusCustomerIdDTO(entity.getInquiryId(), entity.getCustomerEntity().getCustomerId(),
+                    entity.getReceiverId(), entity.getInquiryTitle(), entity.getSendDate(), entity.getSaved(),
+                    entity.getTrash(), entity.getSpam(),entity.getDeleted(), customerId));
+        });
+
+        return dtos;
+    }
+
+    /**
+     * saved 화면에서 요청된 saved 해제 요청에 따라 Y->N으로 변경하는 함수
+     */
+    @Transactional
+    public void updateSavedNo(String inquiryId, String customerId) {
+        Long id = Long.parseLong(inquiryId);
+        Optional<InquiryEntity> inquiryEntity = inquiryRepository.findById(id);
+        if (inquiryEntity.isPresent()) {
+            InquiryEntity entity = inquiryEntity.get();
+            if (entity.getSaved() == InquiryEnum.NY) {
+                entity.setSaved(InquiryEnum.NN);
+            }else if (entity.getSaved() == InquiryEnum.YN) {
+                entity.setSaved(InquiryEnum.NN);
+            }else {
+                if (customerId.equals(entity.getReceiverId())) {
+                    entity.setSaved(InquiryEnum.YN);
+                }else{
+                    entity.setSaved(InquiryEnum.NY);
+                }
+            }
+        }
+    }
+
+    /**
+     * saved 화면에서 요청된 spam 작업. 이미 리스트에는 trash, spam에 해당하지 않는 데이터들이기 떄문에 값만 변경하면 될 듯
+     */
+    @Transactional
+    public void savedToSpam(String inquiryId, String customerId) {
+        Long id = Long.parseLong(inquiryId);
+        Optional<InquiryEntity> inquiryEntity = inquiryRepository.findById(id);
+        if (inquiryEntity.isPresent()) {
+            InquiryEntity entity = inquiryEntity.get();
+            if (entity.getSpam() == InquiryEnum.NY) {
+                entity.setSpam(InquiryEnum.YY);
+            } else if (entity.getSpam() == InquiryEnum.YN) {
+                entity.setSpam(InquiryEnum.YY);
+            } else {
+                if (customerId.equals(entity.getReceiverId())) {
+                    entity.setSpam(InquiryEnum.NY);
+                    return;
+                } else {
+                    entity.setSpam(InquiryEnum.YN);
+                }
+            }
+        }
+    }
+
+    /**
+     * saved 화면에서 요청된 trash 작업. 이미 리스트에는 trash, spam에 해당하지 않는 데이터들이기 때문에 값만 변경하면 될 듯
+     * @param inquiryId
+     * @param customerId
+     */
+    @Transactional
+    public void savedToTrash(String inquiryId, String customerId) {
+        Long id = Long.parseLong(inquiryId);
+        Optional<InquiryEntity> inquiryEntity = inquiryRepository.findById(id);
+        if (inquiryEntity.isPresent()) {
+            InquiryEntity entity = inquiryEntity.get();
+            if (entity.getTrash() == InquiryEnum.NY) {
+                entity.setTrash(InquiryEnum.YY);
+            } else if (entity.getTrash() == InquiryEnum.YN) {
+                entity.setTrash(InquiryEnum.YY);
+            } else {
+                if (customerId.equals(entity.getReceiverId())) {
+                    entity.setTrash(InquiryEnum.NY);
+                } else {
+                    entity.setTrash(InquiryEnum.YN);
+                }
+            }
+        }
+    }
+
+
+    //============================= Spam Page ============================
+
+    /**
+     * customerId가 받은 인콰이어리들 중에 spam으로 처리한 인콰이어리 리스트로 반환하는 함수
+     * @param customerId
+     * @return
+     */
+    public List<InquiryDTO> getSpamInquiry(String customerId) {
+        List<InquiryEntity> inquiryEntities = inquiryRepository.findNonBlockedAndNonSpamNonTrashInquiriesByReceiverId(customerId);
+
+        List<InquiryDTO> dtos = new ArrayList<>();
+        inquiryEntities.forEach((entity)->{
+            dtos.add(InquiryDTO.toDTO(entity, entity.getCustomerEntity().getCustomerId(), entity.getProductEntity().getProductId()));
+        });
+
+        return dtos;
+    }
+
     
 
+    /**
+     * 입력받은 인콰이어리ID에 해당하는 인콰이어리의 receiver의 spam값을 Y->N으로 변경
+     * @param inquiryId
+     * @param customerId
+     */
+    @Transactional
+    public void updateSpamNo(String inquiryId) {
+        Long id = Long.parseLong(inquiryId);
+        Optional<InquiryEntity> inquiryEntity = inquiryRepository.findById(id);
+        if (inquiryEntity.isPresent()) {
+            InquiryEntity entity = inquiryEntity.get();
+            if (entity.getSpam() == InquiryEnum.YY) {
+                entity.setSpam(InquiryEnum.YN);
+            }else{ // NY->NN
+                entity.setSpam(InquiryEnum.NN);
+            }
+        }
+    }
+
+    /**
+     * 전달받은 customerId와 senderId를 inquiryBlock DB에 저장하는 함수
+     * @param customerId
+     * @param senderId
+     */
+    @Transactional
+    public void senderToBlock(String customerId, String senderId) {
+        CustomerEntity customerEntity = customerRepository.findById(customerId).get();
+        
+        // senderId에 해당하는 고객 정보가 존재하는 경우만 인콰이어리 신고회원 DB에 저장
+        if (customerRepository.existsById(senderId)) {
+            InquiryBlockDTO inquiryBlockDTO = new InquiryBlockDTO(null, customerId, senderId);
+            inquiryBlockRepository.save(InquiryBlockEntity.toEntity(inquiryBlockDTO, customerEntity));
+        }
+    }
+
+    // =============================== Trash Page ===========================
+
+    /**
+     * trash 값이 Y인 인콰이어리들을 Trash Page에 필요한 정보를 담은 새로운 DTO 리스트로 반환하는 함수 
+     * @param customerId
+     * @return
+     */
+    public List<InquiryPlusCustomerIdDTO> getTrashInquiry(String customerId) {
+        // 두 쿼리 결과를 각각 조회
+        List<InquiryEntity> inquiriesByReceiver = inquiryRepository.findInquiriesByCustomerAndNotBlocked(customerId);
+        List<InquiryEntity> inquiriesBySender = inquiryRepository.findInquiriesBySenderAndFilteredStatus(customerId);
+
+        // 두 리스트를 스트림으로 합치고 sendDate로 내림차순 정렬
+        List<InquiryEntity> resultEntities = Stream.concat(inquiriesByReceiver.stream(), inquiriesBySender.stream())
+                .sorted((i1, i2) -> i2.getSendDate().compareTo(i1.getSendDate()))
+                .collect(Collectors.toList());
+
+        List<InquiryPlusCustomerIdDTO> dtos = new ArrayList<>();
+
+        resultEntities.forEach((entity) -> {
+            dtos.add(new InquiryPlusCustomerIdDTO(entity.getInquiryId(), entity.getCustomerEntity().getCustomerId(),
+                    entity.getReceiverId(), entity.getInquiryTitle(), entity.getSendDate(), entity.getSaved(),
+                    entity.getTrash(), entity.getSpam(), entity.getDeleted(), customerId));
+        });
+
+        return dtos;
+
+    }
+
+
+    /**
+     * trash함에 있는 인콰이어리를 trash에서 제거하고 초기값으로 돌리는 함수 (받은 메일함으로)
+     * @param inquiryId
+     */
+    @Transactional
+    public void updateTrashNo(String inquiryId) {
+        Long id = Long.parseLong(inquiryId);
+        Optional<InquiryEntity> inquiryEntity = inquiryRepository.findById(id);
+        if (inquiryEntity.isPresent()) {
+            InquiryEntity entity = inquiryEntity.get();
+            // trash 값 변경
+            if (entity.getTrash()== InquiryEnum.YY) {
+                entity.setTrash(InquiryEnum.YN);
+            }else{
+                entity.setTrash(InquiryEnum.NN);
+            }
+            // saved 초기화
+            if (entity.getSaved()== InquiryEnum.YY) {
+                entity.setSaved(InquiryEnum.YN);
+            }else{
+                entity.setSaved(InquiryEnum.NN);
+            }
+            // spam 초기화
+            if (entity.getSpam()== InquiryEnum.YY) {
+                entity.setSpam(InquiryEnum.YN);
+            }else{
+                entity.setSpam(InquiryEnum.NN);
+            }       
+        }
+    }
+
+
+    /**
+     * 전달받은 인콰이어리에 해당하는 deleted값을 N->Y로 변경하는 함수
+     * @param inquiryId
+     */
+    @Transactional
+    public void trashToDeleted(String inquiryId) {
+        Long id = Long.parseLong(inquiryId);
+        Optional<InquiryEntity> inquiryEntity = inquiryRepository.findById(id);
+        if (inquiryEntity.isPresent()) {
+            InquiryEntity entity = inquiryEntity.get();
+            if (entity.getDeleted() == InquiryEnum.NN) {
+                entity.setDeleted(InquiryEnum.NY);
+            } else {
+                entity.setDeleted(InquiryEnum.YY);
+            }
+        }
+    }
+
+
+
+    //=============================Block Page ===========================
+    
+    /**
+     * 전달받은 customerId와 InquiryBlock 테이블의 customerId가 일치한 데이터들 중에
+     * 신고받은 blockedId의 정보를 담은 새로운 DTO 리스트 반환하는 함수
+     * @param customerId
+     * @return
+     */
+    public List<InquiryBlockedCustomerDTO> getBlockedCustomerDTO(String customerId) {
+        List<InquiryBlockEntity> blockEntities = inquiryBlockRepository.findByCustomerEntity_CustomerId(customerId);
+
+        List<InquiryBlockedCustomerDTO> resultDTOs = new ArrayList<>();
+
+        blockEntities.forEach((entity)->{
+            CustomerEntity blockedCustomer = customerRepository.findById(entity.getBlockedId()).get();
+            resultDTOs.add(new InquiryBlockedCustomerDTO(entity.getInquiryBlockId(), customerId, entity.getBlockedId(), 
+                                                        blockedCustomer.getCustomerGubun(), blockedCustomer.getCompName(), 
+                                                        blockedCustomer.getRemoteIp(), blockedCustomer.getCountry()));
+        });
+
+        return resultDTOs;
+    }
+
+    /**
+     * 인콰이어리신고 테이블에서 전달받은 인콰이어리 신고 아이디에 해당하는 데이터 삭제하는 함수
+     * @param inquiryBlockId
+     */
+    public void deleteBlocked(String inquiryBlockId) {
+        Long id = Long.parseLong(inquiryBlockId);
+        inquiryBlockRepository.deleteById(id);
+    }
+
+
+    /**
+     * 신고회원 테이블에 정보 저장하고 신고받은 회원의 신고횟수 +1
+     */
+    @Transactional
+    public Boolean insertReportCustomer(ReportCustomerDTO reportCustomerDTO) {
+
+        Optional<CustomerEntity> customerEntity = customerRepository.findById(reportCustomerDTO.getReportedId());
+        if (!customerEntity.isPresent()) {
+            return false;
+        }
+        CustomerEntity reportedCustomer = customerEntity.get();
+        
+        reportCustomerRepository.save(ReportCustomerEntity.toEntity(reportCustomerDTO, reportedCustomer));
+        
+        // 신고횟수 +1
+        reportedCustomer.setReportedCnt(reportedCustomer.getReportedCnt()+1);
+        
+        return true;
+    }
 
 
 }
