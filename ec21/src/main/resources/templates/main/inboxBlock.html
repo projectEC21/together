@@ -143,11 +143,6 @@
 				method: "GET",
 				success: function (blockList) {
 					$("#result").replaceWith(blockList);
-					let ipElements = $('td.remoteIp');
-					console.log(ipElements);
-					let position = $('span.ipElement').text();//.lastIndexOf('.');
-					console.log('======'+position);
-					let ip = $('span.ipElement').text().substr(0, position) + '***';
 					// 리스트 사이즈 
 					var htmlString = blockList;
 					var parser = new DOMParser();
@@ -304,7 +299,7 @@
 								</td>
 								<!-- ip 주소인데 뒷자리 3개는 * 표 표시 -->
 								<td class="remoteIp" data-title="remoteIp">
-									<span class="ipElement"  th:text="${blocked.remoteIp}"></span>
+									<span th:if="${blocked.remoteIp != null}" th:text="${@stringProcessor.maskIpAddress(blocked.remoteIp)}"></span>
 								</td>
 								
 								<!-- unBlock -->
