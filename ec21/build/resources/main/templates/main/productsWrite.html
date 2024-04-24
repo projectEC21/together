@@ -56,6 +56,7 @@
 	<script th:src="@{/script/jquery-3.7.1.min.js}"></script>
 	<!-- CK Editor -->
 	<script th:src="@{/script/ckeditor.js}"></script>
+
 	<script>
 
 		$(function () {
@@ -93,6 +94,98 @@
 				alert("로딩하는데 실패하였습니다.");
 			});
 		}
+
+		/******************************/
+
+		$(document).ready(function () {
+			$("#insertBtn").click(function (e) {
+				e.preventDefault(); // 기본 폼 제출 방지
+
+				// 빈 필드 검사
+				var firstEmptyInput = findFirstEmptyInput(); // 빈 필드 확인
+				if (firstEmptyInput) {
+					alert("Please fill in the " + firstEmptyInput.label + " field."); // 경고 메시지
+					$('#' + firstEmptyInput.id).focus(); // 해당 필드에 포커스
+					return; // 폼 제출 중단
+				}
+
+				// 셀렉트 박스 유효성 검사
+				var category = $("select[name='category']").val(); // 카테고리 셀렉트 박스 값
+				if (category === "----------------" || category === "DEFAULT" || !category.trim()) { // 기본값 또는 빈 값 확인
+					alert("Please select a valid category."); // 경고 메시지
+					$('select[name="category"]').focus(); // 셀렉트 박스에 포커스
+					return; // 폼 제출 중단
+				}
+
+				// 숫자 필드 유효성 검사
+				if (!validateNumberField("#moq")) { // 최소 주문 수량 필드 확인
+					alert("Please enter a valid quantity."); // 경고 메시지
+					$('#moq').focus(); // 숫자 필드에 포커스
+					return; // 폼 제출 중단
+				}
+
+				// 대표 이미지 업로드 확인
+				if (!checkImageUpload()) { // 대표 이미지가 없으면
+					var confirmation = confirm("Are you sure you want to submit without a representative image?");
+					if (!confirmation) {
+						return; // 사용자가 "아니요"라고 응답하면 폼 제출 중단
+					}
+				}
+
+				// 모든 검사를 통과하면 폼 제출
+				$("#insertForm").submit(); // 폼 제출
+			});
+		});
+
+		// 이미지 업로드 여부 확인 함수
+		function checkImageUpload() {
+			var uploadImg = $("#uploadImg").val();
+			return uploadImg.trim() !== ""; // 값이 비어 있지 않은지 확인
+		}
+
+		// 숫자 필드 유효성 검사 함수
+		function validateNumberField(fieldId) {
+			var value = $(fieldId).val();
+			return value && !isNaN(value) && parseInt(value) > 0; // 값이 숫자이고 0보다 큰지 확인
+		}
+
+		// 셀렉트 박스 유효성 검사 함수
+		function validateSelectBoxes() {
+			var selectBoxes = $("#insertForm").find("select[required]"); // 필수 셀렉트 박스
+			var allValid = true;
+
+			selectBoxes.each(function () {
+				var value = $(this).val();
+				if (value === "----------------" || value === "DEFAULT" || !value.trim()) { // 기본값 또는 빈 값 확인
+					allValid = false;
+					return false; // 유효하지 않은 경우 반복 중단
+				}
+			});
+
+			return allValid; // 모든 셀렉트 박스가 유효한지 여부 반환
+		}
+
+		// 빈 필드 검사 함수
+		function findFirstEmptyInput() {
+			var requiredFields = $("#insertForm").find("input[required], select[required], textarea[required]");
+			var firstEmpty = null;
+
+			requiredFields.each(function () {
+				var value = $(this).val().trim(); // 공백 제거
+				if (!value) { // 필드가 비어 있는지 확인
+					firstEmpty = {
+						id: $(this).attr("id"),
+						label: $(this).closest("tr").find("th").text() // 필드의 라벨
+					};
+					return false; // 반복 중단
+				}
+			});
+
+			return firstEmpty; // 첫 번째 빈 필드 반환
+		}
+
+
+
 
 	</script>
 			
@@ -192,7 +285,6 @@
 	<section class="product-area shop-sidebar product-list shop section">
 		<div class="container">
 			<div class="row">
-
 				<!-- 사이드 바 -->
 				<div class="col-lg-2 col-md-4 col-12">
 					<div class="shop-sidebar login-form">
@@ -230,8 +322,8 @@
                                                 <tr>
                                                     <th class="form-group">Category<span>*</span></th>
                                                     <td>
-                                                        <select name="category" class="category">
-                                                            <option selected="selected">----------------</option>
+                                                        <select name="category" class="category" required>
+                                                            <option selected="selected" value="DEFAULT">----------------</option>
                                                             <option value="FOOD_BEVERAGE">Food & Beverage</option>
                                                             <option value="CHEMICAL">Chemical</option>
                                                             <option value="HEALTH_MEDICAL">Health & Medical</option>
@@ -242,21 +334,21 @@
                                                 </tr>
                                                 <tr>
                                                     <th class="form-group">Product Name<span>*</span></th>
-                                                    <td><input type="text" name="productName" value=""></td>
+                                                    <td><input type="text" name="productName" value="" required></td>
                                                 </tr>
 
                                                 <tr>
                                                     <!-- 원산지 -->
                                                     <th class="form-group">Origin<span>*</span></th>
                                                     <td><input type="text" class="origin" id="origin" name="origin"
-                                                            value=""></td>
+                                                            value="" required></td>
                                                 </tr>
                                                 <tr>
                                                     <!-- 가격 과 단위 처리 어떻게 할지 물어보기 -->
                                                     <!-- 가격 & 단위 -->
                                                     <th class="form-group">Price<span>*</span></th>
                                                     <td>
-                                                        $ <input type="number" step="0.001" class="price" id="price" name="price" value="">
+                                                        <span>$<input type="number" step="0.001" class="price" id="price" name="price" value="" required></span>
                                                         <!-- <input type="text" class="unit" id="unit" name="unit" value=""> -->
                                                     </td>
                                                 </tr>
@@ -264,21 +356,21 @@
                                                     <!-- 단위 -->
                                                     <th class="form-group">Unit<span>*</span></th>
                                                     <td>
-                                                        <input type="text" class="unit" id="unit" name="unit" value="">
+                                                        <input type="text" class="unit" id="unit" name="unit" value="" required>
                                                     </td>
                                                 </tr>
                                                 <!-- 최소 주문 수량 -->
                                                 <tr>
                                                     <th class="form-group">Quantity<span>*</span></th>
                                                     <td>
-                                                        <input type="number" class="moq" id="moq" name="moq" value="">
+                                                        <input type="number" class="moq" id="moq" name="moq" value="" required>
                                                         <p>Minimum Order</p>
                                                     </td>   
                                                 </tr>
                                                 <tr>
-                                                    <th class="form-group">Representative image<span>*</span></th>
+                                                    <th class="form-group">Representative image</th>
                                                     <td>
-                                                        <input type="file" class="uploadImg" id="uploadImg" name="uploadImg">
+                                                        <input type="file" class="uploadImg" id="uploadImg" name="uploadImg" re>
                                                     </td>   
                                                 </tr>
                                             <!-- / 무역 정보 작성 -->
@@ -291,7 +383,7 @@
                                                 <tr>
                                                     <td colspan="2">
                                                         <div name="editor" id="ckeditor"></div>
-                                                        <input type="hidden" name="productDesc" id="productDesc">
+                                                        <input type="hidden" name="productDesc" id="productDesc" required>
                                                     </td>
                                                 </tr>
                                             <!-- / 상품 정보 작성 -->
@@ -308,17 +400,15 @@
                                             </div>
                                         </div>
 									</form>
-
 								</div>
 							</div> <!--/ End Form -->
 					</div>
 				</div>
 			</div>
 		</div>
-
 	</section> <!--/ End Login -->
 
-
+	
 
 		<!-- Start Footer Area -->
 	<footer class="footer">

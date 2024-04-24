@@ -4354,9 +4354,15 @@ span.paging {
 	line-height: 35px;
 }
 
-/* ê°€ê²© */
-.product-list.section input.price {
+.product-list.section td>span{
 	padding-left: 10px;
+	display: inline-flex;
+	align-items: center;
+	width: 100%;
+}
+
+.product-list.section input.price {
+	padding-left: 5px;
     width: 98%;
 	line-height: 35px;
 }
