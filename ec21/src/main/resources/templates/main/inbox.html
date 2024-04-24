@@ -295,11 +295,10 @@
 										<!-- 담당자명-> senderId -->
 										<td class="senderId" data-title="senderId"><span class="senderId">[[${inquiry.senderId}]]</span></td>
 										<!-- 인콰이어리 제목 -->
-										<td data-title="inquiryTitle" colspan="2">
-											<span>
+										<td   data-title="inquiryTitle" colspan="2">
 												<!-- <a id="inquiryTitle" data-toggle="modal" data-target="#inquiryDetail" th:data-id="${inquiry.inquiryId}">[[${inquiry.inquiryTitle}]]</a> -->
-												<a th:id="'modalBtn'+${inquiry.inquiryId}" th:data-id="${inquiry.inquiryId}">[[${inquiry.inquiryTitle}]]</a>
-											</span>
+												<a class="inquiryTitle" data-toggle="modal" data-target="#inquiryDetail" th:id="'modalBtn'+${inquiry.inquiryId}" th:data-id="${inquiry.inquiryId}">
+													[[${inquiry.inquiryTitle}]]</a>
 										</td>
 										<!-- 보낸 날짜 -->
 										<td class="sendDate" data-title="sendDate"><span>[[${inquiry.sendDate}]]</span></td>
