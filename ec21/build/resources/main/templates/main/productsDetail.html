@@ -422,19 +422,19 @@
 													<div class="comp-info">
 														<table>
 															<tr>
-																<th>회사명</th>
-																<td th:text="${customer.compName}">디마</td>
+																<th class="comp-name" th:text="'About ' + ${customer.compName} + '..'" colspan="2">company name</th>
 															</tr>
 															<tr>
-																<th>회사설명</th>
+																<th class="country">country</th>
+																<td class="seller-country" th:text="${customer.country}">
+																	<span id="seller-flag"></span>
+																</td>
+															</tr>
+															<tr>
+																<th>description</th>
 																<td th:text="${customer.compDesc}">디지털마스터</td>
 															</tr>
-															<tr>
-																<th class="country">국가</th>
-																<!-- <td class="seller-country">South Korea</td> -->
-																<td class="seller-country" th:text="${customer.country}"></td>
-																<span class="seller-flag"></span>
-															</tr>
+															
 														</table>
 													</div>
 												</div>
