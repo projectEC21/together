@@ -58,6 +58,16 @@ from tensorflow.keras.initializers import Orthogonal
 # 금지어 유사도
 from rapidfuzz import fuzz
 import random
+spring.datasource.driver-class-name=oracle.jdbc.OracleDriver
+spring.datasource.url=jdbc:oracle:thin:@h2z0kxkxxnhhftv2_high?TNS_ADMIN=./src/main/resources/wallet
+spring.datasource.username=admin
+spring.datasource.password=DIMA3project
+
+# oracleDB
+import cx_Oracle
+cx_Oracle.init_oracle_client(lib_dir=r"../scr/main/resources/wallet")
+connection = cx_Oracle.connect(user="admin", password="DIMA3project", dsn="h2z0kxkxxnhhftv2_high")
+
 
 
 # 클래스 객체 
@@ -160,6 +170,12 @@ def predictLstm(lstm:Lstm):
     print("====lstm_predict_proba : "+str(lstm_predict_proba))
 
     #=========== 금지어 유사도 =============
+
+    # 커서 생성
+    cursor = connection.cursor()
+
+    cursor.execcutemany("select prohibi_tword from prohibit_word")
+
     # 정상(1)인 경우 값 반환 / 이상(0)인 경우 금지어유사도까지 확인
     if lstm_predict==1:
         result = [{"lstm_predict":str(lstm_predict), "lstm_predict_proba": str(lstm_predict_proba)}]
