@@ -1,3 +1,6 @@
+<<<<<<< HEAD
+INDEX VERSION 1.134+/Users/inn00/together/.metadata/.plugins/org.eclipse.jdt.core
+=======
 INDEX VERSION 1.134+/Users/juyeong/workspace_kd3/project/together/.metadata/.plugins/org.eclipse.jdt.core
 2133736188.index
 1370985696.index
@@ -108,3 +111,4 @@ INDEX VERSION 1.134+/Users/juyeong/workspace_kd3/project/together/.metadata/.plu
 277874601.index
 2720992373.index
 2254819794.index
+>>>>>>> 2c2a42ee6a8eff8b9e73a559c2d5a90d2cc83d01
