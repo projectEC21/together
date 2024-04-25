@@ -118,9 +118,10 @@
 							$("#modalFile").text(dto.originalFileName);
 							// 클릭 시 다운로드 
 							$("#modalFile").on("click", function(){
+								console.log(inquiryId);
 								$.ajax({
 									url:"/inquiry/downloadFile",
-									data:{"indquiryId":dto.inquiryId},
+									data:{"inquiryId":inquiryId},
 									method:"GET"
 								});
 							});
