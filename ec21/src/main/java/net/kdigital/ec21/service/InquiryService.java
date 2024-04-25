@@ -6,6 +6,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
@@ -28,6 +29,7 @@ import net.kdigital.ec21.repository.InquiryBlockRepository;
 import net.kdigital.ec21.repository.InquiryRepository;
 import net.kdigital.ec21.repository.ProductRepository;
 import net.kdigital.ec21.repository.ReportCustomerRepository;
+import net.kdigital.ec21.util.FileService;
 
 @Slf4j
 @Service
@@ -41,7 +43,36 @@ public class InquiryService {
     
     // ============================= 인콰이어리 등록 ==============================
 
+    /**
+     * 인콰이어리를 DTO로 받아서 인콰이어리 DB에 저장
+     * 
+     * @param inquiryDTO
+     */
+    public void insertinquiry(InquiryDTO inquiryDTO) {
 
+        inquiryDTO.setSaved(InquiryEnum.NN);
+        inquiryDTO.setTrash(InquiryEnum.NN);
+        inquiryDTO.setSpam(InquiryEnum.NN);
+        inquiryDTO.setDeleted(InquiryEnum.NN);
+
+        // 대표 이미지 저장을 위한 경로
+        String originalFileName = null;
+        String savedFileName = null;
+
+        // 첨부파일이 있으면 파일명 세팅 실시
+        if (!inquiryDTO.getUploadFile().isEmpty()) {
+            originalFileName = inquiryDTO.getUploadFile().getOriginalFilename();
+            savedFileName = FileService.saveFile(inquiryDTO.getUploadFile(), uploadPath);
+
+            inquiryDTO.setOriginalFileName(originalFileName);
+            inquiryDTO.setSavedFileName(savedFileName); // entity로 변환 전 dto의 savedFileName 변경해주기
+        }
+
+        CustomerEntity customerEntity = customerRepository.findById(inquiryDTO.getSenderId()).get();
+        ProductEntity productEntity = productRepository.findById(inquiryDTO.getProductId()).get();
+
+        inquiryRepository.save(InquiryEntity.toEntity(inquiryDTO, customerEntity, productEntity));
+    }
 
     
     //===================================== Received Page ===============================
@@ -622,5 +653,10 @@ public class InquiryService {
         return true;
     }
 
+    // 인콰이어리 업로드 파일 저장할 위치
+    @Value("${spring.servlet.multipart.location}")
+    String uploadPath;
+
+    
 
 }

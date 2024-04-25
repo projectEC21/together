@@ -24,8 +24,11 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.kdigital.ec21.dto.CustomerDTO;
+import net.kdigital.ec21.dto.InquiryDTO;
 import net.kdigital.ec21.dto.ProductDTO;
+import net.kdigital.ec21.dto.check.InquiryEnum;
 import net.kdigital.ec21.service.CustomerService;
+import net.kdigital.ec21.service.InquiryService;
 import net.kdigital.ec21.service.ProductService;
 
 
@@ -36,6 +39,7 @@ import net.kdigital.ec21.service.ProductService;
 public class ProductController {
     private final ProductService productService;
     private final CustomerService customerService;
+    private final InquiryService inquiryService;
 
     // ====================================== 상품 등록 ========================================
     /**
@@ -120,6 +124,20 @@ public class ProductController {
         
         return "main/productsDetail";
     }
+
+    @PostMapping("/productDetail/sendInquiry")
+    public String getMethodName(@ModelAttribute InquiryDTO inquiryDTO) {
+        log.info("인콰이어리 폼 받았어");
+        
+
+        inquiryService.insertinquiry(inquiryDTO);
+
+        return "redirect:/main/productsDetail";
+    }
+    
+
+
+
     
     // ====================================== 상품 수정 ========================================
 
