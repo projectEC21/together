@@ -60,19 +60,19 @@ from rapidfuzz import fuzz
 import random
 
 # # oracleDB 연결
-# import oracledb
+import oracledb
 
-# connection = oracledb.connect(
-#     user="admin",
-#     password="DIMA3project",			# DB 생성 시 입력한 비밀번호
-#     dsn="h2z0kxkxxnhhftv2_high",					    # Database connection -> Connection Strings -> TNS NAME
-#     config_dir='../src/main/resources/wallet',			# wallet 디렉토리 경로
-#     wallet_location='../src/main/resources/wallet')		# wallet 디렉토리 경로
+connection = oracledb.connect(
+    user="admin",
+    password="DIMA3project",			# DB 생성 시 입력한 비밀번호
+    dsn="h2z0kxkxxnhhftv2_high",					    # Database connection -> Connection Strings -> TNS NAME
+    config_dir='../src/main/resources/wallet',			# wallet 디렉토리 경로
+    wallet_location='../src/main/resources/wallet')		# wallet 디렉토리 경로
 
-# print("Successfully connected to Oracle Database")
+print("Successfully connected to Oracle Database")
 
 # # cursor 생성
-# cursor = connection.cursor()
+cursor = connection.cursor()
 
 
 # 클래스 객체 
