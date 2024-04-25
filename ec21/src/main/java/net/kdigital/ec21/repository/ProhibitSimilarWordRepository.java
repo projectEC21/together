@@ -14,6 +14,8 @@ public interface ProhibitSimilarWordRepository extends JpaRepository<ProhibitSim
     // productId에 해당하는 데이터들을 이상단어 유사확률이 높은 순으로 리스트 반환
     List<ProhibitSimilarWordEntity> findProbaByProductEntity_ProductIdOrderBySimilarProbaDesc(String productId);
     
+    // productId에 해당하는 데이터들을 금지어 유사단어의 알파벳 오름차순, 유사확률의 내림차순으로 리스트 반환
+    List<ProhibitSimilarWordEntity> findByProductEntity_ProductIdOrderBySimilarWordAscSimilarProbaDesc(String productId);
 
     // productId에 해당하는 모든 ProhibitSimilarWordEntity 객체를 찾는 메서드
     List<ProhibitSimilarWordEntity> findByProductEntity_ProductId(String productId);

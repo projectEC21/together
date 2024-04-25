@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -76,7 +75,6 @@ public class ProductEntity {
     private LocalDateTime createDate;
 
     @Column(name = "update_date")
-    @UpdateTimestamp
     private LocalDateTime updateDate;
 
     @Column(name = "remote_ip", nullable = false)
