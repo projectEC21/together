@@ -128,7 +128,7 @@ public class ProductController {
     @PostMapping("/productDetail/sendInquiry")
     public String getMethodName(@ModelAttribute InquiryDTO inquiryDTO) {
         log.info("인콰이어리 폼 받았어");
-        
+        log.info(inquiryDTO.getSenderId());
 
         inquiryService.insertinquiry(inquiryDTO);
 

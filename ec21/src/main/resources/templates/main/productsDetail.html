@@ -83,15 +83,17 @@
 				alert("모달 버튼 클릭");
 				let productId = $(this).attr("data-id");
 				let seller = $(this).attr("data-seller");
+				let sender = $("#loginUser").val();
 				let inquiryTitle = $(this).attr("data-title");
 				let category = $(this).attr("data-category");
 				let quantity = $(this).attr("data-quantity");
 				let unit = $(this).attr("data-unit");
-				console.log(productId);
+				console.log(sender);
 
 				// 모달 값 채우기
 				$("#modalProductId").text(productId);
 				$("#modalReceiverId").text(seller);
+				$("#modalSenderId").text(sender);
 				$("#modalTitle").val(inquiryTitle);
 				$("#modalCategory").val(category);
 				$("#modalQuantity").val(quantity);
@@ -170,6 +172,7 @@
 </head>
 
 <body class="js">
+	<input type="hidden" name="" id="loginUser" th:text="${#authentication.name}">
 	<!-- 지우지.. 마시오.. css 다 사라짐요.. -->
 	<!-- Preloader -->
 	<div class="preloader">
@@ -413,7 +416,7 @@
 						aria-hidden="true">
 						<div class="modal-dialog" role="document">
 							<div class="modal-content">
-								<form class="form" th:action="@{/productDetail/sendInquiry}" method="post" id="inquiryForm">
+								<form class="form" th:action="@{/productDetail/sendInquiry}" method="post" id="inquiryForm" enctype="multipart/form-data">
 									<!-- Modal Header -->
 									<div class="modal-header">
 										<h4 class="modal-title">Send Message</h4>
@@ -431,15 +434,15 @@
 										<table>
 											<tr>
 												<th class="col-md-5 text-center">To</th>
-												<td><span id="modalReceiverId"></span></td>
+												<td><span name="receiverId" id="modalReceiverId"></span></td>
 											</tr>
 											<tr>
 												<th class="text-center">Subject <span>*</span></th>
-												<td><input type="text" name="subject" id="modalTitle" required></td>
+												<td><input type="text" name="inquiryTitle" id="modalTitle" required></td>
 											</tr>
 											<tr>
 												<th class="text-center">Category <span>*</span></th>
-												<td><input type="text" name="category" id="modalCategory" required></td>
+												<td><input type="text" name="" id="modalCategory" required></td>
 											</tr>
 											<tr>
 												<th class="text-center">Quantity <span>*</span></th>
@@ -447,11 +450,11 @@
 											</tr>
 											<tr>
 												<th class="text-center">Message <span>*</span></th>
-												<td><textarea class="message-field" name="message" id="modalContent" cols="30" rows="10" required></textarea></td>
+												<td><textarea class="message-field" name="inquiryContent" id="modalContent" cols="30" rows="10" required></textarea></td>
 											</tr>
 											<tr>
 												<th class="text-center">Attach File</th>
-												<td><input type="file" name="attachment" id="modalFile" value="Upload File"></td>
+												<td><input type="file" name="uploadFile" id="modalFile" value="Upload File"></td>
 											</tr>
 											<tr>
 												<td class="agree-check" colspan="2">
@@ -461,8 +464,8 @@
 													Matching.
 												</td>
 											</tr>
-											<input type="hidden" name="senderId" id="modalSenderId" th:text="${#authentication.name}">
-											<input type="hidden" name="modalProductId" id="modalProductId">
+											<input type="hidden" name="senderId" id="modalSenderId">
+											<input type="hidden" name="productId" id="modalProductId">
 										</table>
 									</div>
 									<!-- Modal Footer -->
