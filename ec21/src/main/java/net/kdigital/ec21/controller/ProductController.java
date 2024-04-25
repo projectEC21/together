@@ -145,14 +145,19 @@ public class ProductController {
     @PostMapping("main/productsUpdateProc")
     public String productsUpdate(@ModelAttribute ProductDTO productDTO, Model model) {
         // 수정될 값이 담긴 DTO 받아서 해당 productId의 Product의 값 다시 세팅
-        ProductDTO dto = productService.updateProduct(productDTO);
+        // ProductDTO dto = productService.updateProduct(productDTO);
+        ProductDTO dto = productService.updateProduct_judge(productDTO); // 모델ver
 
         // productId에 해당하는 Product와 동일한 카테고리의 상품들 최대 5개 가져오기
         List<ProductDTO> dtoList = productService.getSameCategoryProducts(dto.getCategory(), dto.getProductId());
 
+        // product를 판매하는 customer 정보
+        CustomerDTO customerDTO = customerService.getCustomer(productDTO.getCustomerId());
+
         model.addAttribute("product", dto);
         model.addAttribute("list", dtoList);
-
+        model.addAttribute("customer", customerDTO);
+        
         return "main/productsDetail";
     }
     
