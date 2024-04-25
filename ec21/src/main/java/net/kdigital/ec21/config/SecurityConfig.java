@@ -48,11 +48,9 @@ public class SecurityConfig {
         http.formLogin((auth) -> auth.loginPage("/main/login")
                 .usernameParameter("customerId")
                 .passwordParameter("customerPw")
-
                 .successHandler(successHandler)
                 .failureHandler(failureHandler)
                 .loginProcessingUrl("/main/loginProc")
-
                 .permitAll());
 
         // .defaultSuccessUrl("/manager/manager_index")
