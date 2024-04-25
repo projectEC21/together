@@ -82,95 +82,27 @@ $(document).ready(function () {
  * IP 주소 마지막 주소 * 처리
  ***********************************/
 
-// 문서 로딩 시 함수 실행
-document.addEventListener('DOMContentLoaded', function () {
-    maskLastThreeChars();
-});
+// $(document).ready(function () {
+//     $('.ipElement').each(function () { // 'ipElement' 클래스를 가진 모든 요소에 대해 반복
+//         var ipElement = $(this); // 현재 반복 중인 요소
+//         console.log(ipElement);
+//         var remoteIp = ipElement.text().trim(); // 텍스트 가져오기 및 공백 제거
+//         console.log(ipElement.text().trim()); // 각 요소의 텍스트 확인
 
-function maskLastThreeChars() {
-    var ipElements = document.querySelectorAll('.remoteIp'); // 'remoteIp' 클래스를 가진 모든 요소 선택
-    ipElements.forEach(function (ipElement) { // 선택한 모든 요소에 대해 반복
-        var remoteIp = ipElement.innerText; // 각 요소의 텍스트 가져오기
-        if (!remoteIp) return; // IP 주소가 없을 경우 건너뛰기
+//         if (!remoteIp) { // IP 주소가 없을 경우 예외 처리
+//             console.log("IP 주소가 없습니다.");
+//             return;
+//         }
 
-        if (remoteIp.length <= 3) {
-            // IP 주소가 3자리 이하일 경우 전부 ***로 마스킹
-            ipElement.innerText = '***';
-        } else {
-            // IP 주소의 마지막 세 자리를 ***로 마스킹
-            ipElement.innerText = remoteIp.slice(0, -3) + '.***';
-        }
-    });
-}
-
-
-/**********************************
- * 메인 화면에 국기 이미지 넣기 ----- 아직 미완성
- ***********************************/
-
-// $(".product-seller").each(function() {
-//     let countryName = $(this).data("country");
-//     console.log("Country name:", countryName);
-
-//     if (!countryName) { // 국가 이름이 누락된 경우 처리
-//         console.error("Country data is missing.");
-//         // 기본 국기 이미지 설정
-//         $("#countryFlag").attr("src", "https://flagsapi.com/default/flat/64.png");
-//         $("#countryFlag").attr("alt", "Default Country Flag");
-//     } else {
-//         // AJAX 요청을 통해 국가 정보를 가져옴
-//         $.ajax({
-//             url: `https://restcountries.com/v3.1/name/${countryName}`, // 국가 이름 기반 요청
-//             method: 'GET',
-//             success: function(data) {
-//                 if (data && data.length > 0) { // 데이터가 제대로 전달되었는지 확인
-//                     let countryCode = data[0].cca2; // 국가 코드
-//                     let flagImageUrl = `https://flagsapi.com/${countryCode}/flat/64.png`; // 국기 이미지 URL 생성
-//                     $("#countryFlag").attr("src", flagImageUrl); // 이미지 요소에 국기 설정
-//                     $("#countryFlag").attr("alt", `${countryName} Flag`); // 대체 텍스트 설정
-//                 } else { // 데이터가 비어있는 경우 처리
-//                     console.warn("Country data not found, using default.");
-//                     $("#countryFlag").attr("src", "https://flagsapi.com/default/flat/64.png");
-//                     $("#countryFlag").attr("alt", "Default Country Flag");
-//                 }
-//             },
-//             error: function() { // AJAX 요청에 오류가 발생한 경우 처리
-//                 console.error("Error retrieving country data, using default.");
-//                 $("#countryFlag").attr("src", "https://flagsapi.com/default/flat/64.png");
-//                 $("#countryFlag").attr("alt", "Default Country Flag");
-//             }
-//         });
-//     }
+//         if (remoteIp.length <= 3) { // 3자리 이하일 경우 마스킹
+//             ipElement.text('***');
+//         } else { // 4자리 이상일 경우 마지막 세 자리를 마스킹
+//             ipElement.text(remoteIp.slice(0, -3) + '***');
+//         }
+//     });
 // });
 
-// $(".product-seller").each(function() {
-//     let countryName = $(this).data("country");
 
-//     if (!countryName) { // 데이터가 없을 경우 처리
-//         console.error("Country data is missing."); // 오류 메시지 출력
-//         // 여기서 중단하지 않고 계속 실행
-//     } else {
-//         // AJAX 요청을 통해 국가 데이터를 가져옴
-//         $.ajax({
-//             url: `https://restcountries.com/v3.1/name/${countryName}`,
-//             method: 'GET',
-//             success: function(data) {
-//                 if (data && data.length > 0) { // 데이터가 제대로 반환되었는지 확인
-//                     let countryCode = data[0].cca2; // 국가 코드 가져오기
-//                     let flagImageUrl = `https://flagsapi.com/${countryCode}/flat/64.png`;
-//                     // 국기 이미지 설정
-//                     $("#countryFlag").attr("src", flagImageUrl).attr("alt", `${countryName} Flag`);
-//                     console.log(countryCode);
-//                 } else {
-//                     console.warn("Country data not found."); // 데이터가 없을 때 경고
-//                 }
-//             },
-//             error: function() { // AJAX 요청에 오류가 발생한 경우 처리
-//                 console.error("Error retrieving country data.");
-//             }
-//         });
-//     }
-// });
 
 /**********************************
  * 메인 화면에 국기 이미지 넣기 -----  완성

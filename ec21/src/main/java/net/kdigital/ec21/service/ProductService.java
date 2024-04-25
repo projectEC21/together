@@ -69,10 +69,6 @@ public class ProductService {
 
         return dtoList;
     }
-
-
-
-    
     
     // ===========================  prodId 생성을 위한 함수 ====================================
     private static int serialNumber = 1;
@@ -255,6 +251,92 @@ public class ProductService {
         entity.setMoq(productDTO.getMoq());
         entity.setUnit(productDTO.getUnit());
         entity.setCategory(productDTO.getCategory());
+
+        return ProductDTO.toDTO(entity, productDTO.getCustomerId());
+	}
+
+    /**
+     * 모델ver : 전달받은 productDTO의 productId에 해당하는 productEntity의 값을 수정하고 수정된 productDTO 반환
+     * + 상품명이나 상품 설명이 바뀐 경우는 모델(python)에 수정된 정보 넣어서 결과값들 다시 세팅
+     * @param productDTO
+     * @return
+     */
+    @Transactional
+	public ProductDTO updateProduct_judge(ProductDTO productDTO) {
+        ProductEntity entity = productRepository.findById(productDTO.getProductId()).get();
+
+        // 상품명 or 설명이 바뀐 경우
+        if(entity.getProductName()!=productDTO.getProductName() || entity.getProductDesc()!=productDTO.getProductDesc()){
+            log.info("여기 수정 서비스야. 상품명이나 설명 바뀐 경우야");
+
+            // 1) prohibit_similar_word db에 해당 productId의 데이터들이 있는지 확인 후 있으면 삭제
+            List<ProhibitSimilarWordEntity> entities = prohibitSimilarWordRepository
+                    .findByProductEntity_ProductId(productDTO.getProductId());
+                    log.info("여기 수정 서비스야. 금지어 유사도 확인했어");
+            if (!entities.isEmpty()) {
+                prohibitSimilarWordRepository.deleteByProductEntity_ProductId(productDTO.getProductId()); // 삭제
+            }
+            
+            // 2) lstm 객체 생성 후 python Server에서 결과들 가져옴
+            Lstm lstm = new Lstm(productDTO.getProductName(), productDTO.getProductDesc()); // lstm 객체 생성
+
+            List<Map<String, Object>> result = modelService.predictLSTM(lstm);
+            log.info("============ 수정한 정보 python 서버 결과 : {}", result);
+            log.info("============ 수정한 정보 lstmPredict : {}", result.get(0).get("lstm_predict"));
+
+            Boolean lstmPredict = false;
+            Double lstmPredictProba = 0.0;
+
+            lstmPredict = String.valueOf(result.get(0).get("lstm_predict")).equals("1") ? true : false;
+            lstmPredictProba = Double.parseDouble(String.valueOf(result.get(0).get("lstm_predict_proba")));
+
+            // 3) ProductEntity에 수정된 정보와 lstm 결과 세팅
+            entity.setProductName(productDTO.getProductName());
+            entity.setProductDesc(productDTO.getProductDesc());
+            entity.setPrice(productDTO.getPrice());
+            entity.setOrigin(productDTO.getOrigin());
+            entity.setMoq(productDTO.getMoq());
+            entity.setUnit(productDTO.getUnit());
+            entity.setCategory(productDTO.getCategory());
+            // lstm 결과 세팅
+            entity.setLstmPredict(lstmPredict);
+            entity.setLstmPredictProba(lstmPredictProba);
+            // lstmPredict가 1이면 judge를 Y로, 0이면 null로 확실히 변경
+            if (lstmPredict) {
+                entity.setJudge(YesOrNo.Y);
+            }else{
+                entity.setJudge(null);
+            }
+
+            // 리스트 사이즈 >= 1 : lstm 값이 0이고 금지어 유사도 결과가 1개 이상 나온 경우
+            if (result.size() >= 1) {
+                result.remove(0);
+                // 중복제거
+                // LinkedHashSet을 사용하여 중복 제거하면서 순서 유지
+                Set<Map<String, Object>> resultSet = new LinkedHashSet<>(result);
+                result.clear();
+                result.addAll(resultSet);
+
+                for (int i = 0; i < result.size(); i++) {
+                    String similarWord = String.valueOf(result.get(i).get("Similar_Word"));
+                    String prohibitWord = String.valueOf(result.get(i).get("Prohibited_Word"));
+                    Double similarProba = Double.parseDouble(String.valueOf(result.get(i).get("Similarity_Score")));
+
+                    ProhibitSimilarWordDTO prohibitDTO = new ProhibitSimilarWordDTO(null, similarWord, similarProba,
+                            prohibitWord, productDTO.getProductId());
+                    log.info("======= 수정된 정보의 prohibitDTO :{}", prohibitDTO);
+                    log.info("======= 수정된 정보의 prohibitDTO :{}", prohibitWord);
+
+                    // 여기서 prohibitSmilarDB에 save하면 될 듯
+                    ProhibitWordEntity prohibitWordEntity = prohibitWordRepository.findById(prohibitWord).get();
+                    ProhibitSimilarWordEntity similarDB = prohibitSimilarWordRepository
+                            .save(ProhibitSimilarWordEntity.toEntity(prohibitDTO, prohibitWordEntity, entity));
+                    if (similarDB != null) {
+                        log.info("====== 수정된 정보 prohibitSimilarWord DB에 저장했어용 ");
+                    }
+                }
+            }
+        }
 
         return ProductDTO.toDTO(entity, productDTO.getCustomerId());
 	}

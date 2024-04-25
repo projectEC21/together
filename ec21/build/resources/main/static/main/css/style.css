@@ -3313,9 +3313,9 @@ textarea {
 }
 
 .shop.single .comp-info th {
-	width: 200px;
+	width: 100px;
     padding: 10px;
-	text-align: right;
+    text-align: end;
 }
 
 .shop.single .comp-info td {

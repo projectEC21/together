@@ -345,6 +345,7 @@ public class InquiryController {
         }
 
         List<InquiryBlockedCustomerDTO> dtos = inquiryService.getBlockedCustomerDTO(customerId);
+
         model.addAttribute("blockList", dtos);
 
         return "/main/inboxBlock::#result";

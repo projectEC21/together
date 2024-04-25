@@ -26,6 +26,10 @@ create table customer (
     blacklist_check char(1) default 'N' check(blacklist_check in ('N','Y'))
 );
 
+--비밀번호 길이 100으로 변경
+ALTER TABLE customer
+MODIFY (customer_pw VARCHAR2(100) not null);
+
 select * from customer;
 
 
