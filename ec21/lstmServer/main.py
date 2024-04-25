@@ -62,8 +62,8 @@ import random
 # oracleDB 연결
 import oracledb
 
-#oracledb.init_oracle_client(lib_dir="C:\DownloadFiles\OracleInstantClient\instantclient_19_22") #도연경로
-oracledb.init_oracle_client(lib_dir="/Users/juyeong/workspace_kd3/project/instantclient") # 주영경로
+oracledb.init_oracle_client(lib_dir="C:\DownloadFiles\OracleInstantClient\instantclient_19_22") #도연경로
+# oracledb.init_oracle_client(lib_dir="/Users/juyeong/workspace_kd3/project/instantclient") # 주영경로
 #oracledb.init_oracle_client(lib_dir="") # 인영경로
 con = oracledb.connect(user='admin', password='DIMA3project', dsn='h2z0kxkxxnhhftv2_high')
 
