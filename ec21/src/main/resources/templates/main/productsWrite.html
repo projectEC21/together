@@ -137,7 +137,11 @@
 
 					// CKEditor에서 텍스트 가져오기
 					let contents = ckEditorInstance.getData().trim();
-					$("#productDesc").val(contents); // 폼의 hidden 필드에 값 설정
+					// $("#productDesc").val(contents); // 폼의 hidden 필드에 값 설정
+					if (!contents) {
+						alert("Please fill in the Product Description field.");
+							return; // 첫 번째 빈 필드 반환
+						}
 					
 
 					if (confirm("Are you sure you want to submit?")) { // 사용자의 확인을 요청
@@ -368,7 +372,7 @@
                                                 <tr>
                                                     <th class="form-group">Representative image</th>
                                                     <td>
-                                                        <input type="file" class="uploadImg" id="uploadImg" name="uploadImg">
+                                                        <input type="file" class="uploadImg" id="uploadImg" name="uploadImg" required>
                                                     </td>   
                                                 </tr>
                                             <!-- / 무역 정보 작성 -->
