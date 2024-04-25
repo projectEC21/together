@@ -42,10 +42,7 @@
     $(function () {
       init();
     })
-<<<<<<< HEAD
-=======
 
->>>>>>> f5995b5d074333800011375892056f2989a11f8b
     function init() {
       $.ajax({
         url: "/manager/count",
@@ -56,9 +53,6 @@
           $("#todayRegisteredCustomer").html(resp["todayRegisteredCustomer"]);
           $("#unprocessedReport").html(resp["unprocessedReport"]);
         }
-<<<<<<< HEAD
-      })
-=======
       });
 
       // 일자별 등록한 상품개수 확인 
@@ -168,7 +162,6 @@
 
 
 
->>>>>>> f5995b5d074333800011375892056f2989a11f8b
     }
   </script>
 
@@ -268,128 +261,35 @@
               <span class="count_top"><i class="fa fa-user"></i> <a th:href="@{/manager/productList}">당일 등록 상품
                   수</a></span>
               <div class="count" id="todayRegisteredProd"></div>
-<<<<<<< HEAD
-              <span class="count_bottom"><i class="blue">4% </i> From last Week</span>
-=======
               <!-- 지난 주 대비 증감률-->
               <!-- <span class="count_bottom"><i class="blue"><i class="fa fa-sort-asc"></i>4% </i> From last Week</span> -->
->>>>>>> f5995b5d074333800011375892056f2989a11f8b
             </div>
             <div class="col-md-3 col-sm-4  tile_stats_count">
               <span class="count_top"><i class="fa fa-clock-o"></i> <a th:href="@{/manager/modelPredict}">당일 이상상품 등록
                   수</a></span>
               <div class="count" id="todayWeirdProd"></div>
-<<<<<<< HEAD
-              <span class="count_bottom"><i class="blue"><i class="fa fa-sort-asc"></i>3% </i> From last Week</span>
-=======
               <!-- 지난 주 대비 증감률-->
               <!-- <span class="count_bottom"><i class="blue"><i class="fa fa-sort-asc"></i>3% </i> From last Week</span> -->
->>>>>>> f5995b5d074333800011375892056f2989a11f8b
             </div>
             <div class="col-md-3 col-sm-4  tile_stats_count">
               <span class="count_top"><i class="fa fa-user"></i><a th:href="@{/manager/customerList}">당일회원가입수</a>
               </span>
               <div class="count blue" id="todayRegisteredCustomer"></div>
-<<<<<<< HEAD
-              <span class="count_bottom"><i class="blue"><i class="fa fa-sort-asc"></i>34% </i> From last Week</span>
-=======
               <!-- 지난 주 대비 증감률-->
               <!-- <span class="count_bottom"><i class="blue"><i class="fa fa-sort-asc"></i>34% </i> From last Week</span> -->
->>>>>>> f5995b5d074333800011375892056f2989a11f8b
             </div>
             <div class="col-md-3 col-sm-4  tile_stats_count">
               <span class="count_top"><i class="fa fa-user"></i> <a th:href="@{/manager/reportedCustomerList}">미처리된 신고
                   개수</a></span>
               <div class="count" id="unprocessedReport"></div>
-<<<<<<< HEAD
-              <span class="count_bottom"><i class="red"><i class="fa fa-sort-desc"></i>12% </i> From last Week</span>
-=======
               <!-- 지난 주 대비 증감률-->
               <!-- <span class="count_bottom"><i class="red"><i class="fa fa-sort-desc"></i>12% </i> From last Week</span> -->
->>>>>>> f5995b5d074333800011375892056f2989a11f8b
             </div>
           </div>
         </div>
 
         <br />
 
-<<<<<<< HEAD
-        <!-- 상품, 회원 count -->
-        <div class="row">
-          <div class="col-md-12 col-sm-12 ">
-            <div class="dashboard_graph">
-
-              <div class="row x_title">
-                <div class="col-md-6">
-                  <h3>Network Activities <small>Graph title sub-title</small></h3>
-                </div>
-                <div class="col-md-6">
-                  <div id="reportrange" class="pull-right"
-                    style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc">
-                    <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
-                    <span>December 30, 2014 - January 28, 2015</span> <b class="caret"></b>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-md-9 col-sm-9 ">
-                <div id="chart_plot_01" class="demo-placeholder"></div>
-              </div>
-              <div class="col-md-3 col-sm-3  bg-white">
-                <div class="x_title">
-                  <h2>Top Campaign Performance</h2>
-                  <div class="clearfix"></div>
-                </div>
-
-                <div class="col-md-12 col-sm-12 ">
-                  <div>
-                    <p>Facebook Campaign</p>
-                    <div class="">
-                      <div class="progress progress_sm" style="width: 76%;">
-                        <div class="progress-bar bg-blue" role="progressbar" data-transitiongoal="80"></div>
-                      </div>
-                    </div>
-                  </div>
-                  <div>
-                    <p>Twitter Campaign</p>
-                    <div class="">
-                      <div class="progress progress_sm" style="width: 76%;">
-                        <div class="progress-bar bg-blue" role="progressbar" data-transitiongoal="60"></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-12 col-sm-12 ">
-                  <div>
-                    <p>Conventional Media</p>
-                    <div class="">
-                      <div class="progress progress_sm" style="width: 76%;">
-                        <div class="progress-bar bg-blue" role="progressbar" data-transitiongoal="40"></div>
-                      </div>
-                    </div>
-                  </div>
-                  <div>
-                    <p>Bill boards</p>
-                    <div class="">
-                      <div class="progress progress_sm" style="width: 76%;">
-                        <div class="progress-bar bg-blue" role="progressbar" data-transitiongoal="50"></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-
-              <div class="clearfix"></div>
-            </div>
-          </div>
-
-        </div>
-        <br />
-
-        <div class="row">
-          <div class="col-md-12 col-sm-912  ">
-=======
         <!-- 상품, 회원 count 끝 -->
 
         <div class="row">
@@ -430,7 +330,6 @@
           </div>
 
           <div class="col-md-12 col-sm-912 ">
->>>>>>> f5995b5d074333800011375892056f2989a11f8b
             <div class="x_panel">
               <div class="x_title">
                 <h2>World Map</h2>
@@ -441,13 +340,8 @@
               </div>
             </div>
           </div>
-<<<<<<< HEAD
-
-        </div>
-=======
         </div>
 
->>>>>>> f5995b5d074333800011375892056f2989a11f8b
       </div>
     </div>
   </div>
@@ -465,16 +359,12 @@
   <!-- NProgress -->
   <script th:src="@{/vendors/nprogress/nprogress.js}"></script>
   <!-- Chart.js -->
-<<<<<<< HEAD
-  <script th:src="@{/vendors/Chart.js/dist/Chart.min.js}"></script>
-=======
   <!-- <script type="text/javascript"
     src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script> -->
   <!-- <script th:src="@{/vendors/Chart.js/dist/Chart.js}"></script> -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
->>>>>>> f5995b5d074333800011375892056f2989a11f8b
   <!-- gauge.js -->
   <script th:src="@{/vendors/gauge.js/dist/gauge.min.js}"></script>
   <!-- bootstrap-progressbar -->
@@ -483,20 +373,7 @@
   <script th:src="@{/vendors/iCheck/icheck.min.js}"></script>
   <!-- Skycons -->
   <script th:src="@{/vendors/skycons/skycons.js}"></script>
-<<<<<<< HEAD
-  <!-- Flot -->
-  <script th:src="@{/vendors/Flot/jquery.flot.js}"></script>
-  <script th:src="@{/vendors/Flot/jquery.flot.pie.js}"></script>
-  <script th:src="@{/vendors/Flot/jquery.flot.time.js}"></script>
-  <script th:src="@{/vendors/Flot/jquery.flot.stack.js}"></script>
-  <script th:src="@{/vendors/Flot/jquery.flot.resize.js}"></script>
-  <!-- Flot plugins -->
-  <script th:src="@{/vendors/flot.orderbars/js/jquery.flot.orderBars.js}"></script>
-  <script th:src="@{/vendors/flot-spline/js/jquery.flot.spline.min.js}"></script>
-  <script th:src="@{/vendors/flot.curvedlines/curvedLines.js}"></script>
-=======
 
->>>>>>> f5995b5d074333800011375892056f2989a11f8b
   <!-- DateJS -->
   <script th:src="@{/vendors/DateJS/build/date.js}"></script>
   <!-- JQVMap -->
@@ -505,19 +382,12 @@
   <script th:src="@{/vendors/jqvmap/examples/js/jquery.vmap.sampledata.js}"></script>
   <!-- bootstrap-daterangepicker -->
   <script th:src="@{/vendors/moment/min/moment.min.js}"></script>
-<<<<<<< HEAD
-  <script th:src="@{/vendors/bootstrap-daterangepicker/daterangepicker.js}"></script>
-
-  <!-- Custom Theme Scripts -->
-  <script th:src="@{/build/js/custom.js}"></script>
-=======
 
   <!-- Custom Theme Scripts -->
   <script th:src="@{/build/js/custom.js}"></script>
 
 
 
->>>>>>> f5995b5d074333800011375892056f2989a11f8b
   <!-- ECharts -->
   <script th:src="@{/vendors/echarts/dist/echarts.min.js}"></script>
   <script th:src="@{/vendors/echarts/map/js/world.js}"></script>
