@@ -49,7 +49,6 @@
 
 	<!-- Color CSS -->
 	<link rel="stylesheet" th:href="@{/main/css/color/color2.css}">
-	<link rel="stylesheet" href="" id="colors">
 
 
 	<!-- 240420 dy : JQuery 파일 추가 및 ajax 작업 -->
@@ -74,7 +73,7 @@
 </head>
 
 <body class="js">
-	<input type="hidden" name="customerId" id="customerId" th:value="${customerId}">
+	<input type="hidden" name="customerId" id="customerId" th:value="${#authentication.name}">
 	<!-- Preloader -->
 	<div class="preloader">
 		<div class="preloader-inner">
@@ -140,10 +139,9 @@
 					</div>
 					<div class="col-lg-8 col-md-7 col-12">
 						<form th:action="@{/main/list}" method="get">
-						<div class="search-bar-top">
-							<div class="search-bar">
-								<!-- CSS가 왕창 깨져요ㅠㅠ 증말 죄송합니다아ㅠㅠㅠ -->
-								<!-- 240420 dy : 카테고리 선택 & 검색어 입력 시 form 태그로 상품 리스트로의 요청 걸어줌 -->
+							<div class="search-bar-top">
+								<div class="search-bar">
+									<!-- 240420 dy : 카테고리 선택 & 검색어 입력 시 form 태그로 상품 리스트로의 요청 걸어줌 -->
 									<select id="category" name="category">
 										<option value="total" th:selected="${category eq 'total'}">All Category</option>
 										<option value="FOOD_BEVERAGE" th:selected="${category eq 'FOOD_BEVERAGE'}">Food & Beverage</option>
@@ -152,8 +150,8 @@
 										<option value="ELECTRONIC" th:selected="${category eq 'ELECTRONIC'}">Electronics</option>
 										<option value="COSMETIC" th:selected="${category eq 'COSMETIC'}">Cosmetic</option>
 									</select>
-									<input name="search" id="searchWord" placeholder="What are you searching for?" type="search" th:value="${searchWord}"
-										th:attr="placeholder=${searchWord eq null ? 'What are you searching for?' : null}" />
+									<input id="searchWord" name="searchWord" placeholder="What are you searching for?" type="search" th:value="${searchWord}"
+										th:attr="placeholder=${searchWord eq null ? 'What are you searching for?' : null}">
 									<button type="submit" class="btnn"> <i class="ti-search"></i></button>
 								</div>
 							</div>
@@ -163,13 +161,13 @@
 						<div class="right-bar">
 							<!-- Search Form -->
 							<div class="sinlge-bar">
-								<a th:href="@{/main/myproducts}" class="single-icon"><i class="fa fa-user-circle-o"
+								<a th:href="@{/main/myproducts(customerId=${#authentication.name})}" class="single-icon"><i class="fa fa-user-circle-o"
 										aria-hidden="true"></i></a>
 							</div>
 
 							<!-- 검색창 옆 부분 인콰이어리 new 로만 보이게 하고 인콰이어리 페이지로 넘어가게 하기 -->
 							<div class="sinlge-bar inquiry">
-								<a th:href="@{/main/inbox}" class="single-icon"><i class="fa fa-envelope-o"></i> <span
+								<a th:href="@{/main/inbox(customerId=${#authentication.name})}" class="single-icon"><i class="fa fa-envelope-o"></i> <span
 										class="total-count">NEW</span></a>
 							</div>
 						</div>
@@ -222,7 +220,7 @@
 					<div class="bread-inner">
 						<ul class="bread-list">
 							<li><a th:href="@{/}">Home<i class="ti-arrow-right"></i></a></li>
-							<li class="active"><a th:href="@{/main/myproducts(customerId=${customerId})}">My Page</a></li>
+							<li class="active"><a th:href="@{/main/myproducts(customerId=${#authentication.name})">My Page</a></li>
 						</ul>
 					</div>
 				</div>
@@ -240,8 +238,8 @@
 						<div class="single-widget category">
 							<h3 class="title">My Page</h3>
 							<ul class="categor-list">
-								<li><a th:href="@{/main/myinfo(customerId=${customerId})}">info</a></li>
-								<li><a th:href="@{/main/myproducts(customerId=${customerId})}" style="color: #222; font-weight: 700;">Products</a></li>
+								<li><a th:href="@{/main/myinfo(customerId=${#authentication.name})">info</a></li>
+								<li><a th:href="@{/main/myproducts(customerId=${#authentication.name})" style="color: #222; font-weight: 700;">Products</a></li>
 								<!-- 해당 페이지에 들어가면 색상이 더 진하게 보이게 해놓음 -->
 							</ul>
 						</div>
@@ -265,7 +263,7 @@
 											</div>
 											<div class="single-slider">
 												<div class="single-slider">
-													<a th:href="@{/main/productsWrite(customerId=${customerId})}">Add A New Product</a>
+													<a th:href="@{/main/productsWrite(customerId=${#authentication.name})}">Add A New Product</a>
 												</div>
 											</div>
 										</div>

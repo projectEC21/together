@@ -231,7 +231,7 @@
 							<ul class="list-main">
 								<li><i class="ti-power-off"></i><a th:href="@{/main/login}">Login</a></li>
 								<li><i class="ti-user"></i><a th:href="@{/main/register}">Sign up</a></li>
-								<li><i class="ti-power-off"></i><a th:href="@{/main/index}">Logout</a></li>
+								<li><i class="ti-power-off"></i><a th:href="@{/main/logout}">Logout</a></li>
 								</li>
 							</ul>
 						</div>
@@ -266,34 +266,42 @@
 						<div class="mobile-nav"></div>
 					</div>
 					<div class="col-lg-8 col-md-7 col-12">
-						<div class="search-bar-top">
-							<div class="search-bar">
-								<select>
-									<option selected="selected">All Category</option>
-									<option>Food & Beverage</option>
-									<option>Chemical</option>
-									<option>Health & Medical</option>
-									<option>Electronics</option>
-									<option>Cosmetic</option>
-								</select>
-								<form>
-									<input name="search" placeholder="What are you searching for?" type="search">
-									<button class="btnn"><i class="ti-search"></i></button>
-								</form>
+						<form th:action="@{/main/list}" method="get">
+							<div class="search-bar-top">
+								<div class="search-bar">
+									<!-- 240425 dy : 카테고리 선택 & 검색어 입력 시 form 태그로 상품 리스트로의 요청 걸어줌 -->
+									<select id="category" name="category">
+										<option value="total" th:selected="${category eq 'total'}">All Category</option>
+										<option value="FOOD_BEVERAGE" th:selected="${category eq 'FOOD_BEVERAGE'}">Food
+											& Beverage</option>
+										<option value="CHEMICAL" th:selected="${category eq 'CHEMICAL'}">Chemical
+										</option>
+										<option value="HEALTH_MEDICAL" th:selected="${category eq 'HEALTH_MEDICAL'}">
+											Health & Medical</option>
+										<option value="ELECTRONIC" th:selected="${category eq 'ELECTRONIC'}">Electronics
+										</option>
+										<option value="COSMETIC" th:selected="${category eq 'COSMETIC'}">Cosmetic
+										</option>
+									</select>
+									<input name="search" id="searchWord" name="searchWord" placeholder="What are you searching for?"
+										type="search" th:value="${searchWord}"
+										th:attr="placeholder=${searchWord eq null ? 'What are you searching for?' : null}" />
+									<button type="submit" class="btnn"> <i class="ti-search"></i></button>
+								</div>
 							</div>
-						</div>
+						</form>
 					</div>
 					<div class="col-lg-2 col-md-3 col-12">
 						<div class="right-bar">
 							<!-- Search Form -->
 							<div class="sinlge-bar">
-								<a th:href="@{/main/myproducts}" class="single-icon"><i class="fa fa-user-circle-o"
+								<a th:href="@{/main/myproducts(customerId=${#authentication.name})}" class="single-icon"><i class="fa fa-user-circle-o"
 										aria-hidden="true"></i></a>
 							</div>
 
 							<!-- 검색창 옆 부분 인콰이어리 new 로만 보이게 하고 인콰이어리 페이지로 넘어가게 하기 -->
 							<div class="sinlge-bar inquiry">
-								<a th:href="@{/main/inbox}" class="single-icon"><i class="fa fa-envelope-o"></i> <span
+								<a th:href="@{/main/inbox(customerId=${#authentication.name})}" class="single-icon"><i class="fa fa-envelope-o"></i> <span
 										class="total-count">new</span></a>
 							</div>
 						</div>
@@ -370,9 +378,9 @@
 							<h3 class="title">My Page</h3>
 
 							<ul class="categor-list">
-								<li><a th:href="@{/main/myinfo(customerId=${customerId})}"
+								<li><a th:href="@{/main/myinfo(customerId=${#authentication.name})}"
 										style="color: #222; font-weight: 700;">info</a></li>
-								<li><a th:href="@{/main/myproducts(customerId=${customerId})}">Products</a></li>
+								<li><a th:href="@{/main/myproducts(customerId=${#authentication.name})}">Products</a></li>
 								<!-- 해당 페이지에 들어가면 색상이 더 진하게 보이게 해놓음 -->
 							</ul>
 
