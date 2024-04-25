@@ -43,6 +43,10 @@ public class InquiryService {
     
     // ============================= 인콰이어리 등록 ==============================
 
+    // 인콰이어리 업로드 파일 저장할 위치
+    @Value("${spring.servlet.multipart.location}")
+    String uploadPath;
+
     /**
      * 인콰이어리를 DTO로 받아서 인콰이어리 DB에 저장
      * 
@@ -653,10 +657,7 @@ public class InquiryService {
         return true;
     }
 
-    // 인콰이어리 업로드 파일 저장할 위치
-    @Value("${spring.servlet.multipart.location}")
-    String uploadPath;
-
+    
     
 
 }
