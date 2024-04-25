@@ -4483,12 +4483,8 @@ ul.social li {
 /* *********  /profile/social  **************************** */
 
 /* *********  chart  **************************** */
+
 .linechart {
-
-  width: 70%;
-}
-
-.mid {
   display: flex;
   justify-content: center;
 }

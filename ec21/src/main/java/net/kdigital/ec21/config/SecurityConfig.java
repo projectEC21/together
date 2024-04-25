@@ -21,55 +21,56 @@ public class SecurityConfig {
     private final CustomerSuccessHandler successHandler;
 
     @Bean
-    SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
+    SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         // 웹 요청 시 접근 권한 설정
-        http.authorizeHttpRequests((auth)->
-                auth.requestMatchers("/",
-                                    "/main/index",
-                                    "/main/register",
-                                    "/main/login",
-                                    "/main/list",
-                                    "/main/productsDetail",
-                                    "/build/**",
-                                    "/data/**",
-                                    "/docs/**",
-                                    "/main/**",
-                                    "/production/**",
-                                    "/script/**",
-                                    "/src/**",
-                                    "/vendors/**").permitAll()
-                .requestMatchers("/manager/**").hasRole("ADMIN")
-                .requestMatchers("/main/**").hasAnyRole("ADMIN","USER")
-                .requestMatchers("/inbox/**").hasAnyRole("ADMIN","USER")
-                .anyRequest().authenticated());
-        
-        // Customer Login 설정
-        http.formLogin((auth)-> auth.loginPage("/main/login")
-                                    .usernameParameter("customerId")
-                                    .passwordParameter("customerPw")
-                                    
-                                    .successHandler(successHandler)
-                                    .failureHandler(failureHandler)
-                                    .loginProcessingUrl("/main/loginProc")
-                                    
-                                    .permitAll());
+        http.authorizeHttpRequests((auth) -> auth.requestMatchers("/",
+                "/main/index",
 
-                                    // .defaultSuccessUrl("/manager/manager_index")
-                                    
+                "/manager/**",
+                "/main/register",
+                "/main/login",
+                "/main/list",
+                "/main/productsDetail",
+                "/build/**",
+                "/data/**",
+                "/docs/**",
+                "/main/**",
+                "/production/**",
+                "/script/**",
+                "/src/**",
+                "/vendors/**").permitAll()
+                .requestMatchers("/manager/**").hasRole("ADMIN")
+                .requestMatchers("/main/**").hasAnyRole("ADMIN", "USER")
+                .requestMatchers("/inbox/**").hasAnyRole("ADMIN", "USER")
+                .anyRequest().authenticated());
+
+        // Customer Login 설정
+        http.formLogin((auth) -> auth.loginPage("/main/login")
+                .usernameParameter("customerId")
+                .passwordParameter("customerPw")
+
+                .successHandler(successHandler)
+                .failureHandler(failureHandler)
+                .loginProcessingUrl("/main/loginProc")
+
+                .permitAll());
+
+        // .defaultSuccessUrl("/manager/manager_index")
+
         // Customer Logout 설정
-        http.logout((auth)->auth.logoutUrl("/main/logout")
-                                .logoutSuccessUrl("/")
-                                .invalidateHttpSession(true)
-                                .deleteCookies("JSESSIONID"));
-        
-        // CSRF(Cross-Site Request Forgery) 비활성화                                   
-        http.csrf((auth)->auth.disable()); // 배포시 활성화 해줘야 함        
-                
+        http.logout((auth) -> auth.logoutUrl("/main/logout")
+                .logoutSuccessUrl("/")
+                .invalidateHttpSession(true)
+                .deleteCookies("JSESSIONID"));
+
+        // CSRF(Cross-Site Request Forgery) 비활성화
+        http.csrf((auth) -> auth.disable()); // 배포시 활성화 해줘야 함
+
         return http.build();
     }
 
     @Bean
-    BCryptPasswordEncoder bCryptPasswordEncoder(){
+    BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
