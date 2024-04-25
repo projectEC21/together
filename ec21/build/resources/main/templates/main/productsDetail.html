@@ -80,25 +80,24 @@
 
 			// 모달창 값 채우기 & 모달창 열기
 			$("#modalBtn").on("click", function () {
-				alert("모달 버튼 클릭");
 				let productId = $(this).attr("data-id");
-				let seller = $(this).attr("data-seller");
+				let receiver = $(this).attr("data-seller");
 				let sender = $("#loginUser").val();
 				let inquiryTitle = $(this).attr("data-title");
 				let category = $(this).attr("data-category");
 				let quantity = $(this).attr("data-quantity");
 				let unit = $(this).attr("data-unit");
-				console.log(sender);
+				console.log(receiver);
 
 				// 모달 값 채우기
-				$("#modalProductId").text(productId);
-				$("#modalReceiverId").text(seller);
-				$("#modalSenderId").text(sender);
+				$("#modalReceiverId").val(receiver);
+				$("#modalSenderId").val(sender);
+				$("#modalProductId").val(productId);
 				$("#modalTitle").val(inquiryTitle);
 				$("#modalCategory").val(category);
 				$("#modalQuantity").val(quantity);
-				$("#modalQuantity").attr("min",quantity);
-				$("#modalUnit").text(unit);
+				$("#modalQuantity").attr("min",quantity); 	// 최소 수량 
+				$("#modalUnit").text(unit);				    // 단위
 				$("#submitBtn").on("click", submitInquiry);
 				// 모달열기
 				$("#inquiryModal").modal();
@@ -165,14 +164,14 @@
 					}
 				});
 			}
-
 		}
+
 	</script>
 
 </head>
 
 <body class="js">
-	<input type="hidden" name="" id="loginUser" th:text="${#authentication.name}">
+	<input type="hidden" name="" id="loginUser" th:value="${#authentication.name}">
 	<!-- 지우지.. 마시오.. css 다 사라짐요.. -->
 	<!-- Preloader -->
 	<div class="preloader">
@@ -434,7 +433,7 @@
 										<table>
 											<tr>
 												<th class="col-md-5 text-center">To</th>
-												<td><span name="receiverId" id="modalReceiverId"></span></td>
+												<td><input name="receiverId" id="modalReceiverId" readonly></td>
 											</tr>
 											<tr>
 												<th class="text-center">Subject <span>*</span></th>
