@@ -64,9 +64,7 @@ import oracledb
 
 # 경로 자체를 바꾸지말고 자기 경로 입력해 놓고 주석풀고 쓰면 될듯합니당
 oracledb.init_oracle_client(lib_dir="C:\DownloadFiles\OracleInstantClient\instantclient_19_22")
-#oracledb.init_oracle_client(lib_dir="") # 주영경로
-#oracledb.init_oracle_client(lib_dir="") # 인영경로
-#oracledb.init_oracle_client(lib_dir="") # 희진경로
+
 con = oracledb.connect(user='admin', password='DIMA3project', dsn='h2z0kxkxxnhhftv2_high')
 print("Successfully connected to Oracle Database")
 
