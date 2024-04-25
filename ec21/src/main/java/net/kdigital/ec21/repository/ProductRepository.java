@@ -25,7 +25,8 @@ public interface ProductRepository extends JpaRepository<ProductEntity, String> 
 
         // updateDate 또는 createDate가 오늘인 데이터 중에서 lstmPredict가 false인 데이터의 개수를 세는 메서드
         @Query("SELECT COUNT(p) FROM ProductEntity p WHERE " +
-                        "(p.updateDate BETWEEN :startOfDay AND :endOfDay OR p.createDate BETWEEN :startOfDay AND :endOfDay) " +
+                        "(p.updateDate BETWEEN :startOfDay AND :endOfDay OR p.createDate BETWEEN :startOfDay AND :endOfDay) "
+                        +
                         "AND p.lstmPredict = FALSE")
         Long countByDateAndLstmPredictFalse(LocalDateTime startOfDay, LocalDateTime endOfDay);
 
@@ -166,4 +167,12 @@ public interface ProductRepository extends JpaRepository<ProductEntity, String> 
         List<Object[]> countProductsByCategoryAndDateRange(@Param("startDate") LocalDateTime startDate,
                         @Param("endDate") LocalDateTime endDate);
 
+        // ============================ 관리자페이지 mainboard 화면
+        // =================================
+        // 금지어 top 10
+        @Query(value = "SELECT similar_word, COUNT(*) as count " +
+                        "FROM prohibit_similar_word " +
+                        "GROUP BY similar_word " +
+                        "ORDER BY count DESC", nativeQuery = true)
+        Page<Object[]> countSimilarWords(Pageable pageable);
 }

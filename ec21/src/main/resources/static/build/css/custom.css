@@ -2436,6 +2436,7 @@ table.tile span {
 
 table.tile th,
 table.tile td {
+
   text-align: center;
 }
 
@@ -2590,6 +2591,7 @@ a.DTTT_button {
 
 table.jambo_table {
   border: 1px solid rgba(221, 221, 221, 0.78);
+  width: 100% !important;
 }
 
 table.jambo_table thead {
@@ -2618,6 +2620,7 @@ table.jambo_table tbody tr.selected td {
   border-top: 1px solid rgba(38, 185, 154, 0.4);
   border-bottom: 1px solid rgba(38, 185, 154, 0.4);
 }
+
 
 
 
@@ -3063,6 +3066,7 @@ span.right {
   /* 부모 요소에 맞게 높이 조정 */
   text-align: center;
   /* 텍스트 가운데 정렬 */
+  background-color: white;
 }
 
 
@@ -3125,7 +3129,7 @@ span.right {
 }
 
 .tile_count .tile_stats_count span a {
-  font-size: 16px;
+  font-size: 20px;
 }
 
 @media (min-width: 768px) {
@@ -4490,18 +4494,28 @@ ul.social li {
 }
 
 .mid {
-  height: 300px;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.mid2 {
+  width: 800;
+  height: 100;
   display: flex;
   justify-content: center;
 }
 
 .Cchart {
 
-  height: 400px;
+  height: 309px;
   display: flex;
   justify-content: center;
 
 }
+
+
 
 /* *********  /chart  **************************** */
 

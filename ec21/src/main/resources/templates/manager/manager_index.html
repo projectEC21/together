@@ -39,6 +39,7 @@
   <script>
 
     $(document).ready(function () {
+
       // 현재 날짜와 달의 첫 날짜를 계산합니다.
       var currentDate = new Date();
       var firstDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
@@ -55,6 +56,31 @@
       $('#startDate, #endDate').on('change', function () {
         updateCharts();
       });
+
+      loadProhibitedWords(); // 페이지가 로드되면 금지어 데이터를 불러오는 함수를 실행합니다.
+
+
+
+      function loadProhibitedWords() {
+        $.ajax({
+          url: "/manager/board/topSimilarWordCounts", // 수정된 엔드포인트
+          type: "GET",
+          success: function (data) {
+            var tableBody = $("#similarWordsTable");
+            tableBody.empty(); // 기존의 데이터를 비우고 새로운 데이터로 채웁니다.
+            // 서버로부터 받은 데이터를 행으로 추가합니다.
+            data.forEach(function (item) {
+              var row = "<tr><td>" + item.similarWord + "</td><td>" + item.count + "</td></tr>";
+              tableBody.append(row);
+            });
+          },
+          error: function (error) {
+            console.log("Error fetching data:", error);
+          }
+        });
+
+      }
+
     });
 
     // 차트 인스턴스를 저장할 변수 선언
@@ -167,19 +193,20 @@
           datasets: [{
             data: chartData,
             backgroundColor: [
-              'rgba(64, 162, 227, 0.8)',
-              'rgba(255, 246, 233, 0.8)',
-              'rgba(13, 146, 118, 0.8)',
-              'rgba(255, 206, 86, 0.8)',
-              'rgba(187, 226, 236, 0.8)',
+              '#0287BE',
+              '#47C6E8',
+              '#F7C74B',
+              '#FDE775',
+              '#F0E6B4'
+
               // 추가 색상...
             ],
             borderColor: [
-              'rgba(64, 162, 227, 1)',
-              'rgba(255, 246, 233, 1)',
-              'rgba(13, 146, 118, 1)',
-              'rgba(255, 206, 86, 1)',
-              'rgba(187, 226, 236, 1)',
+              '#0287BE',
+              '#47C6E8',
+              '#F7C74B',
+              '#FDE775',
+              '#F0E6B4'
 
             ],
             borderWidth: 1,
@@ -188,7 +215,8 @@
         },
         options: {
           responsive: true,
-          maintainAspectRatio: true,
+          cutoutPercentage: 70,
+          maintainAspectRatio: false,
           plugins: {
             legend: {
               display: true, // 범례 표시 여부
@@ -335,6 +363,9 @@
           console.error("Error fetching data: " + textStatus, errorThrown);
         }
       });
+
+
+
 
     }
 
@@ -486,9 +517,8 @@
                 <div class="clearfix"></div>
               </div>
 
-              <div class="x_content">
+              <div class="x_content ">
                 <!-- <button onclick="updateCharts()">Update Charts</button> -->
-
                 <div class="mid">
                   <canvas id="lineChart"></canvas>
                 </div>
@@ -516,8 +546,8 @@
 
 
           <!-- 카테고리별 이상/정상상품 판별개수 그래프 -->
-          <div class="col-md-12 col-sm-912  ">
-            <div class=" x_panel ">
+          <div class="col-md-7 ">
+            <div class=" x_panel">
               <div class="x_title">
                 <h2>카테고리별 이상/ 정상상품 판별 개수</h2>
                 <div class="clearfix"></div>
@@ -534,6 +564,36 @@
             </div>
           </div>
           <!-- /카테고리별 이상/정상상품 판별개수 그래프 끝-->
+
+          <div class="col-md-5 ">
+            <div class=" x_panel">
+              <div class="x_title">
+                <h2>금지어 top 10</h2>
+                <div class="clearfix"></div>
+              </div>
+
+              <div class="x_content">
+                <table id="prohibitedWordsTable" class="table Ctable">
+                  <thead>
+                    <tr>
+                      <th>금지어</th>
+                      <th>횟수</th>
+                    </tr>
+                  </thead>
+                  <tbody id="similarWordsTable">
+                    <tr>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                  </tbody>
+                </table>
+
+
+              </div>
+
+
+            </div>
+          </div>
 
         </div>
         <!--/ 차트 끝-->

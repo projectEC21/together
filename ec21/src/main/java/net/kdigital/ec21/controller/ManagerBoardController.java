@@ -3,16 +3,14 @@ package net.kdigital.ec21.controller;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.kdigital.ec21.service.ManagerBoardService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import java.util.Date;
 
 @Slf4j
 @Controller
@@ -45,6 +43,12 @@ public class ManagerBoardController {
         log.info("End Date: " + end + end.getClass().getName());
 
         return managerBoardService.getCategoryDataByDateRange(start, end);
+    }
+
+    @ResponseBody
+    @GetMapping("/manager/board/topSimilarWordCounts")
+    public List<Map<String, Object>> getTopSimilarWordCounts() {
+        return managerBoardService.getTopSimilarWordCounts();
     }
 
 }
