@@ -1,20 +1,24 @@
 package net.kdigital.ec21.service;
 
+import java.util.List;
 import java.util.Optional;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import net.kdigital.ec21.dto.CustomerDTO;
 import net.kdigital.ec21.entity.CustomerEntity;
 import net.kdigital.ec21.repository.CustomerRepository;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class CustomerService {
     private final CustomerRepository customerRepository;
-    // private final BCryptPasswordEncoder bCryptPasswordEncoder; // 비밀번호 암호화
+    private final BCryptPasswordEncoder bCryptPasswordEncoder; // 비밀번호 암호화
 
     /**
      * 회원 ID를 전달받아 회원DTO를 반환하는 함수
@@ -35,8 +39,8 @@ public class CustomerService {
 
         if (isExist) return false;
         
-        // // 비밀번호 암호화
-        // customerDTO.setCustomerPw(bCryptPasswordEncoder.encode(customerDTO.getCustomerPw()));
+        // 비밀번호 암호화
+        customerDTO.setCustomerPw(bCryptPasswordEncoder.encode(customerDTO.getCustomerPw()));
         // DTO -> entity
         CustomerEntity entity = CustomerEntity.toEntity(customerDTO);
         // DB 저장
@@ -55,8 +59,8 @@ public class CustomerService {
         CustomerEntity entity = customerRepository.findById(dto.getCustomerId()).get();
 
         // 바꿀수 없는 값 : ID
-        // entity.setCustomerPw(bCryptPasswordEncoder.encode(dto.getCustomerPw()));
-        entity.setCustomerPw(dto.getCustomerPw());
+        // entity.setCustomerPw(dto.getCustomerPw());
+        entity.setCustomerPw(bCryptPasswordEncoder.encode(dto.getCustomerPw()));
         entity.setCustomerName(dto.getCustomerName());
         entity.setEmail(dto.getEmail());
         entity.setCustomerDepartment(dto.getCustomerDepartment());
@@ -84,6 +88,20 @@ public class CustomerService {
             return true;
         }
         return false;
+    }
+
+    /**
+     *  모든 Customer의 비밀번호 암호화하는 함수
+     */
+    @Transactional
+    public void changePassword() {
+        List<CustomerEntity> customerList = customerRepository.findAll();
+        log.info("지금 서비스에서 다 찾았어 {}",customerList.get(0));
+        customerList.forEach((entity)->{
+            entity.setCustomerPw(bCryptPasswordEncoder.encode(entity.getCustomerPw()));
+        });
+        log.info("지금 서비스에서 다 바꿨어 {}",customerList.get(0).getCustomerPw());
+
     }
 
     

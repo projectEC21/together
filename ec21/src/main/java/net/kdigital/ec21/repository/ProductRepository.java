@@ -131,7 +131,7 @@ public interface ProductRepository extends JpaRepository<ProductEntity, String> 
 
         // ============================ 관리자페이지 mainboard 화면
         // =================================
-        // 상품등록일자별 카운트하여 linechart data에 Map형식으로 전달
+        // 상품등록일자별 카운트하여 전달
         @Query(value = "SELECT TO_CHAR(TRUNC(create_date), 'YYYY-MM-DD') as truncated_date, COUNT(*) as count " +
                         "FROM product " +
                         "GROUP BY TRUNC(create_date) " +
@@ -140,11 +140,24 @@ public interface ProductRepository extends JpaRepository<ProductEntity, String> 
 
         // ============================ 관리자페이지 mainboard 화면
         // =================================
-        // 카테고리별 장상/이상 개수 카운트하여 barchart data에 list형식으로 전달
+        // 카테고리별 장상/이상 개수 전달
         @Query(value = "SELECT category, " +
                         "SUM(CASE WHEN lstm_predict = 0 THEN 1 ELSE 0 END) AS judge_0_count, " +
                         "SUM(CASE WHEN lstm_predict = 1 THEN 1 ELSE 0 END) AS judge_1_count " +
                         "FROM product " +
                         "GROUP BY category ORDER BY category", nativeQuery = true)
         List<Object[]> findCategoryCounts();
+
+        // ============================ 관리자페이지 mainboard 화면
+        // =================================
+        // 등록된 상품의 등록일자, 카테고리별 개수를 전달.
+        @Query(value = "SELECT TRUNC(create_date) as truncated_date, category, COUNT(*) as count " +
+                        "FROM product " +
+                        "WHERE create_date BETWEEN :startDate AND :endDate " +
+                        "GROUP BY TRUNC(create_date), category " +
+                        "ORDER BY TRUNC(create_date), category", nativeQuery = true)
+
+        List<Object[]> countProductsByCategoryAndDateRange(@Param("startDate") LocalDateTime startDate,
+                        @Param("endDate") LocalDateTime endDate);
+
 }

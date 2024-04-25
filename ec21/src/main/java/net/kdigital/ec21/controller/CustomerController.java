@@ -80,7 +80,12 @@ public class CustomerController {
      * @return
      */
     @GetMapping("/main/login")
-    public String login() {
+    public String login(@RequestParam(value = "error", required =false) String error,
+        @RequestParam(value = "errMessage", required = false) String errMessage,Model model) {
+
+        model.addAttribute("error", error);
+        model.addAttribute("errMessage", errMessage);
+        
         return "main/login";
     }
 
