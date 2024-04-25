@@ -175,4 +175,5 @@ public interface ProductRepository extends JpaRepository<ProductEntity, String> 
                         "GROUP BY similar_word " +
                         "ORDER BY count DESC", nativeQuery = true)
         Page<Object[]> countSimilarWords(Pageable pageable);
+
 }

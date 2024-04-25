@@ -2,14 +2,16 @@ package net.kdigital.ec21.controller;
 
 import java.util.List;
 
+import net.kdigital.ec21.dto.ProductDTO;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import net.kdigital.ec21.dto.ProductDTO;
 import net.kdigital.ec21.service.ProductService;
+import org.springframework.web.bind.annotation.RequestParam;
 
 
 @Controller

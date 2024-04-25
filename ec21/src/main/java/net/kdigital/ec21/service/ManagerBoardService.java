@@ -1,20 +1,22 @@
 package net.kdigital.ec21.service;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import java.util.stream.Collectors;
 
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
 import net.kdigital.ec21.repository.ProductRepository;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 @Service
 @RequiredArgsConstructor
@@ -58,8 +60,7 @@ public class ManagerBoardService {
         LocalDate endDate = LocalDate.parse(end);
         // LocalDate를 LocalDateTime으로 변환하여 자정 시간을 사용합니다.
         LocalDateTime startDateTime = startDate.atStartOfDay();
-        LocalDateTime endDateTime = endDate.plusDays(1).atStartOfDay();
-        ; // 다음 날 자정을 끝으로 사용합니다.
+        LocalDateTime endDateTime = endDate.plusDays(1).atStartOfDay(); // 다음 날 자정을 끝으로 사용합니다.
 
         List<Object[]> results = productRepository.countProductsByCategoryAndDateRange(startDateTime, endDateTime);
         return results.stream()
@@ -73,7 +74,6 @@ public class ManagerBoardService {
                 .collect(Collectors.toList());
     }
 
-    // 금지어 top10
     public List<Map<String, Object>> getTopSimilarWordCounts() {
         int pageSize = 5; // 상위 5개만 가져옴
         Pageable pageable = PageRequest.of(0, pageSize, Sort.Direction.DESC, "count");
