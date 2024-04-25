@@ -54,7 +54,8 @@ public class ManagerBoardService {
         LocalDate endDate = LocalDate.parse(end);
         // LocalDate를 LocalDateTime으로 변환하여 자정 시간을 사용합니다.
         LocalDateTime startDateTime = startDate.atStartOfDay();
-        LocalDateTime endDateTime = endDate.plusDays(1).atStartOfDay(); // 다음 날 자정을 끝으로 사용합니다.
+        LocalDateTime endDateTime = endDate.plusDays(1).atStartOfDay();
+        ; // 다음 날 자정을 끝으로 사용합니다.
 
         List<Object[]> results = productRepository.countProductsByCategoryAndDateRange(startDateTime, endDateTime);
         return results.stream()

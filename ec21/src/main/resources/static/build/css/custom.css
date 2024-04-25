@@ -3068,7 +3068,7 @@ span.right {
 
 .tile_count .tile_stats_count {
   border-bottom: 1px solid #D9DEE4;
-  padding: 0 10px 0 20px;
+  padding: 0 50px 0 50px;
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
@@ -4487,6 +4487,20 @@ ul.social li {
 .linechart {
   display: flex;
   justify-content: center;
+}
+
+.mid {
+  height: 300px;
+  display: flex;
+  justify-content: center;
+}
+
+.Cchart {
+
+  height: 400px;
+  display: flex;
+  justify-content: center;
+
 }
 
 /* *********  /chart  **************************** */
