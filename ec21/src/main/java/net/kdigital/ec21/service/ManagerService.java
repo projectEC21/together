@@ -71,8 +71,8 @@ public class ManagerService {
         Long todayRegisteredProd = productRepository.countByCreateDateBetween(todayStart, todayEnd);
         result.put("todayRegisteredProd", todayRegisteredProd);
 
-        // 당일 등록된 이상 상품 개수
-        Long todayWeirdProd = productRepository.countByCreateDateBetweenAndLstmPredict(todayStart, todayEnd, false);
+        // 당일 등록된 이상 상품 개수(당일 수정된 상품 중 이상으로 판별된 상품 수도 포함됨)
+        Long todayWeirdProd = productRepository.countByDateAndLstmPredictFalse(todayStart, todayEnd);
         result.put("todayWeirdProd", todayWeirdProd);
 
         // 당일 등록한 회원 수
@@ -208,9 +208,9 @@ public class ManagerService {
     public List<ModelPredictModalDTO> getProhibitSimilarWordDTOs(String productId) {
         List<ModelPredictModalDTO> modalDTOs = new ArrayList<>();
 
-        // productId에 해당하는 금지어유사도 결과 데이터들 가져오기 (금지어 유사 확률 높은 순)
+        // productId에 해당하는 금지어유사도 결과 데이터들 가져오기 (금지어 유사단어의 알파벳 오름차순, 금지어 유사도 내림차순)
         List<ProhibitSimilarWordEntity> entityList = prohibitSimilarWordRepository
-                .findProbaByProductEntity_ProductIdOrderBySimilarProbaDesc(productId);
+                .findByProductEntity_ProductIdOrderBySimilarWordAscSimilarProbaDesc(productId);
         if (entityList == null) {
             return null;
         }

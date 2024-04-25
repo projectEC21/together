@@ -1,6 +1,7 @@
 package net.kdigital.ec21.service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
@@ -298,6 +299,7 @@ public class ProductService {
             entity.setMoq(productDTO.getMoq());
             entity.setUnit(productDTO.getUnit());
             entity.setCategory(productDTO.getCategory());
+            entity.setUpdateDate(LocalDateTime.now());  // 수정일 세팅
             // lstm 결과 세팅
             entity.setLstmPredict(lstmPredict);
             entity.setLstmPredictProba(lstmPredictProba);
