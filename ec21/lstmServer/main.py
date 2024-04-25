@@ -59,6 +59,21 @@ from tensorflow.keras.initializers import Orthogonal
 from rapidfuzz import fuzz
 import random
 
+# # oracleDB 연결
+# import oracledb
+
+# connection = oracledb.connect(
+#     user="admin",
+#     password="DIMA3project",			# DB 생성 시 입력한 비밀번호
+#     dsn="h2z0kxkxxnhhftv2_high",					    # Database connection -> Connection Strings -> TNS NAME
+#     config_dir='../src/main/resources/wallet',			# wallet 디렉토리 경로
+#     wallet_location='../src/main/resources/wallet')		# wallet 디렉토리 경로
+
+# print("Successfully connected to Oracle Database")
+
+# # cursor 생성
+# cursor = connection.cursor()
+
 
 # 클래스 객체 
 class Lstm(BaseModel):
@@ -159,20 +174,26 @@ def predictLstm(lstm:Lstm):
     print("====lstm_predict : "+str(lstm_predict))
     print("====lstm_predict_proba : "+str(lstm_predict_proba))
 
-    #=========== 금지어 유사도 =============
-    # 정상(1)인 경우 값 반환 / 이상(0)인 경우 금지어유사도까지 확인
-    if lstm_predict==1:
-        result = [{"lstm_predict":str(lstm_predict), "lstm_predict_proba": str(lstm_predict_proba)}]
-        
-        # print(JSONResponse(result))
-        return JSONResponse(result)
-    else:
-        # 상품 데이터, 금지어사전 원본
-        # ori_prohibited_words = pd.read_csv('IPR리스트_231218.csv')
-        ori_prohibited_words = pd.read_csv('../../../fastAPI/lstm/LstmServer/IPR리스트_231218.csv')
+    # lstm 결과 변수에 저장
+    result = [{"lstm_predict":str(lstm_predict), "lstm_predict_proba": str(lstm_predict_proba)}]
 
-        # 금지어사전 하나의 리스트로 변환
+    #=========== 금지어 유사도 =============
+
+    # 이상(0)인 경우 금지어유사도까지 확인
+    if lstm_predict!=1:
+        
+        # # 금지어 테이블에서 금지어 데이터를 가져오는 쿼리
+        # cursor.execute("SELECT prohibit_word FROM prohibit_word")
+
+        # # 금지어 데이터를 리스트로 변환
+        # prohibited_words_list = [row[0].lower() for row in cursor.fetchall()]
+
+        # # 상품 데이터, 금지어사전 원본
+        # # ori_prohibited_words = pd.read_csv('IPR리스트_231218.csv')
+        ori_prohibited_words = pd.read_csv('../../../fastAPI/lstm/LstmServer/IPR리스트_231218.csv')
+        # # 금지어사전 하나의 리스트로 변환
         prohibited_words_list = ori_prohibited_words['KEYWORD'].str.lower().tolist()
+        
 
         # 결과를 저장할 리스트 생성 (상품 아이디와 lstm결과도 넣어줌)
         result = [{"lstm_predict":str(lstm_predict),"lstm_predict_proba":str(lstm_predict_proba)}]
@@ -192,9 +213,15 @@ def predictLstm(lstm:Lstm):
                         "Prohibited_Word": prohibited_word, # 금지어리스트의 단어
                         "Similarity_Score": str(similarity_score) # 금지어 유사도
                     })
+        
+        # 결과 콘솔창에서 확인
         print(result)
 
-        return JSONResponse(content=result)   
+        # # oracledb 연결 해제
+        # cursor.close()
+        # connection.close()
+
+    return JSONResponse(content=result)   
     
     
 
