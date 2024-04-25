@@ -25,8 +25,6 @@ public class SecurityConfig {
         // 웹 요청 시 접근 권한 설정
         http.authorizeHttpRequests((auth) -> auth.requestMatchers("/",
                 "/main/index",
-
-                "/manager/**",
                 "/main/register",
                 "/main/login",
                 "/main/list",
