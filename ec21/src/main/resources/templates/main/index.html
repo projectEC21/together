@@ -163,14 +163,14 @@
 						<div class="right-bar">
 							<!-- Search Form -->
 							<div sec:authorize="isAuthenticated()" class="sinlge-bar">
-								<a th:href="@{/main/myproducts}" class="single-icon"><i class="fa fa-user-circle-o"
+								<a th:href="@{/main/myproducts(customerId=${#authentication.name})}" class="single-icon"><i class="fa fa-user-circle-o"
 										aria-hidden="true"></i></a>
 							</div>
 
 							<!-- 검색창 옆 부분 인콰이어리 new 로만 보이게 하고 인콰이어리 페이지로 넘어가게 하기 -->
 							<!-- ++ 0이 아닐때만 파란색으로 뜨게 하기 ! === 아직 안됨 -->
 							<div sec:authorize="isAuthenticated()" class="sinlge-bar inquiry">
-								<a th:href="@{/main/inbox}" class="single-icon"><i class="fa fa-envelope-o"></i> <span
+								<a th:href="@{/main/inbox(customerId=${#authentication.name})}" class="single-icon"><i class="fa fa-envelope-o"></i> <span
 										class="total-count">new</span></a>
 							</div>
 						</div>
