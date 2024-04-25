@@ -265,15 +265,6 @@ public class ProductService {
 	public ProductDTO updateProduct_judge(ProductDTO productDTO) {
         ProductEntity entity = productRepository.findById(productDTO.getProductId()).get();
 
-        // 수정
-        entity.setProductName(productDTO.getProductName());
-        entity.setProductDesc(productDTO.getProductDesc());
-        entity.setPrice(productDTO.getPrice());
-        entity.setOrigin(productDTO.getOrigin());
-        entity.setMoq(productDTO.getMoq());
-        entity.setUnit(productDTO.getUnit());
-        entity.setCategory(productDTO.getCategory());
-
         // 상품명 or 설명이 바뀐 경우
         if(entity.getProductName()!=productDTO.getProductName() || entity.getProductDesc()!=productDTO.getProductDesc()){
             log.info("여기 수정 서비스야. 상품명이나 설명 바뀐 경우야");
@@ -299,7 +290,15 @@ public class ProductService {
             lstmPredict = String.valueOf(result.get(0).get("lstm_predict")).equals("1") ? true : false;
             lstmPredictProba = Double.parseDouble(String.valueOf(result.get(0).get("lstm_predict_proba")));
 
-            // 3) ProductEntity에 lstm 결과 세팅
+            // 3) ProductEntity에 수정된 정보와 lstm 결과 세팅
+            entity.setProductName(productDTO.getProductName());
+            entity.setProductDesc(productDTO.getProductDesc());
+            entity.setPrice(productDTO.getPrice());
+            entity.setOrigin(productDTO.getOrigin());
+            entity.setMoq(productDTO.getMoq());
+            entity.setUnit(productDTO.getUnit());
+            entity.setCategory(productDTO.getCategory());
+            // lstm 결과 세팅
             entity.setLstmPredict(lstmPredict);
             entity.setLstmPredictProba(lstmPredictProba);
             // lstmPredict가 1이면 judge를 Y로, 0이면 null로 확실히 변경
