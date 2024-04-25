@@ -106,13 +106,13 @@
             console.log("Similar words:", similarWords);
 
             // 상품명에서 유사단어 강조 적용
-            var modalName = $("#modalName").html();
+            var modalName = $("#modalName").text();
             modalName = applyHighlighting(similarWords, modalName);
             $("#modalName").html(modalName);
 
 
             // 상품 설명에서 유사단어 강조 적용
-            var modalDesc = $("#modalDesc").html();
+            var modalDesc = $("#modalDesc").text();
             modalDesc = applyHighlighting(similarWords, modalDesc);
             $("#modalDesc").html(modalDesc);
 

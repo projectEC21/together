@@ -24,11 +24,11 @@ public class CustomerFailureHandler extends SimpleUrlAuthenticationFailureHandle
         
         String errMsg = "";
         if (exception instanceof BadCredentialsException) {
-            errMsg =exception.getMessage();
-            errMsg+= "\n아이디나 비밀번호가 잘못되었습니다.";
+            // errMsg =exception.getMessage();
+            errMsg+= "\nYour username or password is incorrect.";
         }else{
-            errMsg = exception.getMessage();
-            errMsg += "\n로그인에 실패했습니다. 관리자에게 문의하세요";
+            // errMsg = exception.getMessage();
+            errMsg += "\nLogin failed. Please contact the administrator.";
         }
 
         errMsg = URLEncoder.encode(errMsg, "UTF-8");
