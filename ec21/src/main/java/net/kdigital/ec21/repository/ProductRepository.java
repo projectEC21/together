@@ -23,6 +23,12 @@ public interface ProductRepository extends JpaRepository<ProductEntity, String> 
         Long countByCreateDateBetweenAndLstmPredict(LocalDateTime startDate, LocalDateTime endDate,
                         boolean lstmPredict);
 
+        // updateDate 또는 createDate가 오늘인 데이터 중에서 lstmPredict가 false인 데이터의 개수를 세는 메서드
+        @Query("SELECT COUNT(p) FROM ProductEntity p WHERE " +
+                        "(p.updateDate BETWEEN :startOfDay AND :endOfDay OR p.createDate BETWEEN :startOfDay AND :endOfDay) " +
+                        "AND p.lstmPredict = FALSE")
+        Long countByDateAndLstmPredictFalse(LocalDateTime startOfDay, LocalDateTime endOfDay);
+
         // ============================ 관리자 전체 상품 화면 =================================
 
         // 회원ID, 상품ID, 상품명 (3개지 필드 비교)에 전달받은 검색어가 포함된 상품들을 정렬 조건순으로 반환
