@@ -217,9 +217,9 @@ def predictLstm(lstm:Lstm):
         # 결과 콘솔창에서 확인
         print(result)
 
-        # oracledb 연결 해제
-        cursor.close()
-        connection.close()
+        # # oracledb 연결 해제
+        # cursor.close()
+        # connection.close()
 
     return JSONResponse(content=result)   
     
