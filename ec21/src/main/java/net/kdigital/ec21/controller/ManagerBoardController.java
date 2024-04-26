@@ -47,4 +47,10 @@ public class ManagerBoardController {
         return managerBoardService.getCategoryDataByDateRange(start, end);
     }
 
+    @ResponseBody
+    @GetMapping("/manager/board/topSimilarWordCounts")
+    public List<Map<String, Object>> getTopSimilarWordCounts() {
+        return managerBoardService.getTopSimilarWordCounts();
+    }
+
 }
