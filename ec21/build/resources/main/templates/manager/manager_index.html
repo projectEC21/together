@@ -205,12 +205,12 @@
               '#F0E6B4'
             ],
             borderWidth: 1,
-            weight: 3
+            weight: 2
           }]
         },
         options: {
           responsive: true,
-          cutoutPercentage: 70,
+          cutoutPercentage: 80,
           maintainAspectRatio: false // 비율을 유지하도록 변경
         },
         plugins: {
@@ -448,29 +448,34 @@
         <!-- 상품, 회원 count -->
         <!-- 240413 dy : id값 부여하고 ajax로 값 꽂아 넣기 -->
         <div class="row" style="display: flex; justify-content: center;">
-          <div class="tile_count">
-            <div class="col-md-3 col-sm-4  tile_stats_count">
-              <span class="count_top"><i class="fa fa-user"></i> <a th:href="@{/manager/productList}">당일 등록 상품
-                  수</a></span>
-              <div class="count" id="todayRegisteredProd"></div>
-              <!-- 지난 주 대비 증감률-->
-              <!-- <span class="count_bottom"><i class="blue"><i class="fa fa-sort-asc"></i>4% </i> From last Week</span> -->
+
+          <div class="col-xl-3 col-md-6 mb-4 tile_stats_count">
+            <div class="card-body">
+              <div class="row no-gutters align-items-center">
+                <div class="col mr-2">
+                  <span class="count_top"><i class="fa fa-user"></i> <a th:href="@{/manager/productList}">당일 등록 상품
+                      수</a></span>
+                  <div class="count" id="todayRegisteredProd"></div>
+                  <!-- 지난 주 대비 증감률-->
+                  <!-- <span class="count_bottom"><i class="blue"><i class="fa fa-sort-asc"></i>4% </i> From last Week</span> -->
+                </div>
+              </div>
             </div>
-            <div class="col-md-3 col-sm-4  tile_stats_count">
+            <div class="col-xl-3 col-md-6 mb-4  tile_stats_count">
               <span class="count_top"><i class="fa fa-clock-o"></i> <a th:href="@{/manager/modelPredict}">당일 이상상품 등록
                   수</a></span>
               <div class="count" id="todayWeirdProd"></div>
               <!-- 지난 주 대비 증감률-->
               <!-- <span class="count_bottom"><i class="blue"><i class="fa fa-sort-asc"></i>3% </i> From last Week</span> -->
             </div>
-            <div class="col-md-3 col-sm-4  tile_stats_count">
+            <div class="col-xl-3 col-md-6 mb-4  tile_stats_count">
               <span class="count_top"><i class="fa fa-user"></i><a th:href="@{/manager/customerList}">당일회원가입수</a>
               </span>
               <div class="count blue" id="todayRegisteredCustomer"></div>
               <!-- 지난 주 대비 증감률-->
               <!-- <span class="count_bottom"><i class="blue"><i class="fa fa-sort-asc"></i>34% </i> From last Week</span> -->
             </div>
-            <div class="col-md-3 col-sm-4  tile_stats_count">
+            <div class="col-xl-3 col-md-6 mb-4 tile_stats_count">
               <span class="count_top"><i class="fa fa-user"></i> <a th:href="@{/manager/reportedCustomerList}">미처리된 신고
                   개수</a></span>
               <div class="count" id="unprocessedReport"></div>
