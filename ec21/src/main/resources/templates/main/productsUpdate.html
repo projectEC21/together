@@ -116,12 +116,12 @@
                         <!-- Top Right -->
                         <div class="right-content">
                             <ul class="list-main">
-                                <li><i class="ti-power-off"></i><a th:href="@{/main/login}">Login</a></li>
-                                <li><i class="ti-user"></i><a th:href="@{/main/register}">Sign up</a></li>
-                                <li><i class="ti-power-off"></i><a th:href="@{/main/index}">Logout</a></li>
+                                <li sec:authorize="isAnonymous()"><i class="ti-power-off"></i><a th:href="@{/main/login}">Login</a></li>
+								<li sec:authorize="isAnonymous()"><i class="ti-user"></i><a th:href="@{/main/register}">Sign up</a></li>
+								<li sec:authorize="isAuthenticated()"><i class="ti-power-off"></i><a th:href="@{/main/logout}">Logout</a></li>
                                 <li><i class="fa fa-user-circle-o" aria-hidden="true"></i><a
-                                        th:href="@{/main/myproducts}"></a></li>
-                                <li><i class="fa fa-envelope-o"></i><a th:href="@{/main/inbox}"></a><span
+                                        th:href="@{/main/myproducts(customerId=${#authentication.name})}"></a></li>
+                                <li><i class="fa fa-envelope-o"></i><a th:href="@{/main/inbox(customerId=${#authentication.name})}"></a><span
                                         class="total-count">NEW</span></li>
                             </ul>
                         </div>
@@ -169,7 +169,7 @@
                             <li><a th:href="@{/}">Home<i class="ti-arrow-right"></i></a></li>
                             <li class="active"><a href="#">Products</a></li>
                             <li><i class="ti-arrow-right"></i></a></li>
-                            <li class="active"><a th:href="@{/main/productsWrite}">Add a New Product</a></li>
+                            <li class="active"><a th:href="@{/main/productsWrite(customerId=${#authentication.name})}">Add a New Product</a></li>
                         </ul>
                     </div>
                 </div>
@@ -189,7 +189,7 @@
                             <h3 class="title">My Page</h3>
                             <ul class="categor-list">
                                 <li><a href="#">info</a></li>
-                                <li><a th:href="@{main/myproducts}" style="font-weight:600;">Products</a></li>
+                                <li><a th:href="@{main/myproducts(customerId=${#authentication.name})}" style="font-weight:600;">Products</a></li>
                                 <!-- 해당 페이지에 들어가면 색상이 더 진하게 보이게 해놓음
 											th : @@/myProducts -->
                             </ul>
