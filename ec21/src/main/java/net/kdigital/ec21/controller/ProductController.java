@@ -10,8 +10,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,8 +22,10 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.kdigital.ec21.dto.CustomerDTO;
+import net.kdigital.ec21.dto.InquiryDTO;
 import net.kdigital.ec21.dto.ProductDTO;
 import net.kdigital.ec21.service.CustomerService;
+import net.kdigital.ec21.service.InquiryService;
 import net.kdigital.ec21.service.ProductService;
 
 
@@ -36,6 +36,7 @@ import net.kdigital.ec21.service.ProductService;
 public class ProductController {
     private final ProductService productService;
     private final CustomerService customerService;
+    private final InquiryService inquiryService;
 
     // ====================================== 상품 등록 ========================================
     /**
@@ -120,6 +121,23 @@ public class ProductController {
         
         return "main/productsDetail";
     }
+
+    /**
+     * 상세 페이지에서 인콰이어리 모달창에서 전송된 정보 받아서 DB에 저장
+     */
+    @PostMapping("/productDetail/sendInquiry")
+    public String getMethodName(@ModelAttribute InquiryDTO inquiryDTO) {
+        log.info("인콰이어리 폼 받았어");
+        log.info(inquiryDTO.getReceiverId());
+
+        inquiryService.insertinquiry(inquiryDTO);
+
+        return "redirect:/main/productsDetail";
+    }
+    
+
+
+
     
     // ====================================== 상품 수정 ========================================
 

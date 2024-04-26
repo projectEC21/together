@@ -55,7 +55,29 @@
       $('#startDate, #endDate').on('change', function () {
         updateCharts();
       });
+
+      loadProhibitedWords();
     });
+
+    function loadProhibitedWords() {
+      $.ajax({
+        url: "/manager/board/topSimilarWordCounts", // 수정된 엔드포인트
+        type: "GET",
+        success: function (data) {
+          var tableBody = $("#similarWordsTable");
+          tableBody.empty(); // 기존의 데이터를 비우고 새로운 데이터로 채웁니다.
+          // 서버로부터 받은 데이터를 행으로 추가합니다.
+          data.forEach(function (item) {
+            var row = "<tr><td>" + item.similarWord + "</td><td>" + item.count + "</td></tr>";
+            tableBody.append(row);
+          });
+        },
+        error: function (error) {
+          console.log("Error fetching data:", error);
+        }
+      });
+
+    }
 
     // 차트 인스턴스를 저장할 변수 선언
     var lineChartInstance;
@@ -126,23 +148,15 @@
               beginAtZero: true
             }
           },
-          tooltips: {
-            callbacks: {
-              title: function () {
-                return ''; // 이것은 툴팁의 제목을 숨깁니다.
-              },
-              label: function (tooltipItem, data) {
-                return `Count: ${tooltipItem.yLabel}`;
-              }
+          plugins: {
+            legend: {
+              display: false
             }
-          },
-          legend: {
-            display: false // 이것은 범례를 숨깁니다.
           }
+
         }
       });
     }
-
 
     function updateDoughnutChart(data) {
       console.log(data);
@@ -177,37 +191,39 @@
             label: 'Category Counts',
             data: chartData,
             backgroundColor: [
-              'rgba(64, 162, 227, 0.8)',
-              'rgba(255, 246, 233, 0.8)',
-              'rgba(13, 146, 118, 0.8)',
-              'rgba(255, 206, 86, 0.8)',
-              'rgba(187, 226, 236, 0.8)',
-              // 추가 색상...
+              '#0287BE',
+              '#47C6E8',
+              '#F7C74B',
+              '#FDE775',
+              '#F0E6B4'
             ],
             borderColor: [
-              'rgba(64, 162, 227, 1)',
-              'rgba(255, 246, 233, 1)',
-              'rgba(13, 146, 118, 1)',
-              'rgba(255, 206, 86, 1)',
-              'rgba(187, 226, 236, 1)',
-
+              '#0287BE',
+              '#47C6E8',
+              '#F7C74B',
+              '#FDE775',
+              '#F0E6B4'
             ],
-            borderWidth: 1
+            borderWidth: 1,
+            weight: 3
           }]
         },
         options: {
           responsive: true,
-          maintainAspectRatio: true // 비율을 유지하도록 변경
+          cutoutPercentage: 70,
+          maintainAspectRatio: false // 비율을 유지하도록 변경
         },
-        tooltips: {
-          callbacks: {
-            title: function () {
-              return ''; // 이것은 툴팁의 제목을 숨깁니다.
+        plugins: {
+          legend: {
+            display: true, // 범례 표시 여부
+            position: 'top',// 범례의 위치
+            align: 'center',
+            labels: {
+              boxWidth: 100, // 범례 색상 상자의 너비
+              padding: 10, // 범례 항목 간의 패딩
+              usePointStyle: true
             }
           }
-        },
-        legend: {
-          display: false // 이것은 범례를 숨깁니다.
         }
       });
     }
@@ -359,7 +375,7 @@
           <!-- menu profile quick info -->
           <div class="profile clearfix">
             <div class="profile_pic">
-              <img th:src="@{/production/images/user.png}" alt="..." class="img-circle profile_img">
+              <img th:src="@{/production/images/user.jpeg}" alt="..." class="img-circle profile_img">
             </div>
             <div class="profile_info">
               <h2>관리자</h2>
@@ -469,62 +485,98 @@
         <!-- 상품, 회원 count 끝 -->
 
         <!-- 차트 시작 -->
-        <div class="row">
+        <div>
+          <label for="startDate">Start Date:</label>
+          <input type="date" id="startDate">
+          <label for="endDate">End Date:</label>
+          <input type="date" id="endDate">
+        </div>
 
+        <div class="row">
           <!-- 일자별 상품등록 개수 라인, 도넛 그래프-->
-          <div class="col-md-12 col-sm-912  ">
+          <div class="col-md-7  ">
+            <div class=" x_panel">
+              <div class="x_title">
+                <h2>일자별 상품등록 개수</h2>
+                <div class="clearfix"></div>
+              </div>
+              <div class="x_content ">
+                <!-- <button onclick="updateCharts()">Update Charts</button> -->
+                <div class="mid">
+                  <canvas id="lineChart"></canvas>
+                </div>
+
+
+              </div>
+            </div>
+          </div>
+          <!-- 일자별 상품등록 개수 라인, 도넛 그래프 끝 -->
+          <!-- 카테고리별 이상/정상상품 판별개수 그래프 -->
+          <div class="col-md-5 col-sm-912  ">
             <div class=" x_panel">
               <div class="x_title">
                 <h2>일자별 상품등록 개수</h2>
                 <div class="clearfix"></div>
               </div>
 
-              <div class="">
-                <div class="x_content mid ">
-                  <div class=" ">
-                    <label for="startDate">Start Date:</label>
-                    <input type="date" id="startDate">
-                    <label for="endDate">End Date:</label>
-                    <input type="date" id="endDate">
-                    <!-- <button onclick="updateCharts()">Update Charts</button> -->
-                    <div style="
-                    display: flex;
-                    justify-content: center;
-                ">
-                      <div style="width: 700px;">
-                        <canvas id="lineChart"></canvas>
-                      </div>
-                      <div style="width: 400px; height: 400px;">
-                        <canvas id="doughnutChart"></canvas>
-                      </div>
-                    </div>
-
-                  </div>
+              <div class="x_content ">
+                <div class="mid">
+                  <canvas id="doughnutChart"></canvas>
                 </div>
               </div>
             </div>
           </div>
-          <!-- 일자별 상품등록 개수 라인, 도넛 그래프 끝 -->
 
+          <!-- /카테고리별 이상/정상상품 판별개수 그래프 끝-->
           <!-- 카테고리별 이상/정상상품 판별개수 그래프 -->
-          <div class="col-md-12 col-sm-912  ">
+          <div class="col-md-7 ">
             <div class=" x_panel">
               <div class="x_title">
                 <h2>카테고리별 이상/ 정상상품 판별 개수</h2>
                 <div class="clearfix"></div>
               </div>
 
-              <div class="">
-                <div class="x_content mid ">
-                  <div class="">
-                    <!-- bar chart -->
-                    <canvas id="categoryProduct"></canvas>
-                  </div>
+
+              <div class="x_content">
+                <div class="Cchart">
+                  <!-- bar chart -->
+                  <canvas id="categoryProduct"></canvas>
                 </div>
+
               </div>
             </div>
           </div>
           <!-- /카테고리별 이상/정상상품 판별개수 그래프 끝-->
+
+          <div class="col-md-5 ">
+            <div class=" x_panel">
+              <div class="x_title">
+                <h2>금지어 top 10</h2>
+                <div class="clearfix"></div>
+              </div>
+
+              <div class="x_content">
+                <table id="prohibitedWordsTable" class="table Ctable">
+                  <thead>
+                    <tr>
+                      <th>금지어</th>
+                      <th>횟수</th>
+                    </tr>
+                  </thead>
+                  <tbody id="similarWordsTable">
+                    <tr>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                  </tbody>
+                </table>
+
+
+              </div>
+
+
+            </div>
+          </div>
 
         </div>
         <!--/ 차트 끝-->
@@ -534,7 +586,7 @@
     <!-- /page content -->
 
   </div>
-  </div>
+
 
   <!-- jQuery -->
 
