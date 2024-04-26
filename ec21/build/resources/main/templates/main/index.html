@@ -111,8 +111,7 @@
 								<li sec:authorize="isAnonymous()"><i class="ti-power-off"></i><a th:href="@{/main/login}">Login</a></li>
 								<li sec:authorize="isAnonymous()"><i class="ti-user"></i><a th:href="@{/main/register}">Sign up</a></li>
 								<li sec:authorize="isAuthenticated()"><i class="ti-power-off"></i><a th:href="@{/main/logout}">Logout</a></li>
-								<li sec:authorize="hasRole('ROLE_ADMIN')"><a th:href="@{/manager/manager_index}" style="font-weight: bolder;">manager</a>
-								</li>
+								<li sec:authorize="hasRole('ROLE_ADMIN')"><a th:href="@{/manager/manager_index}" style="font-weight: bolder;">manager</a></li>
 							</ul>
 						</div>
 						<!-- End Top Right -->

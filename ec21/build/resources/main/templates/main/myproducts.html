@@ -101,10 +101,9 @@
 						<!-- Top Right -->
 						<div class="right-content">
 							<ul class="list-main">
-								<li><i class="ti-power-off"></i><a th:href="@{/main/login}">Login</a></li>
-								<li><i class="ti-user"></i><a th:href="@{/main/register}">Sign up</a></li>
-								<li><i class="ti-power-off"></i><a th:href="@{/main/logout}">Logout</a></li>
-								</li>
+								<li sec:authorize="isAnonymous()"><i class="ti-power-off"></i><a th:href="@{/main/login}">Login</a></li>
+								<li sec:authorize="isAnonymous()"><i class="ti-user"></i><a th:href="@{/main/register}">Sign up</a></li>
+								<li sec:authorize="isAuthenticated()"><i class="ti-power-off"></i><a th:href="@{/main/logout}">Logout</a></li>
 							</ul>
 						</div>
 						<!-- End Top Right -->

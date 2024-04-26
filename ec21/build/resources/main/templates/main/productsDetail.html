@@ -200,9 +200,9 @@
 						<!-- Top Right -->
 						<div class="right-content">
 							<ul class="list-main">
-								<li><i class="ti-power-off"></i><a th:href="@{/main/login}">Login</a></li>
-								<li><i class="ti-user"></i><a th:href="@{/main/register}">Sign up</a></li>
-								<li><i class="ti-power-off"></i><a th:href="@{/main/logout}">Logout</a></li>
+								<li sec:authorize="isAnonymous()"><i class="ti-power-off"></i><a th:href="@{/main/login}">Login</a></li>
+								<li sec:authorize="isAnonymous()"><i class="ti-user"></i><a th:href="@{/main/register}">Sign up</a></li>
+								<li sec:authorize="isAuthenticated()"><i class="ti-power-off"></i><a th:href="@{/main/logout}">Logout</a></li>
 							</ul>
 						</div>
 						<!-- End Top Right -->
@@ -321,7 +321,7 @@
 				<div class="col-12">
 					<div class="bread-inner">
 						<ul class="bread-list">
-							<li><a th:href="@{/main/index}">Home<i class="ti-arrow-right"></i></a></li>
+							<li><a th:href="@{/}">Home<i class="ti-arrow-right"></i></a></li>
 							<li class="active"><a th:href="@{/main/list}">Products<i class="ti-arrow-right"></i></a>
 							</li>
 							<li class="active"><a
@@ -345,7 +345,8 @@
 			<div class="row">
 				<div class="col-12">
 					<!-- Product Edit & Delete Buttons for User and Manager -->
-					<div class="btn-edit">
+					<!-- 240426 dy : 상품 판매자와 로그인한 ID가 동일한 경우에만 버튼 보임 -->
+					<div class="btn-edit" th:if="${product.customerId == #authentication.name}">
 						<ul class="user-custom">
 							<li><a th:href="@{/main/productsUpdate(productId=${product.productId})}"
 									class="btn min user">Edit</a></li>
@@ -400,7 +401,8 @@
 								</div>
 
 								<!-- Inquiry Button -->
-								<div class="add-to-cart">
+								<!-- 240426 dy : 판매자와 로그인한 아이디가 동일하지 않은 경우에만 보이게 -->
+								<div class="add-to-cart" th:if="${product.customerId != #authentication.name}">
 									<button class="btn" th:id="modalBtn" data-toggle="modal" data-target="#inquiryModal" th:data-quantity="${product.moq}" th:data-unit="${product.unit}"
 									th:data-id="${product.productId}" th:data-category="${product.category}" th:data-seller="${product.customerId}" th:data-title="${product.productName}">
 										Inquire Now <i class="fa fa-envelope-o"></i>
