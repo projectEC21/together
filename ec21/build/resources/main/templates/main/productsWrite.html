@@ -137,11 +137,11 @@
 
 					// CKEditor에서 텍스트 가져오기
 					let contents = ckEditorInstance.getData().trim();
-					// $("#productDesc").val(contents); // 폼의 hidden 필드에 값 설정
 					if (!contents) {
 						alert("Please fill in the Product Description field.");
-							return; // 첫 번째 빈 필드 반환
-						}
+						return; // 첫 번째 빈 필드 반환
+					}
+					$("#productDesc").val(contents); // 폼의 hidden 필드에 값 설정
 					
 
 					if (confirm("Are you sure you want to submit?")) { // 사용자의 확인을 요청
@@ -391,7 +391,7 @@
                                             <!-- / 상품 정보 작성 -->
                                             </div>
                                             <!-- 회원ID -->
-                                            <input type="hidden" name="customerId" value="jooyoungyoon">
+                                            <input type="hidden" name="customerId" th:value="${#authentication.name}">
                                             <input type="hidden" name="remoteIp" id="remoteIp">
                                             <input type="hidden" name="country" id="country">
                                         </table>

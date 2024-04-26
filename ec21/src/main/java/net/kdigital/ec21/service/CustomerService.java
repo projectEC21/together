@@ -58,9 +58,11 @@ public class CustomerService {
     public CustomerDTO updateCustomer(CustomerDTO dto) {
         CustomerEntity entity = customerRepository.findById(dto.getCustomerId()).get();
 
-        // 바꿀수 없는 값 : ID
-        // entity.setCustomerPw(dto.getCustomerPw());
-        entity.setCustomerPw(bCryptPasswordEncoder.encode(dto.getCustomerPw()));
+        // 비밀번호가 같은 경우 인코딩을 하게되면 이전 값과 달라짐. 
+        // 그러므로 같은 경우 즉 변경하지 않은 경우는 따로 entity 세팅하지 않아도 됨.
+        if (!dto.getCustomerPw().equals(entity.getCustomerPw())) {
+            entity.setCustomerPw(bCryptPasswordEncoder.encode(dto.getCustomerPw()));
+        }
         entity.setCustomerName(dto.getCustomerName());
         entity.setEmail(dto.getEmail());
         entity.setCustomerDepartment(dto.getCustomerDepartment());
