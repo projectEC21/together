@@ -32,14 +32,17 @@ public class SecurityConfig {
                 "/build/**",
                 "/data/**",
                 "/docs/**",
-                "/main/**",
+                "/main/css/**",
+                "/main/fonts/**",
+                "/main/images/**",
+                "/main/js/**",
                 "/production/**",
                 "/script/**",
                 "/src/**",
                 "/vendors/**").permitAll()
                 .requestMatchers("/manager/**").hasRole("ADMIN")
-                .requestMatchers("/main/**").hasAnyRole("ADMIN", "USER")
-                .requestMatchers("/inbox/**").hasAnyRole("ADMIN", "USER")
+                .requestMatchers("/inbox/**").hasAnyRole("USER")
+                .requestMatchers("/main/**").hasAnyRole("ADMIN", "USER") // 더 일반적인 경로 설정을 이후에 배치
                 .anyRequest().authenticated());
 
         // Customer Login 설정

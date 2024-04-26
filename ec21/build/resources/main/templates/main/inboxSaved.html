@@ -108,6 +108,7 @@
 					success: function (dto) {
 						console.log(dto);
 						// 모달 값 채우기
+						$("#modalFile").attr("data-inquiryID",dto.inquiryId);
 						$("#modalInquiryTitle").text(dto.inquiryTitle);
 						$("#modalReceiverId").text(dto.receiverId);
 						$("#modalSenderId").text(dto.senderId);
@@ -121,7 +122,7 @@
 							// 클릭 시 다운로드 
 							$("#modalFile").on("click", function () {
 								$.ajax({
-									url: "/inquiry/downloadFile",
+									url: "/inbox/downloadFile",
 									data: { "indquiryId": dto.inquiryId },
 									method: "GET"
 								});
@@ -136,6 +137,12 @@
 			init();
 		});
 
+		// 다운로드
+		function download() {
+			let inquiryID = $("#modalFile").attr("data-inquiryID");
+			alert(inquiryID);
+			window.location = '/inbox/downloadFile?inquiryId=' + encodeURIComponent(inquiryID);
+		}
 
 		// 쓰레기통으로 처리하는 함수
 		function toTrash(element) {
@@ -389,7 +396,7 @@
 								<th class="">Attach File</th>
 								<td>
 									<span>
-										<a href="#" id="modalFile">bts.jpg</a>
+										<a href="javascript:download();" data-inquiryID=""  id="modalFile">bts.jpg</a>
 									</span>
 								</td>
 							</tr>

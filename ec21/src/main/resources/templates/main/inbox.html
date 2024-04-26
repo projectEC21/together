@@ -97,17 +97,15 @@
 			});
 
 			// 모달창 값 채우기 & 모달창 열기
-			$(document).on("click","a[id^='modalBtn']", function () {
+			$(document).on("click", "a[id^='modalBtn']", function () {
 				let inquiryId = $(this).attr("data-id");
 				$.ajax({
-					url:"/inbox/getInquiryModalDTO",
-					data :{"inquiryId":inquiryId},
-					async :false,
-					method:"GET",
-					success:function(dto){
-						console.log(dto);
+					url: "/inbox/getInquiryModalDTO",
+					data: { "inquiryId": inquiryId },
+					method: "GET",
+					success: function (dto) {
 						// 모달 값 채우기
-						$("#modalInquiryId").val(dto.inquiryId);
+						$("#modalFile").attr("data-inquiryId", dto.inquiryId);
 						$("#modalInquiryTitle").text(dto.inquiryTitle);
 						$("#modalReceiverId").text(dto.receiverId);
 						$("#modalSenderId").text(dto.senderId);
@@ -116,21 +114,7 @@
 						$("#modalQuantity").text(dto.quantity);
 						$("#modalUnit").text(dto.unit);
 						$("#modalInquiryContent").text(dto.inquiryContent);
-						console.log(dto.originalFileName + " : " + typeof dto.originalFileName );
-						if(dto.originalFileName!=""){
-							$("#modalFile").text(dto.originalFileName);
-							// 클릭 시 다운로드 
-							$("#modalFile").on("click", function(){
-								console.log(inquiryId);
-								$.ajax({
-									url:"/inquiry/downloadFile",
-									data:{"inquiryId":inquiryId},
-									async:false,
-									method:"GET"
-								});
-							});
-						}
-
+						$("#modalFile").text(dto.originalFileName);
 						// 모달열기
 						$("#inquiryDetail").modal();
 					}
@@ -139,6 +123,11 @@
 
 		});
 
+		// 첨부 파일 다운로드
+		function download() {
+			let inquiryId = $("#modalFile").attr("data-inquiryID");
+			window.location = '/inbox/downloadFile?inquiryId=' + encodeURIComponent(inquiryId);
+		}
 
 
 		// 스팸으로 처리하는 함수
@@ -185,11 +174,7 @@
 
 
 		
-		// 파일 다운로드
-		function toDownload() {
-			let inquiryId = $("#modalInquiryId").val();
-			alert("file download ! "+ inquiryId);
-		}
+		
 
 
 
@@ -383,7 +368,7 @@
 									<th class="">Attach File</th>
 									<td>
 										<span>
-											<a href="#" id="modalFile">bts.jpg</a>
+											<a href="javascript:download();" data-inquiryId="" id="modalFile">bts.jpg</a>
 										</span>
 									</td>
 								</tr>

@@ -123,7 +123,7 @@
 							$("#modalFile").on("click", function(){
 								console.log(inquiryId);
 								$.ajax({
-									url:"/inquiry/downloadFile",
+									url:"/inbox/downloadFile",
 									data:{"inquiryId":inquiryId},
 									async:false,
 									method:"GET"

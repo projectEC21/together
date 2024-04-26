@@ -9,7 +9,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<!-- Title Tag  -->
-	<title>EC21, Global B2B Marketplace</title>
+	<title>EC21, Global B2B Marketplace</title> 
 	<!-- Favicon -->
 	<link rel="icon" type="image/png" th:href="@{/main/images/ec21logo.png}">
 	<!-- Web Font -->
@@ -84,8 +84,8 @@
 					data: { "inquiryId": inquiryId },
 					method: "GET",
 					success: function (dto) {
-						console.log(dto);
 						// 모달 값 채우기
+						$("#modalFile").attr("data-inquiryId", dto.inquiryId);
 						$("#modalInquiryTitle").text(dto.inquiryTitle);
 						$("#modalReceiverId").text(dto.receiverId);
 						$("#modalSenderId").text(dto.senderId);
@@ -94,17 +94,7 @@
 						$("#modalQuantity").text(dto.quantity);
 						$("#modalUnit").text(dto.unit);
 						$("#modalInquiryContent").text(dto.inquiryContent);
-						if (dto.originalFileName != null) {
-							$("#modalFile").text(dto.originalFileName);
-							// 클릭 시 다운로드 
-							$("#modalFile").on("click", function () {
-								$.ajax({
-									url: "/inquiry/downloadFile",
-									data: { "indquiryId": dto.inquiryId },
-									method: "GET"
-								});
-							});
-						}
+						$("#modalFile").text(dto.originalFileName);
 						// 모달열기
 						$("#inquiryDetail").modal();
 					}
@@ -112,7 +102,15 @@
 			}); // End 모달 클릭 이벤트
 
 			init();
+
 		});
+
+		// 첨부 파일 다운로드
+		function download() {
+			let inquiryId = $("#modalFile").attr("data-inquiryID");
+			window.location = '/inbox/downloadFile?inquiryId=' + encodeURIComponent(inquiryId);
+		}
+
 
 		// untrash 처리하는 함수 : 받은 메일함으로 보냄
 		function toUnTrash(element) {
