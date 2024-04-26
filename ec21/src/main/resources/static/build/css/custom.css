@@ -1389,6 +1389,7 @@ body .container.body .right_col {
   .right_col .x_panel {
     padding: 10px !important;
     overflow-x: auto;
+
     /* 화면이 작아질 때 스크롤바 생성 */
   }
 
@@ -2303,6 +2304,7 @@ h2 {
   opacity: 1;
   -webkit-transition: all .2s ease;
   transition: all .2s ease;
+  border-radius: 20px;
 }
 
 .x_title {
@@ -2436,6 +2438,7 @@ table.tile span {
 
 table.tile th,
 table.tile td {
+
   text-align: center;
 }
 
@@ -2562,6 +2565,7 @@ table.countries_list {
   width: 100%;
 }
 
+
 table.countries_list td {
   padding: 0 10px;
   line-height: 30px;
@@ -2590,6 +2594,7 @@ a.DTTT_button {
 
 table.jambo_table {
   border: 1px solid rgba(221, 221, 221, 0.78);
+  width: 100% !important;
 }
 
 table.jambo_table thead {
@@ -2618,6 +2623,7 @@ table.jambo_table tbody tr.selected td {
   border-top: 1px solid rgba(38, 185, 154, 0.4);
   border-bottom: 1px solid rgba(38, 185, 154, 0.4);
 }
+
 
 
 
@@ -3044,9 +3050,32 @@ span.right {
   background: #425567; } */
 
 /** top tiles  */
+.main_count {
+  margin-bottom: 20px;
+  margin-top: 20px;
+
+}
+
+.count {
+  background-color: white;
+  font-size: 20px;
+  padding: 0 80px 0 80px;
+  width: 250px;
+  /* border: 10px solid black; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 10px;
+  border-radius: 30px;
+}
+
 .tile_count {
   margin-bottom: 20px;
   margin-top: 20px;
+}
+
+.count_top {
+  width: 200px;
 }
 
 
@@ -3063,16 +3092,14 @@ span.right {
   /* 부모 요소에 맞게 높이 조정 */
   text-align: center;
   /* 텍스트 가운데 정렬 */
+  background-color: white;
 }
 
 
 .tile_count .tile_stats_count {
   border-bottom: 1px solid #D9DEE4;
-  padding: 0 10px 0 20px;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;
-  position: relative;
+  padding: 0 50px 0 50px;
+
 }
 
 /* @media (min-width: 992px) {
@@ -3104,7 +3131,7 @@ span.right {
 
 .tile_count .tile_stats_count .count {
   font-size: 30px;
-  line-height: 47px;
+  /* line-height: 47px; */
   font-weight: 600;
 }
 
@@ -3125,7 +3152,7 @@ span.right {
 }
 
 .tile_count .tile_stats_count span a {
-  font-size: 16px;
+  font-size: 20px;
 }
 
 @media (min-width: 768px) {
@@ -4488,6 +4515,30 @@ ul.social li {
   display: flex;
   justify-content: center;
 }
+
+.mid {
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.mid2 {
+  width: 800;
+  height: 100;
+  display: flex;
+  justify-content: center;
+}
+
+.Cchart {
+
+  height: 309px;
+  display: flex;
+  justify-content: center;
+
+}
+
+
 
 /* *********  /chart  **************************** */
 
