@@ -102,6 +102,7 @@
 				$.ajax({
 					url:"/inbox/getInquiryModalDTO",
 					data :{"inquiryId":inquiryId},
+					async :false,
 					method:"GET",
 					success:function(dto){
 						console.log(dto);
@@ -115,12 +116,7 @@
 						$("#modalQuantity").text(dto.quantity);
 						$("#modalUnit").text(dto.unit);
 						$("#modalInquiryContent").text(dto.inquiryContent);
-						// if (!dto.originalFileName) {
-						// 	console.log(dto.inquiryId);
-						// 	$("#modalFile").text(dto.originalFileName);
-						// 	$("#modalFile").attr("href", "javascript:void(0)");
-						// 	$("#modalFile").attr("onlcick", "toDownload()");
-						// }
+						console.log(dto.originalFileName + " : " + typeof dto.originalFileName );
 						if(dto.originalFileName!=""){
 							$("#modalFile").text(dto.originalFileName);
 							// 클릭 시 다운로드 
@@ -129,6 +125,7 @@
 								$.ajax({
 									url:"/inquiry/downloadFile",
 									data:{"inquiryId":inquiryId},
+									async:false,
 									method:"GET"
 								});
 							});

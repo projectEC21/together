@@ -106,34 +106,43 @@
 					data: { "inquiryId": inquiryId },
 					method: "GET",
 					success: function (dto) {
-						console.log(dto);
-						// 모달 값 채우기
-						$("#modalInquiryTitle").text(dto.inquiryTitle);
-						$("#modalReceiverId").text(dto.receiverId);
-						$("#modalSenderId").text(dto.senderId);
-						$("#modalProductName").text(dto.productName);
-						$("#modalCategory").text(dto.category);
-						$("#modalQuantity").text(dto.quantity);
-						$("#modalUnit").text(dto.unit);
-						$("#modalInquiryContent").text(dto.inquiryContent);
-						if (dto.originalFileName != null) {
-							$("#modalFile").text(dto.originalFileName);
-							// 클릭 시 다운로드 
-							$("#modalFile").on("click", function () {
-								$.ajax({
-									url: "/inquiry/downloadFile",
-									data: { "indquiryId": dto.inquiryId },
-									method: "GET"
-								});
-							});
+						if (dto) {
+							console.log(dto);
+							fillModal(dto);
+							// 모달 열기
+							$("#inquiryDetail").modal();
+						} else {
+							console.error('No data received');
 						}
-						// 모달열기
-						$("#inquiryDetail").modal();
 					}
 				}); // End ajax
-			}); // End 모달 클릭 이벤트
+			}); // End document click event
 
 		});
+
+		// 모달 채우는 함수
+		function fillModal(dto) {
+			$("#modalInquiryTitle").text(dto.inquiryTitle || '');
+			$("#modalReceiverId").text(dto.receiverId || '');
+			$("#modalSenderId").text(dto.senderId || '');
+			$("#modalProductName").text(dto.productName || '');
+			$("#modalCategory").text(dto.category || '');
+			$("#modalQuantity").text(dto.quantity || '');
+			$("#modalUnit").text(dto.unit || '');
+			$("#modalInquiryContent").text(dto.inquiryContent || '');
+			$("#modalFile").text(dto.originalFileName || '').off("click");
+
+			if (dto.originalFileName) {
+				$("#modalFile").on("click", function () {
+					toDownload(inquiryId);
+				});
+			}
+		}
+
+		// 파일 다운로드
+		function toDownload(inquiryId) {
+			window.location = '/inquiry/downloadFile?inquiryId=' + encodeURIComponent(inquiryId);
+		}
 
 
 		// 쓰레기통으로 처리하는 함수

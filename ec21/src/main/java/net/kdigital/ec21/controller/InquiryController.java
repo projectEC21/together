@@ -119,6 +119,7 @@ public class InquiryController {
      * 
      * @return
      */
+    @ResponseBody
     @GetMapping("inquiry/downloadFile")
     public String download(@RequestParam(name = "inquiryId") String inquiryId, HttpServletResponse response) {
         log.info("=============지금 다운로드 컨트롤러야 인콰이어리 번호 : {}",inquiryId);
