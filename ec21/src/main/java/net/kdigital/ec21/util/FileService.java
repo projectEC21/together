@@ -5,6 +5,9 @@ import java.util.UUID;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class FileService {
     // 1) 서버에 디렉토리가 없으면 디렉토리 생성
     // 2) 원본 파일명을 꺼내서 저장파일명(랜덤값 or 밀리세컨)을 새롭게 작성
@@ -44,6 +47,7 @@ public class FileService {
         filename = originalFileName.substring(0, position);
         savedFileName = filename + "_" + uuid + ext;
 
+        log.info("========= 저장될 파일 이름 : {}", savedFileName);
         // 서버의 저장공간에 파일을 저장하는 작업
         File serverFile = null;
         serverFile = new File(uploadPath + "/" + savedFileName);

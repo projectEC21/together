@@ -106,6 +106,7 @@
 					success:function(dto){
 						console.log(dto);
 						// 모달 값 채우기
+						$("#modalInquiryId").val(dto.inquiryId);
 						$("#modalInquiryTitle").text(dto.inquiryTitle);
 						$("#modalReceiverId").text(dto.receiverId);
 						$("#modalSenderId").text(dto.senderId);
@@ -114,17 +115,25 @@
 						$("#modalQuantity").text(dto.quantity);
 						$("#modalUnit").text(dto.unit);
 						$("#modalInquiryContent").text(dto.inquiryContent);
-						if(dto.originalFileName!=null){
+						// if (!dto.originalFileName) {
+						// 	console.log(dto.inquiryId);
+						// 	$("#modalFile").text(dto.originalFileName);
+						// 	$("#modalFile").attr("href", "javascript:void(0)");
+						// 	$("#modalFile").attr("onlcick", "toDownload()");
+						// }
+						if(dto.originalFileName!=""){
 							$("#modalFile").text(dto.originalFileName);
 							// 클릭 시 다운로드 
 							$("#modalFile").on("click", function(){
+								console.log(inquiryId);
 								$.ajax({
 									url:"/inquiry/downloadFile",
-									data:{"indquiryId":dto.inquiryId},
+									data:{"inquiryId":inquiryId},
 									method:"GET"
 								});
 							});
 						}
+
 						// 모달열기
 						$("#inquiryDetail").modal();
 					}
@@ -178,6 +187,16 @@
 		}
 
 
+		
+		// 파일 다운로드
+		function toDownload() {
+			let inquiryId = $("#modalInquiryId").val();
+			alert("file download ! "+ inquiryId);
+		}
+
+
+
+
 	</script>
 </head>
 
@@ -216,10 +235,10 @@
 						<!-- Top Right -->
 						<div class="right-content">
 							<ul class="list-main">
-								<li><i class="ti-power-off"></i><a th:href="@{/main/login}">Login</a></li>
-								<li><i class="ti-user"></i><a th:href="@{/main/register}">Sign up</a></li>
-								<li><i class="ti-power-off"></i><a th:href="@{/main/logout}">Logout</a></li>
-								<li><a th:href="@{/main/myproducts}"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a></li>
+								<li sec:authorize="isAnonymous()"><i class="ti-power-off"></i><a th:href="@{/main/login}">Login</a></li>
+								<li sec:authorize="isAnonymous()"><i class="ti-user"></i><a th:href="@{/main/register}">Sign up</a></li>
+								<li sec:authorize="isAuthenticated()"><i class="ti-power-off"></i><a th:href="@{/main/logout}">Logout</a></li>
+								<li  sec:authorize="isAuthenticated()"><a th:href="@{/main/myproducts}"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a></li>
 							</ul>
 						</div>
 						<!-- End Top Right -->
@@ -252,13 +271,13 @@
 					<div class="single-widget inquiry-category">
 						<h3 Inquiry class="inquiry-title">My Inquiry</h3>
 						<ul class="categor-list">
-							<li><a th:href="@{/main/inbox(customerId=${customerId})}" style="
+							<li><a th:href="@{/main/inbox(customerId=${#authentication.name})}" style="
 								color: #439eff;">Received</a></li>
-							<li><a th:href="@{/main/inboxSent(customerId=${customerId})}" >Sent</a></li>
-							<li><a th:href="@{/main/inboxSaved(customerId=${customerId})}" >Saved</a></li>
-							<li><a th:href="@{/main/inboxSpam(customerId=${customerId})}" >Spam</a></li>
-							<li><a th:href="@{/main/inboxBlock(customerId=${customerId})}" >Block</a></li>
-							<li><a th:href="@{/main/inboxTrash(customerId=${customerId})}" >Trash</a></li>
+							<li><a th:href="@{/main/inboxSent(customerId=${#authentication.name})}" >Sent</a></li>
+							<li><a th:href="@{/main/inboxSaved(customerId=${#authentication.name})}" >Saved</a></li>
+							<li><a th:href="@{/main/inboxSpam(customerId=${#authentication.name})}" >Spam</a></li>
+							<li><a th:href="@{/main/inboxBlock(customerId=${#authentication.name})}" >Block</a></li>
+							<li><a th:href="@{/main/inboxTrash(customerId=${#authentication.name})}" >Trash</a></li>
 						</ul>
 					</div>
 					<!--/ End Single Widget -->
@@ -337,6 +356,7 @@
 						<!-- Modal Body -->
 						<div class="modal-body" >
 							<table>
+								<input type="hidden" name="" id="modalInquiryId">
 								<tr>
 									<th class="col-md-2">To</th>
 									<td id="modalReceiverId" >zettlernb (Ningbo Zettler Electronics Co., Ltd.)</td>
