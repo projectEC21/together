@@ -141,7 +141,8 @@
             borderColor: 'rgba(54, 162, 235, 1)',
             tension: 0.4
           }]
-        }, options: {
+        },
+        options: {
           scales: {
             y: {
               beginAtZero: true
@@ -156,7 +157,6 @@
         }
       });
     }
-
 
     function updateDoughnutChart(data) {
       console.log(data);
@@ -196,8 +196,6 @@
               '#F7C74B',
               '#FDE775',
               '#F0E6B4'
-
-              // 추가 색상...
             ],
             borderColor: [
               '#0287BE',
@@ -205,7 +203,6 @@
               '#F7C74B',
               '#FDE775',
               '#F0E6B4'
-
             ],
             borderWidth: 1,
             weight: 3
@@ -452,28 +449,28 @@
         <!-- 240413 dy : id값 부여하고 ajax로 값 꽂아 넣기 -->
         <div class="row" style="display: flex; justify-content: center;">
           <div class="tile_count">
-            <div class="col-md-3 col-sm-4  count">
+            <div class="col-md-3 col-sm-4  tile_stats_count">
               <span class="count_top"><i class="fa fa-user"></i> <a th:href="@{/manager/productList}">당일 등록 상품
                   수</a></span>
               <div class="count" id="todayRegisteredProd"></div>
               <!-- 지난 주 대비 증감률-->
               <!-- <span class="count_bottom"><i class="blue"><i class="fa fa-sort-asc"></i>4% </i> From last Week</span> -->
             </div>
-            <div class="col-md-3 col-sm-4  count">
+            <div class="col-md-3 col-sm-4  tile_stats_count">
               <span class="count_top"><i class="fa fa-clock-o"></i> <a th:href="@{/manager/modelPredict}">당일 이상상품 등록
                   수</a></span>
-              <div class="main_count" id="todayWeirdProd"></div>
+              <div class="count" id="todayWeirdProd"></div>
               <!-- 지난 주 대비 증감률-->
               <!-- <span class="count_bottom"><i class="blue"><i class="fa fa-sort-asc"></i>3% </i> From last Week</span> -->
             </div>
-            <div class="col-md-3 col-sm-4  count">
+            <div class="col-md-3 col-sm-4  tile_stats_count">
               <span class="count_top"><i class="fa fa-user"></i><a th:href="@{/manager/customerList}">당일회원가입수</a>
               </span>
               <div class="count blue" id="todayRegisteredCustomer"></div>
               <!-- 지난 주 대비 증감률-->
               <!-- <span class="count_bottom"><i class="blue"><i class="fa fa-sort-asc"></i>34% </i> From last Week</span> -->
             </div>
-            <div class="col-md-3 col-sm-4  count">
+            <div class="col-md-3 col-sm-4  tile_stats_count">
               <span class="count_top"><i class="fa fa-user"></i> <a th:href="@{/manager/reportedCustomerList}">미처리된 신고
                   개수</a></span>
               <div class="count" id="unprocessedReport"></div>
@@ -486,16 +483,18 @@
         <br />
 
         <!-- 상품, 회원 count 끝 -->
+
+        <!-- 차트 시작 -->
         <div>
           <label for="startDate">Start Date:</label>
           <input type="date" id="startDate">
           <label for="endDate">End Date:</label>
           <input type="date" id="endDate">
         </div>
-        <!-- 차트 시작 -->
+
         <div class="row">
           <!-- 일자별 상품등록 개수 라인, 도넛 그래프-->
-          <div class="col-md-7">
+          <div class="col-md-7  ">
             <div class=" x_panel">
               <div class="x_title">
                 <h2>일자별 상품등록 개수</h2>
@@ -512,7 +511,6 @@
             </div>
           </div>
           <!-- 일자별 상품등록 개수 라인, 도넛 그래프 끝 -->
-
           <!-- 카테고리별 이상/정상상품 판별개수 그래프 -->
           <div class="col-md-5 col-sm-912  ">
             <div class=" x_panel">
