@@ -119,7 +119,8 @@ public class InquiryController {
      * 
      * @return
      */
-    @GetMapping("inquiry/downloadFile")
+    @ResponseBody
+    @GetMapping("/inbox/downloadFile")
     public String download(@RequestParam(name = "inquiryId") String inquiryId, HttpServletResponse response) {
         log.info("=============지금 다운로드 컨트롤러야 인콰이어리 번호 : {}",inquiryId);
         InquiryDTO inquiryDTO = inquiryService.getInquiry(inquiryId);
@@ -409,10 +410,4 @@ public class InquiryController {
 
         return "/main/inboxTrash::#result";
     }
-
-
-
-
-
-
 }
