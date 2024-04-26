@@ -53,4 +53,4 @@ public class ManagerBoardController {
         return managerBoardService.getTopSimilarWordCounts();
     }
 
-}
+} 
