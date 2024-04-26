@@ -5,12 +5,18 @@ import java.util.List;
 import java.util.Map;
 
 import java.util.stream.Collectors;
+
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
 import net.kdigital.ec21.repository.ProductRepository;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 @Service
 @RequiredArgsConstructor
@@ -63,6 +69,21 @@ public class ManagerBoardService {
                     map.put("date", result[0]); // 날짜
                     map.put("category", result[1]); // 카테고리
                     map.put("count", result[2]); // 갯수
+                    return map;
+                })
+                .collect(Collectors.toList());
+    }
+
+    public List<Map<String, Object>> getTopSimilarWordCounts() {
+        int pageSize = 5; // 상위 5개만 가져옴
+        Pageable pageable = PageRequest.of(0, pageSize, Sort.Direction.DESC, "count");
+
+        Page<Object[]> results = productRepository.countSimilarWords(pageable);
+        return results.stream()
+                .map(result -> {
+                    Map<String, Object> map = new HashMap<>();
+                    map.put("similarWord", result[0]);
+                    map.put("count", result[1]);
                     return map;
                 })
                 .collect(Collectors.toList());
