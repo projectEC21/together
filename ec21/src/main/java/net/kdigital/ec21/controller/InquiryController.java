@@ -14,7 +14,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,20 +21,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletResponse;
-import net.kdigital.ec21.dto.CustomerDTO;
 import net.kdigital.ec21.dto.InquiryBlockedCustomerDTO;
 import net.kdigital.ec21.dto.InquiryDTO;
 import net.kdigital.ec21.dto.InquiryModalDTO;
 import net.kdigital.ec21.dto.InquiryPlusCustomerIdDTO;
-import net.kdigital.ec21.dto.ProductDTO;
 import net.kdigital.ec21.dto.ReportCustomerDTO;
 import net.kdigital.ec21.dto.check.ReportCategory;
 import net.kdigital.ec21.dto.check.YesOrNo;
 import net.kdigital.ec21.service.CustomerService;
 import net.kdigital.ec21.service.InquiryService;
 import net.kdigital.ec21.service.ProductService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 
 @Controller
@@ -126,7 +121,7 @@ public class InquiryController {
      */
     @GetMapping("inquiry/downloadFile")
     public String download(@RequestParam(name = "inquiryId") String inquiryId, HttpServletResponse response) {
-        
+        log.info("=============지금 다운로드 컨트롤러야 인콰이어리 번호 : {}",inquiryId);
         InquiryDTO inquiryDTO = inquiryService.getInquiry(inquiryId);
 
         String originalFileName = inquiryDTO.getOriginalFileName();
