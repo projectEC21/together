@@ -430,7 +430,8 @@
                 </a>
                 <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
                   <a class="dropdown-item" th:href=@{/}><i class="fa fa-home pull-right"></i> Home</a>
-                  <a class="dropdown-item" th:href="@{main/login}"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
+                  <a class="dropdown-item" th:href="@{main/logout}"><i class="fa fa-sign-out pull-right"></i> Log
+                    Out</a>
                 </div>
               </li>
 
@@ -447,173 +448,230 @@
         <!-- /top tiles -->
         <!-- 상품, 회원 count -->
         <!-- 240413 dy : id값 부여하고 ajax로 값 꽂아 넣기 -->
-        <div class="row" style="display: flex; justify-content: center;">
-
-          <div class="col-xl-3 col-md-6 mb-4 tile_stats_count">
-            <div class="card-body">
-              <div class="row no-gutters align-items-center">
-                <div class="col mr-2">
-                  <span class="count_top"><i class="fa fa-user"></i> <a th:href="@{/manager/productList}">당일 등록 상품
-                      수</a></span>
-                  <div class="count" id="todayRegisteredProd"></div>
-                  <!-- 지난 주 대비 증감률-->
-                  <!-- <span class="count_bottom"><i class="blue"><i class="fa fa-sort-asc"></i>4% </i> From last Week</span> -->
-                </div>
-              </div>
-            </div>
-            <div class="col-xl-3 col-md-6 mb-4  tile_stats_count">
-              <span class="count_top"><i class="fa fa-clock-o"></i> <a th:href="@{/manager/modelPredict}">당일 이상상품 등록
-                  수</a></span>
-              <div class="count" id="todayWeirdProd"></div>
-              <!-- 지난 주 대비 증감률-->
-              <!-- <span class="count_bottom"><i class="blue"><i class="fa fa-sort-asc"></i>3% </i> From last Week</span> -->
-            </div>
-            <div class="col-xl-3 col-md-6 mb-4  tile_stats_count">
-              <span class="count_top"><i class="fa fa-user"></i><a th:href="@{/manager/customerList}">당일회원가입수</a>
-              </span>
-              <div class="count blue" id="todayRegisteredCustomer"></div>
-              <!-- 지난 주 대비 증감률-->
-              <!-- <span class="count_bottom"><i class="blue"><i class="fa fa-sort-asc"></i>34% </i> From last Week</span> -->
-            </div>
-            <div class="col-xl-3 col-md-6 mb-4 tile_stats_count">
-              <span class="count_top"><i class="fa fa-user"></i> <a th:href="@{/manager/reportedCustomerList}">미처리된 신고
-                  개수</a></span>
-              <div class="count" id="unprocessedReport"></div>
-              <!-- 지난 주 대비 증감률-->
-              <!-- <span class="count_bottom"><i class="red"><i class="fa fa-sort-desc"></i>12% </i> From last Week</span> -->
-            </div>
-          </div>
-        </div>
-
-        <br />
-
-        <!-- 상품, 회원 count 끝 -->
-
-        <!-- 차트 시작 -->
-        <div>
-          <label for="startDate">Start Date:</label>
-          <input type="date" id="startDate">
-          <label for="endDate">End Date:</label>
-          <input type="date" id="endDate">
-        </div>
-
         <div class="row">
-          <!-- 일자별 상품등록 개수 라인, 도넛 그래프-->
-          <div class="col-md-7  ">
-            <div class=" x_panel">
-              <div class="x_title">
-                <h2>일자별 상품등록 개수</h2>
-                <div class="clearfix"></div>
-              </div>
-              <div class="x_content ">
-                <!-- <button onclick="updateCharts()">Update Charts</button> -->
-                <div class="mid">
-                  <canvas id="lineChart"></canvas>
-                </div>
 
+          <!-- 당일 등록 상품-->
+          <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-primary shadow h-100 py-2 radius">
+              <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                  <div class="col mr-2 main">
+                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1 ">
+                      <i class=" fa fa-user"></i>
+                      <a th:href="@{/manager/productList}">당일 등록 상품
+                        수
+                      </a>
 
-              </div>
-            </div>
-          </div>
-          <!-- 일자별 상품등록 개수 라인, 도넛 그래프 끝 -->
-          <!-- 카테고리별 이상/정상상품 판별개수 그래프 -->
-          <div class="col-md-5 col-sm-912  ">
-            <div class=" x_panel">
-              <div class="x_title">
-                <h2>일자별 상품등록 개수</h2>
-                <div class="clearfix"></div>
-              </div>
-
-              <div class="x_content ">
-                <div class="mid">
-                  <canvas id="doughnutChart"></canvas>
+                    </div>
+                    <div class="count h5 mb-0 font-weight-bold text-gray-800" id="todayRegisteredProd">
+                    </div>
+                    <!-- 지난 주 대비 증감률-->
+                    <!-- <span class="count_bottom"><i class="blue"><i class="fa fa-sort-asc"></i>4% </i> From last Week</span> -->
+                  </div>
                 </div>
               </div>
             </div>
           </div>
 
-          <!-- /카테고리별 이상/정상상품 판별개수 그래프 끝-->
-          <!-- 카테고리별 이상/정상상품 판별개수 그래프 -->
-          <div class="col-md-7 ">
-            <div class=" x_panel">
-              <div class="x_title">
-                <h2>카테고리별 이상/ 정상상품 판별 개수</h2>
-                <div class="clearfix"></div>
+          <!--당일 이상상품 등록-->
+          <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-primary shadow h-100 py-2 radius">
+              <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                  <div class="col mr-2 main">
+                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1 ">
+                      <i class=" fa fa-user"></i>
+                      <a th:href="@{/manager/modelPredict}">당일 이상상품 등록
+                        수</a>
+
+                    </div>
+                    <div class="count h5 mb-0 font-weight-bold text-gray-800" id="todayWeirdProd">
+
+                    </div>
+                    <!-- 지난 주 대비 증감률-->
+                    <!-- <span class="count_bottom"><i class="blue"><i class="fa fa-sort-asc"></i>4% </i> From last Week</span> -->
+                  </div>
+                </div>
               </div>
+            </div>
+          </div>
+
+          <!--당일 회원 가입 수-->
+          <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-primary shadow h-100 py-2 radius">
+              <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                  <div class="col mr-2 main">
+                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1 ">
+                      <i class=" fa fa-user"></i>
+                      <a th:href="@{/manager/customerList}">당일회원가입수</a>
+
+                    </div>
+                    <div class="count h5 mb-0 font-weight-bold text-gray-800" id="todayRegisteredCustomer">
+
+                    </div>
+                    <!-- 지난 주 대비 증감률-->
+                    <!-- <span class="count_bottom"><i class="blue"><i class="fa fa-sort-asc"></i>4% </i> From last Week</span> -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 미처리된 신고 개수-->
+
+          <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-primary shadow h-100 py-2 radius">
+              <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                  <div class="col mr-2 main">
+                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1 ">
+                      <i class=" fa fa-user"></i>
+                      <a th:href="@{/manager/reportedCustomerList}">미처리된 신고
+                        개수</a>
+                    </div>
+                    <div class="count h5 mb-0 font-weight-bold text-gray-800" id="unprocessedReport">
+
+                    </div>
+                    <!-- 지난 주 대비 증감률-->
+                    <!-- <span class="count_bottom"><i class="blue"><i class="fa fa-sort-asc"></i>4% </i> From last Week</span> -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
 
 
-              <div class="x_content">
-                <div class="Cchart">
-                  <!-- bar chart -->
-                  <canvas id="categoryProduct"></canvas>
+
+          <br />
+
+          <!-- 상품, 회원 count 끝 -->
+
+          <!-- 차트 시작 -->
+          <div>
+            <label for="startDate">Start Date:</label>
+            <input type="date" id="startDate">
+            <label for="endDate">End Date:</label>
+            <input type="date" id="endDate">
+          </div>
+
+          <div class="row">
+            <!-- 일자별 상품등록 개수 라인, 도넛 그래프-->
+            <div class="col-md-7">
+              <div class=" x_panel shadow">
+                <div class="x_title">
+                  <h2>일자별 상품등록 개수</h2>
+                  <div class="clearfix"></div>
+                </div>
+                <div class="x_content ">
+                  <!-- <button onclick="updateCharts()">Update Charts</button> -->
+                  <div class="mid">
+                    <canvas id="lineChart"></canvas>
+                  </div>
+
+
+                </div>
+              </div>
+            </div>
+            <!-- 일자별 상품등록 개수 라인, 도넛 그래프 끝 -->
+            <!-- 카테고리별 이상/정상상품 판별개수 그래프 -->
+            <div class="col-md-5 col-sm-912  ">
+              <div class=" x_panel shadow">
+                <div class="x_title">
+                  <h2>일자별 상품등록 개수</h2>
+                  <div class="clearfix"></div>
                 </div>
 
+                <div class="x_content ">
+                  <div class="mid">
+                    <canvas id="doughnutChart"></canvas>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-          <!-- /카테고리별 이상/정상상품 판별개수 그래프 끝-->
 
-          <div class="col-md-5 ">
-            <div class=" x_panel">
-              <div class="x_title">
-                <h2>금지어 top 10</h2>
-                <div class="clearfix"></div>
+            <!-- /카테고리별 이상/정상상품 판별개수 그래프 끝-->
+            <!-- 카테고리별 이상/정상상품 판별개수 그래프 -->
+            <div class="col-md-7 ">
+              <div class=" x_panel shadow">
+                <div class="x_title">
+                  <h2>카테고리별 이상/ 정상상품 판별 개수</h2>
+                  <div class="clearfix"></div>
+                </div>
+
+
+                <div class="x_content">
+                  <div class="Cchart">
+                    <!-- bar chart -->
+                    <canvas id="categoryProduct"></canvas>
+                  </div>
+
+                </div>
               </div>
-
-              <div class="x_content">
-                <table id="prohibitedWordsTable" class="table Ctable">
-                  <thead>
-                    <tr>
-                      <th>금지어</th>
-                      <th>횟수</th>
-                    </tr>
-                  </thead>
-                  <tbody id="similarWordsTable">
-                    <tr>
-                      <td></td>
-                      <td></td>
-                    </tr>
-                  </tbody>
-                </table>
-
-
-              </div>
-
-
             </div>
+            <!-- /카테고리별 이상/정상상품 판별개수 그래프 끝-->
+
+            <div class="col-md-5 ">
+              <div class=" x_panel shadow">
+                <div class="x_title">
+                  <h2>금지어 top 10</h2>
+                  <div class="clearfix"></div>
+                </div>
+
+                <div class="x_content">
+                  <table id="prohibitedWordsTable" class="table Ctable">
+                    <thead>
+                      <tr>
+                        <th>금지어</th>
+                        <th>횟수</th>
+                      </tr>
+                    </thead>
+                    <tbody id="similarWordsTable">
+                      <tr>
+                        <td></td>
+                        <td></td>
+                      </tr>
+                    </tbody>
+                  </table>
+
+
+                </div>
+
+
+              </div>
+            </div>
+
           </div>
+          <!--/ 차트 끝-->
 
         </div>
-        <!--/ 차트 끝-->
-
       </div>
+      <!-- /page content -->
+
     </div>
-    <!-- /page content -->
-
-  </div>
 
 
-  <!-- jQuery -->
+    <!-- jQuery -->
 
-  <!-- Bootstrap -->
-  <script th:src="@{/vendors/bootstrap/dist/js/bootstrap.bundle.min.js}"></script>
-  <!-- FastClick -->
-  <script th:src="@{/vendors/fastclick/lib/fastclick.js}"></script>
+    <!-- Bootstrap -->
+    <script th:src="@{/vendors/bootstrap/dist/js/bootstrap.bundle.min.js}"></script>
+    <!-- FastClick -->
+    <script th:src="@{/vendors/fastclick/lib/fastclick.js}"></script>
 
-  <!-- Chart.js -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Chart.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-  <!-- bootstrap-progressbar -->
-  <script th:src="@{/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js}"></script>
-  <!-- iCheck -->
-  <script th:src="@{/vendors/iCheck/icheck.min.js}"></script>
+    <!-- bootstrap-progressbar -->
+    <script th:src="@{/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js}"></script>
+    <!-- iCheck -->
+    <script th:src="@{/vendors/iCheck/icheck.min.js}"></script>
 
-  <!-- bootstrap-daterangepicker -->
-  <script th:src="@{/vendors/moment/min/moment.min.js}"></script>
+    <!-- bootstrap-daterangepicker -->
+    <script th:src="@{/vendors/moment/min/moment.min.js}"></script>
 
-  <!-- Custom Theme Scripts -->
-  <script th:src="@{/build/js/custom.js}"></script>
+    <!-- Custom Theme Scripts -->
+    <script th:src="@{/build/js/custom.js}"></script>
 
 </body>
 
