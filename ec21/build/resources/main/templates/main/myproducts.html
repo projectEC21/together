@@ -219,7 +219,7 @@
 					<div class="bread-inner">
 						<ul class="bread-list">
 							<li><a th:href="@{/}">Home<i class="ti-arrow-right"></i></a></li>
-							<li class="active"><a th:href="@{/main/myproducts(customerId=${#authentication.name})">My Page</a></li>
+							<li class="active"><a th:href="@{/main/myproducts(customerId=${#authentication.name})}">My Page</a></li>
 						</ul>
 					</div>
 				</div>
@@ -237,8 +237,8 @@
 						<div class="single-widget category">
 							<h3 class="title">My Page</h3>
 							<ul class="categor-list">
-								<li><a th:href="@{/main/myinfo(customerId=${#authentication.name})">info</a></li>
-								<li><a th:href="@{/main/myproducts(customerId=${#authentication.name})" style="color: #222; font-weight: 700;">Products</a></li>
+								<li><a th:href="@{/main/myinfo(customerId=${#authentication.name})}">info</a></li>
+								<li><a th:href="@{/main/myproducts(customerId=${#authentication.name})}" style="color: #222; font-weight: 700;">Products</a></li>
 								<!-- 해당 페이지에 들어가면 색상이 더 진하게 보이게 해놓음 -->
 							</ul>
 						</div>
