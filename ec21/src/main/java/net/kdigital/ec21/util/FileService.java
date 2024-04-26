@@ -61,4 +61,22 @@ public class FileService {
 
         return savedFileName; // 저장 파일명 반환
     }
+
+
+
+    /**
+     * 저장 장치에 저장된 파일 색제 (경로 + 파일명)
+     * @param fullPath
+     * @return
+     */
+    public static boolean deleteFile(String fullPath){
+        boolean result = false;
+
+        File delFile = new File(fullPath);
+        if (delFile.isFile()) {
+            result = delFile.delete();
+        }
+
+        return result;
+    }
 }
