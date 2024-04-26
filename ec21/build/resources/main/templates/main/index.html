@@ -59,7 +59,7 @@
 	<!-- jQuery 라이브러리 로드 -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
-	
+
 	<script>
 		$(function () {
 			$("#searchBtn").on("click", search);
@@ -76,7 +76,7 @@
 			})
 		}
 	
-	</script>
+  	</script>
 </head>
 
 <body class="js">
@@ -170,8 +170,9 @@
 						<div class="right-bar">
 							<!-- Search Form -->
 							<div class="sinlge-bar">
-								<a th:href="@{/main/myproducts(customerId=${#authentication.name})}" class="single-icon"><i class="fa fa-user-circle-o"
-										aria-hidden="true"></i></a>
+								<a th:href="@{/main/myproducts(customerId=${#authentication.name})}" class="single-icon">
+									<i class="fa fa-user-circle-o" aria-hidden="true"></i>
+								</a>
 							</div>
 
 							<!-- 검색창 옆 부분 인콰이어리 new 로만 보이게 하고 인콰이어리 페이지로 넘어가게 하기 -->
@@ -228,7 +229,8 @@
 
 		<!-- Single Slider -->
 		<div class="single-slider">
-			<div class="container">
+			<div class="main-image">
+				<img class="main-image" th:src="@{/main/images/main_image1.jpg}" alt="main">
 				<div class="row no-gutters">
 					<div class="col-lg-9 offset-lg-3 col-12">
 						<div class="text-inner">
@@ -237,10 +239,8 @@
 									<div class="hero-text">
 										<h1><span>UP TO 50% OFF </span>Shirt For Man</h1>
 										<p>Maboriosam in a nesciung eget magnae <br> dapibus disting tloctio in the find
-											it pereri <br> odiy maboriosm.</p>
-										<div class="button">
-											<a th:href="@{/}" class="btn">Shop Now!</a>
-										</div>
+											it pereri <br> odiy maboriosm.
+										</p>
 									</div>
 								</div>
 							</div>

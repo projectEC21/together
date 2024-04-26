@@ -278,6 +278,11 @@ body {
 /*======================================
 	01. Header CSS
 ========================================*/
+
+.main-image{
+	max-width: 100%;
+}
+
 /* Topbar */
 .topbar {
 	background-color: #fff;
@@ -796,7 +801,7 @@ body {
 }
 
 .header.shop .search-bar {
-	width: 535px;
+	width: 570px;
 	height: 50px;
 	display: inline-flex;
 	background: #fff;
@@ -811,7 +816,7 @@ body {
 	clear: initial;
 	margin: 0;
 	height: 48px;
-	width: 150px;
+	width: 170px;
 	border: 1px solid #444;
 	text-align: center;
 	background: transparent;
@@ -863,7 +868,7 @@ body {
 	font-size: 14px;
 	font-weight: 400;
 	padding: 0 25px 0 20px;
-	width: 328px;
+	width: 340px;
 }
 
 .header.shop .search-bar .btnn {

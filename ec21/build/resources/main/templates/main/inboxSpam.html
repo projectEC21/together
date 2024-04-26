@@ -120,7 +120,7 @@
 							// 클릭 시 다운로드 
 							$("#modalFile").on("click", function () {
 								$.ajax({
-									url: "/inquiry/downloadFile",
+									url: "/inbox/downloadFile",
 									data: { "indquiryId": dto.inquiryId },
 									method: "GET"
 								});
