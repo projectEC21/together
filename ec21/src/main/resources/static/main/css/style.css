@@ -848,7 +848,7 @@ html {
 	margin: 0;
 	line-height: 50px;
 	border-radius: 55px;
-	border: 1px solid #ececec;
+	border: 1px solid #ccc;
 }
 
 .header.shop .nice-select {
@@ -2440,8 +2440,8 @@ html {
 
 
 .single-product .product-content h3 a {
-	font-size: 15px;
-	font-weight: 600;
+	font-size: 14px;
+	font-weight: 500;
 }
 
 .single-product .product-content h3 a:hover {
@@ -2677,8 +2677,8 @@ html {
 /* Shop Topbar */
 .shop .shop-top {
 	clear: both;
-	background: #f6f7fb;
-	/* padding: 18px 20px 50px 20px; */
+	/* background: #f6f7fb; */
+	padding: 18px 20px 50px 20px;
 }
 
 .shop .shop-shorter {
@@ -2696,10 +2696,18 @@ html {
 
 .shop .single-shorter label {
 	display: inline-block;
-	float: left;
-	margin: 4px 5px 0 0;
-	font-weight: 500;
-	font-size: large;
+    float: left;
+    margin: 4px 5px 0 0;
+    font-weight: 400;
+    font-size: 17px;
+    border-bottom: 1px solid #666;
+}
+
+.shop .single-shorter input {
+	border: none;
+    font-size: 14px;
+    padding-left: 20px;
+    width: 45px;
 }
 
 .shop .single-slider a {
