@@ -53,4 +53,12 @@ public class ManagerBoardController {
         return managerBoardService.getTopSimilarWordCounts();
     }
 
+    // 240427 dy : 이게 맞을랑가 모르겠지만.. 참고해주세욥
+    @ResponseBody
+    @GetMapping("/manager/board/getRegistCustomerAndProuctCountsForFiveDays")
+    public List<Map<String, Object>> getRegistCustomerAndProuctCountsForFiveDays() {
+        return managerBoardService.getRegistCustomerAndProuctCountsForFiveDays();
+    }
+    
+
 } 
