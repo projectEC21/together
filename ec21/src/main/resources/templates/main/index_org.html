@@ -59,7 +59,7 @@
 	<!-- jQuery 라이브러리 로드 -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
-	
+
 	<script>
 		$(function () {
 			$("#searchBtn").on("click", search);
@@ -75,25 +75,12 @@
 				method: "GET"
 			})
 		}
-
-
-		document.addEventListener("scroll", function() {
-			const header = document.querySelector(".header-inner");
-			const scrollPosition = window.scrollY;
-
-			if (scrollPosition > 150) { // 스크롤 위치가 100px 이상이면
-				header.classList.add("fixed-header");
-				document.body.classList.add("header-padding");
-			} else { // 스크롤 위치가 100px 미만이면
-				header.classList.remove("fixed-header");
-				document.body.classList.remove("header-padding");
-			}	
-		});
 	
-	</script>
+  </script>
 </head>
 
 <body class="js">
+
 	<!-- Preloader -->
 	<div class="preloader">
 		<div class="preloader-inner">
@@ -104,7 +91,7 @@
 		</div>
 	</div>
 	<!-- End Preloader -->
-	
+
 	<!-- Header -->
 	<header class="header shop">
 		<!-- Topbar -->
@@ -114,12 +101,6 @@
 					<div class="col-lg-4 col-md-12 col-12">
 						<!-- Top Left -->
 						<div class="top-left">
-							<!-- logo -->
-							<div class="logo">
-								<a th:href="@{/}">
-									<img th:src="@{/main/images/ec21logo.png}" alt="logo" style="width: 100px; height: 30px;">
-								</a>
-							</div>
 						</div>
 						<!--/ End Top Left -->
 					</div>
@@ -130,9 +111,7 @@
 								<li sec:authorize="isAnonymous()"><i class="ti-power-off"></i><a th:href="@{/main/login}">Login</a></li>
 								<li sec:authorize="isAnonymous()"><i class="ti-user"></i><a th:href="@{/main/register}">Sign up</a></li>
 								<li sec:authorize="isAuthenticated()"><i class="ti-power-off"></i><a th:href="@{/main/logout}">Logout</a></li>
-								<li><a th:href="@{/main/myproducts}"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a></li>
-								<li><a th:href="@{/main/inbox(customerId=${#authentication.name})}" class="single-icon">
-										<i class="fa fa-envelope-o"></i><span class="total-count"></span></li>
+								<li sec:authorize="hasRole('ROLE_ADMIN')"><a th:href="@{/manager/manager_index}" style="font-weight: bolder;">manager</a></li>
 							</ul>
 						</div>
 						<!-- End Top Right -->
@@ -141,81 +120,141 @@
 			</div>
 		</div>
 		<!-- End Topbar -->
-		
-		<!-- Start Area 4 -->
-		<section class="hero-area4">
-			<div>
-				<div class="search-top">
-					<div class="top-search"><a href="#"><i class="ti-search"></i></a></div>
-					<!-- Search Form -->
-					<div class="search-top">
-						<form class="search-form">
-							<input type="text" placeholder="Search here..." name="search">
-							<button value="search" type="submit"><i class="ti-search"></i></button>
+		<div class="middle-inner">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-2 col-md-2 col-12">
+						<!-- Logo -->
+						<div class="logo">
+							<a th:href="@{/}"><img th:src="@{/main/images/ec21logo.png}" alt="logo"></a>
+						</div>
+						<!--/ End Logo -->
+						<!-- Search Form -->
+						<div class="search-top">
+							<div class="top-search"><a href="#"><i class="ti-search"></i></a></div>
+							<!-- Search Form -->
+							<div class="search-top">
+								<form class="search-form">
+									<input type="text" placeholder="Search here..." name="search">
+									<button value="search" type="submit"><i class="ti-search"></i></button>
+								</form>
+							</div>
+							<!--/ End Search Form -->
+						</div>
+						<!--/ End Search Form -->
+						<div class="mobile-nav"></div>
+					</div>
+					<!-- 240416 dy : 카테고리 선택 & 검색어 입력 후 버튼 누르면, 해당 카테고리의 목록이 보이도록 -->
+					<div class="col-lg-8 col-md-7 col-12">
+						<form th:action="@{/main/list}" method="get">
+							<div class="search-bar-top">
+								<div class="search-bar">
+									<!-- 240420 dy : 카테고리 선택 & 검색어 입력 시 form 태그로 상품 리스트로의 요청 걸어줌 -->
+									<select id="category" name="category">
+										<option value="total" th:selected="${category eq 'total'}">All Category</option>
+										<option value="FOOD_BEVERAGE" th:selected="${category eq 'FOOD_BEVERAGE'}">Food & Beverage</option>
+										<option value="CHEMICAL" th:selected="${category eq 'CHEMICAL'}">Chemical</option>
+										<option value="HEALTH_MEDICAL" th:selected="${category eq 'HEALTH_MEDICAL'}">Health & Medical</option>
+										<option value="ELECTRONIC" th:selected="${category eq 'ELECTRONIC'}">Electronics</option>
+										<option value="COSMETIC" th:selected="${category eq 'COSMETIC'}">Cosmetic</option>
+									</select>
+									<input id="searchWord" name="searchWord" placeholder="What are you searching for?"
+										type="text" th:value="${searchWord}"
+										th:attr="placeholder=${searchWord eq null ? 'What are you searching for?' : null}">
+									<button type="submit" class="btnn"> <i class="ti-search"></i></button>
+								</div>
+							</div>
 						</form>
 					</div>
-					<!--/ End Search Form -->
-				</div>
-				<!--/ End Search Form -->
-				<form th:action="@{/main/list}" method="get">
-					<div>
-						<div class="search-bar">
-							<!-- 240420 dy : 카테고리 선택 & 검색어 입력 시 form 태그로 상품 리스트로의 요청 걸어줌 -->
-							<select id="category" name="category" style="border: none;">
-								<option value="total" th:selected="${category eq 'total'}">All Category</option>
-								<option value="FOOD_BEVERAGE" th:selected="${category eq 'FOOD_BEVERAGE'}">Food & Beverage</option>
-								<option value="CHEMICAL" th:selected="${category eq 'CHEMICAL'}">Chemical</option>
-								<option value="HEALTH_MEDICAL" th:selected="${category eq 'HEALTH_MEDICAL'}">Health & Medical</option>
-								<option value="ELECTRONIC" th:selected="${category eq 'ELECTRONIC'}">Electronics</option>
-								<option value="COSMETIC" th:selected="${category eq 'COSMETIC'}">Cosmetic</option>
-							</select>
-							<input id="searchWord" name="searchWord" placeholder="What are you searching for?"
-								type="text" th:value="${searchWord}"
-								th:attr="placeholder=${searchWord eq null ? 'What are you searching for?' : null}">
-							<button type="submit" class="btnn"> <i class="ti-search"></i></button>
-						</div>
-					</div>
-				</form>
-			</div>
-		</section>
-		<!--/ End Hero Area 4 -->
+					<div class="col-lg-2 col-md-3 col-12">
+						<div class="right-bar">
+							<!-- Search Form -->
+							<div class="sinlge-bar">
+								<a th:href="@{/main/myproducts(customerId=${#authentication.name})}" class="single-icon"><i class="fa fa-user-circle-o"
+										aria-hidden="true"></i></a>
+							</div>
 
-		<!-- Header Inner -->
-		<div class="header-inner">
-			<div class="container">
-				<div class="cat-nav-head">
-					<div class="row">
-						<div class="col-12">
-							<div class="menu-area">
-								<!-- Main Menu -->
-								<nav class="navbar navbar-expand-lg">
-									<div class="navbar-collapse">	
-										<div class="nav-inner">	
-											<ul class="nav main-menu menu navbar-nav">
-												<li><a th:href="@{/main/list(category=total)}">All</a></li>
-												<li><a th:href="@{/main/list(category=FOOD_BEVERAGE)}">Food & Beverage</a></li>
-												<li><a th:href="@{/main/list(category=CHEMICAL)}">Chemical</a></li>
-												<li><a th:href="@{/main/list(category=HEALTH_MEDICAL)}">Health & Medical</a></li>
-												<li><a th:href="@{/main/list(category=ELECTRONIC)}">Electronics</a></li>
-												<li><a th:href="@{/main/list(category=COSMETIC)}">Cosmetic</a></li>
-											</ul>
-										</div>
-									</div>
-								</nav>
-								<!--/ End Main Menu -->	
+							<!-- 검색창 옆 부분 인콰이어리 new 로만 보이게 하고 인콰이어리 페이지로 넘어가게 하기 -->
+							<!-- ++ 0이 아닐때만 파란색으로 뜨게 하기 ! === 아직 안됨 -->
+							<div class="sinlge-bar inquiry">
+								<a th:href="@{/main/inbox(customerId=${#authentication.name})}" class="single-icon">
+									<i class="fa fa-envelope-o"></i><span class="total-count">new</span>
+								</a>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-		<!--/ End Header Inner -->	
+
+		<!-- Header Inner -->
+		<div class="header-inner">
+			<div class="container">
+				<div class="cat-nav-head">
+					<div class="row">
+					</div>
+					<div class="col-lg-9 col-12">
+						<div class="menu-area">
+
+							<!-- Main Menu -->
+							<nav class="navbar navbar-expand-lg">
+								<div class="navbar-collapse">
+									<div class="nav-inner">
+										<!-- 240416 dy : 카테고리 별 상품 목록 요청(검색어X) -->
+										<ul class="nav main-menu menu navbar-nav">
+											<li><a th:href="@{/main/list(category=total)}">All</a></li>
+											<li><a th:href="@{/main/list(category=FOOD_BEVERAGE)}">Food & Beverage</a></li>
+											<li><a th:href="@{/main/list(category=CHEMICAL)}">Chemical</a></li>
+											<li><a th:href="@{/main/list(category=HEALTH_MEDICAL)}">Health & Medical</a></li>
+											<li><a th:href="@{/main/list(category=ELECTRONIC)}">Electronics</a></li>
+											<li><a th:href="@{/main/list(category=COSMETIC)}">Cosmetic</a></li>
+										</ul>
+									</div>
+								</div>
+							</nav>
+							<!--/ End Main Menu -->
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		</div>
+		<!--/ End Header Inner -->
 	</header>
+	<!--/ End Header -->
 
-	<div style="height: 50px;"></div>
-	<!-- 여기에 50px 높이의 공간이 추가됩니다 -->
+	<!-- Slider Area -->
+	<section class="hero-slider">
 
-	<!-- Start Product Area -->
+		<!-- Single Slider -->
+		<div class="single-slider">
+			<div class="main-image">
+				<img class="main-image" th:src="@{/main/images/main_image1.jpg}" alt="main">
+				<div class="row no-gutters">
+					<div class="col-lg-9 offset-lg-3 col-12">
+						<div class="text-inner">
+							<div class="row">
+								<div class="col-lg-7 col-12">
+									<div class="hero-text">
+										<h1><span>UP TO 50% OFF </span>Shirt For Man</h1>
+										<p>Maboriosam in a nesciung eget magnae <br> dapibus disting tloctio in the find
+											it pereri <br> odiy maboriosm.
+										</p>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--/ End Single Slider -->
+	</section>
+	<!--/ End Slider Area -->
+
+
+	<!-- End Small Banner -->
+	<!-- Start Product Area : 상품리스트 -->
 	<div class="product-area section">
 		<div class="container">
 			<div class="row">
@@ -239,9 +278,8 @@
 												<div class="single-product">
 													<div class="product-img">
 														<a th:href="@{/main/productsDetail(productId = ${product.productId})}">
-															<!-- 이미지는 대표 이미로 받는 걸 default로 에디터로 받는 걸 호버링으로 놓을 예정 -->
-															<img class="default-img" th:src="@{/main/images/example_img1.jpeg}" alt="#">
-															<img class="hover-img" th:src="@{/main/images/example_img2.jpeg}"alt="#">
+															<img class="default-img" src="https://via.placeholder.com/550x750" alt="#">
+															<img class="hover-img" src="https://via.placeholder.com/550x750" alt="#">
 														</a>
 													</div>
 													<div class="product-content">
@@ -262,6 +300,7 @@
 								</div>
 							</div>
 							<!--/ End Single Tab -->
+
 						</div>
 					</div>
 				</div>
@@ -295,6 +334,124 @@
 	</section>
 	<!-- End Shop Services Area -->
 
+	<!-- Modal -->
+	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span class="ti-close"
+							aria-hidden="true"></span></button>
+				</div>
+				<div class="modal-body">
+					<div class="row no-gutters">
+						<div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+							<!-- Product Slider -->
+							<div class="product-gallery">
+								<div class="quickview-slider-active">
+									<div class="single-slider">
+										<img src="https://via.placeholder.com/569x528" alt="#">
+									</div>
+									<div class="single-slider">
+										<img src="https://via.placeholder.com/569x528" alt="#">
+									</div>
+									<div class="single-slider">
+										<img src="https://via.placeholder.com/569x528" alt="#">
+									</div>
+									<div class="single-slider">
+										<img src="https://via.placeholder.com/569x528" alt="#">
+									</div>
+								</div>
+							</div>
+							<!-- End Product slider -->
+						</div>
+						<div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+							<div class="quickview-content">
+								<h2>Flared Shift Dress</h2>
+								<div class="quickview-ratting-review">
+									<div class="quickview-ratting-wrap">
+										<div class="quickview-ratting">
+											<i class="yellow fa fa-star"></i>
+											<i class="yellow fa fa-star"></i>
+											<i class="yellow fa fa-star"></i>
+											<i class="yellow fa fa-star"></i>
+											<i class="fa fa-star"></i>
+										</div>
+										<a href="#"> (1 customer review)</a>
+									</div>
+									<div class="quickview-stock">
+										<span><i class="fa fa-check-circle-o"></i> in stock</span>
+									</div>
+								</div>
+								<h3>$29.00</h3>
+								<div class="quickview-peragraph">
+									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia iste laborum
+										ad impedit pariatur esse optio tempora sint ullam autem deleniti nam in quos qui
+										nemo ipsum numquam.</p>
+								</div>
+								<div class="size">
+									<div class="row">
+										<div class="col-lg-6 col-12">
+											<h5 class="title">Size</h5>
+											<select>
+												<option selected="selected">s</option>
+												<option>m</option>
+												<option>l</option>
+												<option>xl</option>
+											</select>
+										</div>
+										<div class="col-lg-6 col-12">
+											<h5 class="title">Color</h5>
+											<select>
+												<option selected="selected">orange</option>
+												<option>purple</option>
+												<option>black</option>
+												<option>pink</option>
+											</select>
+										</div>
+									</div>
+								</div>
+								<div class="quantity">
+									<!-- Input Order -->
+									<div class="input-group">
+										<div class="button minus">
+											<button type="button" class="btn btn-primary btn-number" disabled="disabled"
+												data-type="minus" data-field="quant[1]">
+												<i class="ti-minus"></i>
+											</button>
+										</div>
+										<input type="text" name="quant[1]" class="input-number" data-min="1"
+											data-max="1000" value="1">
+										<div class="button plus">
+											<button type="button" class="btn btn-primary btn-number" data-type="plus"
+												data-field="quant[1]">
+												<i class="ti-plus"></i>
+											</button>
+										</div>
+									</div>
+									<!--/ End Input Order -->
+								</div>
+								<div class="add-to-cart">
+									<a href="#" class="btn">Add to cart</a>
+									<a href="#" class="btn min"><i class="ti-heart"></i></a>
+									<a href="#" class="btn min"><i class="fa fa-compress"></i></a>
+								</div>
+								<div class="default-social">
+									<h4 class="share-now">Share:</h4>
+									<ul>
+										<li><a class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
+										<li><a class="twitter" href="#"><i class="fa fa-twitter"></i></a></li>
+										<li><a class="youtube" href="#"><i class="fa fa-pinterest-p"></i></a></li>
+										<li><a class="dribbble" href="#"><i class="fa fa-google-plus"></i></a></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Modal end -->
 
 	<!-- Start Footer Area -->
 	<footer class="footer">

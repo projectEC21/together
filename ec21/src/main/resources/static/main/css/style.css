@@ -279,8 +279,41 @@ body {
 	01. Header CSS
 ========================================*/
 
-.main-image{
-	max-width: 100%;
+/* 첫 메인 화면 */
+html {
+	scroll-behavior: smooth;
+}
+
+.hero-area4 {
+	background: url("../images/main_image1.jpg") fixed;
+	background-size: 100%;
+	height: 72vh;
+	padding: 20px;
+	/* border: 1px solid #ccc; */
+}
+
+.hero-area4 .search-bar {
+	position: absolute;
+	left: 28%;
+    top: 235px;
+}
+
+
+/* 카테고리 */
+
+/* 고정 헤더 및 패딩을 위한 CSS */
+.fixed-header {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	z-index: 1000;
+	background: white; /* 헤더의 배경색 */
+	transition: all 0.4s ease; /* 부드러운 전환 */
+}
+
+.header-padding {
+	padding-top: 60px; /* 고정된 헤더의 높이만큼 패딩 추가 */
 }
 
 /* Topbar */
@@ -781,6 +814,11 @@ body {
 	margin: 10px 0 0;
 }
 
+.header.shop .logo img {
+	width: 76%;
+	height: 40%;
+}
+
 .header.shop .top-contact {
 	margin-top: 0px;
 }
@@ -804,25 +842,26 @@ body {
 	width: 570px;
 	height: 50px;
 	display: inline-flex;
+	align-items: center;
 	background: #fff;
 	position: relative;
 	margin: 0;
-	line-height: 45px;
-	border-radius: 5px;
-	border: 1px solid #ececec;
+	line-height: 50px;
+	border-radius: 55px;
+	border: 1px solid #ccc;
 }
 
 .header.shop .nice-select {
 	clear: initial;
 	margin: 0;
 	height: 48px;
-	width: 170px;
-	border: 1px solid #444;
+	width: 180px;
+	/* border: 1px solid #444; */
 	text-align: center;
 	background: transparent;
 	text-transform: capitalize;
 	padding: 0 0 0 20px;
-	border-right: 1px solid #eee;
+	border: none;
 	line-height: 50px;
 	font-size: 14px;
 	font-weight: 400;
@@ -835,6 +874,8 @@ body {
 
 .header.shop .nice-select .list {
 	border-radius: 0px;
+	width: 89%;
+    margin-left: 20px;
 }
 
 .header.shop .nice-select .list li.focus {
@@ -860,30 +901,30 @@ body {
 }
 
 .header.shop .search-bar input {
-	height: 48px;
+	height: 50px;
 	background: transparent;
 	color: #666;
 	border-radius: 0;
-	border: 1px solid #444;
+	/* border: 1px solid #444; */
 	font-size: 14px;
 	font-weight: 400;
 	padding: 0 25px 0 20px;
-	width: 340px;
+	width: 360px;
 }
 
 .header.shop .search-bar .btnn {
-	height: 50px;
-	line-height: 53px;
+	height: 51px;
+	line-height: 57px;
 	width: 62px;
 	text-align: center;
 	font-size: 18px;
 	color: #fff;
 	background: #333333;
 	position: absolute;
-	right: -2px;
+	right: -30px;
 	top: -1px;
 	border: none;
-	border-radius: 0 5px 5px 0;
+	border-radius: 0 55px 55px 0;
 	-webkit-transition: all 0.4s ease;
 	-moz-transition: all 0.4s ease;
 	transition: all 0.4s ease;
@@ -1124,7 +1165,7 @@ body {
 }
 
 .header.shop .nav li {
-	margin-right: 45px;
+	margin-right: 63px;
 	position: relative;
 	float: none;
 }
@@ -1275,17 +1316,17 @@ body {
 .header.shop .topbar .container .row .col-lg-8.col-md-12.col-12 .right-content .list-main .total-count,
 .header.shop .right-bar .sinlge-bar .single-icon .total-count {
 	position: absolute;
-	top: -7px;
-	right: -8px;
-	background: #f6931d;
-	width: 25px;
-	height: 20px;
-	line-height: 20px;
-	text-align: center;
-	color: #fff;
-	border-radius: 100%;
-	font-size: 11px;
+    top: 0px;
+    right: 25px;
+    background: #f6931d !important;
+    width: 7px;
+    height: 9px;
+    line-height: 20px;
+    color: #fff;
+    border-radius: 100%;
+    font-size: 11px;
 }
+
 
 .header.shop .right-bar .sinlge-bar {
 	display: inline-block;
@@ -2102,12 +2143,13 @@ body {
 .single-product .product-img {
 	position: relative;
 	overflow: hidden;
-	cursor: pointer;
+	/* cursor: pointer; */
 }
 
 .single-product .product-img a {
 	display: block;
 	position: relative;
+	width: 100%;
 }
 
 .single-product .product-img a img {
@@ -2392,14 +2434,14 @@ body {
 	/* 넘치는 텍스트 숨김 */
 	text-overflow: ellipsis;
 	/* 생략 표시 */
-	max-width: 180px;
+	max-width: 75%;
 }
 
 
 
 .single-product .product-content h3 a {
-	font-size: 15px;
-	font-weight: 600;
+	font-size: 14px;
+	font-weight: 500;
 }
 
 .single-product .product-content h3 a:hover {
@@ -2635,8 +2677,8 @@ body {
 /* Shop Topbar */
 .shop .shop-top {
 	clear: both;
-	background: #f6f7fb;
-	/* padding: 18px 20px 50px 20px; */
+	/* background: #f6f7fb; */
+	padding: 18px 20px 50px 20px;
 }
 
 .shop .shop-shorter {
@@ -2654,10 +2696,18 @@ body {
 
 .shop .single-shorter label {
 	display: inline-block;
-	float: left;
-	margin: 4px 5px 0 0;
-	font-weight: 500;
-	font-size: large;
+    float: left;
+    margin: 4px 5px 0 0;
+    font-weight: 400;
+    font-size: 17px;
+    border-bottom: 1px solid #666;
+}
+
+.shop .single-shorter input {
+	border: none;
+    font-size: 14px;
+    padding-left: 20px;
+    width: 45px;
 }
 
 .shop .single-slider a {
