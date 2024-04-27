@@ -814,6 +814,11 @@ html {
 	margin: 10px 0 0;
 }
 
+.header.shop .logo img {
+	width: 76%;
+	height: 40%;
+}
+
 .header.shop .top-contact {
 	margin-top: 0px;
 }
@@ -841,7 +846,7 @@ html {
 	position: relative;
 	margin: 0;
 	line-height: 50px;
-	border-radius: 55px;
+	border-radius: 0px;
 	border: 1px solid #ececec;
 }
 
@@ -901,11 +906,11 @@ html {
 	font-size: 14px;
 	font-weight: 400;
 	padding: 0 25px 0 20px;
-	width: 350px;
+	width: 360px;
 }
 
 .header.shop .search-bar .btnn {
-	height: 50px;
+	height: 51px;
 	line-height: 57px;
 	width: 62px;
 	text-align: center;
@@ -913,7 +918,7 @@ html {
 	color: #fff;
 	background: #333333;
 	position: absolute;
-	right: -2px;
+	right: -30px;
 	top: -1px;
 	border: none;
 	border-radius: 0 55px 55px 0;
@@ -2141,7 +2146,7 @@ html {
 .single-product .product-img a {
 	display: block;
 	position: relative;
-	width: 50%;
+	width: 100%;
 }
 
 .single-product .product-img a img {
@@ -2426,7 +2431,7 @@ html {
 	/* 넘치는 텍스트 숨김 */
 	text-overflow: ellipsis;
 	/* 생략 표시 */
-	max-width: 180px;
+	max-width: 75%;
 }
 
 

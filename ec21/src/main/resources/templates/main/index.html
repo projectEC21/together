@@ -141,72 +141,44 @@
 			</div>
 		</div>
 		<!-- End Topbar -->
-		<div class="middle-inner">
-			<div class="container">
-				<div class="row">
-					<div class="col-lg-2 col-md-2 col-12">
-						<!-- Logo -->
-						<div class="logo">
-							<a th:href="@{/}"><img th:src="@{/main/images/ec21logo.png}" alt="logo"></a>
-						</div>
-						<!--/ End Logo -->
-						<!-- Search Form -->
-						<div class="search-top">
-							<div class="top-search"><a href="#"><i class="ti-search"></i></a></div>
-							<!-- Search Form -->
-							<div class="search-top">
-								<form class="search-form">
-									<input type="text" placeholder="Search here..." name="search">
-									<button value="search" type="submit"><i class="ti-search"></i></button>
-								</form>
-							</div>
-							<!--/ End Search Form -->
-						</div>
-						<!--/ End Search Form -->
-						<div class="mobile-nav"></div>
-					</div>
-					<!-- 240416 dy : 카테고리 선택 & 검색어 입력 후 버튼 누르면, 해당 카테고리의 목록이 보이도록 -->
-					<div class="col-lg-8 col-md-7 col-12">
-						<form th:action="@{/main/list}" method="get">
-							<div class="search-bar-top">
-								<div class="search-bar">
-									<!-- 240420 dy : 카테고리 선택 & 검색어 입력 시 form 태그로 상품 리스트로의 요청 걸어줌 -->
-									<select id="category" name="category">
-										<option value="total" th:selected="${category eq 'total'}">All Category</option>
-										<option value="FOOD_BEVERAGE" th:selected="${category eq 'FOOD_BEVERAGE'}">Food & Beverage</option>
-										<option value="CHEMICAL" th:selected="${category eq 'CHEMICAL'}">Chemical</option>
-										<option value="HEALTH_MEDICAL" th:selected="${category eq 'HEALTH_MEDICAL'}">Health & Medical</option>
-										<option value="ELECTRONIC" th:selected="${category eq 'ELECTRONIC'}">Electronics</option>
-										<option value="COSMETIC" th:selected="${category eq 'COSMETIC'}">Cosmetic</option>
-									</select>
-									<input id="searchWord" name="searchWord" placeholder="What are you searching for?"
-										type="text" th:value="${searchWord}"
-										th:attr="placeholder=${searchWord eq null ? 'What are you searching for?' : null}">
-									<button type="submit" class="btnn"> <i class="ti-search"></i></button>
-								</div>
-							</div>
+		
+		<!-- Start Area 4 -->
+		<section class="hero-area4">
+			<div>
+				<div class="search-top">
+					<div class="top-search"><a href="#"><i class="ti-search"></i></a></div>
+					<!-- Search Form -->
+					<div class="search-top">
+						<form class="search-form">
+							<input type="text" placeholder="Search here..." name="search">
+							<button value="search" type="submit"><i class="ti-search"></i></button>
 						</form>
 					</div>
-					<div class="col-lg-2 col-md-3 col-12">
-						<div class="right-bar">
-							<!-- Search Form -->
-							<div class="sinlge-bar">
-								<a th:href="@{/main/myproducts(customerId=${#authentication.name})}" class="single-icon"><i class="fa fa-user-circle-o"
-										aria-hidden="true"></i></a>
-							</div>
-
-							<!-- 검색창 옆 부분 인콰이어리 new 로만 보이게 하고 인콰이어리 페이지로 넘어가게 하기 -->
-							<!-- ++ 0이 아닐때만 파란색으로 뜨게 하기 ! === 아직 안됨 -->
-							<div class="sinlge-bar inquiry">
-								<a th:href="@{/main/inbox(customerId=${#authentication.name})}" class="single-icon">
-									<i class="fa fa-envelope-o"></i><span class="total-count">new</span>
-								</a>
-							</div>
+					<!--/ End Search Form -->
+				</div>
+				<!--/ End Search Form -->
+				<form th:action="@{/main/list}" method="get">
+					<div>
+						<div class="search-bar">
+							<!-- 240420 dy : 카테고리 선택 & 검색어 입력 시 form 태그로 상품 리스트로의 요청 걸어줌 -->
+							<select id="category" name="category">
+								<option value="total" th:selected="${category eq 'total'}">All Category</option>
+								<option value="FOOD_BEVERAGE" th:selected="${category eq 'FOOD_BEVERAGE'}">Food & Beverage</option>
+								<option value="CHEMICAL" th:selected="${category eq 'CHEMICAL'}">Chemical</option>
+								<option value="HEALTH_MEDICAL" th:selected="${category eq 'HEALTH_MEDICAL'}">Health & Medical</option>
+								<option value="ELECTRONIC" th:selected="${category eq 'ELECTRONIC'}">Electronics</option>
+								<option value="COSMETIC" th:selected="${category eq 'COSMETIC'}">Cosmetic</option>
+							</select>
+							<input id="searchWord" name="searchWord" placeholder="What are you searching for?"
+								type="text" th:value="${searchWord}"
+								th:attr="placeholder=${searchWord eq null ? 'What are you searching for?' : null}">
+							<button type="submit" class="btnn"> <i class="ti-search"></i></button>
 						</div>
 					</div>
-				</div>
+				</form>
 			</div>
-		</div>
+		</section>
+		<!--/ End Hero Area 4 -->
 
 		<!-- Header Inner -->
 		<div class="header-inner">
@@ -238,7 +210,7 @@
 			</div>
 		</div>
 		<!--/ End Header Inner -->	
-</header>
+	</header>
 
 	<div style="height: 50px;"></div>
 	<!-- 여기에 50px 높이의 공간이 추가됩니다 -->
@@ -267,7 +239,9 @@
 												<div class="single-product">
 													<div class="product-img">
 														<a th:href="@{/main/productsDetail(productId = ${product.productId})}">
-															<img class="default-img" src="https://via.placeholder.com/550x750" alt="#">
+															<!-- 이미지는 대표 이미로 받는 걸 default로 에디터로 받는 걸 호버링으로 놓을 예정 -->
+															<img class="default-img" th:src="@{/main/images/example_img1.jpeg}" alt="#">
+															<img class="hover-img" th:src="@{/main/images/example_img2.jpeg}"alt="#">
 														</a>
 													</div>
 													<div class="product-content">
