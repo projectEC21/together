@@ -9,27 +9,28 @@ $(document).ready(function () {
     });
 });
 
+/**
+ * 인콰이어리 모달 클릭시 로그인이 되어있지 않은 유저는 로그인 창으로
+ * @returns 
+ */
+function isUserLoggedIn() {
+    let sessionCookie = document.cookie.includes("sessionID");
+    let token = localStorage.getItem("jwtToken");
 
-$(document).ready(function() {
-    $("#modalBtn").on("click", function(event) {
-        event.preventDefault(); // 기본 폼 제출을 방지
-        event.stopPropagation(); // 이벤트 전파 방지
+    return sessionCookie || token; // 로그인 상태 확인
+        }
 
-        // 로그인 상태 확인
-        if (!isUserLoggedIn()) {
-            alert;
-            window.location.href = "/main/login"; // 로그인 페이지로 리디렉션
-        } 
+    document.addEventListener("DOMContentLoaded", function() {
+        let modalButton = document.getElementById("modalBtn");
+        modalButton.addEventListener("click", function(event) {
+            if (!isUserLoggedIn()) { 
+                event.preventDefault(); // 로그인되어 있지 않으면 모달 열기 중지
+                let loginUrl = '@{/main/login}'; // 로그인 페이지 URL
+                
+                window.location.href = loginUrl; // 로그인 페이지로 리디렉션
+            }
+        });
     });
-
-    function isUserLoggedIn() {
-        // 로그인 상태 확인 (세션, 쿠키, 또는 로컬 스토리지 검사)
-        let sessionCookie = document.cookie.includes("sessionID");
-        let token = localStorage.getItem("jwtToken");
-
-        return sessionCookie || token; // 세션 또는 JWT가 있으면 로그인된 것으로 간주
-    }
-});
 
 
 $(document).ready(function () {
