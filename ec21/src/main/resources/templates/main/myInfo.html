@@ -282,8 +282,8 @@
 										<option value="COSMETIC" th:selected="${category eq 'COSMETIC'}">Cosmetic
 										</option>
 									</select>
-									<input name="search" id="searchWord" name="searchWord" placeholder="What are you searching for?"
-										type="search" th:value="${searchWord}"
+									<input id="searchWord" name="searchWord" placeholder="What are you searching for?"
+										type="type" th:value="${searchWord}"
 										th:attr="placeholder=${searchWord eq null ? 'What are you searching for?' : null}" />
 									<button type="submit" class="btnn"> <i class="ti-search"></i></button>
 								</div>
