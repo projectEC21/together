@@ -294,8 +294,13 @@ html {
 
 .hero-area4 .search-bar {
 	position: absolute;
+<<<<<<< HEAD
 	left: 28%;
     top: 235px;
+=======
+	left: 400px;
+	top: 200px;
+>>>>>>> 5b77e925effd94bd99da3d429628d49ac9813f60
 }
 
 
@@ -909,11 +914,19 @@ html {
 	font-size: 14px;
 	font-weight: 400;
 	padding: 0 25px 0 20px;
+<<<<<<< HEAD
 	width: 360px;
 }
 
 .header.shop .search-bar .btnn {
 	height: 51px;
+=======
+	width: 350px;
+}
+
+.header.shop .search-bar .btnn {
+	height: 50px;
+>>>>>>> 5b77e925effd94bd99da3d429628d49ac9813f60
 	line-height: 57px;
 	width: 62px;
 	text-align: center;
@@ -2149,7 +2162,11 @@ html {
 .single-product .product-img a {
 	display: block;
 	position: relative;
+<<<<<<< HEAD
 	width: 100%;
+=======
+	width: 50%;
+>>>>>>> 5b77e925effd94bd99da3d429628d49ac9813f60
 }
 
 .single-product .product-img a img {
