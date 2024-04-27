@@ -294,8 +294,8 @@ html {
 
 .hero-area4 .search-bar {
 	position: absolute;
-	left: 400px;
-	top: 200px;
+	left: 28%;
+    top: 235px;
 }
 
 
@@ -842,11 +842,12 @@ html {
 	width: 570px;
 	height: 50px;
 	display: inline-flex;
+	align-items: center;
 	background: #fff;
 	position: relative;
 	margin: 0;
 	line-height: 50px;
-	border-radius: 0px;
+	border-radius: 55px;
 	border: 1px solid #ececec;
 }
 
@@ -860,7 +861,7 @@ html {
 	background: transparent;
 	text-transform: capitalize;
 	padding: 0 0 0 20px;
-	border-right: 1px solid #eee;
+	border: none;
 	line-height: 50px;
 	font-size: 14px;
 	font-weight: 400;
@@ -873,6 +874,8 @@ html {
 
 .header.shop .nice-select .list {
 	border-radius: 0px;
+	width: 89%;
+    margin-left: 20px;
 }
 
 .header.shop .nice-select .list li.focus {
@@ -1313,17 +1316,17 @@ html {
 .header.shop .topbar .container .row .col-lg-8.col-md-12.col-12 .right-content .list-main .total-count,
 .header.shop .right-bar .sinlge-bar .single-icon .total-count {
 	position: absolute;
-	top: -7px;
-	right: -8px;
-	background: #f6931d;
-	width: 25px;
-	height: 20px;
-	line-height: 20px;
-	text-align: center;
-	color: #fff;
-	border-radius: 100%;
-	font-size: 11px;
+    top: 0px;
+    right: 25px;
+    background: #f6931d !important;
+    width: 7px;
+    height: 9px;
+    line-height: 20px;
+    color: #fff;
+    border-radius: 100%;
+    font-size: 11px;
 }
+
 
 .header.shop .right-bar .sinlge-bar {
 	display: inline-block;
