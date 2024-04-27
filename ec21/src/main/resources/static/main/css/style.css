@@ -3175,11 +3175,11 @@ textarea {
     text-transform: uppercase;
     margin: 30px 5px 0 0;
     border-radius: 10px;
-    background: #fff;
+    background: #F7941D;
     display: inline-block;
     font-weight: 800;
     font-size: 27px;
-    color: #F7941D;
+    color: #fff;
     border: 1px solid;
 }
 
