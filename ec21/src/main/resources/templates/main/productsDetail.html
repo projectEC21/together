@@ -166,6 +166,25 @@
 			}
 		}
 
+		// 스크롤 시 드롭다운 닫기
+		document.addEventListener("scroll", function () {
+			// 현재 스크롤 위치를 감지
+			var scrollPosition = window.scrollY; // 또는 window.pageYOffset
+
+			// 스크롤 위치가 특정 픽셀 수 이상인 경우
+			var threshold = 200; // 원하는 스크롤 길이
+			if (scrollPosition > threshold) {
+				// 모든 열려 있는 드롭다운 메뉴를 닫기
+				var dropdowns = document.querySelectorAll(".dropdown-menu.show");
+				dropdowns.forEach(function (dropdown) {
+					if (dropdown.classList.contains("show")) {
+						// 'show' 클래스 제거
+						dropdown.classList.remove("show");
+					}
+				});
+			}
+		});
+
 	</script>
 
 </head>
@@ -346,8 +365,9 @@
 				<div class="col-12">
 					<!-- Product Edit & Delete Buttons for User and Manager -->
 					<!-- 240426 dy : 상품 판매자와 로그인한 ID가 동일한 경우에만 버튼 보임 -->
-					<div class="btn-edit" th:if="${product.customerId == #authentication.name}">
-						<ul class="user-custom">
+					<!-- <div class="btn-edit" th:if="${product.customerId == #authentication.name}">
+						<a class="" href="#"><i class="fa fa-cog"></i></a>
+						<ul class="user-custom ">
 							<li><a th:href="@{/main/productsUpdate(productId=${product.productId})}"
 									class="btn min user">Edit</a></li>
 							<li>
@@ -366,7 +386,37 @@
 							</th:block>
 							</li>
 						</ul>
+					</div> -->
+					<!-- 드롭다운 버튼 -->
+					<div class="for-user" th:if="${product.customerId == #authentication.name}">
+						<a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<i class="fa fa-cog"></i> <!-- 아이콘 -->
+						</a>
+						<!-- 드롭다운 메뉴 -->
+						<ul class="dropdown-menu dropdown-custom">
+							<!-- 'Edit' 링크 -->
+							<li>
+								<a th:href="@{/main/productsUpdate(productId=${product.productId})}"
+									class="dropdown-link">Edit</a>
+							</li>
+							<!-- 'Delete' 링크, 현재 페이지가 'myproducts'일 경우 -->
+							<li>
+								<th:block th:if="${currentPage eq 'myproducts'}">
+									<a onclick="return deleteProduct(this,event)"
+										th:href="@{/main/myproducts/afterDelete(customerId=${product.customerId},category=${category}, searchWord=${searchWord})}"
+										id="deleteBtn" th:data-product="${product.productId}">Delete</a>
+							</li>
+							<!-- 'Delete' 링크, 현재 페이지가 'myproducts'가 아닐 경우 -->
+							</th:block>
+							<th:block th:unless="${currentPage eq 'myproducts'}">
+								<a onclick="return deleteProduct(this,event)"
+									th:href="@{/main/list/afterDelete(category=${category}, searchWord=${searchWord})}"
+									id="deleteBtn" th:data-product="${product.productId}">Delete</a>
+							</th:block>
+							</li>
+						</ul>
 					</div>
+
 					<!-- Product Gallery -->
 					<div class="row">
 						<div class="col-lg-6 col-12">
