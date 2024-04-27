@@ -425,17 +425,15 @@
 						</ul>
 					</div>
 
-					<!-- Product Gallery -->
+					<!-- Product Gallery : 조원들이랑 상의 할 곳 -->
 					<div class="row">
 						<div class="col-lg-6 col-12">
-							<img th:src="@{/main/images/example_img4}" alt="">
 							<div class="product-gallery">
 								<div class="flexslider-thumbnails">
-									<ul class="slides">
-										<span th:if="${product.originalFileName}!=null">
-											<img th:src="@{/main/downloadImg(productId=${product.productId})}">
-										</span>
-									</ul>
+									<img th:src="@{/main/images/example_img6.jpeg}" alt="">
+									<span th:if="${product.originalFileName}!=null">
+										<img th:src="@{/main/downloadImg(productId=${product.productId})}">
+									</span>
 								</div>
 							</div>
 						</div>
@@ -450,8 +448,6 @@
 										<span class="country-name">[[${product.origin}]]</span>
 										<span class="flag-container"></span>
 									</h6>
-
-
 									<h6 class="quantity">Minimum Order Quantity : <span>[[${product.moq}]]
 											[[${product.unit}]]</span></h6>
 								</div>
@@ -470,28 +466,31 @@
 
 					<!-- Inquiry Modal -->
 					<div class="modal fade" id="inquiryModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-						<div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
+						<div class="modal-dialog" role="document">
 							<div class="modal-content">
-								<form class="form" action="/productDetail/sendInquiry" method="post" id="inquiryForm" enctype="multipart/form-data">
+								<form class="form" th:action="@{/productDetail/sendInquiry}" method="post" id="inquiryForm" enctype="multipart/form-data">
 									<!-- Modal Header -->
 									<div class="modal-header">
-										<p class="modal-title">
-											<i class="ti-user"></i> Reminder for Buyers
-											<br>Be cautious with
-												pre-payment by T/T or Western Union. Do not make pre-payment to any sellers
-												unless you can fully trust the sellers.
-												<br> More... EC21.com is NOT RESPONSIBLE for transactions between buyers and
-												sellers.
-										</p>
+										<div class="modal-title">
+											<span>SENDING</span>
+										</div>
 										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 											<span aria-hidden="true">&times;</span>
 										</button>
 									</div>
 									<!-- Modal Body -->
 									<div class="modal-body">
+										<p>
+											<i class="ti-user"></i> Reminder for Buyers
+										<br>Be cautious with
+											pre-payment by T/T or Western Union. Do not make pre-payment to any sellers
+											unless you can fully trust the sellers.
+											<!-- <br> More... EC21.com is NOT RESPONSIBLE for transactions between buyers and
+											sellers. -->
+										</p>
 										<table>
 											<tr>
-												<th class="col-md-5">To</th>
+												<th class="col-md-5 to">To</th>
 												<td><input name="receiverId" id="modalReceiverId" readonly></td>
 											</tr>
 											<tr>
@@ -615,14 +614,19 @@
 						<div class="single-product" th:each="dto:${list}">
 							<div class="product-img">
 								<a th:href="@{/main/productsDetail(productId=${dto.productId})}">
-									<img class="default-img" src="https://via.placeholder.com/550x750" alt="#">
-									<img class="hover-img" src="https://via.placeholder.com/550x750" alt="#">
+									<img class="default-img" th:src="@{/main/example_img5.jpeg}">
+									<img class="hover-img" th:src="@{/main/example_img6.jpeg}">
 								</a>
 							</div>
+
 							<div class="product-content">
 								<h3><a th:href="@{/main/productsDetail(productId=${dto.productId})}">[[${dto.productName}]]</a></h3>
 								<div class="product-price">
-									<span>$[[${dto.price}]]</span>
+									<span>$ [[${dto.price}]]</span>
+								</div>
+								<div class="product-seller" th:data-country =${dto.country}>
+									<img id="countryFlag" src="" alt="" style="width:20px; height:20px;">
+									<span>[[${dto.customerId}]]</span>
 								</div>
 							</div>
 						</div>
@@ -630,6 +634,8 @@
 					</div>
 				</div>
 			</div>
+			<div style="height: 50px;"></div>
+			<!-- 여기에 50px 높이의 공간이 추가됩니다 -->
 		</div>
 	</div>
 	<!-- End Most Popular Area -->

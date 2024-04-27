@@ -2164,11 +2164,13 @@ html {
 
 .single-product .product-img a img {
 	width: 100%;
+    position: relative;
+    left: 15%;
 }
 
 .single-product .product-img a img.hover-img {
 	position: absolute;
-	left: 0;
+	left: 15%;
 	top: 0;
 	z-index: 1;
 	opacity: 0;
@@ -2406,6 +2408,9 @@ html {
 
 .single-product .product-content {
 	margin-top: 10px;
+    position: relative;
+    left: 16%;
+	width: 80%;
 }
 
 .single-product .product-img:hover.default-overlay::before {
@@ -2688,7 +2693,7 @@ html {
 .shop .shop-top {
 	clear: both;
 	/* background: #f6f7fb; */
-	padding: 18px 20px 50px 20px;
+	padding: 18px 20px 50px 80px;
 }
 
 .shop .shop-shorter {
@@ -2810,10 +2815,23 @@ html {
 ========================================*/
 /* modal 과 관련된 css */
 .shop.single .modal-header {
-	color: #666
+	padding: 11px;
+    background: #F7941D;
+    border-radius: 0px;
 }
 
+.shop.single .modal-title {
+	font-weight: 800;
+    font-size: 33px;
+    font-family: poppins;
+    color: #fff;
+}
 
+.shop.single .modal-body p {
+	color: #555;
+	margin-bottom: 32px;
+    line-height: 27px;
+}
 
 .shop.single .modal-body th {
 	width: 10%;
@@ -2825,7 +2843,7 @@ html {
 	    /* display: block; */
 		margin-top: 10px;
 		margin-left: 20px;
-		padding: 10px;
+		padding: 12px;
 }
 
 .shop.single .modal-body td #modalReceiverId {
@@ -2842,11 +2860,18 @@ html {
 	font-size: 16px;
 }
 
+.button.close {
+	color: #fff;
+	border: 1px solid #0f435e;
+}
+
 .shop.single .modal-body input,
 textarea {
 	resize: none;
 	width: 80%;
 }
+
+
 
 
 
@@ -2874,15 +2899,28 @@ textarea {
 /* /modal 과 관련된 css */
 
 .shop.single {
-	padding: 70px 0 100px;
+	padding: 60px 0 100px;
+	margin-bottom: 96px;
 }
 
 .shop.single .product-gallery {
-	margin-top: 30px;
+	margin: 30px;
+    border: 2px solid #e6e6e6;
 }
 
 .shop.single .flexslider-thumbnails {
 	position: relative;
+}
+
+.shop.single .product-gallery .flexslider-thumbnails img {
+	max-width: 400px;
+    width: 100%;
+    display: flex;
+    position: relative;
+    left: 17%;
+    height: 400px;
+    /* border: 1px solid #f6f6f6; */
+    top: 7px;
 }
 
 .shop.single .product-gallery .slides li {
@@ -2918,15 +2956,19 @@ textarea {
 }
 
 .shop.single .product-desc {
-	margin-top: 32px;
-	margin-left: 70px;
+	width: 85%;
+    position: relative;
+    top: 14%;
+    left: 14%;
+	margin: 10px;
 }
 
 .shop.single .product-desc .short h4 {
 	font-size: 23px;
-	font-weight: 600;
-	margin: -5px 0 20px 0;
-	line-height: 28px;
+    font-weight: 600;
+    margin: -5px 0 20px 0;
+    line-height: 28px;
+    width: 74%;
 }
 
 .shop.single .product-desc .short h6{
@@ -3185,11 +3227,11 @@ textarea {
     text-transform: uppercase;
     margin: 30px 5px 0 0;
     border-radius: 10px;
-    background: #fff;
+    background: #F7941D;
     display: inline-block;
     font-weight: 800;
     font-size: 27px;
-    color: #F7941D;
+    color: #fff;
     border: 1px solid;
 }
 
@@ -3230,6 +3272,11 @@ textarea {
 }
 
 /* Product Tab */
+.product-area .product-info {
+	margin-top: 50px;
+	position: relative;
+    right: 6%;
+}
 .shop.single .product-info {
 	margin-top: 50px;
 }
@@ -3374,9 +3421,9 @@ textarea {
 }
 
 .shop.single .comp-info th {
-	width: 100px;
-    padding: 10px;
-    text-align: end;
+	width: 12%;
+    padding: 11px;
+	text-align: end;
 }
 
 .shop.single .comp-info td {
@@ -3384,9 +3431,9 @@ textarea {
 }
 
 .shop.single .comp-info .comp-name {
-	font-size: larger;
-	font-weight: 500;
-	text-align: start;
+	font-size: 23px;
+    font-weight: 500;
+    text-align: left;
 }
 /*======================================
    End Shop Single CSS
@@ -5300,7 +5347,7 @@ start Inquiry CSS
 	position: relative;
 	color: #2c2d3f;
 	font-weight: 700;
-	padding-bottom: 15px;
+	padding-bottom: 20px;
 }
 
 /* Blog Sidebar */
