@@ -83,8 +83,14 @@
 				let productId = $(this).attr("data-id");
 				let receiver = $(this).attr("data-seller");
 				let sender = $("#loginUser").val();
-				let inquiryTitle = $(this).attr("data-title");
-				let category = $(this).attr("data-category");
+				let prefixedTitle = $(this).attr("data-title");
+				let inquiryTitle = "Regard " + prefixedTitle;
+				// let inquiryTitle = $(this).attr("data-title");
+
+				let prefixedCategory = $(this).attr("data-category");
+				// _를 &로 변경
+				let category = prefixedCategory.replace(/_/g, "&");
+				// let category = $(this).attr("data-category");
 				let quantity = $(this).attr("data-quantity");
 				let unit = $(this).attr("data-unit");
 				console.log(receiver);
@@ -143,12 +149,14 @@
 		// 	}
 		// }
 
+		
 		// 인콰이어리 post로 보내기
 		function submitInquiry(){
 			if (confirm("인콰이어리 전송")) {
 				$("#inquiryForm").submit();
 			}
 		}
+
 
 		function deleteProduct(element, event) {
 			let productId = element.getAttribute("data-product");
@@ -286,7 +294,7 @@
 							<!-- 검색창 옆 부분 인콰이어리 new 로만 보이게 하고 인콰이어리 페이지로 넘어가게 하기 -->
 							<div class="sinlge-bar inquiry">
 								<a th:href="@{/main/inbox(customerId=${#authentication.name})}" class="single-icon">
-									<i class="fa fa-envelope-o"></i><span class="total-count">new</span>
+									<i class="fa fa-envelope-o"></i><span class="total-count"></span>
 								</a>
 							</div>
 						</div>
@@ -420,15 +428,13 @@
 					<!-- Product Gallery -->
 					<div class="row">
 						<div class="col-lg-6 col-12">
+							<img th:src="@{/main/images/example_img4}" alt="">
 							<div class="product-gallery">
 								<div class="flexslider-thumbnails">
 									<ul class="slides">
 										<span th:if="${product.originalFileName}!=null">
 											<img th:src="@{/main/downloadImg(productId=${product.productId})}">
 										</span>
-										<!-- <li data-thumb="https://via.placeholder.com/600x500">
-												<img src="https://via.placeholder.com/600x500" alt="#">
-											</li> -->
 									</ul>
 								</div>
 							</div>
@@ -463,48 +469,49 @@
 					</div>
 
 					<!-- Inquiry Modal -->
-					<div class="modal fade" id="inquiryModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-						aria-hidden="true">
-						<div class="modal-dialog" role="document">
+					<div class="modal fade" id="inquiryModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+						<div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
 							<div class="modal-content">
-								<form class="form" th:action="@{/productDetail/sendInquiry}" method="post" id="inquiryForm" enctype="multipart/form-data">
+								<form class="form" action="/productDetail/sendInquiry" method="post" id="inquiryForm" enctype="multipart/form-data">
 									<!-- Modal Header -->
 									<div class="modal-header">
-										<h4 class="modal-title">Send Message</h4>
+										<p class="modal-title">
+											<i class="ti-user"></i> Reminder for Buyers
+											<br>Be cautious with
+												pre-payment by T/T or Western Union. Do not make pre-payment to any sellers
+												unless you can fully trust the sellers.
+												<br> More... EC21.com is NOT RESPONSIBLE for transactions between buyers and
+												sellers.
+										</p>
 										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 											<span aria-hidden="true">&times;</span>
 										</button>
 									</div>
 									<!-- Modal Body -->
 									<div class="modal-body">
-										<p class="caution"><i class="ti-user"></i> Reminder for Buyers: Be cautious with
-											pre-payment by T/T or Western Union. Do not make pre-payment to any sellers
-											unless you can fully trust the sellers.
-											More... EC21.com is NOT RESPONSIBLE for transactions between buyers and
-											sellers.</p>
 										<table>
 											<tr>
-												<th class="col-md-5 text-center">To</th>
+												<th class="col-md-5">To</th>
 												<td><input name="receiverId" id="modalReceiverId" readonly></td>
 											</tr>
 											<tr>
-												<th class="text-center">Subject <span>*</span></th>
+												<th class="">Subject <span>*</span></th>
 												<td><input type="text" name="inquiryTitle" id="modalTitle" required></td>
 											</tr>
 											<tr>
-												<th class="text-center">Category <span>*</span></th>
+												<th class="">Category <span>*</span></th>
 												<td><input type="text" name="" id="modalCategory" required></td>
 											</tr>
 											<tr>
-												<th class="text-center">Quantity <span>*</span></th>
+												<th class="">Quantity <span>*</span></th>
 												<td><input type="number" name="quantity" id="modalQuantity" required> (<span id="modalUnit"></span>) </td>
 											</tr>
 											<tr>
-												<th class="text-center">Message <span>*</span></th>
+												<th class="">Message <span>*</span></th>
 												<td><textarea class="message-field" name="inquiryContent" id="modalContent" cols="30" rows="10" required></textarea></td>
 											</tr>
 											<tr>
-												<th class="text-center">Attach File</th>
+												<th class="">Attach File</th>
 												<td><input type="file" name="uploadFile" id="modalFile" value="Upload File"></td>
 											</tr>
 											<tr>
@@ -728,6 +735,27 @@
 		</div>
 	</footer>
 	<!-- /End Footer Area -->
+
+	<!-- Bootstrap 모달 -->
+	<div class="modal fade" id="loginAlertModal" tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">Login Required</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					You will be redirected to the login page.
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" id="redirectLoginBtn">OK</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
 
 	<!-- Jquery -->
 	<script th:src="@{/main/js/jquery.min.js}"></script>

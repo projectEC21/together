@@ -9,6 +9,29 @@ $(document).ready(function () {
     });
 });
 
+
+$(document).ready(function() {
+    $("#modalBtn").on("click", function(event) {
+        event.preventDefault(); // 기본 폼 제출을 방지
+        event.stopPropagation(); // 이벤트 전파 방지
+
+        // 로그인 상태 확인
+        if (!isUserLoggedIn()) {
+            alert;
+            window.location.href = "/main/login"; // 로그인 페이지로 리디렉션
+        } 
+    });
+
+    function isUserLoggedIn() {
+        // 로그인 상태 확인 (세션, 쿠키, 또는 로컬 스토리지 검사)
+        let sessionCookie = document.cookie.includes("sessionID");
+        let token = localStorage.getItem("jwtToken");
+
+        return sessionCookie || token; // 세션 또는 JWT가 있으면 로그인된 것으로 간주
+    }
+});
+
+
 $(document).ready(function () {
     $("#submitBtn").click(function (e) {
         e.preventDefault(); // 기본 폼 제출 방지
