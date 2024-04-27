@@ -132,7 +132,7 @@
 								<li sec:authorize="isAuthenticated()"><i class="ti-power-off"></i><a th:href="@{/main/logout}">Logout</a></li>
 								<li><a th:href="@{/main/myproducts}"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a></li>
 								<li><a th:href="@{/main/inbox(customerId=${#authentication.name})}" class="single-icon">
-										<i class="fa fa-envelope-o"></i><span class="total-count">new</span></li>
+										<i class="fa fa-envelope-o"></i><span class="total-count"></span></li>
 							</ul>
 						</div>
 						<!-- End Top Right -->
@@ -161,7 +161,7 @@
 					<div>
 						<div class="search-bar">
 							<!-- 240420 dy : 카테고리 선택 & 검색어 입력 시 form 태그로 상품 리스트로의 요청 걸어줌 -->
-							<select id="category" name="category">
+							<select id="category" name="category" style="border: none;">
 								<option value="total" th:selected="${category eq 'total'}">All Category</option>
 								<option value="FOOD_BEVERAGE" th:selected="${category eq 'FOOD_BEVERAGE'}">Food & Beverage</option>
 								<option value="CHEMICAL" th:selected="${category eq 'CHEMICAL'}">Chemical</option>
