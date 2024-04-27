@@ -106,9 +106,8 @@
 					data: { "inquiryId": inquiryId },
 					method: "GET",
 					success: function (dto) {
-						console.log(dto);
 						// 모달 값 채우기
-						$("#modalFile").attr("data-inquiryID",dto.inquiryId);
+						$("#modalFile").attr("data-inquiryId",dto.inquiryId);
 						$("#modalInquiryTitle").text(dto.inquiryTitle);
 						$("#modalReceiverId").text(dto.receiverId);
 						$("#modalSenderId").text(dto.senderId);
@@ -117,31 +116,19 @@
 						$("#modalQuantity").text(dto.quantity);
 						$("#modalUnit").text(dto.unit);
 						$("#modalInquiryContent").text(dto.inquiryContent);
-						if (dto.originalFileName != null) {
-							$("#modalFile").text(dto.originalFileName);
-							// 클릭 시 다운로드 
-							$("#modalFile").on("click", function () {
-								$.ajax({
-									url: "/inbox/downloadFile",
-									data: { "indquiryId": dto.inquiryId },
-									method: "GET"
-								});
-							});
-						}
+						$("#modalFile").text(dto.originalFileName);
 						// 모달열기
 						$("#inquiryDetail").modal();
 					}
 				}); // End ajax
 			}); // End 모달 클릭 이벤트
-
 			init();
 		});
 
-		// 다운로드
+		// 첨부 파일 다운로드
 		function download() {
-			let inquiryID = $("#modalFile").attr("data-inquiryID");
-			alert(inquiryID);
-			window.location = '/inbox/downloadFile?inquiryId=' + encodeURIComponent(inquiryID);
+			let inquiryId = $("#modalFile").attr("data-inquiryID");
+			window.location = '/inbox/downloadFile?inquiryId=' + encodeURIComponent(inquiryId);
 		}
 
 		// 쓰레기통으로 처리하는 함수
@@ -396,7 +383,7 @@
 								<th class="">Attach File</th>
 								<td>
 									<span>
-										<a href="javascript:download();" data-inquiryID=""  id="modalFile">bts.jpg</a>
+										<a href="javascript:download();" data-inquiryId=""  id="modalFile">bts.jpg</a>
 									</span>
 								</td>
 							</tr>
