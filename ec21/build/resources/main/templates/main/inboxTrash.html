@@ -9,7 +9,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<!-- Title Tag  -->
-	<title>EC21, Global B2B Marketplace</title> 
+	<title>EC21, Global B2B Marketplace</title>
 	<!-- Favicon -->
 	<link rel="icon" type="image/png" th:href="@{/main/images/ec21logo.png}">
 	<!-- Web Font -->
@@ -100,9 +100,7 @@
 					}
 				}); // End ajax
 			}); // End 모달 클릭 이벤트
-
 			init();
-
 		});
 
 		// 첨부 파일 다운로드
@@ -110,7 +108,6 @@
 			let inquiryId = $("#modalFile").attr("data-inquiryID");
 			window.location = '/inbox/downloadFile?inquiryId=' + encodeURIComponent(inquiryId);
 		}
-
 
 		// untrash 처리하는 함수 : 받은 메일함으로 보냄
 		function toUnTrash(element) {
@@ -389,7 +386,7 @@
 								<th class="">Attach File</th>
 								<td>
 									<span>
-										<a href="#" id="modalFile">bts.jpg</a>
+										<a href="javascript:download()" data-inquiryId="" id="modalFile">bts.jpg</a>
 									</span>
 								</td>
 							</tr>
