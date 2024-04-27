@@ -303,7 +303,7 @@
                     </thead>
                     <!-- 240414 dy : 전달받은 카테고리와 검색어에 해당하는 상품 리스트 꽂아 넣음 (디폴트- 카테고리:전체/검색어:"") -->
                     <tbody id="result">
-                      <tr class="even pointer" th:each="product:${list}">
+                      <tr class="even pointer" th:each="product:${list}" data-toggle="collapse" data-target="#details1">
                         <td class=" " th:text="${product.customerId}">121000040</td>
                         <td class=" " th:text="${product.productId}"><a
                             th:href="@{/main/productDetail}">3248202404071536</a></td>
@@ -333,6 +333,9 @@
                           <input type="button" class="btn-hover color-11 toWeird" th:data-id="${product.productId}"
                             value="이상">
                         </td>
+                      </tr>
+                      <tr id="details1" class="collapse">
+                        <td colspan="2">Details Content Here</td>
                       </tr>
                     </tbody>
                   </table>

@@ -205,23 +205,26 @@
               '#F0E6B4'
             ],
             borderWidth: 1,
-            weight: 2
+            weight: 1
           }]
         },
         options: {
           responsive: true,
           cutoutPercentage: 80,
-          maintainAspectRatio: false // 비율을 유지하도록 변경
-        },
-        plugins: {
-          legend: {
-            display: true, // 범례 표시 여부
-            position: 'top',// 범례의 위치
-            align: 'center',
-            labels: {
-              boxWidth: 100, // 범례 색상 상자의 너비
-              padding: 10, // 범례 항목 간의 패딩
-              usePointStyle: true
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              display: true, // 범례 표시 여부
+              position: 'right', // 범례의 위치를 오른쪽으로 변경
+              align: 'center',
+              labels: {
+                boxWidth: 20, // 범례 색상 상자의 너비
+                padding: 20, // 범례 항목 간의 패딩
+                boxWidth: 80, // 범례 색상 상자의 너비
+                // 범례 항목 간의 패딩
+                usePointStyle: true
+                // }
+              }
             }
           }
         }
@@ -463,8 +466,7 @@
                       </a>
 
                     </div>
-                    <div class="count h5 mb-0 font-weight-bold text-gray-800" id="todayRegisteredProd">
-                    </div>
+                    <div class="count" id="todayRegisteredProd"></div>
                     <!-- 지난 주 대비 증감률-->
                     <!-- <span class="count_bottom"><i class="blue"><i class="fa fa-sort-asc"></i>4% </i> From last Week</span> -->
                   </div>
@@ -485,7 +487,7 @@
                         수</a>
 
                     </div>
-                    <div class="count h5 mb-0 font-weight-bold text-gray-800" id="todayWeirdProd">
+                    <div class="count" id="todayWeirdProd">
 
                     </div>
                     <!-- 지난 주 대비 증감률-->
@@ -504,10 +506,10 @@
                   <div class="col mr-2 main">
                     <div class="text-xs font-weight-bold text-primary text-uppercase mb-1 ">
                       <i class=" fa fa-user"></i>
-                      <a th:href="@{/manager/customerList}">당일회원가입수</a>
+                      <a th:href="@{/manager/customerList}">당일 회원 가입 수</a>
 
                     </div>
-                    <div class="count h5 mb-0 font-weight-bold text-gray-800" id="todayRegisteredCustomer">
+                    <div class="count" id="todayRegisteredCustomer">
 
                     </div>
                     <!-- 지난 주 대비 증감률-->
@@ -530,7 +532,7 @@
                       <a th:href="@{/manager/reportedCustomerList}">미처리된 신고
                         개수</a>
                     </div>
-                    <div class="count h5 mb-0 font-weight-bold text-gray-800" id="unprocessedReport">
+                    <div class="count" id="unprocessedReport">
 
                     </div>
                     <!-- 지난 주 대비 증감률-->
@@ -557,7 +559,7 @@
 
           <div class="row">
             <!-- 일자별 상품등록 개수 라인, 도넛 그래프-->
-            <div class="col-md-7">
+            <div class="col-md-6">
               <div class=" x_panel shadow">
                 <div class="x_title">
                   <h2>일자별 상품등록 개수</h2>
@@ -575,7 +577,7 @@
             </div>
             <!-- 일자별 상품등록 개수 라인, 도넛 그래프 끝 -->
             <!-- 카테고리별 이상/정상상품 판별개수 그래프 -->
-            <div class="col-md-5 col-sm-912  ">
+            <div class="col-md-6 col-sm-912  ">
               <div class=" x_panel shadow">
                 <div class="x_title">
                   <h2>일자별 상품등록 개수</h2>
@@ -592,7 +594,7 @@
 
             <!-- /카테고리별 이상/정상상품 판별개수 그래프 끝-->
             <!-- 카테고리별 이상/정상상품 판별개수 그래프 -->
-            <div class="col-md-7 ">
+            <div class="col-md-6 ">
               <div class=" x_panel shadow">
                 <div class="x_title">
                   <h2>카테고리별 이상/ 정상상품 판별 개수</h2>
@@ -611,67 +613,115 @@
             </div>
             <!-- /카테고리별 이상/정상상품 판별개수 그래프 끝-->
 
-            <div class="col-md-5 ">
+            <div class="col-md-6 ">
               <div class=" x_panel shadow">
-                <div class="x_title">
-                  <h2>금지어 top 10</h2>
-                  <div class="clearfix"></div>
+
+
+                <div class=" x_panel ">
+                  <div class="x_content">
+                    <div class="x_title">
+                      <h2>금지어 top 10</h2>
+                      <div class="clearfix"></div>
+                    </div>
+                    <table id="prohibitedWordsTable" class="table Ctable">
+                      <thead>
+                        <tr>
+                          <th>금지어</th>
+                          <th>횟수</th>
+                        </tr>
+                      </thead>
+                      <tbody id="similarWordsTable">
+                        <tr>
+                          <td></td>
+                          <td></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
 
-                <div class="x_content">
-                  <table id="prohibitedWordsTable" class="table Ctable">
-                    <thead>
-                      <tr>
-                        <th>금지어</th>
-                        <th>횟수</th>
-                      </tr>
-                    </thead>
-                    <tbody id="similarWordsTable">
-                      <tr>
-                        <td></td>
-                        <td></td>
-                      </tr>
-                    </tbody>
-                  </table>
+                <div class=" x_panel ">
+                  <div class="x_content">
+                    <div class="x_title">
+                      <h2>주간 요약본</h2>
+                      <div class="clearfix"></div>
+                    </div>
 
-
+                    <table id="prohibitedWordsTable" class="table Ctable">
+                      <thead>
+                        <tr>
+                          <th>일자</th>
+                          <th>상품</th>
+                          <th>회원</th>
+                        </tr>
+                      </thead>
+                      <tbody id="similarWordsTable">
+                        <tr>
+                          <td>2024.04.22</td>
+                          <td>3</td>
+                          <td>4</td>
+                        </tr>
+                        <tr>
+                          <td>2024.04.23</td>
+                          <td>3</td>
+                          <td>4</td>
+                        </tr>
+                        <tr>
+                          <td>2024.04.24</td>
+                          <td>3</td>
+                          <td>4</td>
+                        </tr>
+                        <tr>
+                          <td>2024.04.25</td>
+                          <td>3</td>
+                          <td>4</td>
+                        </tr>
+                        <tr>
+                          <td>2024.04.26</td>
+                          <td>3</td>
+                          <td>4</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
-
-
               </div>
-            </div>
 
+
+            </div>
           </div>
-          <!--/ 차트 끝-->
 
         </div>
+        <!--/ 차트 끝-->
+
       </div>
-      <!-- /page content -->
-
     </div>
+    <!-- /page content -->
+
+  </div>
 
 
-    <!-- jQuery -->
+  <!-- jQuery -->
 
-    <!-- Bootstrap -->
-    <script th:src="@{/vendors/bootstrap/dist/js/bootstrap.bundle.min.js}"></script>
-    <!-- FastClick -->
-    <script th:src="@{/vendors/fastclick/lib/fastclick.js}"></script>
+  <!-- Bootstrap -->
+  <script th:src="@{/vendors/bootstrap/dist/js/bootstrap.bundle.min.js}"></script>
+  <!-- FastClick -->
+  <script th:src="@{/vendors/fastclick/lib/fastclick.js}"></script>
 
-    <!-- Chart.js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Chart.js -->
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script> -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    <!-- bootstrap-progressbar -->
-    <script th:src="@{/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js}"></script>
-    <!-- iCheck -->
-    <script th:src="@{/vendors/iCheck/icheck.min.js}"></script>
+  <!-- bootstrap-progressbar -->
+  <script th:src="@{/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js}"></script>
+  <!-- iCheck -->
+  <script th:src="@{/vendors/iCheck/icheck.min.js}"></script>
 
-    <!-- bootstrap-daterangepicker -->
-    <script th:src="@{/vendors/moment/min/moment.min.js}"></script>
+  <!-- bootstrap-daterangepicker -->
+  <script th:src="@{/vendors/moment/min/moment.min.js}"></script>
 
-    <!-- Custom Theme Scripts -->
-    <script th:src="@{/build/js/custom.js}"></script>
+  <!-- Custom Theme Scripts -->
+  <script th:src="@{/build/js/custom.js}"></script>
 
 </body>
 
