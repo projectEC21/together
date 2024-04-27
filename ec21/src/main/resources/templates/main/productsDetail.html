@@ -468,26 +468,29 @@
 					<div class="modal fade" id="inquiryModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 						<div class="modal-dialog" role="document">
 							<div class="modal-content">
-								<form class="form" action="/productDetail/sendInquiry" method="post" id="inquiryForm" enctype="multipart/form-data">
+								<form class="form" th:action="@{/productDetail/sendInquiry}" method="post" id="inquiryForm" enctype="multipart/form-data">
 									<!-- Modal Header -->
 									<div class="modal-header">
-										<p class="modal-title">
-											<i class="ti-user"></i> Reminder for Buyers
-											<br>Be cautious with
-												pre-payment by T/T or Western Union. Do not make pre-payment to any sellers
-												unless you can fully trust the sellers.
-												<br> More... EC21.com is NOT RESPONSIBLE for transactions between buyers and
-												sellers.
-										</p>
+										<div class="modal-title">
+											<span>SENDING</span>
+										</div>
 										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 											<span aria-hidden="true">&times;</span>
 										</button>
 									</div>
 									<!-- Modal Body -->
 									<div class="modal-body">
+										<p>
+											<i class="ti-user"></i> Reminder for Buyers
+										<br>Be cautious with
+											pre-payment by T/T or Western Union. Do not make pre-payment to any sellers
+											unless you can fully trust the sellers.
+											<!-- <br> More... EC21.com is NOT RESPONSIBLE for transactions between buyers and
+											sellers. -->
+										</p>
 										<table>
 											<tr>
-												<th class="col-md-5">To</th>
+												<th class="col-md-5 to">To</th>
 												<td><input name="receiverId" id="modalReceiverId" readonly></td>
 											</tr>
 											<tr>

@@ -2815,10 +2815,23 @@ html {
 ========================================*/
 /* modal 과 관련된 css */
 .shop.single .modal-header {
-	color: #666
+	padding: 11px;
+    background: #F7941D;
+    border-radius: 0px;
 }
 
+.shop.single .modal-title {
+	font-weight: 800;
+    font-size: 33px;
+    font-family: poppins;
+    color: #fff;
+}
 
+.shop.single .modal-body p {
+	color: #555;
+	margin-bottom: 32px;
+    line-height: 27px;
+}
 
 .shop.single .modal-body th {
 	width: 10%;
@@ -2830,7 +2843,7 @@ html {
 	    /* display: block; */
 		margin-top: 10px;
 		margin-left: 20px;
-		padding: 10px;
+		padding: 12px;
 }
 
 .shop.single .modal-body td #modalReceiverId {
@@ -2847,11 +2860,18 @@ html {
 	font-size: 16px;
 }
 
+.button.close {
+	color: #fff;
+	border: 1px solid #0f435e;
+}
+
 .shop.single .modal-body input,
 textarea {
 	resize: none;
 	width: 80%;
 }
+
+
 
 
 
