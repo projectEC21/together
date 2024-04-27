@@ -352,6 +352,7 @@ html {
 }
 
 /* Dropdown Menu */
+
 .header .nav li .dropdown {
 	background: #fff;
 	width: 220px;
@@ -379,11 +380,14 @@ html {
 	transform: translateY(0px);
 }
 
+
+.shop.single .for-user .dropdown-menu li,
 .header .nav li .dropdown li {
 	float: none;
 	margin: 0;
 }
 
+.shop.single .for-user .dropdown-menu li a,
 .header .nav li .dropdown li a {
 	padding: 8px 15px;
 	color: #666;
@@ -392,20 +396,24 @@ html {
 	text-transform: capitalize;
 	background: transparent;
 }
-
+.shop.single .for-user .dropdown-menu li a:before,
 .header .nav li .dropdown li a:before {
 	display: none;
 }
 
+.shop.single .for-user .dropdown-menu li:last-child a,
 .header .nav li .dropdown li:last-child a {
 	border-bottom: 0px;
 }
 
+
+.shop.single .for-user .dropdown-menu li:hover a,
 .header .nav li .dropdown li:hover a {
 	color: #fff;
-	background: #F7941D;
+	background: #0f435e;
 }
 
+.shop.single .for-user .dropdown-menu li a:hover,
 .header .nav li .dropdown li a:hover {
 	border-color: transparent;
 }
@@ -495,6 +503,8 @@ html {
 .header.shop .topbar .login a {
 	color: #F7941D;
 }
+
+
 
 /* Topbar Left Nav */
 .header.shop .left-nav {}
@@ -3196,25 +3206,6 @@ textarea {
 	line-height: 45px;
 }
 
-.shop.single .btn-edit .user-custom li {
-	display: inline-block;
-	line-height: 1px;
-}
-
-/* 사용자 또는 관리자가 조작하는 버튼 */
-.shop.single .btn-edit .user-custom a {
-	border-radius: 25px;
-	border: 1px solid #333;
-	height: min-content;
-	width: 120px;
-	text-align: center;
-	background-color: #fff;
-	color: #333;
-}
-
-.shop.single .btn-edit .user-custom a.btn:hover {
-	color: #fff;
-}
 
 .shop.single .cat {
 	font-size: 14px;
