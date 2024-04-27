@@ -2,6 +2,7 @@ package net.kdigital.ec21.service;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Map;
 
 import java.util.stream.Collectors;
@@ -10,9 +11,12 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
+import net.kdigital.ec21.repository.CustomerRepository;
 import net.kdigital.ec21.repository.ProductRepository;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,6 +26,7 @@ import org.springframework.data.domain.Sort;
 @RequiredArgsConstructor
 public class ManagerBoardService {
     private final ProductRepository productRepository;
+    private final CustomerRepository customerRepository;
 
     public List<Map<String, Object>> getRegisterProductCount() {
         List<Object[]> results = productRepository.countProductsByCreationDate();
@@ -87,6 +92,36 @@ public class ManagerBoardService {
                     return map;
                 })
                 .collect(Collectors.toList());
+    }
+
+
+    // 240427 dy : 5일 동안 각 일별 등록 회원 수, 등록 상품 수
+    public List<Map<String, Object>> getRegistCustomerAndProuctCountsForFiveDays(){
+        // 반환할 결과 담을 List
+        List<Map<String, Object>> result = new ArrayList<>();
+
+        // 시스템상 당일 정보
+        LocalDateTime todayStart = LocalDate.now().atStartOfDay();
+        LocalDateTime todayEnd = LocalDate.now().plusDays(1).atStartOfDay();
+        // 데이터 포맷 형식
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy (E)", Locale.KOREAN);
+
+        // 5일 동안의 값
+        for (int i = 1; i <= 5; i++) {
+            // count
+            Long productCnt = productRepository.countByCreateDateBetween(todayStart.minusDays(i), todayEnd.minusDays(i));
+            Long customerCnt = customerRepository.countByCreateDateBetween(todayStart.minusDays(i), todayEnd.minusDays(i));
+            // date
+            String formattedDate = todayStart.minusDays(i).format(formatter);
+            
+            Map<String, Object> data = new HashMap<>();
+            data.put("date", formattedDate);
+            data.put("productCnt", productCnt);
+            data.put("customerCnt", customerCnt);
+
+            result.add(data);
+        }
+        return result;
     }
 
 }
