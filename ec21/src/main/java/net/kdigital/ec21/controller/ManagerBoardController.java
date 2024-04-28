@@ -59,6 +59,5 @@ public class ManagerBoardController {
     public List<Map<String, Object>> getRegistCustomerAndProuctCountsForFiveDays() {
         return managerBoardService.getRegistCustomerAndProuctCountsForFiveDays();
     }
-    
 
-} 
+}

@@ -240,7 +240,7 @@
     <div class="main_container">
       <div class="col-md-3 left_col">
         <div class="left_col scroll-view">
-          <div class="navbar nav_title" style="border: 0; text-align: center;">
+          <div class="navbar nav_title">
             <a th:href="@{/manager/manager_index}" class="site_title">
               <img th:src="@{/production/images/ec21logo.png}" alt="">
             </a>
@@ -251,7 +251,7 @@
           <!-- menu profile quick info -->
           <div class="profile clearfix">
             <div class="profile_pic">
-              <img th:src="@{/production/images/user.png}" alt="..." class="img-circle profile_img">
+              <img th:src="@{/production/images/user.jpeg}" alt="..." class="img-circle profile_img">
             </div>
             <div class="profile_info">
               <h2>관리자</h2>
@@ -302,11 +302,12 @@
               <li class="nav-item dropdown open" style="padding-left: 15px;">
                 <a href="javascript:;" class="user-profile dropdown-toggle" aria-haspopup="true" id="navbarDropdown"
                   data-toggle="dropdown" aria-expanded="false">
-                  <img th:src="@{/production/images/user.png}" alt="">관리자
+                  <img th:src="@{/production/images/user.jpeg}" alt="...">관리자
                 </a>
                 <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
                   <a class="dropdown-item" th:href=@{/}><i class="fa fa-home pull-right"></i> Home</a>
-                  <a class="dropdown-item" th:href="@{main/login}"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
+                  <a class="dropdown-item" th:href="@{main/logout}"><i class="fa fa-sign-out pull-right"></i> Log
+                    Out</a>
                 </div>
               </li>
 
@@ -359,6 +360,8 @@
                 </div>
 
                 <div class="x_content">
+
+
                   <!-- start project list -->
                   <table id="" class="table table-striped jambo_table table-bordered " cellspacing="0" width="100%">
                     <!-- dt-responsive-->
@@ -366,6 +369,7 @@
                     <thead>
                       <!-- <button id="modalBtn">모달 열기</button> -->
                       <tr class="headings">
+                        <th>no</th>
                         <th class="column-title" style="width: 10%">회원 ID</th>
                         <th class="column-title" style="width: 10%">상품 ID</th>
                         <!-- <th style="width: 10%">카테고리</th> -->
@@ -378,8 +382,9 @@
 
                     <!-- 240414 dy : ajax로 모델이상상품 정보 꽂아 넣기 -->
                     <tbody id="result">
-                      <tr class="view" th:each="product:${list}">
+                      <tr class="view" th:each="product, i:${list}">
                         <input type="hidden" id="modelProduct" th:value="${product}">
+                        <td class="no" th:text="${i.index + 1}"></td>
                         <td th:text="${product.customerId}">#</td>
                         <td th:text="${product.productId}">121000203</td>
                         <!-- <td th:text="${product.category}">카테고리</td> -->
@@ -395,25 +400,47 @@
                         </td>
                         <td>
                           <!-- 이상검출도: [[${product.lstmPredictProba}]] % -->
-                          <div>이상검출도: [[${#numbers.formatDecimal(product.lstmPredictProba * 100, 1, 2)} + ' %']] <!--
-                          <div th:text="${numbers.formatDecimal(product.lstmPredictProba * 100, 1, 2)} + '%'">
-                </div> -->
+                          <div>이상검출도:
+                            <!-- [[${#numbers.formatDecimal(product.lstmPredictProba * 100, 1, 2)} + ' %']] -->
+                            <div class="progress">
+                              <div class="progress-bar" role="progressbar"
+                                th:style="'width:' + ${#numbers.formatDecimal(product.lstmPredictProba * 100, 1, 2)} + '%;'"
+                                th:attr="aria-valuenow=${#numbers.formatDecimal(product.lstmPredictProba * 100, 1, 2)}"
+                                aria-valuemin="0" aria-valuemax="100">
+                                [[${#numbers.formatDecimal(product.lstmPredictProba * 100, 1, 2)} + ' %']]
+                              </div>
+                            </div>
+
+                            <!--
+                            <div th:text="${numbers.formatDecimal(product.lstmPredictProba * 100, 1, 2)} + '%'">
+                            </div> -->
                           </div>
 
-                          <div class="progress progress_sm">
+                          <!-- <div class="progress progress_sm">
                             <div class="progress-bar bg-green" role="progressbar"
                               th:attr="style=|width: ${#numbers.formatDecimal(product.lstmPredictProba * 100, 1, 2)}%|">
                             </div>
+                          </div> -->
 
-                          </div>
-                          이상단어유사도: [[${product.similarProba}]] %
+                          <!-- 이상단어유사도: [[${product.similarProba}]] %
                           <div class="progress progress_sm">
                             <div class="progress-bar bg-green" role="progressbar"
                               th:attr="style=|width: ${product.similarProba}%|">
                             </div>
+                          </div> -->
 
-                          </div>
-                          <div>이상단어 검출: <div> [[${product.prohibitWord}]]([[${product.prohibitReason}]])</div>
+                          <div class="prohibitWord">
+                            <div class="prohibit" th:if="${product.prohibitWord != null}">
+                              <p>이상단어 검출:</p>
+                              <div>[[${product.prohibitWord}]]([[${product.prohibitReason}]])
+                                <span class="badge badge-secondary"> [[${product.similarProba}]] %
+                                </span>
+                              </div>
+                            </div>
+                            <div th:unless="${product.prohibitWord != null}">
+                              이상단어 검출되지 않음
+                            </div>
+
                           </div>
                         </td>
                         <td>

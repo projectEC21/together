@@ -154,6 +154,8 @@
       })
     }
 
+
+
   </script>
 </head>
 
@@ -162,7 +164,7 @@
     <div class="main_container">
       <div class="col-md-3 left_col">
         <div class="left_col scroll-view">
-          <div class="navbar nav_title" style="border: 0; text-align: center;">
+          <div class="navbar nav_title">
             <a th:href="@{/manager/manager_index}" class="site_title">
               <img th:src="@{/production/images/ec21logo.png}" alt="">
             </a>
@@ -173,7 +175,7 @@
           <!-- menu profile quick info -->
           <div class="profile clearfix">
             <div class="profile_pic">
-              <img th:src="@{/production/images/user.png}" alt="..." class="img-circle profile_img">
+              <img th:src="@{/production/images/user.jpeg}" alt="..." class="img-circle profile_img">
             </div>
             <div class="profile_info">
               <h2>관리자</h2>
@@ -224,11 +226,12 @@
               <li class="nav-item dropdown open" style="padding-left: 15px;">
                 <a href="javascript:;" class="user-profile dropdown-toggle" aria-haspopup="true" id="navbarDropdown"
                   data-toggle="dropdown" aria-expanded="false">
-                  <img th:src="@{/production/images/user.png}" alt="">관리자
+                  <img th:src="@{/production/images/user.jpeg}" alt="...">관리자
                 </a>
                 <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
                   <a class="dropdown-item" th:href=@{/}><i class="fa fa-home pull-right"></i> Home</a>
-                  <a class="dropdown-item" th:href="@{main/login}"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
+                  <a class="dropdown-item" th:href="@{main/logout}"><i class="fa fa-sign-out pull-right"></i> Log
+                    Out</a>
                 </div>
               </li>
 
@@ -262,7 +265,8 @@
                   <div class="col-md-5 col-sm-5   form-group pull-right top_search">
                     <div class="input-group">
                       <!-- 240415 dy : select를 신고카테고리로 바꾸고, 검색어는 신고당한 회원ID, 담당자명, 회사명에서 검색되게 함 -->
-                      <select name="category" id="category">
+
+                      <select class="category" name="category" id="category">
                         <option value="total">전체</option>
                         <option value="FOOD_BEVERAGE">FOOD_BEVERAGE</option>
                         <option value="CHEMICAL">CHEMICAL</option>
@@ -279,6 +283,11 @@
                 </div>
 
                 <div class="x_content">
+                  <div>
+                    <a>미처리</a> |
+                    <a>정상</a> |
+                    <a>이상</a> |
+                  </div>
                   <!-- <a href="" id="predictTotal">전체</a> | <a href="" id="predictWeird">이상</a> | <a href="" id="predictNormal"> 정상</a> -->
                   <!-- <div class="row">
                     <div class="col-sm-12">
@@ -287,6 +296,7 @@
                     <!-- table-bordered dataTable no-footer -->
                     <thead>
                       <tr class="headings">
+                        <th>no</th>
                         <th class="column-title" style="width: 10%;">회원 ID </th>
                         <th class="column-title" style="width: 15%;">상품ID </th>
                         <th class="column-title">상품명 </th>
@@ -303,7 +313,11 @@
                     </thead>
                     <!-- 240414 dy : 전달받은 카테고리와 검색어에 해당하는 상품 리스트 꽂아 넣음 (디폴트- 카테고리:전체/검색어:"") -->
                     <tbody id="result">
-                      <tr class="even pointer" th:each="product:${list}" data-toggle="collapse" data-target="#details1">
+                      <tr class="even pointer" th:each="product, i : ${list}" data-toggle="collapse"
+                        data-target="#details1">
+                        <td class="no" th:text="${i.index + 1}">
+
+                        </td>
                         <td class=" " th:text="${product.customerId}">121000040</td>
                         <td class=" " th:text="${product.productId}"><a
                             th:href="@{/main/productDetail}">3248202404071536</a></td>
@@ -328,9 +342,9 @@
                         </td>
 
                         <td class=" last">
-                          <input type="button" class="btn-hover color-9 toNormal" th:data-id="${product.productId}"
+                          <input type="button" class="btn btn-info btn-xs toNormal" th:data-id="${product.productId}"
                             value="정상">
-                          <input type="button" class="btn-hover color-11 toWeird" th:data-id="${product.productId}"
+                          <input type="button" class="btn btn-danger btn-xs toWeird" th:data-id="${product.productId}"
                             value="이상">
                         </td>
                       </tr>
@@ -359,16 +373,14 @@
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
 
-
-
-        <h2 id="modalProductCategory"></h2>
-
-        <h4 class="modal-title" id="modal-title"></h4>
-
+        <div class="modal-header">
+          <div class="title" id="modal-title"></div>
+          <div class="modalProductCategory" id="modalProductCategory"></div>
+        </div>
 
         <div class="modal-body">
           <div class="info">
-            <ol>
+            <ol class="custom-list">
               <!-- <li>
                 <span class="dtr-title">Category:</span>
                 <span id="modalProductCategory">-</span>
