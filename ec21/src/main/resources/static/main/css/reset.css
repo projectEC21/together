@@ -1108,7 +1108,7 @@ object {
 }
 
 .modal-dialog .modal-content {
-  border-radius: 0;
+  border-radius: 2px;
 }
 
 .modal-dialog .modal-content .modal-header {
@@ -1136,13 +1136,13 @@ object {
 	margin: 0;
 	width: 40px;
 	height: 40px;
-	line-height: 40px;
+	line-height: 37px;
 	text-shadow: none;
 	font-size: 11px;
 	background: transparent;
 	color: #737373;
 	border-radius: 100%;
-	border: 1px solid #eee;
+	border: 1px solid #737373;
 	-webkit-transition:all 0.4s ease;
 	-moz-transition:all 0.4s ease;
 	transition:all 0.4s ease;
