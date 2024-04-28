@@ -63,14 +63,79 @@
 
 	<!-- 240417 dy : 검색어 입력 후 돋보기 클릭 시 /main/list 요청-->
 	<script>
-		$(function () {
 
+		$(document).ready(function() {
+			// 로그인 여부를 확인하는 함수
+			function isUserLoggedIn() {
+				let sessionCookie = document.cookie.includes("sessionID");
+				let token = localStorage.getItem("jwtToken");
+				return sessionCookie || token; // 로그인 상태 확인
+			}
+
+			// 모달 버튼 클릭 이벤트
+			$("#modalBtn").click(function(event) {
+				if (!isUserLoggedIn()) {
+					event.preventDefault(); // 로그인되지 않으면 모달 열기 중지
+					
+					// 현재 페이지의 URL을 쿼리 파라미터로 추가
+					let currentUrl = encodeURIComponent(window.location.href); // 현재 URL을 인코딩
+					let loginUrl = `/main/login?redirect=${currentUrl}&showModal=true`; // 모달 정보 추가
+					
+					// 리디렉션
+					window.location.href = loginUrl; // 로그인 페이지로 리디렉션
+				} else {
+					// 로그인한 사용자를 위한 모달 열기
+					$("#inquiryModal").modal("show");
+				}
+			});
+
+			// 페이지 로드 시 모달 열기 확인
+			function shouldShowModal() {
+				const urlParams = new URLSearchParams(window.location.search);
+				return urlParams.get("showModal") === "true"; // 'showModal' 파라미터 확인
+			}
+
+			// 모달 열기 조건 확인
+			if (shouldShowModal()) {
+				$("#inquiryModal").modal("show"); // 모달 열기
+			}
+
+			// 인콰이어리 전송 버튼 클릭 이벤트
+			$("#sendInquiryBtn").click(function() {
+				// 유효성 검사 수행
+				let isValid = validateInquiryForm();
+				if (isValid) {
+					if (confirm("인콰이어리 전송하시겠습니까?")) {
+						$("#inquiryForm").submit(); // 인콰이어리 전송
+						alert("인콰이어리가 성공적으로 전송되었습니다."); // 완료 메시지
+					}
+				} else {
+					alert("양식을 올바르게 작성하세요."); // 유효성 검사 실패 시 경고 메시지
+				}
+			});
+
+			// 유효성 검사 함수
+			function validateInquiryForm() {
+				let requiredFields = $("#inquiryForm input[required], #inquiryForm textarea[required]");
+				for (let i = 0; i < requiredFields.length; i++) {
+					if (requiredFields[i].value.trim() === "") {
+						return false; // 필수 필드가 비어있으면 유효성 검사 실패
+					}
+				}
+				return true; // 유효성 검사 통과
+			}
+		});
+
+
+		$(function () {
 			// 인콰이어리 모달 변수 초기화
 			var modal = $("#inquiryModal");
+
 			// 닫기 버튼 이벤트
 			$("#closeBtn").on("click", function (event) {
 				modal.hide();
 			});
+
 			// 모달 백그라운드 클릭 이벤트
 			$(window).on("click", function (event) {
 				if ($(event.target).is(modal)) {
@@ -86,7 +151,6 @@
 				let prefixedTitle = $(this).attr("data-title");
 				let inquiryTitle = "Regard " + prefixedTitle;
 				// let inquiryTitle = $(this).attr("data-title");
-
 				let prefixedCategory = $(this).attr("data-category");
 				// _를 &로 변경
 				let category = prefixedCategory.replace(/_/g, "&");
@@ -106,7 +170,7 @@
 				$("#modalUnit").text(unit);				    // 단위
 				$("#submitBtn").on("click", submitInquiry);
 				// 모달열기
-				$("#inquiryModal").modal();
+				// $("#inquiryModal").modal();
 
 			}); // End 모달 클릭 이벤트
 
@@ -124,39 +188,13 @@
 			})
 		}
 
-		// 신고 내용 GET 방식으로 보내기
-		// function submitInquiry() {
-		// 	let receiverId = $("#modalReceiverId").text();
-		// 	let senderId = $("#modalSenderId").val();
-		// 	let productId = $("#modalProductId").val();
-		// 	let quantity = $("#modalQuantity").val();
-		// 	let inquiryTitle = $("#modalTitle").val();
-		// 	let inquiryContent = $("#modalContent").text();
-		// 	let uploadFile = $("#modalFile").val();
-			
-		// 	if (confirm("Successfully sending inquiry!")) {
-		// 		$.ajax({
-		// 			url: "/productsDetail/sendInquiry",
-		// 			data: { "senderId": senderId, "receiverId": receiverId, "productId": productId, "quantity": quantity, 
-		// 					"inquiryTitle": inquiryTitle, "inquiryContent": inquiryContent, "uploadFile": uploadFile},
-		// 			method: "get",
-		// 			success: function (resp) {
-		// 				if (resp) {
-		// 					$("#closeBtn").click();
-		// 				}
-		// 			}
-		// 		});
+		
+		// // 인콰이어리 post로 보내기
+		// function submitInquiry(){
+		// 	if (confirm("인콰이어리 전송")) {
+		// 		$("#inquiryForm").submit();
 		// 	}
 		// }
-
-		
-		// 인콰이어리 post로 보내기
-		function submitInquiry(){
-			if (confirm("인콰이어리 전송")) {
-				$("#inquiryForm").submit();
-			}
-		}
-
 
 		function deleteProduct(element, event) {
 			let productId = element.getAttribute("data-product");
@@ -762,7 +800,6 @@
 		</div>
 	</div>
 	
-
 	<!-- Jquery -->
 	<script th:src="@{/main/js/jquery.min.js}"></script>
 	<script th:src="@{/main/js/jquery-migrate-3.0.0.js}"></script>
@@ -770,7 +807,7 @@
 	<!-- Popper JS -->
 	<script th:src="@{/main/js/popper.min.js}"></script>
 	<!-- Bootstrap JS -->
-	<script th:src="@{/static/main/js/bootstrap.min.js}"></script>
+	<script th:src="@{/main/js/bootstrap.min.js}"></script>
 	<!-- Color JS -->
 	<script th:src="@{/main/js/colors.js}"></script>
 	<!-- Slicknav JS -->

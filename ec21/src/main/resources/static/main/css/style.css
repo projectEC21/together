@@ -923,16 +923,16 @@ html {
 }
 
 .header.shop .search-bar .btnn {
-	height: 51px;
-	line-height: 57px;
-	width: 62px;
-	text-align: center;
-	font-size: 18px;
-	color: #fff;
-	background: #333333;
-	position: absolute;
-	right: -30px;
-	top: -1px;
+	height: 50px;
+    line-height: 55px;
+    width: 61px;
+    text-align: center;
+    font-size: 18px;
+    color: #fff;
+    background: #333333;
+    position: absolute;
+    right: -33px;
+    top: -1px;
 	border: none;
 	border-radius: 0 55px 55px 0;
 	-webkit-transition: all 0.4s ease;
