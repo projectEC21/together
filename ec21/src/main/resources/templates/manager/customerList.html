@@ -270,10 +270,9 @@
         $("#etcReasonError").hide();
       });
 
-
-
-
     });
+
+
   </script>
 </head>
 
@@ -348,7 +347,7 @@
                 </a>
                 <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
                   <a class="dropdown-item" th:href=@{/}><i class="fa fa-home pull-right"></i> Home</a>
-                  <a class="dropdown-item" th:href="@{main/logout}"><i class="fa fa-sign-out pull-right"></i> Log
+                  <a class="dropdown-item" th:href="@{/main/logout}"><i class="fa fa-sign-out pull-right"></i> Log
                     Out</a>
                 </div>
               </li>
@@ -381,17 +380,19 @@
 
                 <div class="title_right">
                   <div class="col-md-5 col-sm-5   form-group pull-right top_search">
+                    <form th:action="@{/manager/customerList}" method="get">
                     <div class="input-group">
-                      <select name="" id="">
-                        <option value="전체">전체</option>
-                        <option value="회원ID">회원ID</option>
-                        <option value="회사명">회사명</option>
+                      <select name="searchCategory" id="searchCategory">
+                        <option value="total" th:selected="${searchCategory eq 'total'}" >전체</option>
+                        <option value="customerId" th:selected="${searchCategory eq 'customerId'}">회원ID</option>
+                        <option value="compName" th:selected="${searchCategory eq 'compName'}">회사명</option>
                       </select>
-                      <input type="text" class="form-control" id="searchWord" placeholder="Search for...">
+                      <input type="text" class="form-control" id="searchWord" name="searchWord" placeholder="Search for..."  th:value="${searchWord}">
                       <span class="input-group-btn">
-                        <button class="btn btn-default" type="button">찾기</button>
+                        <button class="btn btn-default" type="submit">찾기</button>
                       </span>
                     </div>
+                    </form>
                   </div>
                 </div>
 
