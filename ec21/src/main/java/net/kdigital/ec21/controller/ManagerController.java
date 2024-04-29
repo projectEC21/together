@@ -1,6 +1,7 @@
 package net.kdigital.ec21.controller;
 
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Map;
 
 import org.springframework.data.domain.Page;
@@ -23,6 +24,7 @@ import net.kdigital.ec21.dto.ReportedCustomerWithInfoDTO;
 import net.kdigital.ec21.service.ManagerService;
 
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -82,9 +84,17 @@ public class ManagerController {
 	 */
 	@RequestMapping(value = "/manager/productList/getList", method = RequestMethod.GET)
 	public String getProductList(@RequestParam(name = "category", defaultValue = "total") String category,
-			@RequestParam(name = "searchWord", defaultValue = "") String searchWord, Model model) {
+			@RequestParam(name = "searchWord", defaultValue = "") String searchWord, 
+			@RequestParam(name = "filter", defaultValue = "") String filter, Model model) {
+		List<ProductDTO> dtoList = new ArrayList<>();
 
-		List<ProductDTO> dtoList = managerService.selectProductBySearch(category, searchWord);
+		// 전체 상품 대상
+		if (filter.equals("") || filter.equals("total")) {
+			dtoList = managerService.selectProductBySearch(category, searchWord);
+		} // 미처리/정상/이상 상품 대상
+		else{
+			dtoList = managerService.selectProductBySearchAndFilter(filter, category, searchWord);
+		}
 		model.addAttribute("list", dtoList);
 
 		return "/manager/productList::#result";
@@ -175,16 +185,23 @@ public class ManagerController {
 	// ============================= 회원 관리 =============================
 
 	/**
-	 * 정상회원 리스트 화면 요청
-	 * 
+	 *  정상회원 화면 요청
+	 * @param searchCategory
+	 * @param searchWord
+	 * @param model
 	 * @return
 	 */
 	@GetMapping("manager/customerList")
-	public String customerList(Model model) {
-		List<CustomerDTO> dtoList = managerService.selectNotBlacklist();
+	public String customerListView(@RequestParam(name = "searchCategory", defaultValue = "total") String searchCategory,
+			@RequestParam(name = "searchWord", defaultValue = "") String searchWord, Model model) {
+		List<CustomerDTO> dtoList = managerService.selectNotBlacklistByCategoryAndSearch(searchCategory, searchWord);
+		// List<CustomerDTO> dtoList = managerService.selectNotBlacklist();
 		model.addAttribute("list", dtoList);
+		model.addAttribute("searchCategory", searchCategory);
+		model.addAttribute("searchWord", searchWord);
 		return "manager/customerList";
 	}
+
 
 	/**
 	 * 전달받은 상품 ID에 해당하는 금지어유사도 결과 리스트를 JSON 데이터로 반환
@@ -239,7 +256,7 @@ public class ManagerController {
 	/**
 	 * ajax - 신고당한 회원 리스트 반환 (미처리/처리(블랙버튼/정상버튼)에 따라 다르게 처리)
 	 * 
-	 * @param reportCustomerId
+	 * @param reportCustomerId 
 	 * @param reportedId
 	 * @param category
 	 * @param searchWord

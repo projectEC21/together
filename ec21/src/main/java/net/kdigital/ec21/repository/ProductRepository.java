@@ -51,8 +51,71 @@ public interface ProductRepository extends JpaRepository<ProductEntity, String> 
                         @Param("searchWord") String searchWord,
                         Sort sort);
 
-        // ============================ 모델로 이상 상품 판별 화면
-        // =================================
+        // judge == null 
+        // 검색어가 존재하는 경우
+        @Query("SELECT p FROM ProductEntity p WHERE " +
+                "(LOWER(p.customerEntity.customerId) LIKE %:searchWord% OR " +
+                "LOWER(p.productId) LIKE %:searchWord% OR " +
+                "LOWER(p.productName) LIKE %:searchWord%) AND " +
+                "p.judge IS NULL")
+        List<ProductEntity> findByMultipleFieldsContainingAndJudgeIsNull(@Param("searchWord") String searchWord, Sort sort);
+        // 카테고리와 검색어가 존재하는 경우
+        @Query("SELECT p FROM ProductEntity p WHERE " +
+                "(LOWER(p.customerEntity.customerId) LIKE %:searchWord% OR " +
+                "LOWER(p.productId) LIKE %:searchWord% OR " +
+                "LOWER(p.productName) LIKE %:searchWord%) AND " +
+                "p.judge IS NULL AND " +
+                "p.category = :category")
+        List<ProductEntity> findByMultipleFieldsContainingAndJudgeIsNullAndCategory(
+                @Param("searchWord") String searchWord,
+                @Param("category") ProductCategory category,
+                Sort sort);
+
+        // judge == Y
+        @Query("SELECT p FROM ProductEntity p WHERE " +
+                        "(LOWER(p.customerEntity.customerId) LIKE %:searchWord% OR " +
+                        "LOWER(p.productId) LIKE %:searchWord% OR " +
+                        "LOWER(p.productName) LIKE %:searchWord%) AND " +
+                        "p.judge = 'Y'")
+        List<ProductEntity> findByMultipleFieldsContainingAndJudgeIsY(@Param("searchWord") String searchWord,
+                        Sort sort);
+
+        // 카테고리와 검색어가 존재하는 경우
+        @Query("SELECT p FROM ProductEntity p WHERE " +
+                        "(LOWER(p.customerEntity.customerId) LIKE %:searchWord% OR " +
+                        "LOWER(p.productId) LIKE %:searchWord% OR " +
+                        "LOWER(p.productName) LIKE %:searchWord%) AND " +
+                        "p.judge = 'Y' AND " +
+                        "p.category = :category")
+        List<ProductEntity> findByMultipleFieldsContainingAndJudgeIsYAndCategory(
+                        @Param("searchWord") String searchWord,
+                        @Param("category") ProductCategory category,
+                        Sort sort);
+        
+        
+        // judge == N
+        @Query("SELECT p FROM ProductEntity p WHERE " +
+                        "(LOWER(p.customerEntity.customerId) LIKE %:searchWord% OR " +
+                        "LOWER(p.productId) LIKE %:searchWord% OR " +
+                        "LOWER(p.productName) LIKE %:searchWord%) AND " +
+                        "p.judge = 'N'")
+        List<ProductEntity> findByMultipleFieldsContainingAndJudgeIsN(@Param("searchWord") String searchWord,
+                        Sort sort);
+
+        // 카테고리와 검색어가 존재하는 경우
+        @Query("SELECT p FROM ProductEntity p WHERE " +
+                        "(LOWER(p.customerEntity.customerId) LIKE %:searchWord% OR " +
+                        "LOWER(p.productId) LIKE %:searchWord% OR " +
+                        "LOWER(p.productName) LIKE %:searchWord%) AND " +
+                        "p.judge = 'N' AND " +
+                        "p.category = :category")
+        List<ProductEntity> findByMultipleFieldsContainingAndJudgeIsNAndCategory(
+                        @Param("searchWord") String searchWord,
+                        @Param("category") ProductCategory category,
+                        Sort sort);
+        
+
+        // =================== 모델로 이상 상품 판별 화면 ========================
         // lstmPredict 값이 이상, 즉 false(0)인 모든 ProductEntity 리스트로 반환
         List<ProductEntity> findByLstmPredict(boolean lstmPredict);
 

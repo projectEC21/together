@@ -136,6 +136,61 @@ public class ManagerService {
     }
 
     /**
+     * 미처리/ 정상/ 이상 까지 필터 넣기
+     * @param filter
+     * @param category
+     * @param searchWord
+     * @return
+     */
+    public List<ProductDTO> selectProductBySearchAndFilter(String filter, String category, String searchWord) {
+        ProductCategory targeCategory ;
+        List<ProductEntity> entityList = new ArrayList<>();
+        List<ProductDTO> dtoList = new ArrayList<>();
+        
+        // 1) 미처리된 상품 (judge == null)
+        if (filter.equals("unprocessedList")) {
+            // 1-1) 카테고리 total 인 경우 : judge==null & searchword
+            if (category.equals("total")) {
+                entityList = productRepository.findByMultipleFieldsContainingAndJudgeIsNull(searchWord, Sort.by(Direction.DESC, "createDate"));
+            }// 1-2) 카테고리 존재하는 경우 : judge==null & category & searchWord
+            else{
+                targeCategory = ProductCategory.valueOf(category);
+                entityList = productRepository.findByMultipleFieldsContainingAndJudgeIsNullAndCategory(searchWord, 
+                        targeCategory, Sort.by(Direction.DESC, "createDate"));
+            }
+        } // 2) 정상 상품 (judge == Y)
+        else if(filter.equals("normalList")){
+            // 2-1) 카테고리 total인 경우 : judge == Y & searchWord
+            if (category.equals("total")) {
+                entityList = productRepository.findByMultipleFieldsContainingAndJudgeIsY(searchWord, Sort.by(Direction.DESC, "createDate"));
+            }// 2-2) 카테고리 존재하는 경우 : judge == Y & category & searchWord
+            else{
+                targeCategory = ProductCategory.valueOf(category);
+                entityList = productRepository.findByMultipleFieldsContainingAndJudgeIsYAndCategory(searchWord,targeCategory, Sort.by(Direction.DESC, "createDate"));
+            }
+        } // 3) 이상 상품 (judge == N)
+        else{
+            // 3-1) 카테고리 total인 경우 : judge == N & searchWord
+            if (category.equals("total")) {
+                entityList = productRepository.findByMultipleFieldsContainingAndJudgeIsN(searchWord,
+                        Sort.by(Direction.DESC, "createDate"));
+            } // 3-2) 카테고리 존재하는 경우 : judge == N & category & searchWord
+            else {
+                targeCategory = ProductCategory.valueOf(category);
+                entityList = productRepository.findByMultipleFieldsContainingAndJudgeIsNAndCategory(searchWord,
+                        targeCategory, Sort.by(Direction.DESC, "createDate"));
+            }
+        }
+
+        entityList.forEach((entity) -> {
+            dtoList.add(ProductDTO.toDTO(entity, entity.getCustomerEntity().getCustomerId()));
+        });
+
+        return dtoList;
+    
+    }
+
+    /**
      * lstm 예측값이 0(false)이고 관리자가 미처리한 상품들 중
      * 전달받은 카테고리와 검색어에 해당하는 상품들을
      * 새로운 ModelPredictDTO에 담아 리스트로 반환하는 함수
@@ -288,6 +343,32 @@ public class ManagerService {
         });
 
         return dtoList;
+    }
+
+    /**
+     * 정상회원 중 검색 카테고리, 검색어에 의한 결과 리스트를 최신 가입 순으로 반환
+     * @param category
+     * @param searchWord
+     * @return
+     */
+    public List<CustomerDTO> selectNotBlacklistByCategoryAndSearch(String category, String searchWord) {
+
+        List<CustomerEntity> entities = new ArrayList<>();
+        List<CustomerDTO> result = new ArrayList<>();
+
+        if (category.equals("total")) { // 전체
+            entities = customerRepository.findBySearchTermAndNotBlacklisted(searchWord,YesOrNo.N);
+        }else if(category.equals("customerId")){ // 회원ID
+            entities = customerRepository.findByCustomerIdContainingAndBlacklistCheckOrderByCreateDateDesc(searchWord,YesOrNo.N);
+        }else{ // 회사명
+            entities = customerRepository.findByCompNameContainingAndBlacklistCheckOrderByCreateDateDesc(searchWord,YesOrNo.N);
+        }
+        
+        entities.forEach((entity)->{
+            result.add(CustomerDTO.toDTO(entity));
+        });
+        
+        return result;
     }
 
     /**
@@ -537,5 +618,9 @@ public class ManagerService {
 
         return result;
     }
+
+    
+
+
 
 }
