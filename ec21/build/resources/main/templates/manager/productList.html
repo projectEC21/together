@@ -40,6 +40,7 @@
   <script th:src="@{/script/jquery-3.7.1.min.js}"></script>
   <script>
     $(function () {
+      $(".filter").on("click", filteredList);
       $("#category").on("change", search);
       $("#searchWord").on("keyup", search);
       init();
@@ -125,10 +126,28 @@
       }
     }
 
+    function filteredList(){
+      let filter = $(this).attr("data-value");
+      let category = $("#category").val();
+      let searchWord = $("#searchWord").val();
+      $.ajax({
+        url: "/manager/productList/getList",
+        data: { "category": category, "searchWord": searchWord, "filter":filter},
+        method: "GET",
+        success: function (list) {
+          $("#result").replaceWith(list);
+          $(".toNormal").on("click", productNormal);
+          $(".toWeird").on("click", productWeird);
+        }
+      });
+
+    }
+
+
+
     function search() {
       let category = $("#category").val();
       let searchWord = $("#searchWord").val();
-
       $.ajax({
         url: "/manager/productList/getList",
         data: { "category": category, "searchWord": searchWord },
@@ -138,7 +157,7 @@
           $(".toNormal").on("click", productNormal);
           $(".toWeird").on("click", productWeird);
         }
-      })
+      });
     }
 
     function init() {
@@ -230,7 +249,7 @@
                 </a>
                 <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
                   <a class="dropdown-item" th:href=@{/}><i class="fa fa-home pull-right"></i> Home</a>
-                  <a class="dropdown-item" th:href="@{main/logout}"><i class="fa fa-sign-out pull-right"></i> Log
+                  <a class="dropdown-item" th:href="@{/main/logout}"><i class="fa fa-sign-out pull-right"></i> Log
                     Out</a>
                 </div>
               </li>
@@ -284,10 +303,10 @@
 
                 <div class="x_content">
                   <div>
-                    <a>전체</a>|
-                    <a>미처리</a>|
-                    <a>정상</a>|
-                    <a>이상</a>|
+                    <a class="filter" th:data-value="total">전체</a>|
+                    <a class="filter" th:data-value="unprocessedList">미처리</a>|
+                    <a class="filter" th:data-value="normalList">정상</a>|
+                    <a class="filter" th:data-value="weirdList">이상</a>|
                   </div>
                   <!-- <a href="" id="predictTotal">전체</a> | <a href="" id="predictWeird">이상</a> | <a href="" id="predictNormal"> 정상</a> -->
                   <!-- <div class="row">

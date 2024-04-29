@@ -84,9 +84,17 @@ public class ManagerController {
 	 */
 	@RequestMapping(value = "/manager/productList/getList", method = RequestMethod.GET)
 	public String getProductList(@RequestParam(name = "category", defaultValue = "total") String category,
-			@RequestParam(name = "searchWord", defaultValue = "") String searchWord, Model model) {
+			@RequestParam(name = "searchWord", defaultValue = "") String searchWord, 
+			@RequestParam(name = "filter", defaultValue = "") String filter, Model model) {
+		List<ProductDTO> dtoList = new ArrayList<>();
 
-		List<ProductDTO> dtoList = managerService.selectProductBySearch(category, searchWord);
+		// 전체 상품 대상
+		if (filter.equals("") || filter.equals("total")) {
+			dtoList = managerService.selectProductBySearch(category, searchWord);
+		} // 미처리/정상/이상 상품 대상
+		else{
+			dtoList = managerService.selectProductBySearchAndFilter(filter, category, searchWord);
+		}
 		model.addAttribute("list", dtoList);
 
 		return "/manager/productList::#result";
