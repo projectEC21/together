@@ -7018,3 +7018,15 @@ button {
 /*
 ======= 상품등록 시 추가할 버튼 끝 ===========
 */
+
+.progress-bar-warning {
+  background-color: yellow;
+}
+
+.progress-bar-orange {
+  background-color: orange;
+}
+
+.progress-bar-danger {
+  background-color: red;
+}
