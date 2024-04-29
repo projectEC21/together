@@ -923,18 +923,6 @@ html {
 }
 
 .header.shop .search-bar .btnn {
-<<<<<<< HEAD
-	height: 51px;
-	line-height: 57px;
-	width: 62px;
-	text-align: center;
-	font-size: 18px;
-	color: #fff;
-	background: #333333;
-	position: absolute;
-	right: -30px;
-	top: -1px;
-=======
 	height: 50px;
     line-height: 55px;
     width: 61px;
@@ -945,7 +933,6 @@ html {
     position: absolute;
     right: -33px;
     top: -1px;
->>>>>>> 4532157e974d0cabce5603e22d1982e0cc9ae658
 	border: none;
 	border-radius: 0 55px 55px 0;
 	-webkit-transition: all 0.4s ease;
@@ -2710,11 +2697,7 @@ html {
 .shop .shop-top {
 	clear: both;
 	/* background: #f6f7fb; */
-<<<<<<< HEAD
-	padding: 18px 20px 50px 20px;
-=======
 	padding: 18px 20px 50px 80px;
->>>>>>> 4532157e974d0cabce5603e22d1982e0cc9ae658
 }
 
 .shop .shop-shorter {
