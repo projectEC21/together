@@ -68,6 +68,7 @@
 
     });
 
+
     function loadWeeklySummary() {
       $.ajax({
         url: "/manager/board/getRegistCustomerAndProuctCountsForFiveDays", // AJAX 요청을 보낼 서버의 URL 경로
@@ -89,6 +90,7 @@
         }
       });
     }
+
     function loadProhibitedWords() {
       $.ajax({
         url: "/manager/board/topSimilarWordCounts", // 수정된 엔드포인트
@@ -427,6 +429,47 @@
     }
 
 
+    window.addEventListener("DOMContentLoaded", () => {
+      const btn = document.querySelector("button");
+      var doneTimeout = null,
+        resetTimeout = null;
+
+      if (btn) {
+        btn.addEventListener("click", function () {
+          const runClass = "btn--running";
+          const doneClass = "btn--done";
+          // Set the submit duration to 9 seconds
+          const submitDuration = 14000; // 9 seconds
+          // The total duration the button stays in the "done" state
+          const totalDuration = 14000; // 14 seconds
+          const resetDuration = totalDuration - submitDuration; // This will be the remaining time after the submitDuration
+
+          // fake the submission
+          this.disabled = true;
+          this.classList.add(runClass);
+
+          clearTimeout(doneTimeout);
+          clearTimeout(resetTimeout);
+
+          doneTimeout = setTimeout(() => {
+            this.classList.remove(runClass);
+            this.classList.add(doneClass);
+
+            // reset the button
+            resetTimeout = setTimeout(() => {
+              this.disabled = false;
+              this.classList.remove(doneClass);
+            }, resetDuration);
+
+          }, submitDuration);
+        });
+      }
+    });
+
+
+
+
+
   </script>
 
 </head>
@@ -634,6 +677,26 @@
             </div>
           </div>
 
+          <!-- 상품 등록시 추가할 버튼 -->
+          <div class="submitfirst">
+            <div class="submitdiv">
+              <button class="submitBtn" type="button">
+                <span class="submitBtn__text">Submit</span>
+                <svg class="btn__progress" viewBox="0 0 48 48" width="48px" height="48px">
+                  <circle class="btn__progress-track" r="20" cx="24" cy="24" fill="none" stroke="#c7cad1"
+                    stroke-width="8">
+                  </circle>
+                  <circle class="btn__progress-fill" r="20" cx="24" cy="24" fill="none" stroke="#000000"
+                    stroke-width="8" transform="rotate(-90,24,24)" stroke-dasharray="125.66 125.66"
+                    stroke-dashoffset="125.66"></circle>
+                  <polyline class="btn__progress-check" points="12,24 20,32 36,16" fill="none" stroke="#fff"
+                    stroke-width="4" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="34 34"
+                    stroke-dashoffset="34"></polyline>
+                </svg>
+              </button>
+            </div>
+          </div>
+          <!-- 상품 등록시 추가할 버튼끝 -->
 
           <div class="row">
             <!-- 일자별 상품등록 개수 라인, 도넛 그래프-->

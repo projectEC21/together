@@ -6836,3 +6836,185 @@ ul.notifications {
   /* 하단 왼쪽 모서리 */
   border: 1px solid rgba(221, 226, 232, 0.49);
 }
+
+#prohibitedWordsTable tr {
+  text-align: center;
+}
+
+#weeklyRegSummaryTable tr {
+  text-align: center;
+}
+
+/*
+======= 상품등록 시 추가할 버튼 ===========
+*/
+/* Main button styles */
+
+
+
+.submitfirst {
+  border: 0;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+
+.submitdiv,
+button {
+  font: 1em/1.5 Nunito, sans-serif;
+}
+
+.submitdiv {
+  --hue: 223;
+  --bg1: hsl(var(--hue), 10%, 90%);
+  --bg2: hsl(var(--hue), 10%, 80%);
+  --fg1: hsl(var(--hue), 10%, 10%);
+  --fg2: hsl(var(--hue), 10%, 20%);
+  --primary1: hsl(var(--hue), 90%, 55%);
+  --primary2: hsl(var(--hue), 90%, 45%);
+  font-size: calc(20px + (40 - 20) * (100vw - 320px) / (1280 - 320));
+}
+
+.submitdiv {
+  background-color: var(--bg1);
+  color: var(--fg1);
+  height: 100vh;
+  display: grid;
+  place-items: center;
+}
+
+
+.submitBtn {
+  --hue: 223;
+  --bg1: hsl(var(--hue), 10%, 90%);
+  --bg2: hsl(var(--hue), 10%, 80%);
+  --fg1: hsl(var(--hue), 10%, 10%);
+  --fg2: hsl(var(--hue), 10%, 20%);
+  --primary1: hsl(var(--hue), 90%, 55%);
+  --primary2: hsl(var(--hue), 90%, 45%);
+  font-size: calc(20px + (40 - 20) * (100vw - 320px) / (1280 - 320));
+}
+
+.submitBtn {
+  background-color: transparent;
+  border-radius: 1.5em;
+  display: block;
+  position: relative;
+  width: 7.5em;
+  height: 3em;
+  transition: width 0.3s ease-in-out;
+  border: 0px;
+}
+
+.submitBtn:not(:disabled):active {
+  transform: translateY(0.1em);
+}
+
+.submitBtn__text {
+  background-color: var(--primary1);
+  border-radius: inherit;
+  color: hsl(0, 0%, 100%);
+  display: inline-block;
+  padding: 0.75em 1.5em;
+  transition:
+    background-color 0.15s linear,
+    color 0.15s 0.3s ease-in-out;
+  width: 100%;
+}
+
+.submitBtn:not(:disabled):focus .submitBtn__text,
+.btsubmitBtnn:not(:disabled):hover .submitBtn__text {
+  background-color: var(--primary2);
+}
+
+.btn__progress {
+  overflow: visible;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 3em;
+  height: 3em;
+  visibility: hidden;
+}
+
+.btn__progress-track {
+  r: 12px;
+  stroke: var(--bg2);
+  stroke-width: 24;
+}
+
+.btn__progress-fill {
+  stroke: var(--primary1);
+  stroke-dashoffset: 125.66;
+}
+
+.btn__progress-check {
+  stroke: hsl(0, 0%, 100%);
+  stroke-dashoffset: 34;
+}
+
+/* Both states */
+.btn--running,
+.btn--done {
+  outline: none;
+  pointer-events: none;
+  width: 3em;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+}
+
+.btn--running .submitBtn__text,
+.btn--done .submitBtn__text {
+  color: transparent;
+  transition:
+    background-color 0.3s ease-in-out,
+    visibility 0.3s steps(1);
+}
+
+.btn--running .btn__progress,
+.btn--done .btn__progress {
+  visibility: visible;
+}
+
+/* Running state */
+.btn--running .submitBtn__text {
+  background-color: var(--bg2);
+  visibility: hidden;
+}
+
+.btn--running .btn__progress {
+  transition: visibility 0.3s 0.3s steps(1, start);
+}
+
+.btn--running .btn__progress-track {
+  r: 20px;
+  stroke-width: 8;
+  transition:
+    r 0.3s 0.3s ease-in-out,
+    stroke-width 0.3s 0.3s ease-in-out;
+}
+
+.btn--running .btn__progress-fill {
+  stroke-dashoffset: 0;
+  transition: stroke-dashoffset 14s 0.6s linear;
+}
+
+
+/* Done state */
+.btn--done .btn__progress-track {
+  stroke: var(--primary1);
+  transition:
+    r 0.3s ease-in-out,
+    stroke-width 0.3s ease-in-out;
+}
+
+.btn--done .btn__progress-check {
+  stroke-dashoffset: 0;
+  transition: stroke-dashoffset 0.3s 0.3s ease-out;
+}
+
+/*
+======= 상품등록 시 추가할 버튼 끝 ===========
+*/
