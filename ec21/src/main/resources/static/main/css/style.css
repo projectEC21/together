@@ -2786,6 +2786,7 @@ html {
 
 .shop .nice-select .list {
 	border-radius: 0px;
+    width: 100%;
 }
 
 .shop .nice-select .option.selected {
@@ -3311,7 +3312,7 @@ textarea {
 
 /* Product Tab */
 .product-area .product-info {
-	margin-top: 50px;
+	margin-top: 0px;
 	position: relative;
 	right: 6%;
 }
@@ -4471,7 +4472,8 @@ span.paging {
 ========================================*/
 
 .product-list.section .write-form {
-	width: max-content;
+    position: relative;
+    left: 10%;
 }
 
 .product-list.section .title h2 {
@@ -4495,7 +4497,6 @@ span.paging {
 	padding-bottom: 40px;
 }
 
-/* css ëŠ” ì¡°ê¸ˆ ë” ìƒê°í•´ë³´ê¸° */
 .product-list.section th.form-group.title {
 	font-size: 25px;
 	border: 1px solid #efefef;
@@ -4518,17 +4519,21 @@ span.paging {
 
 .product-list.section th {
 	margin-top: 20px;
-	padding-top: 20px;
-	display: block;
+    border: 1px solid rgba(0, 0, 0, .125);
+    padding: 30px;
+    text-align: center;
+	/* padding-top: 20px;
+	display: block; */
 }
 
 .product-list.section td {
-	padding-left: 10px;
-	display: block;
+	padding: 13px;
+    border: 1px solid rgba(0, 0, 0, .125);
+    width: 72%;
 }
 
 .product-list.section .nice-select.category {
-	width: 100%;
+	width: 93%;
 	line-height: 40px;
 }
 
@@ -4541,7 +4546,7 @@ span.paging {
 
 .product-list.section input {
 	padding-left: 10px;
-	width: 100%;
+	width: 93%;
 	line-height: 35px;
 }
 
@@ -4554,8 +4559,29 @@ span.paging {
 
 .product-list.section input.price {
 	padding-left: 5px;
+<<<<<<< HEAD
 	width: 98%;
+=======
+    width: 91%;
+>>>>>>> f6aa6ed4d5a949c17beb752b5d112aea92726dd8
 	line-height: 35px;
+}
+
+.product-list.section input.moq-unit{
+	width: 95%;
+    display: inline-flex;
+}
+
+.product-list.section input.moq {
+	width: 54%;
+}
+.product-list.section input.unit {
+	width: 35%;
+}
+
+.form-group h6{
+	position: relative;
+	float: left;
 }
 
 .ck.ck-editor {
@@ -4568,11 +4594,12 @@ span.paging {
 
 .product-list.section .form .btn {
 	display: inline-block;
-	margin: 0 200px;
-	height: 46px;
-	width: 170px;
-	color: #fff;
-	line-height: 20px;
+    position: relative;
+    height: 46px;
+    width: 170px;
+    color: #fff;
+    line-height: 20px;
+    left: 36%;
 }
 
 /*======================================
@@ -4589,9 +4616,14 @@ start new Write CSS
 	font-size: 14px;
 	color: #333;
 	font-weight: 400;
+<<<<<<< HEAD
 	text-align: left;
 	padding-bottom: 40px;
 	margin: 0 20px;
+=======
+    text-align: left;
+    padding-bottom: 40px;
+>>>>>>> f6aa6ed4d5a949c17beb752b5d112aea92726dd8
 }
 
 .product-list.section .product-info .title h2 {
@@ -5234,6 +5266,15 @@ start Inquiry CSS
 /*======================================
 	MyInfo CSS
 ======================================*/
+.shop.myinfo img {
+	border-radius: 100%;
+    height: auto;
+    width: 17%;
+    position: relative;
+    left: 36%;
+    top: -22px;
+}
+
 .shop.myinfo h2 {
 	position: relative;
 	font-size: 40px;
@@ -5246,7 +5287,7 @@ start Inquiry CSS
 }
 
 .myinfo {
-	background: #f6f6f6;
+	border:  solid rgba(0, 0, 0, .125);
 	padding: 50px 0;
 	width: 95%;
 }
@@ -5274,14 +5315,15 @@ start Inquiry CSS
 }
 
 .shop.myinfo .form .form-group input {
-	width: 90%;
-	height: 45px;
-	line-height: 50px;
-	padding: 0 20px;
-	border-radius: 3px;
-	color: #333 !important;
-	border: none;
-	display: block;
+    width: 90%;
+    height: 45px;
+    line-height: 50px;
+    padding: 0 20px;
+    border-radius: 3px;
+    color: #333 !important;
+    border: none;
+    border-bottom: 1px solid #555;
+    display: block;
 }
 
 .shop.myinfo .form .form-group label {
@@ -5319,6 +5361,8 @@ start Inquiry CSS
 	color: #fff;
 	line-height: 20px;
 	margin: 0 auto;
+	position: relative;
+    left: 32%;
 }
 
 /*======================================

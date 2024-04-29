@@ -308,13 +308,14 @@ big {
 }
 .breadcrumbs ul li a {
 	color: #333;
-	font-size: 16px;
+	font-size: 18px;
 	font-weight: 400;
 	text-transform: capitalize;
 }
 .breadcrumbs ul li.active a {
 	color: #333;
 	display: inline-block;
+	font-size: 18px;
 }
 .breadcrumbs ul li a:hover{
 	color:#F7941D;

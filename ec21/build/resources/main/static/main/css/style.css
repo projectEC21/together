@@ -293,6 +293,7 @@ html {
 	position: relative;
 }
 
+<<<<<<< HEAD
 .hero-area4:before {
 	content: '';
 	background: linear-gradient(to bottom, rgb(27 50 85), transparent);
@@ -303,6 +304,8 @@ html {
 	height: 100%;
 	/* before 요소가 hero-area4를 완전히 커버하도록 설정 */
 }
+=======
+>>>>>>> f6aa6ed4d5a949c17beb752b5d112aea92726dd8
 
 
 .hero-area4 .search-bar {
@@ -315,8 +318,13 @@ html {
 /* breadcrumbs */
 .breadcrumbs .notice span {
 	font-size: 16px;
+<<<<<<< HEAD
 	font-family: 'themify';
 	color: #666;
+=======
+    font-family: 'themify';
+    color: #666;
+>>>>>>> f6aa6ed4d5a949c17beb752b5d112aea92726dd8
 }
 
 /* 고정 헤더 및 패딩을 위한 CSS */
@@ -3626,7 +3634,11 @@ textarea {
 .table.shopping-summery {
 	background: #fff;
 	position: relative;
+<<<<<<< HEAD
 	left: 3%;
+=======
+    left: 3%;
+>>>>>>> f6aa6ed4d5a949c17beb752b5d112aea92726dd8
 	border: 1px solid rgba(0, 0, 0, .125);
 }
 
@@ -5234,6 +5246,15 @@ start Inquiry CSS
 /*======================================
 	MyInfo CSS
 ======================================*/
+.shop.myinfo img {
+	border-radius: 100%;
+    height: auto;
+    width: 17%;
+    position: relative;
+    left: 36%;
+    top: -22px;
+}
+
 .shop.myinfo h2 {
 	position: relative;
 	font-size: 40px;
@@ -5246,7 +5267,7 @@ start Inquiry CSS
 }
 
 .myinfo {
-	background: #f6f6f6;
+	border:  solid rgba(0, 0, 0, .125);
 	padding: 50px 0;
 	width: 95%;
 }
@@ -5274,14 +5295,15 @@ start Inquiry CSS
 }
 
 .shop.myinfo .form .form-group input {
-	width: 90%;
-	height: 45px;
-	line-height: 50px;
-	padding: 0 20px;
-	border-radius: 3px;
-	color: #333 !important;
-	border: none;
-	display: block;
+    width: 90%;
+    height: 45px;
+    line-height: 50px;
+    padding: 0 20px;
+    border-radius: 3px;
+    color: #333 !important;
+    border: none;
+    border-bottom: 1px solid #555;
+    display: block;
 }
 
 .shop.myinfo .form .form-group label {
