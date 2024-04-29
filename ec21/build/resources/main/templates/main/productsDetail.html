@@ -669,11 +669,16 @@
 				<div class="col-12">
 					<div class="owl-carousel popular-slider" id="result">
 						<!-- Start Single Product -->
-						<div class="single-product" th:each="dto:${list}">
+						<div class="single-product" th:each="dto:${dtoList}">
 							<div class="product-img">
 								<a th:href="@{/main/productsDetail(productId=${dto.productId})}">
-									<img class="default-img" th:src="@{/main/example_img5.jpeg}">
-									<img class="hover-img" th:src="@{/main/example_img6.jpeg}">
+									<span th:if="${dto.originalFileName}!=null">
+										<img th:src="@{/main/downloadImg(productId=${dto.productId})}">
+									</span>
+									<span th:unless="${dto.originalFileName}!=null">
+										<img class="default-img" th:src="@{/main/example_img5.jpeg}">
+										<img class="hover-img" th:src="@{/main/example_img6.jpeg}">
+									</span>
 								</a>
 							</div>
 
