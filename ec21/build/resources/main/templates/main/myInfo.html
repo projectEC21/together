@@ -202,10 +202,6 @@
 
 <body class="js">
 
-<<<<<<< HEAD
-	<input type="hidden" name="customerId" id="customerId" th:value="${#authentication.name}">
-=======
->>>>>>> f6aa6ed4d5a949c17beb752b5d112aea92726dd8
 	
 	<!-- Preloader -->
 	<div class="preloader">
@@ -245,26 +241,17 @@
 								<li sec:authorize="isAuthenticated()"><i class="ti-power-off"></i><a th:href="@{/main/logout}">Logout</a></li>
 								<li><a th:href="@{/main/myproducts}"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a></li>
 								<li><a th:href="@{/main/inbox(customerId=${#authentication.name})}" class="single-icon">
-<<<<<<< HEAD
-										<i class="fa fa-envelope-o"></i><span class="total-count"></span></li>
-							</ul>
-=======
 									<i class="fa fa-envelope-o"></i><span class="total-count"></span></li>
 								</ul>
 							</div>
 							<!-- End Top Right -->
->>>>>>> f6aa6ed4d5a949c17beb752b5d112aea92726dd8
 						</div>
 					</div>
 				</div>
 			</div>
 		<!-- End Topbar -->
 	</header>
-<<<<<<< HEAD
-
-=======
 	
->>>>>>> f6aa6ed4d5a949c17beb752b5d112aea92726dd8
 	<!-- myInfo -->
 	<section class="product shop section">
 		<div class="container">
@@ -303,13 +290,8 @@
 							</div>
 						</div>
 					</div>
-<<<<<<< HEAD
-				</div>	
-
-=======
 				</div>
 				<!-- 카테고리 종료 -->
->>>>>>> f6aa6ed4d5a949c17beb752b5d112aea92726dd8
 				<div class="col-lg-9 col-12">
 					<div class="row">
 						<div class="shop myinfo section">
@@ -423,24 +405,6 @@
 											<div class="form-group">
 												<label>Business No</label>
 												<br>
-<<<<<<< HEAD
-
-												<div class="form-group info-btn">
-													<button class="btn" type="button" id="editButton">Edit My Account
-													</button>
-													<button class="btn" type="button" id="modifyButton"
-														style="display: none;">Modify My
-														Account
-													</button>
-													<button class="btn" type="button" id="cancelButton"
-														style="display: none;">Cancel</button>
-												</div>
-											</form>
-										</div>
-									</div>
-								</div>
-								<!--/ End Form -->
-=======
 												<input type="text" name="busiNo" th:value="${customer.busiNo}"
 												required="required" readonly>
 											</div>
@@ -461,7 +425,6 @@
 										<input type="hidden" name="customerId" id="customerId" th:value="${#authentication.name}">
 									</form>
 								</div>
->>>>>>> f6aa6ed4d5a949c17beb752b5d112aea92726dd8
 							</div>
 							</div>
 							<!--/ End Form -->
