@@ -4279,9 +4279,23 @@ tbody.collapse.show {
 .card-header {
     padding: .75rem 1.25rem;
     margin-bottom: 0;
-    background-color: rgba(0, 0, 0, .03);
-    border-bottom: 1px solid rgba(0, 0, 0, .125)
+    background-color: #0f435e;
+    color: #fff;
+    font-size: 18px;
+    font-weight: bolder;
+    border-radius: 4px;
 }
+.card-body li {
+    padding: 10px;
+}
+
+.card-body li a{
+    font-size: 17px
+}
+.card-body li a:hover {
+    color: #666;
+    border-bottom: 1px solid #757575;
+} 
 
 .card-header:first-child {
     border-radius: calc(.25rem - 1px) calc(.25rem - 1px) 0 0
