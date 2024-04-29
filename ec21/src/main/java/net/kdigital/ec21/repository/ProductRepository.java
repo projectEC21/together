@@ -15,6 +15,7 @@ import net.kdigital.ec21.dto.check.YesOrNo;
 import net.kdigital.ec21.entity.ProductEntity;
 
 public interface ProductRepository extends JpaRepository<ProductEntity, String> {
+
         // ================== 메인보드 : count 관련 ========================
         // 당일 등록 상품 개수
         Long countByCreateDateBetween(LocalDateTime startDate, LocalDateTime endDate);

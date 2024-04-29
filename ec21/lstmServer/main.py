@@ -63,7 +63,8 @@ import random
 import oracledb
 
 oracledb.init_oracle_client(lib_dir="C:\DownloadFiles\OracleInstantClient\instantclient_19_22") #도연경로
-#oracledb.init_oracle_client(lib_dir="") # 인영경로
+# oracledb.init_oracle_client(lib_dir="/Users/inn00/Downloads/instantclient_19/instantclient_19_16 basic") # 인영경로
+# 맥은 cx_Oracle 사용해야하는거 같아유
 con = oracledb.connect(user='admin', password='DIMA3project', dsn='h2z0kxkxxnhhftv2_high')
 
 print("Successfully connected to Oracle Database")
