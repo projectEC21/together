@@ -202,6 +202,8 @@
 
 <body class="js">
 
+	<input type="hidden" name="customerId" id="customerId" th:value="${#authentication.name}">
+	
 	<!-- Preloader -->
 	<div class="preloader">
 		<div class="preloader-inner">
@@ -222,6 +224,12 @@
 					<div class="col-lg-4 col-md-12 col-12">
 						<!-- Top Left -->
 						<div class="top-left">
+							<!-- logo -->
+							<div class="logo">
+								<a th:href="@{/}">
+									<img th:src="@{/main/images/ec21logo.png}" alt="logo" style="width: 100px; height: 30px;">
+								</a>
+							</div>
 						</div>
 						<!--/ End Top Left -->
 					</div>
@@ -232,6 +240,9 @@
 								<li sec:authorize="isAnonymous()"><i class="ti-power-off"></i><a th:href="@{/main/login}">Login</a></li>
 								<li sec:authorize="isAnonymous()"><i class="ti-user"></i><a th:href="@{/main/register}">Sign up</a></li>
 								<li sec:authorize="isAuthenticated()"><i class="ti-power-off"></i><a th:href="@{/main/logout}">Logout</a></li>
+								<li><a th:href="@{/main/myproducts}"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a></li>
+								<li><a th:href="@{/main/inbox(customerId=${#authentication.name})}" class="single-icon">
+										<i class="fa fa-envelope-o"></i><span class="total-count"></span></li>
 							</ul>
 						</div>
 						<!-- End Top Right -->
@@ -240,154 +251,47 @@
 			</div>
 		</div>
 		<!-- End Topbar -->
-		<div class="middle-inner">
-			<div class="container">
-				<div class="row">
-					<div class="col-lg-2 col-md-2 col-12">
-						<!-- Logo -->
-						<div class="logo">
-							<a th:href="@{/}"><img th:src="@{/main/images/ec21logo.png}" alt="logo"></a>
-						</div>
-						<!--/ End Logo -->
-						<!-- Search Form -->
-						<div class="search-top">
-							<div class="top-search"><a href="#"><i class="ti-search"></i></a></div>
-							<!-- Search Form -->
-							<div class="search-top">
-								<form class="search-form">
-									<input type="text" placeholder="Search here..." name="search">
-									<button value="search" type="submit"><i class="ti-search"></i></button>
-								</form>
-							</div>
-							<!--/ End Search Form -->
-						</div>
-						<!--/ End Search Form -->
-						<div class="mobile-nav"></div>
-					</div>
-					<div class="col-lg-8 col-md-7 col-12">
-						<form th:action="@{/main/list}" method="get">
-							<div class="search-bar-top">
-								<div class="search-bar">
-									<!-- 240425 dy : 카테고리 선택 & 검색어 입력 시 form 태그로 상품 리스트로의 요청 걸어줌 -->
-									<select id="category" name="category">
-										<option value="total" th:selected="${category eq 'total'}">All Category</option>
-										<option value="FOOD_BEVERAGE" th:selected="${category eq 'FOOD_BEVERAGE'}">Food
-											& Beverage</option>
-										<option value="CHEMICAL" th:selected="${category eq 'CHEMICAL'}">Chemical
-										</option>
-										<option value="HEALTH_MEDICAL" th:selected="${category eq 'HEALTH_MEDICAL'}">
-											Health & Medical</option>
-										<option value="ELECTRONIC" th:selected="${category eq 'ELECTRONIC'}">Electronics
-										</option>
-										<option value="COSMETIC" th:selected="${category eq 'COSMETIC'}">Cosmetic
-										</option>
-									</select>
-									<input id="searchWord" name="searchWord" placeholder="What are you searching for?"
-										type="type" th:value="${searchWord}"
-										th:attr="placeholder=${searchWord eq null ? 'What are you searching for?' : null}" />
-									<button type="submit" class="btnn"> <i class="ti-search"></i></button>
+	</header>
+
+	<!-- myInfo -->
+	<section class="product shop section">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-2 col-12 ">
+						<div id="accordion">
+							<div class="card">
+								<div class="card-header">
+									<a class="card-link" data-toggle="collapse" href="#account-category">My Account</a>
 								</div>
-							</div>
-						</form>
-					</div>
-					<div class="col-lg-2 col-md-3 col-12">
-						<div class="right-bar">
-							<!-- Search Form -->
-							<div class="sinlge-bar">
-								<a th:href="@{/main/myproducts(customerId=${#authentication.name})}" class="single-icon"><i class="fa fa-user-circle-o"
-										aria-hidden="true"></i></a>
-							</div>
-
-							<!-- 검색창 옆 부분 인콰이어리 new 로만 보이게 하고 인콰이어리 페이지로 넘어가게 하기 -->
-							<div class="sinlge-bar inquiry">
-								<a th:href="@{/main/inbox(customerId=${#authentication.name})}" class="single-icon"><i class="fa fa-envelope-o"></i> <span
-										class="total-count">new</span></a>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<!-- Header Inner -->
-		<div class="header-inner">
-			<div class="container">
-				<div class="cat-nav-head">
-					<div class="row">
-					</div>
-					<div class="col-lg-9 col-12">
-						<div class="menu-area">
-
-							<!-- Main Menu -->
-							<nav class="navbar navbar-expand-lg">
-								<div class="navbar-collapse">
-									<div class="nav-inner">
-										<!-- 240417 dy : 카테고리 별 상품 목록 요청(검색어X) -->
-										<ul class="nav main-menu menu navbar-nav">
-											<li><a th:href="@{/main/list(category=total)}">All</a></li>
-											<li><a th:href="@{/main/list(category=FOOD_BEVERAGE)}">Food & Beverage</a>
-											</li>
-											<li><a th:href="@{/main/list(category=CHEMICAL)}">Chemical</a></li>
-											<li><a th:href="@{/main/list(category=HEALTH_MEDICAL)}">Health & Medical</a>
-											</li>
-											<li><a th:href="@{/main/list(category=ELECTRONIC)}">Electronics</a></li>
-											<li><a th:href="@{/main/list(category=COSMETIC)}">Cosmetic</a></li>
+								<div id="account-category" class="collapse show" data-parent="#accordion">
+									<div class="card-body">
+										<ul class="categor-list">
+											<li><a th:href="@{/main/myinfo(customerId=${#authentication.name})}">My Information</a></li>
+											<li><a th:href="@{/main/myproducts(customerId=${#authentication.name})}">My Products</a></li>
+											<li><a th:href="@{/main/productsWrite(customerId=${#authentication.name})}">Add A New</a></li>
 										</ul>
 									</div>
 								</div>
-							</nav>
-							<!--/ End Main Menu -->
+							</div>
+							<div class="card">
+								<div class="card-header">
+								<a class="collapsed card-link" data-toggle="collapse" href="#product-category">To Product</a>
+							</div>
+							<div id="product-category" class="collapse" data-parent="#accordion">
+								<div class="card-body">
+									<ul class="categor-list">
+										<li><a th:href="@{/main/list(category=total)}">All</a></li>
+										<li><a th:href="@{/main/list(category=FOOD_BEVERAGE)}">Food & Beverage</a></li>
+										<li><a th:href="@{/main/list(category=CHEMICAL)}">Chemical</a></li>
+										<li><a th:href="@{/main/list(category=HEALTH_MEDICAL)}">Health & Medical</a></li>
+										<li><a th:href="@{/main/list(category=ELECTRONIC)}">Electronics</a></li>
+										<li><a th:href="@{/main/list(category=COSMETIC)}">Cosmetic</a></li>
+									</ul>
+								</div>
+							</div>
 						</div>
 					</div>
-				</div>
-			</div>
-		</div>
-		</div>
-		<!--/ End Header Inner -->
-	</header>
-	<!--/ End Header -->
-
-
-	<!-- Breadcrumbs -->
-	<div class="breadcrumbs">
-		<div class="container">
-			<div class="row">
-				<div class="col-12">
-					<div class="bread-inner">
-						<ul class="bread-list">
-							<li><a th:href="@{/}">Home<i class="ti-arrow-right"></i></a></li>
-							<li class="active"><a href="#">My Information</a></li>
-						</ul>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- End Breadcrumbs -->
-
-	<!-- myInfo -->
-	<section class="product-area shop-sidebar product-list shop section">
-		<div class="container">
-			<div class="row">
-				<!-- 사이드 바 -->
-				<div class="col-lg-2 col-md-4 col-12">
-					<div class="shop-sidebar login-form">
-						<!-- Single Widget -->
-						<div class="single-widget category">
-							<h3 class="title">My Page</h3>
-
-							<ul class="categor-list">
-								<li><a th:href="@{/main/myinfo(customerId=${#authentication.name})}"
-										style="color: #222; font-weight: 700;">info</a></li>
-								<li><a th:href="@{/main/myproducts(customerId=${#authentication.name})}">Products</a></li>
-								<!-- 해당 페이지에 들어가면 색상이 더 진하게 보이게 해놓음 -->
-							</ul>
-
-						</div>
-						<!--/ End Single Widget -->
-					</div>
-				</div>
-				<!-- 사이드 바 끝-->
+				</div>	
 
 				<div class="col-lg-9 col-12">
 					<div class="row">
@@ -538,13 +442,10 @@
 													<button class="btn" type="button" id="cancelButton"
 														style="display: none;">Cancel</button>
 												</div>
-
-
 											</form>
 										</div>
 									</div>
 								</div>
-
 								<!--/ End Form -->
 							</div>
 						</div>
@@ -552,8 +453,6 @@
 				</div>
 			</div>
 		</div>
-		</div>
-
 	</section>
 	<!--/ End Login -->
 
