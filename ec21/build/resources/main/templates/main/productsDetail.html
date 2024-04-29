@@ -669,7 +669,7 @@
 				<div class="col-12">
 					<div class="owl-carousel popular-slider" id="result">
 						<!-- Start Single Product -->
-						<div class="single-product" th:each="dto:${dtoList}">
+						<div class="single-product" th:each="dto:${list}">
 							<div class="product-img">
 								<a th:href="@{/main/productsDetail(productId=${dto.productId})}">
 									<span th:if="${dto.originalFileName}!=null">
