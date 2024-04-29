@@ -94,9 +94,8 @@ public class ManagerBoardService {
                 .collect(Collectors.toList());
     }
 
-
     // 240427 dy : 5일 동안 각 일별 등록 회원 수, 등록 상품 수
-    public List<Map<String, Object>> getRegistCustomerAndProuctCountsForFiveDays(){
+    public List<Map<String, Object>> getRegistCustomerAndProuctCountsForFiveDays() {
         // 반환할 결과 담을 List
         List<Map<String, Object>> result = new ArrayList<>();
 
@@ -104,16 +103,18 @@ public class ManagerBoardService {
         LocalDateTime todayStart = LocalDate.now().atStartOfDay();
         LocalDateTime todayEnd = LocalDate.now().plusDays(1).atStartOfDay();
         // 데이터 포맷 형식
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy (E)", Locale.KOREAN);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yy/MM/dd (E)", Locale.KOREAN);
 
         // 5일 동안의 값
         for (int i = 1; i <= 5; i++) {
             // count
-            Long productCnt = productRepository.countByCreateDateBetween(todayStart.minusDays(i), todayEnd.minusDays(i));
-            Long customerCnt = customerRepository.countByCreateDateBetween(todayStart.minusDays(i), todayEnd.minusDays(i));
+            Long productCnt = productRepository.countByCreateDateBetween(todayStart.minusDays(i),
+                    todayEnd.minusDays(i));
+            Long customerCnt = customerRepository.countByCreateDateBetween(todayStart.minusDays(i),
+                    todayEnd.minusDays(i));
             // date
             String formattedDate = todayStart.minusDays(i).format(formatter);
-            
+
             Map<String, Object> data = new HashMap<>();
             data.put("date", formattedDate);
             data.put("productCnt", productCnt);

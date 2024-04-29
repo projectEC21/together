@@ -351,6 +351,7 @@ html {
 	font-size: 10px;
 }
 
+
 /* Dropdown Menu */
 
 .header .nav li .dropdown {
@@ -3597,6 +3598,8 @@ textarea {
 ========================================*/
 .table.shopping-summery {
 	background: #fff;
+	position: relative;
+    left: 3%;
 }
 
 .shopping-cart {
@@ -3644,9 +3647,9 @@ textarea {
 	color: #757575;
     font-weight: 400;
     font-size: 13px;
-    display: -webkit-inline-box;
+	display: -webkit-box;
     -webkit-box-orient: vertical;
-    -webkit-line-clamp: 3;
+    -webkit-line-clamp: 2;
     overflow: hidden;
     text-overflow: ellipsis;
 }
@@ -3659,6 +3662,15 @@ textarea {
 }
 
 
+.shopping-summery .product-desc p>span {
+	font-size: 13px;
+	color: #666!important;
+	display: -webkit-inline-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 
 
 .shopping-cart .table p {
