@@ -2,15 +2,14 @@
 <html lang="en" xmlns:th="http://thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
-	<!-- Meta Tag --> 
+	<!-- Meta Tag -->
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name='copyright' content=''>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<!-- Title Tag  -->
-	<title>EC21, Global B2B Marketplace</title>
-
+	<title>EC21, Global B2B Marketplace</title> 
 	<!-- Favicon -->
 	<link rel="icon" type="image/png" th:href="@{/main/images/ec21logo.png}">
 	<!-- Web Font -->
@@ -20,7 +19,7 @@
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap" rel="stylesheet">
 
-	<!-- StyleSheet --> 
+	<!-- StyleSheet -->
 
 	<!-- Bootstrap -->
 	<link rel="stylesheet" th:href="@{/main/css/bootstrap.css}">
@@ -29,7 +28,7 @@
 	<!-- Font Awesome -->
 	<link rel="stylesheet" th:href="@{/main/css/font-awesome.css}">
 	<!-- Fancybox -->
-	<link rel="stylesheet" th:href="@{/main/css/jquery.fancybox.css}">
+	<link rel="stylesheet" th:href="@{/main/css/fancybox.css}">
 	<!-- Themify Icons -->
 	<link rel="stylesheet" th:href="@{/main/css/themify-icons.css}">
 	<!-- Nice Select CSS -->
@@ -52,35 +51,31 @@
 	<link rel="stylesheet" th:href="@{/main/css/color/color2.css}">
 
 
-	<!-- 240417 dy : JQuery 파일 추가 및 ajax 작업 -->
+	<!-- 240420 dy : JQuery 파일 추가 및 ajax 작업 -->
 	<script th:src="@{/script/jquery-3.7.1.min.js}"></script>
-	<!-- 240417 dy : 검색어 입력 후 돋보기 클릭 시 /main/list 요청-->
-
-	<!-- jQuery 라이브러리 로드 -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-
-
 	<script>
-		$(function () {
-			$("#searchBtn").on("click", search);
-		});
-
-		function search() {
-			let category = $("#category").val();
-			let searchWord = $("#searchWord").val();
-
-			$.ajax({
-				url: "/main/list",
-				data: { "category": category, "searchWord": searchWord },
-				method: "GET"
-			})
+		// 삭제 버튼 클릭 시 확인
+		function confirmDelete(element, event) {
+			let productName = element.getAttribute("data-name");
+			// 'confirm' 대화상자로 사용자 확인 받기
+			var result = confirm(`상품명 : ${productName}\n▷ 정말 삭제하시겠습니까?`);
+			if (!result) {
+				// 사용자가 '취소'를 선택한 경우, 링크 동작 중지
+				event.preventDefault();
+				return false;
+			}
+			// 사용자가 '확인'을 선택한 경우, 링크 동작 계속 (기본 동작 허용)
+			return true;
 		}
-	
-  </script>
+
+	</script>
+
 </head>
 
 <body class="js">
 
+	<input type="hidden" name="customerId" id="customerId" th:value="${#authentication.name}">
+	
 	<!-- Preloader -->
 	<div class="preloader">
 		<div class="preloader-inner">
@@ -111,7 +106,6 @@
 								<li sec:authorize="isAnonymous()"><i class="ti-power-off"></i><a th:href="@{/main/login}">Login</a></li>
 								<li sec:authorize="isAnonymous()"><i class="ti-user"></i><a th:href="@{/main/register}">Sign up</a></li>
 								<li sec:authorize="isAuthenticated()"><i class="ti-power-off"></i><a th:href="@{/main/logout}">Logout</a></li>
-								<li sec:authorize="hasRole('ROLE_ADMIN')"><a th:href="@{/manager/manager_index}" style="font-weight: bolder;">manager</a></li>
 							</ul>
 						</div>
 						<!-- End Top Right -->
@@ -144,7 +138,6 @@
 						<!--/ End Search Form -->
 						<div class="mobile-nav"></div>
 					</div>
-					<!-- 240416 dy : 카테고리 선택 & 검색어 입력 후 버튼 누르면, 해당 카테고리의 목록이 보이도록 -->
 					<div class="col-lg-8 col-md-7 col-12">
 						<form th:action="@{/main/list}" method="get">
 							<div class="search-bar-top">
@@ -158,8 +151,7 @@
 										<option value="ELECTRONIC" th:selected="${category eq 'ELECTRONIC'}">Electronics</option>
 										<option value="COSMETIC" th:selected="${category eq 'COSMETIC'}">Cosmetic</option>
 									</select>
-									<input id="searchWord" name="searchWord" placeholder="What are you searching for?"
-										type="text" th:value="${searchWord}"
+									<input id="searchWord" name="searchWord" placeholder="What are you searching for?" type="search" th:value="${searchWord}"
 										th:attr="placeholder=${searchWord eq null ? 'What are you searching for?' : null}">
 									<button type="submit" class="btnn"> <i class="ti-search"></i></button>
 								</div>
@@ -175,11 +167,9 @@
 							</div>
 
 							<!-- 검색창 옆 부분 인콰이어리 new 로만 보이게 하고 인콰이어리 페이지로 넘어가게 하기 -->
-							<!-- ++ 0이 아닐때만 파란색으로 뜨게 하기 ! === 아직 안됨 -->
 							<div class="sinlge-bar inquiry">
-								<a th:href="@{/main/inbox(customerId=${#authentication.name})}" class="single-icon">
-									<i class="fa fa-envelope-o"></i><span class="total-count">new</span>
-								</a>
+								<a th:href="@{/main/inbox(customerId=${#authentication.name})}" class="single-icon"><i class="fa fa-envelope-o"></i> <span
+										class="total-count"></span></a>
 							</div>
 						</div>
 					</div>
@@ -191,17 +181,14 @@
 		<div class="header-inner">
 			<div class="container">
 				<div class="cat-nav-head">
-					<div class="row">
-					</div>
 					<div class="col-lg-9 col-12">
 						<div class="menu-area">
-
 							<!-- Main Menu -->
 							<nav class="navbar navbar-expand-lg">
 								<div class="navbar-collapse">
 									<div class="nav-inner">
-										<!-- 240416 dy : 카테고리 별 상품 목록 요청(검색어X) -->
-										<ul class="nav main-menu menu navbar-nav">
+										<!-- 240418 dy : 카테고리 별 상품 목록 요청(검색어X) -->
+										<ul class="nav main-menu menu navbar-nav" id="menu-bar">
 											<li><a th:href="@{/main/list(category=total)}">All</a></li>
 											<li><a th:href="@{/main/list(category=FOOD_BEVERAGE)}">Food & Beverage</a></li>
 											<li><a th:href="@{/main/list(category=CHEMICAL)}">Chemical</a></li>
@@ -218,240 +205,133 @@
 				</div>
 			</div>
 		</div>
-		</div>
 		<!--/ End Header Inner -->
 	</header>
 	<!--/ End Header -->
 
-	<!-- Slider Area -->
-	<section class="hero-slider">
-
-		<!-- Single Slider -->
-		<div class="single-slider">
-			<div class="main-image">
-				<img class="main-image" th:src="@{/main/images/main_image1.jpg}" alt="main">
-				<div class="row no-gutters">
-					<div class="col-lg-9 offset-lg-3 col-12">
-						<div class="text-inner">
-							<div class="row">
-								<div class="col-lg-7 col-12">
-									<div class="hero-text">
-										<h1><span>UP TO 50% OFF </span>Shirt For Man</h1>
-										<p>Maboriosam in a nesciung eget magnae <br> dapibus disting tloctio in the find
-											it pereri <br> odiy maboriosm.
-										</p>
-									</div>
-								</div>
-							</div>
-						</div>
+	<!-- Breadcrumbs : 사이트 내 경로 -->
+	<div class="breadcrumbs">
+		<div class="container">
+			<div class="row">
+				<div class="col-12">
+					<div class="bread-inner">
+						<ul class="bread-list">
+							<li><a th:href="@{/}">Home<i class="ti-arrow-right"></i></a></li>
+							<li class="active"><a th:href="@{/main/myproducts(customerId=${#authentication.name})}">My Page</a></li>
+						</ul>
 					</div>
 				</div>
 			</div>
 		</div>
-		<!--/ End Single Slider -->
-	</section>
-	<!--/ End Slider Area -->
+	</div>
+	<!-- End Breadcrumbs -->
 
-
-	<!-- End Small Banner -->
-	<!-- Start Product Area : 상품리스트 -->
-	<div class="product-area section">
+	<section class="product shop-sidebar shop section">
 		<div class="container">
 			<div class="row">
-				<div class="col-12">
-					<div class="section-title">
-						<h2>Trending Item</h2>
+				<div class="col-lg-2 col-md-4 col-12">
+					<div class="shop-sidebar login-form">
+						<!-- Single Widget -->
+						<div class="single-widget category">
+							<h3 class="title">My Page</h3>
+							<ul class="categor-list">
+								<li><a th:href="@{/main/myinfo(customerId=${#authentication.name})}">info</a></li>
+								<li>
+									<a th:href="@{/main/myproducts(customerId=${#authentication.name})}" style="color: #222; font-weight: 700;">Products</a>
+									<ul>
+										<li><a th:href="@{/main/productsWrite(customerId=${#authentication.name})}">Add New</a></li>
+									</ul>
+								</li>
+								<!-- 해당 페이지에 들어가면 색상이 더 진하게 보이게 해놓음 -->
+							</ul>
+						</div>
+						<!--/ End Single Widget -->
 					</div>
 				</div>
-			</div>
-			<div class="row">
-				<div class="col-12">
-					<div class="product-info">
-						<div class="tab-content" id="myTabContent">
-							<!-- Start Single Tab -->
-							<div class="tab-pane fade show active" id="man" role="tabpanel">
-								<div class="tab-single">
-									<div class="row">
-										<!-- 240416 dy : 상품 위치 확인 및 model에 담아온 ProductDTO 리스트 반복문으로 값 꽂아주기 -->
-										<th:block th:each="product : ${list}">
-											<div class="col-xl-3 col-lg-4 col-md-4 col-12">
-												<div class="single-product">
-													<div class="product-img">
-														<a th:href="@{/main/productsDetail(productId = ${product.productId})}">
-															<img class="default-img" src="https://via.placeholder.com/550x750" alt="#">
-															<img class="hover-img" src="https://via.placeholder.com/550x750" alt="#">
-														</a>
-													</div>
-													<div class="product-content">
-														<h3><a th:href="@{/main/productsDetail(productId = ${product.productId})}">[[${product.productName}]]</a></h3>
-														<div class="product-price">
-															<span>$ [[${product.price}]]</span>
-														</div>
-														<div class="product-seller" th:data-country =${product.country}>
-															<img id="countryFlag" src="" alt="" style="width:20px; height:20px;">
-															<span>[[${product.customerId}]]</span>
-														</div>
-													</div>
+
+				<div class="col-lg-9 col-md-8 col-12">
+					<div class="row">
+						<!-- My products List -->
+						<div class="shopping-cart section">
+							<div class="container">
+								<div class="row" style="margin: -10px;">
+									<div class="col-12">
+										<!-- Shop Top -->
+										<div class="shop-top my">
+											<div class="shop-shorter">
+												<div class="single-shorter">
+													<label>Show :<span> [[${#lists.size(productList)}]]</span></label>
 												</div>
 											</div>
-										</th:block>
-										<!-- th:each 끝  -->
+											<div class="single-slider">
+												<div class="single-slider">
+													<a th:href="@{/main/productsWrite(customerId=${#authentication.name})}">Add A New Product</a>
+												</div>
+											</div>
+										</div>
+
+										<!-- 올린 상품 리스트 -->
+										<table class="table shopping-summery" id="result">
+											<thead>
+												<tr class="main-hading">
+													<th>no</th>
+													<th class="product-title" colspan="2">PRODUCT</th>
+													<th>PRICE</th> <!--가격 -->
+													<th>QUANTITY</th> <!-- 단위-->
+													<th>DATE</th>
+													<th><i class="ti-trash remove-icon"></i></th>
+												</tr>
+											</thead>
+											<tbody>
+												<!-- 240418 dy : 회원의 상품 목록 출력 -->
+												<tr th:if="${productList != null and !#lists.isEmpty(productList)}" th:each="product, i : ${productList}">
+													<td class="no">
+														<span>[[${i.count}]]</span>
+													</td>
+													<td class="product-info" data-title="Description" colspan="2">
+														<span class="image" th:if="${product.originalFileName}!=null">
+															<img th:src="@{/main/downloadImg(productId=${product.productId})}">
+														</span>
+														<span class="product-name">
+															<a th:href="@{/main/productsDetail(productId=${product.productId},currentPage='myproducts')}">[[${product.productName}]]</a>
+														</span>
+														<span class="product-desc" th:utext="${product.productDesc}"></span>
+													</td>
+													<td class="price" data-title="Price">
+														<span>$[[${product.price}]]</span>
+													</td>
+													<td class="qty" data-title="Qty">
+														<span th:if="${product.moq >= 1000}" th:text="${#numbers.formatInteger(product.moq, 3, 'COMMA')} + ' ' + ${product.unit}"> </span>
+														<span th:unless="${product.moq >= 1000}" th:text="${product.moq} + ' ' + ${product.unit}"></span>
+													</td>
+													<td class="createDate" data-title="date">
+														<span>[[${#temporals.format(product.createDate, 'yyyy-MM-dd')}]]</span>
+													</td>
+													<td class="action" data-title="Remove">
+														<a onclick="return confirmDelete(this, event)" 
+															th:href="@{/main/myproducts/delete(productId=${product.productId},customerId=${customerId})}"
+															class="deleteBtn" th:data-name="${product.productName}">
+															<i class="ti-trash remove-icon"></i>
+														</a>
+													</td>
+												</tr>
+											</tbody>
+										</table>
+										<!--/ End Shopping Summery -->
 									</div>
+									<!-- 페이징 -->
 								</div>
 							</div>
-							<!--/ End Single Tab -->
-
 						</div>
+						<!--/ End Shopping Cart -->
 					</div>
+					<span class="paging"> 
+						<< < 1 2 3 4 5 > >> 
+					</span>
 				</div>
 			</div>
-		</div>
-	</div>
-	<!-- End Product Area -->
-
-	<div style="height: 50px;"></div>
-	<!-- 여기에 50px 높이의 공간이 추가됩니다 -->
-
-
-	<!-- Start Shop Services Area -->
-	<section class="shop-services section home">
-		<div class="container">
-			<div class="row">
-				<span>
-					EC21 is a leading <b>global B2B marketplace</b> connecting buyers with suppliers all over the world
-					including China, Korea, United States and more.
-					Suppliers/manufacturers/exporters can post and promote their products and selling leads.
-					Buyers/importers can search and contact suppliers easily by B2B categories and keywords.
-					Buyers can also post their own buying leads to get quotes or offers from manufacturers.
-					Nowadays, online B2B marketplace is becoming more and more important trade tool for business to
-					business transaction
-					and marketing because it speeds up marketing process and saves overall transaction cost.
-					Join the great B2B portal, <b>EC21 and boost your business, we will always be with you!</b>
-				</span>
-			</div>
-		</div>
-		</div>
-	</section>
-	<!-- End Shop Services Area -->
-
-	<!-- Modal -->
-	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span class="ti-close"
-							aria-hidden="true"></span></button>
-				</div>
-				<div class="modal-body">
-					<div class="row no-gutters">
-						<div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
-							<!-- Product Slider -->
-							<div class="product-gallery">
-								<div class="quickview-slider-active">
-									<div class="single-slider">
-										<img src="https://via.placeholder.com/569x528" alt="#">
-									</div>
-									<div class="single-slider">
-										<img src="https://via.placeholder.com/569x528" alt="#">
-									</div>
-									<div class="single-slider">
-										<img src="https://via.placeholder.com/569x528" alt="#">
-									</div>
-									<div class="single-slider">
-										<img src="https://via.placeholder.com/569x528" alt="#">
-									</div>
-								</div>
-							</div>
-							<!-- End Product slider -->
-						</div>
-						<div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
-							<div class="quickview-content">
-								<h2>Flared Shift Dress</h2>
-								<div class="quickview-ratting-review">
-									<div class="quickview-ratting-wrap">
-										<div class="quickview-ratting">
-											<i class="yellow fa fa-star"></i>
-											<i class="yellow fa fa-star"></i>
-											<i class="yellow fa fa-star"></i>
-											<i class="yellow fa fa-star"></i>
-											<i class="fa fa-star"></i>
-										</div>
-										<a href="#"> (1 customer review)</a>
-									</div>
-									<div class="quickview-stock">
-										<span><i class="fa fa-check-circle-o"></i> in stock</span>
-									</div>
-								</div>
-								<h3>$29.00</h3>
-								<div class="quickview-peragraph">
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia iste laborum
-										ad impedit pariatur esse optio tempora sint ullam autem deleniti nam in quos qui
-										nemo ipsum numquam.</p>
-								</div>
-								<div class="size">
-									<div class="row">
-										<div class="col-lg-6 col-12">
-											<h5 class="title">Size</h5>
-											<select>
-												<option selected="selected">s</option>
-												<option>m</option>
-												<option>l</option>
-												<option>xl</option>
-											</select>
-										</div>
-										<div class="col-lg-6 col-12">
-											<h5 class="title">Color</h5>
-											<select>
-												<option selected="selected">orange</option>
-												<option>purple</option>
-												<option>black</option>
-												<option>pink</option>
-											</select>
-										</div>
-									</div>
-								</div>
-								<div class="quantity">
-									<!-- Input Order -->
-									<div class="input-group">
-										<div class="button minus">
-											<button type="button" class="btn btn-primary btn-number" disabled="disabled"
-												data-type="minus" data-field="quant[1]">
-												<i class="ti-minus"></i>
-											</button>
-										</div>
-										<input type="text" name="quant[1]" class="input-number" data-min="1"
-											data-max="1000" value="1">
-										<div class="button plus">
-											<button type="button" class="btn btn-primary btn-number" data-type="plus"
-												data-field="quant[1]">
-												<i class="ti-plus"></i>
-											</button>
-										</div>
-									</div>
-									<!--/ End Input Order -->
-								</div>
-								<div class="add-to-cart">
-									<a href="#" class="btn">Add to cart</a>
-									<a href="#" class="btn min"><i class="ti-heart"></i></a>
-									<a href="#" class="btn min"><i class="fa fa-compress"></i></a>
-								</div>
-								<div class="default-social">
-									<h4 class="share-now">Share:</h4>
-									<ul>
-										<li><a class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
-										<li><a class="twitter" href="#"><i class="fa fa-twitter"></i></a></li>
-										<li><a class="youtube" href="#"><i class="fa fa-pinterest-p"></i></a></li>
-										<li><a class="dribbble" href="#"><i class="fa fa-google-plus"></i></a></li>
-									</ul>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- Modal end -->
+		</section>
+	<!--/ End Product Style 1  -->
 
 	<!-- Start Footer Area -->
 	<footer class="footer">
@@ -544,7 +424,7 @@
 						</div>
 						<div class="col-lg-6 col-12">
 							<div class="right">
-								<img th:src="@{main/images/payments.png}" alt="#">
+								<img th:src="@{/main/images/payments.png}" alt="#">
 							</div>
 						</div>
 					</div>
@@ -590,8 +470,6 @@
 	<script th:src="@{/main/js/easing.js}"></script>
 	<!-- Active JS -->
 	<script th:src="@{/main/js/active.js}"></script>
-	<!-- myFunction JS : 필요한 자바 스크립트 이리로 넣어서 사용하면 됩니다 -->
-	<script th:src="@{/main/js/myFunction.js}"></script>
-
 </body>
+
 </html>

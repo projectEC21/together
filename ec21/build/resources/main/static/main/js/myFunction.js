@@ -3,38 +3,13 @@
  *************************/
 
 // modalControl.js
-$(document).ready(function () {
-    $('#inquiry').click(function () {
-        $('#myModal').modal('show');  // Bootstrap 모달을 수동으로 열기
-    });
-});
+// $(document).ready(function () {
+//     $('#inquiry').click(function () {
+//         $('#myModal').modal('show');  // Bootstrap 모달을 수동으로 열기
+//     });
+// });
 
-/**
- * 인콰이어리 모달 클릭시 로그인이 되어있지 않은 유저는 로그인 창으로
- * @returns 
- */
-// 로그인 여부를 확인하는 함수
-function isUserLoggedIn() {
-    let sessionCookie = document.cookie.includes("sessionID");
-    let token = localStorage.getItem("jwtToken");
-    return sessionCookie || token; // 로그인 상태 확인
-}
 
-// 문서가 준비된 후 이벤트 추가
-$(document).ready(function() {
-    // 모달 버튼 클릭 이벤트
-    $("#modalBtn").click(function(event) {
-        if (!isUserLoggedIn()) {
-            event.preventDefault(); // 로그인되지 않으면 모달 열기 중지
-            
-            // 현재 페이지의 URL을 쿼리 파라미터로 추가
-            let loginUrl = "@{/main/login}"; // 로그인 페이지 URL
-        
-            // 리디렉션
-            window.location.href = loginUrl; // 로그인 페이지로 리디렉션
-        }
-    });
-});
 
 
 
@@ -249,3 +224,34 @@ $(document).ready(function () {
         }
     });
 });
+
+
+/*********************
+ * 이동 시켜 놓음
+ * 신고 내용 GET 방식으로 보내기
+ * 	
+		// function submitInquiry() {
+		// 	let receiverId = $("#modalReceiverId").text();
+		// 	let senderId = $("#modalSenderId").val();
+		// 	let productId = $("#modalProductId").val();
+		// 	let quantity = $("#modalQuantity").val();
+		// 	let inquiryTitle = $("#modalTitle").val();
+		// 	let inquiryContent = $("#modalContent").text();
+		// 	let uploadFile = $("#modalFile").val();
+			
+		// 	if (confirm("Successfully sending inquiry!")) {
+		// 		$.ajax({
+		// 			url: "/productsDetail/sendInquiry",
+		// 			data: { "senderId": senderId, "receiverId": receiverId, "productId": productId, "quantity": quantity, 
+		// 					"inquiryTitle": inquiryTitle, "inquiryContent": inquiryContent, "uploadFile": uploadFile},
+		// 			method: "get",
+		// 			success: function (resp) {
+		// 				if (resp) {
+		// 					$("#closeBtn").click();
+		// 				}
+		// 			}
+		// 		});
+		// 	}
+		// }
+ * 
+ ***********************/

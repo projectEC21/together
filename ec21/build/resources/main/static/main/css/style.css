@@ -923,16 +923,16 @@ html {
 }
 
 .header.shop .search-bar .btnn {
-	height: 51px;
-	line-height: 57px;
-	width: 62px;
-	text-align: center;
-	font-size: 18px;
-	color: #fff;
-	background: #333333;
-	position: absolute;
-	right: -30px;
-	top: -1px;
+	height: 50px;
+    line-height: 55px;
+    width: 61px;
+    text-align: center;
+    font-size: 18px;
+    color: #fff;
+    background: #333333;
+    position: absolute;
+    right: -33px;
+    top: -1px;
 	border: none;
 	border-radius: 0 55px 55px 0;
 	-webkit-transition: all 0.4s ease;
@@ -2690,6 +2690,10 @@ html {
 }
 
 /* Shop Topbar */
+.shop .shop-top.my {
+	padding: 0;
+}
+
 .shop .shop-top {
 	clear: both;
 	/* background: #f6f7fb; */
@@ -2813,6 +2817,15 @@ html {
 /*======================================
    Start Shop Single CSS
 ========================================*/
+/* nav-bar 관련 css */
+.nav-pills .nav-link.active {
+	background-color: #0f435e;
+	font-size: 17px;
+}
+
+/* End nav-bar 관련 css */
+
+
 /* modal 과 관련된 css */
 .shop.single .modal-header {
 	padding: 11px;
@@ -3602,50 +3615,50 @@ textarea {
 	text-align: center;
 }
 
-.shopping-summery th.product-title, 
-.shopping-summery td.product-info {
-	width: 60%;
+.shopping-summery th.product-title {
+	width: 51%;
 } 
 
-.shopping-summery .product-info img {
+.shopping-summery .product-img img {
 	border-radius: 0;
 	width: 80px;
 	height: 80px;
-	display: block;
 }
 
 .shopping-summery tbody tr:last-child {
 	border: none;
 }
 
-
-.shopping-summery .product-info .product-name a {
+.shopping-summery .product-info .product-name a{
 	color: #282828;
-	font-weight: 500;
-	font-size: 17px;
-	display: -webkit-inline-box;
+    font-weight: 500;
+    font-size: 15px;
+    display: -webkit-inline-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 1;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
-.shopping-summery .product-name a:hover {
-	font-weight: bolder;
-	color: #999!important;
-	text-decoration: underline;
-}
-
-
-.shopping-summery .product-desc p>span {
-	font-size: 13px;
-	color: #666!important;
-	display: -webkit-inline-box;
+.shopping-summery .product-info .product-desc a{
+	color: #757575;
+    font-weight: 400;
+    font-size: 13px;
+    display: -webkit-inline-box;
     -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
+    -webkit-line-clamp: 3;
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
+.shopping-summery .product-info a:hover {
+	font-weight: bolder;
+	color: #999!important;
+	text-decoration: underline;
+	cursor: pointer;
+}
+
+
 
 
 .shopping-cart .table p {
