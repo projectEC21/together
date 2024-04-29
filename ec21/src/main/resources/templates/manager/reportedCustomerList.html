@@ -152,7 +152,7 @@
     <div class="main_container">
       <div class="col-md-3 left_col">
         <div class="left_col scroll-view">
-          <div class="navbar nav_title" style="border: 0; text-align: center;">
+          <div class="navbar nav_title">
             <a th:href="@{/manager/manager_index}" class="site_title">
               <img th:src="@{/production/images/ec21logo.png}" alt="">
             </a>
@@ -163,7 +163,7 @@
           <!-- menu profile quick info -->
           <div class="profile clearfix">
             <div class="profile_pic">
-              <img th:src="@{/production/images/user.png}" alt="..." class="img-circle profile_img">
+              <img th:src="@{/production/images/user.jpeg}" alt="..." class="img-circle profile_img">
             </div>
             <div class="profile_info">
               <h2>관리자</h2>
@@ -214,11 +214,12 @@
               <li class="nav-item dropdown open" style="padding-left: 15px;">
                 <a href="javascript:;" class="user-profile dropdown-toggle" aria-haspopup="true" id="navbarDropdown"
                   data-toggle="dropdown" aria-expanded="false">
-                  <img th:src="@{/production/images/user.png}" alt="">관리자
+                  <img th:src="@{/production/images/user.jpeg}" alt="...">관리자
                 </a>
                 <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
                   <a class="dropdown-item" th:href=@{/}><i class="fa fa-home pull-right"></i> Home</a>
-                  <a class="dropdown-item" th:href="@{main/login}"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
+                  <a class="dropdown-item" th:href="@{main/logout}"><i class="fa fa-sign-out pull-right"></i> Log
+                    Out</a>
                 </div>
               </li>
 
@@ -281,7 +282,7 @@
                   <table id="" class="table table-striped jambo_table table-bordered " cellspacing="0" width="100%">
                     <thead>
                       <tr class="headings">
-                        <th class="column-title">신고횟수</th>
+                        <th>no</th>
                         <th class="column-title">구분</th>
                         <th class="column-title">회원 ID </th>
                         <th class="column-title">담당자명</th>
@@ -290,6 +291,7 @@
                         <th class="column-title">국가IP</th>
                         <th class="column-title">신고사유</th>
                         <th class="column-title" style="width: 35%;">상세사유</th>
+                        <th class="column-title">신고횟수</th>
                         <th class="column-title no-link last" style="width: 13%;">
                           <span class="nobr">버튼</span>
                         </th>
@@ -300,9 +302,8 @@
                       </tr>
                     </thead>
                     <tbody id="result">
-                      <tr class="even pointer" th:each="reportedCustomer : ${list}">
-
-                        <td class=" " th:text="${reportedCustomer.reportedCount}">#</td>
+                      <tr class="even pointer" th:each="reportedCustomer, i : ${list}">
+                        <td class="no" th:text="${i.index + 1}"></td>
                         <td class=" " th:text="${reportedCustomer.customerGubun}">셀러</td>
                         <td class=" " th:text="${reportedCustomer.reportedId}">121000040</td>
                         <!--회원정보 보게 하고 싶음 여기 a태그 걸고 파라미터로 reportedId 보내면 될 듯 -->
@@ -312,6 +313,7 @@
                         <td class=" " th:text="${reportedCustomer.remoteIp}"> 121.172.252.00</td>
                         <td class="a-right a-right " th:text="${reportedCustomer.reportCategory}">마약</td>
                         <td class="a-right a-right " th:text="${reportedCustomer.reportReason}">마약을 판매하는 업체입니다</td>
+                        <td class=" " th:text=" ${reportedCustomer.reportedCount}">#</td>
                         <td class=" last">
                           <input type="hidden" name="" class="reportCustomerId"
                             th:value="${reportedCustomer.reportCustomerId}">

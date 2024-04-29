@@ -3,11 +3,15 @@
  *************************/
 
 // modalControl.js
-$(document).ready(function () {
-    $('#inquiry').click(function () {
-        $('#myModal').modal('show');  // Bootstrap 모달을 수동으로 열기
-    });
-});
+// $(document).ready(function () {
+//     $('#inquiry').click(function () {
+//         $('#myModal').modal('show');  // Bootstrap 모달을 수동으로 열기
+//     });
+// });
+
+
+
+
 
 $(document).ready(function () {
     $("#submitBtn").click(function (e) {
@@ -220,3 +224,34 @@ $(document).ready(function () {
         }
     });
 });
+
+
+/*********************
+ * 이동 시켜 놓음
+ * 신고 내용 GET 방식으로 보내기
+ * 	
+		// function submitInquiry() {
+		// 	let receiverId = $("#modalReceiverId").text();
+		// 	let senderId = $("#modalSenderId").val();
+		// 	let productId = $("#modalProductId").val();
+		// 	let quantity = $("#modalQuantity").val();
+		// 	let inquiryTitle = $("#modalTitle").val();
+		// 	let inquiryContent = $("#modalContent").text();
+		// 	let uploadFile = $("#modalFile").val();
+			
+		// 	if (confirm("Successfully sending inquiry!")) {
+		// 		$.ajax({
+		// 			url: "/productsDetail/sendInquiry",
+		// 			data: { "senderId": senderId, "receiverId": receiverId, "productId": productId, "quantity": quantity, 
+		// 					"inquiryTitle": inquiryTitle, "inquiryContent": inquiryContent, "uploadFile": uploadFile},
+		// 			method: "get",
+		// 			success: function (resp) {
+		// 				if (resp) {
+		// 					$("#closeBtn").click();
+		// 				}
+		// 			}
+		// 		});
+		// 	}
+		// }
+ * 
+ ***********************/

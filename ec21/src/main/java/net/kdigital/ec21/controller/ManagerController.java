@@ -3,6 +3,9 @@ package net.kdigital.ec21.controller;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -63,6 +66,7 @@ public class ManagerController {
 	 * 
 	 * @return
 	 */
+
 	@GetMapping("manager/productList")
 	public String productList() {
 		return "manager/productList";
@@ -113,9 +117,10 @@ public class ManagerController {
 
 		return "/manager/modelPredict::#result";
 	}
-	
+
 	/**
 	 * ajax - 전달받은 상품ID에 해당하는 (금지어 유사단어, 금지어 단어, 금지어 카테고리) 정보 리스트로 반환
+	 * 
 	 * @param productId
 	 * @param model
 	 * @return
@@ -129,43 +134,43 @@ public class ManagerController {
 
 	/**
 	 * 금지어 목록에 새로운 단어 추가 요청
+	 * 
 	 * @param similarWord
 	 * @param prohibitReason
 	 * @return
 	 */
 	@ResponseBody
 	@GetMapping("modelPredict/wordPlus")
-	public Boolean getMethodName(@RequestParam(name = "similarWord") String similarWord, 
-								@RequestParam(name = "prohibitReason")String prohibitReason) {
+	public Boolean getMethodName(@RequestParam(name = "similarWord") String similarWord,
+			@RequestParam(name = "prohibitReason") String prohibitReason) {
 		return managerService.insertProhibitWord(similarWord, prohibitReason);
 	}
 
 	/**
 	 * 정상상품 요청 시 상품의 judge를 Y 즉, 정상으로 변경
+	 * 
 	 * @param productId
 	 * @return
 	 */
 	@ResponseBody
 	@GetMapping("modelPredict/productNormal")
-	public Boolean productNormal(@RequestParam(name = "productId") String productId){
+	public Boolean productNormal(@RequestParam(name = "productId") String productId) {
 		log.info("지금 정상 버튼 눌러서 컨트롤러왔어");
 		return managerService.updateProductJudgeNormal(productId);
 	}
 
 	/**
 	 * 이상상품 요청 시 상품의 judge를 N 즉, 이상으로 변경
+	 * 
 	 * @param productId
 	 * @return
 	 */
 	@ResponseBody
 	@GetMapping("modelPredict/productWeird")
-	public Boolean productWeird(@RequestParam(name = "productId") String productId){
+	public Boolean productWeird(@RequestParam(name = "productId") String productId) {
 		log.info("지금 블랙 버튼 눌러서 컨트롤러왔어");
 		return managerService.updateProductJudgeWeird(productId);
 	}
-	
-	
-
 
 	// ============================= 회원 관리 =============================
 
@@ -181,7 +186,6 @@ public class ManagerController {
 		return "manager/customerList";
 	}
 
-
 	/**
 	 * 전달받은 상품 ID에 해당하는 금지어유사도 결과 리스트를 JSON 데이터로 반환
 	 * 
@@ -194,7 +198,7 @@ public class ManagerController {
 	public String getCustomerProductDTOs(@RequestParam(name = "customerId") String customerId)
 			throws JsonProcessingException {
 		log.info(customerId);
-		List<CustomerListModalDTO> result = managerService.getCustomerProductDTOs(customerId); 
+		List<CustomerListModalDTO> result = managerService.getCustomerProductDTOs(customerId);
 		if (result == null) {
 			return null;
 		}
@@ -204,6 +208,7 @@ public class ManagerController {
 
 	/**
 	 * 전달받은 customerId에 해당하는 회원 블랙리스트 처리 요청
+	 * 
 	 * @param customerId
 	 * @param blackReason
 	 * @param etcReason
@@ -218,11 +223,8 @@ public class ManagerController {
 		log.info("=======  {}", customerId);
 		log.info("=======  {}", blackReason);
 		log.info("=======  {}", etcReason);
-		return managerService.insertToBlacklist(customerId,blackReason,etcReason);
+		return managerService.insertToBlacklist(customerId, blackReason, etcReason);
 	}
-	
-
-
 
 	/**
 	 * 신고당한 회원 리스트 화면 요청
@@ -261,12 +263,13 @@ public class ManagerController {
 
 		List<ReportedCustomerWithInfoDTO> dtoList = managerService.selectReportedCustomerBySearch(category, searchWord);
 		model.addAttribute("list", dtoList);
-		
+
 		return "/manager/reportedCustomerList::#result";
 	}
 
 	/**
 	 * 전달받은 회원ID가 블랙리스트 DB에 존재하는지 확인 (존재하면 false, 존재하지 않으면 true)
+	 * 
 	 * @param reportedId
 	 * @return
 	 */
@@ -275,7 +278,6 @@ public class ManagerController {
 	public Boolean checkBlack(@RequestParam(name = "reportedId", defaultValue = "") String reportedId) {
 		return managerService.checkBlack(reportedId);
 	}
-	
 
 	/**
 	 * 블랙리스트 회원 리스트 화면 요청

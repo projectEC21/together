@@ -282,7 +282,7 @@
     <div class="main_container">
       <div class="col-md-3 left_col">
         <div class="left_col scroll-view">
-          <div class="navbar nav_title" style="border: 0; text-align: center;">
+          <div class="navbar nav_title">
             <a th:href="@{/manager/manager_index}" class="site_title">
               <img th:src="@{/production/images/ec21logo.png}" alt="">
             </a>
@@ -293,7 +293,7 @@
           <!-- menu profile quick info -->
           <div class="profile clearfix">
             <div class="profile_pic">
-              <img th:src="@{/production/images/user.png}" alt="..." class="img-circle profile_img">
+              <img th:src="@{/production/images/user.jpeg}" alt="..." class="img-circle profile_img">
             </div>
             <div class="profile_info">
               <h2>관리자</h2>
@@ -344,11 +344,11 @@
               <li class="nav-item dropdown open" style="padding-left: 15px;">
                 <a href="javascript:;" class="user-profile dropdown-toggle" aria-haspopup="true" id="navbarDropdown"
                   data-toggle="dropdown" aria-expanded="false">
-                  <img th:src="@{/production/images/user.png}" alt="">관리자
+                  <img th:src="@{/production/images/user.jpeg}" alt="...">관리자
                 </a>
                 <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
                   <a class="dropdown-item" th:href=@{/}><i class="fa fa-home pull-right"></i> Home</a>
-                  <a class="dropdown-item" th:href="@{/main/login}"><i class="fa fa-sign-out pull-right"></i> Log
+                  <a class="dropdown-item" th:href="@{main/logout}"><i class="fa fa-sign-out pull-right"></i> Log
                     Out</a>
                 </div>
               </li>
@@ -396,7 +396,9 @@
                 </div>
 
                 <div class="x_content">
-
+                  <div>
+                    <h3>총 개수: <span th:text="${#lists.size(list)}"></span></h3>
+                  </div>
                   <table id="" class="table table-striped jambo_table table-bordered " cellspacing="0" width="100%">
 
                     <thead>
@@ -429,6 +431,7 @@
                       </tr>
                     </tbody>
                   </table>
+
 
                 </div>
               </div>

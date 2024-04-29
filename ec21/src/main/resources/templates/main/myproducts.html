@@ -73,7 +73,9 @@
 </head>
 
 <body class="js">
+
 	<input type="hidden" name="customerId" id="customerId" th:value="${#authentication.name}">
+	
 	<!-- Preloader -->
 	<div class="preloader">
 		<div class="preloader-inner">
@@ -94,6 +96,12 @@
 					<div class="col-lg-4 col-md-12 col-12">
 						<!-- Top Left -->
 						<div class="top-left">
+							<!-- logo -->
+							<div class="logo">
+								<a th:href="@{/}">
+									<img th:src="@{/main/images/ec21logo.png}" alt="logo" style="width: 100px; height: 30px;">
+								</a>
+							</div>
 						</div>
 						<!--/ End Top Left -->
 					</div>
@@ -104,6 +112,9 @@
 								<li sec:authorize="isAnonymous()"><i class="ti-power-off"></i><a th:href="@{/main/login}">Login</a></li>
 								<li sec:authorize="isAnonymous()"><i class="ti-user"></i><a th:href="@{/main/register}">Sign up</a></li>
 								<li sec:authorize="isAuthenticated()"><i class="ti-power-off"></i><a th:href="@{/main/logout}">Logout</a></li>
+								<li><a th:href="@{/main/myproducts}"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a></li>
+								<li><a th:href="@{/main/inbox(customerId=${#authentication.name})}" class="single-icon">
+										<i class="fa fa-envelope-o"></i><span class="total-count"></span></li>
 							</ul>
 						</div>
 						<!-- End Top Right -->
@@ -112,224 +123,111 @@
 			</div>
 		</div>
 		<!-- End Topbar -->
-		<div class="middle-inner">
-			<div class="container">
-				<div class="row">
-					<div class="col-lg-2 col-md-2 col-12">
-						<!-- Logo -->
-						<div class="logo">
-							<a th:href="@{/}"><img th:src="@{/main/images/ec21logo.png}" alt="logo"></a>
-						</div>
-						<!--/ End Logo -->
-						<!-- Search Form -->
-						<div class="search-top">
-							<div class="top-search"><a href="#"><i class="ti-search"></i></a></div>
-							<!-- Search Form -->
-							<div class="search-top">
-								<form class="search-form">
-									<input type="text" placeholder="Search here..." name="search">
-									<button value="search" type="submit"><i class="ti-search"></i></button>
-								</form>
-							</div>
-							<!--/ End Search Form -->
-						</div>
-						<!--/ End Search Form -->
-						<div class="mobile-nav"></div>
-					</div>
-					<div class="col-lg-8 col-md-7 col-12">
-						<form th:action="@{/main/list}" method="get">
-							<div class="search-bar-top">
-								<div class="search-bar">
-									<!-- 240420 dy : 카테고리 선택 & 검색어 입력 시 form 태그로 상품 리스트로의 요청 걸어줌 -->
-									<select id="category" name="category">
-										<option value="total" th:selected="${category eq 'total'}">All Category</option>
-										<option value="FOOD_BEVERAGE" th:selected="${category eq 'FOOD_BEVERAGE'}">Food & Beverage</option>
-										<option value="CHEMICAL" th:selected="${category eq 'CHEMICAL'}">Chemical</option>
-										<option value="HEALTH_MEDICAL" th:selected="${category eq 'HEALTH_MEDICAL'}">Health & Medical</option>
-										<option value="ELECTRONIC" th:selected="${category eq 'ELECTRONIC'}">Electronics</option>
-										<option value="COSMETIC" th:selected="${category eq 'COSMETIC'}">Cosmetic</option>
-									</select>
-									<input id="searchWord" name="searchWord" placeholder="What are you searching for?" type="search" th:value="${searchWord}"
-										th:attr="placeholder=${searchWord eq null ? 'What are you searching for?' : null}">
-									<button type="submit" class="btnn"> <i class="ti-search"></i></button>
-								</div>
-							</div>
-						</form>
-					</div>
-					<div class="col-lg-2 col-md-3 col-12">
-						<div class="right-bar">
-							<!-- Search Form -->
-							<div class="sinlge-bar">
-								<a th:href="@{/main/myproducts(customerId=${#authentication.name})}" class="single-icon"><i class="fa fa-user-circle-o"
-										aria-hidden="true"></i></a>
-							</div>
-
-							<!-- 검색창 옆 부분 인콰이어리 new 로만 보이게 하고 인콰이어리 페이지로 넘어가게 하기 -->
-							<div class="sinlge-bar inquiry">
-								<a th:href="@{/main/inbox(customerId=${#authentication.name})}" class="single-icon"><i class="fa fa-envelope-o"></i> <span
-										class="total-count">NEW</span></a>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<!-- Header Inner -->
-		<div class="header-inner">
-			<div class="container">
-				<div class="cat-nav-head">
-					<div class="row">
-					</div>
-					<div class="col-lg-9 col-12">
-						<div class="menu-area">
-
-							<!-- Main Menu -->
-							<nav class="navbar navbar-expand-lg">
-								<div class="navbar-collapse">
-									<div class="nav-inner">
-										<!-- 240418 dy : 카테고리 별 상품 목록 요청(검색어X) -->
-										<ul class="nav main-menu menu navbar-nav">
-											<li><a th:href="@{/main/list(category=total)}">All</a></li>
-											<li><a th:href="@{/main/list(category=FOOD_BEVERAGE)}">Food & Beverage</a></li>
-											<li><a th:href="@{/main/list(category=CHEMICAL)}">Chemical</a></li>
-											<li><a th:href="@{/main/list(category=HEALTH_MEDICAL)}">Health & Medical</a></li>
-											<li><a th:href="@{/main/list(category=ELECTRONIC)}">Electronics</a></li>
-											<li><a th:href="@{/main/list(category=COSMETIC)}">Cosmetic</a></li>
-										</ul>
-									</div>
-								</div>
-							</nav>
-							<!--/ End Main Menu -->
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		</div>
-		<!--/ End Header Inner -->
 	</header>
-	<!--/ End Header -->
 
-	<!-- Breadcrumbs : 사이트 내 경로 -->
-	<div class="breadcrumbs">
-		<div class="container">
+	<!-- <div class="container">
+		<div class="row">
+			<div style="height: 30px;"></div>
+		</div>
+	</div> -->
+
+
+
+	<!-- 내 상품 목록 -->
+	<section class="product shop-sidebar shop section">
+		<div>
 			<div class="row">
-				<div class="col-12">
-					<div class="bread-inner">
-						<ul class="bread-list">
-							<li><a th:href="@{/}">Home<i class="ti-arrow-right"></i></a></li>
-							<li class="active"><a th:href="@{/main/myproducts(customerId=${#authentication.name})}">My Page</a></li>
-						</ul>
+				<div class="col-lg-2 col-12 ">
+					<div class="side-category">
+						<div class="shop-sidebar login-form">
+							<ul class="nav nav-pills" role="tablist">
+								<li class="nav-item">
+									<a class="nav-link active" data-toggle="pill" href="#account-category">My Account</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" data-toggle="pill" href="#product-category">To Product</a>
+								</li>
+							</ul>
+							<!-- Tab panes -->
+							<div class="tab-content">
+								<div id="account-category" class="container tab-pane active"><br>
+									<ul class="categor-list">
+										<li><a th:href="@{/main/myinfo(customerId=${#authentication.name})}">My Information</a></li>
+										<li><a th:href="@{/main/myproducts(customerId=${#authentication.name})}">My Products</a>
+										<li><a th:href="@{/main/productsWrite(customerId=${#authentication.name})}">Add A New</a></li>
+									</ul>
+								</div>
+								<div id="product-category" class="container tab-pane fade"><br>
+									<ul class="categor-list">
+										<li><a th:href="@{/main/list(category=total)}">All</a></li>
+										<li><a th:href="@{/main/list(category=FOOD_BEVERAGE)}">Food & Beverage</a></li>
+										<li><a th:href="@{/main/list(category=CHEMICAL)}">Chemical</a></li>
+										<li><a th:href="@{/main/list(category=HEALTH_MEDICAL)}">Health & Medical</a></li>
+										<li><a th:href="@{/main/list(category=ELECTRONIC)}">Electronics</a></li>
+										<li><a th:href="@{/main/list(category=COSMETIC)}">Cosmetic</a></li>
+									</ul>
+								</div>	
+							</div>					
+						</div>
 					</div>
+				</div>
+
+				<!-- 올린 상품 리스트 -->
+				<div class="col-lg-9 col-12">
+					<table class="table shopping-summery" id="result">
+						<thead>
+							<tr class="main-hading">
+								<th>no</th>
+								<th class="product-title">PRODUCT</th>
+								<th>PRICE</th> <!--가격 -->
+								<th>QUANTITY</th> <!-- 단위-->
+								<th>DATE</th>
+								<th><i class="ti-trash remove-icon"></i></th>
+							</tr>
+						</thead>
+						<tbody>
+							<!-- 240418 dy : 회원의 상품 목록 출력 -->
+							<tr th:if="${productList != null and !#lists.isEmpty(productList)}" th:each="product, i : ${productList}">
+								<td class="product-img" style="width: 14%;">
+									<!-- 예시 사진 -->
+									<img th:src="@{/main/images/example_img6.jpeg}">
+									<span class="image" th:if="${product.originalFileName}!=null">
+										<img th:src="@{/main/downloadImg(productId=${product.productId})}">
+									</span>
+									<!-- <span>[[${i.count}]]</span> -->
+								</td>
+								<td class="product-info" data-title="Description">
+									<span class="product-name">
+										<a th:href="@{/main/productsDetail(productId=${product.productId},currentPage='myproducts')}">[[${product.productName}]]</a>
+									</span>
+									<span class="product-desc"><a th:utext="${product.productDesc}"></a></span>
+								</td>
+								<td class="price" data-title="Price">
+									<span>$[[${product.price}]]</span>
+								</td>
+								<td class="qty" data-title="Qty">
+									<span th:if="${product.moq >= 1000}" th:text="${#numbers.formatInteger(product.moq, 3, 'COMMA')} + ' ' + ${product.unit}"> </span>
+									<span th:unless="${product.moq >= 1000}" th:text="${product.moq} + ' ' + ${product.unit}"></span>
+								</td>
+								<td class="createDate" data-title="date">
+									<span>[[${#temporals.format(product.createDate, 'yyyy-MM-dd')}]]</span>
+								</td>
+								<td class="action" data-title="Remove">
+									<a onclick="return confirmDelete(this, event)" 
+										th:href="@{/main/myproducts/delete(productId=${product.productId},customerId=${customerId})}"
+										class="deleteBtn" th:data-name="${product.productName}">
+										<i class="ti-trash remove-icon"></i>
+									</a>
+								</td>
+							</tr>
+						</tbody>
+					</table> 
+					<!--/ End Shopping Summery -->				
 				</div>
 			</div>
 		</div>
-	</div>
-	<!-- End Breadcrumbs -->
-
-	<section class="product shop-sidebar shop section">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-2 col-md-4 col-12">
-					<div class="shop-sidebar login-form">
-						<!-- Single Widget -->
-						<div class="single-widget category">
-							<h3 class="title">My Page</h3>
-							<ul class="categor-list">
-								<li><a th:href="@{/main/myinfo(customerId=${#authentication.name})}">info</a></li>
-								<li><a th:href="@{/main/myproducts(customerId=${#authentication.name})}" style="color: #222; font-weight: 700;">Products</a></li>
-								<!-- 해당 페이지에 들어가면 색상이 더 진하게 보이게 해놓음 -->
-							</ul>
-						</div>
-						<!--/ End Single Widget -->
-					</div>
-				</div>
-
-				<div class="col-lg-9 col-md-8 col-12">
-					<div class="row">
-						<!-- My products List -->
-						<div class="shopping-cart section">
-							<div class="container">
-								<div class="row" style="margin: -10px;">
-									<div class="col-12">
-										<!-- Shop Top -->
-										<div class="shop-top">
-											<div class="shop-shorter">
-												<div class="single-shorter">
-													<label>Show :<span> [[${#lists.size(productList)}]]</span></label>
-												</div>
-											</div>
-											<div class="single-slider">
-												<div class="single-slider">
-													<a th:href="@{/main/productsWrite(customerId=${#authentication.name})}">Add A New Product</a>
-												</div>
-											</div>
-										</div>
-
-										<!-- 올린 상품 리스트 -->
-										<table class="table shopping-summery" id="result">
-											<thead>
-												<tr class="main-hading">
-													<th>no</th>
-													<th class="product-title" colspan="2">PRODUCT</th>
-													<th>PRICE</th> <!--가격 -->
-													<th>QUANTITY</th> <!-- 단위-->
-													<th>DATE</th>
-													<th><i class="ti-trash remove-icon"></i></th>
-												</tr>
-											</thead>
-											<tbody>
-												<!-- 240418 dy : 회원의 상품 목록 출력 -->
-												<tr th:if="${productList != null and !#lists.isEmpty(productList)}" th:each="product, i : ${productList}">
-													<td class="no">
-														<span>[[${i.count}]]</span>
-													</td>
-													<td class="product-info" data-title="Description" colspan="2">
-														<span class="image" th:if="${product.originalFileName}!=null">
-															<img th:src="@{/main/downloadImg(productId=${product.productId})}">
-														</span>
-														<span class="product-name">
-															<a th:href="@{/main/productsDetail(productId=${product.productId},currentPage='myproducts')}">[[${product.productName}]]</a>
-														</span>
-														<span class="product-desc" th:utext="${product.productDesc}"></span>
-													</td>
-													<td class="price" data-title="Price">
-														<span>$[[${product.price}]]</span>
-													</td>
-													<td class="qty" data-title="Qty">
-														<span th:if="${product.moq >= 1000}" th:text="${#numbers.formatInteger(product.moq, 3, 'COMMA')} + ' ' + ${product.unit}"> </span>
-														<span th:unless="${product.moq >= 1000}" th:text="${product.moq} + ' ' + ${product.unit}"></span>
-													</td>
-													<td class="createDate" data-title="date">
-														<span>[[${#temporals.format(product.createDate, 'yyyy-MM-dd')}]]</span>
-													</td>
-													<td class="action" data-title="Remove">
-														<a onclick="return confirmDelete(this, event)" 
-															th:href="@{/main/myproducts/delete(productId=${product.productId},customerId=${customerId})}"
-															class="deleteBtn" th:data-name="${product.productName}">
-															<i class="ti-trash remove-icon"></i>
-														</a>
-													</td>
-												</tr>
-											</tbody>
-										</table>
-										<!--/ End Shopping Summery -->
-									</div>
-									<!-- 페이징 -->
-								</div>
-							</div>
-						</div>
-						<!--/ End Shopping Cart -->
-					</div>
-					<span class="paging"> 
-						<< < 1 2 3 4 5 > >> 
-					</span>
-				</div>
-			</div>
-		</section>
-	<!--/ End Product Style 1  -->
-
+	</section>
+	
 	<!-- Start Footer Area -->
 	<footer class="footer">
 		<!-- Footer Top -->
@@ -409,6 +307,7 @@
 			</div>
 		</div>
 		<!-- End Footer Top -->
+		
 		<div class="copyright">
 			<div class="container">
 				<div class="inner">

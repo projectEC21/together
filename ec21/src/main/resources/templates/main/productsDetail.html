@@ -63,14 +63,79 @@
 
 	<!-- 240417 dy : 검색어 입력 후 돋보기 클릭 시 /main/list 요청-->
 	<script>
-		$(function () {
 
+		// $(document).ready(function() {
+		// 	// 로그인 여부를 확인하는 함수
+		// 	function isUserLoggedIn() {
+		// 		let sessionCookie = document.cookie.includes("sessionID");
+		// 		let token = localStorage.getItem("jwtToken");
+		// 		return sessionCookie || token; // 로그인 상태 확인
+		// 	}
+
+		// 	// 모달 버튼 클릭 이벤트
+		// 	$("#modalBtn").click(function(event) {
+		// 		if (!isUserLoggedIn()) {
+		// 			event.preventDefault(); // 로그인되지 않으면 모달 열기 중지
+					
+		// 			// 현재 페이지의 URL을 쿼리 파라미터로 추가
+		// 			let currentUrl = encodeURIComponent(window.location.href); // 현재 URL을 인코딩
+		// 			let loginUrl = `/main/login?redirect=${currentUrl}&showModal=true`; // 모달 정보 추가
+					
+		// 			// 리디렉션
+		// 			window.location.href = loginUrl; // 로그인 페이지로 리디렉션
+		// 		} else {
+		// 			// 로그인한 사용자를 위한 모달 열기
+		// 			$("#inquiryModal").modal("show");
+		// 		}
+		// 	});
+
+		// 	// 페이지 로드 시 모달 열기 확인
+		// 	function shouldShowModal() {
+		// 		const urlParams = new URLSearchParams(window.location.search);
+		// 		return urlParams.get("showModal") === "true"; // 'showModal' 파라미터 확인
+		// 	}
+
+		// 	// 모달 열기 조건 확인
+		// 	if (shouldShowModal()) {
+		// 		$("#inquiryModal").modal("show"); // 모달 열기
+		// 	}
+
+		// 	// 인콰이어리 전송 버튼 클릭 이벤트
+		// 	$("#sendInquiryBtn").click(function() {
+		// 		// 유효성 검사 수행
+		// 		let isValid = validateInquiryForm();
+		// 		if (isValid) {
+		// 			if (confirm("인콰이어리 전송하시겠습니까?")) {
+		// 				$("#inquiryForm").submit(); // 인콰이어리 전송
+		// 				alert("인콰이어리가 성공적으로 전송되었습니다."); // 완료 메시지
+		// 			}
+		// 		} else {
+		// 			alert("양식을 올바르게 작성하세요."); // 유효성 검사 실패 시 경고 메시지
+		// 		}
+		// 	});
+
+		// 	// 유효성 검사 함수
+		// 	function validateInquiryForm() {
+		// 		let requiredFields = $("#inquiryForm input[required], #inquiryForm textarea[required]");
+		// 		for (let i = 0; i < requiredFields.length; i++) {
+		// 			if (requiredFields[i].value.trim() === "") {
+		// 				return false; // 필수 필드가 비어있으면 유효성 검사 실패
+		// 			}
+		// 		}
+		// 		return true; // 유효성 검사 통과
+		// 	}
+		// });
+
+
+		$(function () {
 			// 인콰이어리 모달 변수 초기화
 			var modal = $("#inquiryModal");
+
 			// 닫기 버튼 이벤트
 			$("#closeBtn").on("click", function (event) {
 				modal.hide();
 			});
+
 			// 모달 백그라운드 클릭 이벤트
 			$(window).on("click", function (event) {
 				if ($(event.target).is(modal)) {
@@ -83,8 +148,13 @@
 				let productId = $(this).attr("data-id");
 				let receiver = $(this).attr("data-seller");
 				let sender = $("#loginUser").val();
-				let inquiryTitle = $(this).attr("data-title");
-				let category = $(this).attr("data-category");
+				let prefixedTitle = $(this).attr("data-title");
+				let inquiryTitle = "Regard " + prefixedTitle;
+				// let inquiryTitle = $(this).attr("data-title");
+				let prefixedCategory = $(this).attr("data-category");
+				// _를 &로 변경
+				let category = prefixedCategory.replace(/_/g, "&");
+				// let category = $(this).attr("data-category");
 				let quantity = $(this).attr("data-quantity");
 				let unit = $(this).attr("data-unit");
 				console.log(receiver);
@@ -100,7 +170,7 @@
 				$("#modalUnit").text(unit);				    // 단위
 				$("#submitBtn").on("click", submitInquiry);
 				// 모달열기
-				$("#inquiryModal").modal();
+				// $("#inquiryModal").modal();
 
 			}); // End 모달 클릭 이벤트
 
@@ -118,31 +188,7 @@
 			})
 		}
 
-		// 신고 내용 GET 방식으로 보내기
-		// function submitInquiry() {
-		// 	let receiverId = $("#modalReceiverId").text();
-		// 	let senderId = $("#modalSenderId").val();
-		// 	let productId = $("#modalProductId").val();
-		// 	let quantity = $("#modalQuantity").val();
-		// 	let inquiryTitle = $("#modalTitle").val();
-		// 	let inquiryContent = $("#modalContent").text();
-		// 	let uploadFile = $("#modalFile").val();
-			
-		// 	if (confirm("Successfully sending inquiry!")) {
-		// 		$.ajax({
-		// 			url: "/productsDetail/sendInquiry",
-		// 			data: { "senderId": senderId, "receiverId": receiverId, "productId": productId, "quantity": quantity, 
-		// 					"inquiryTitle": inquiryTitle, "inquiryContent": inquiryContent, "uploadFile": uploadFile},
-		// 			method: "get",
-		// 			success: function (resp) {
-		// 				if (resp) {
-		// 					$("#closeBtn").click();
-		// 				}
-		// 			}
-		// 		});
-		// 	}
-		// }
-
+		
 		// 인콰이어리 post로 보내기
 		function submitInquiry(){
 			if (confirm("인콰이어리 전송")) {
@@ -165,6 +211,25 @@
 				});
 			}
 		}
+
+		// 스크롤 시 드롭다운 닫기
+		document.addEventListener("scroll", function () {
+			// 현재 스크롤 위치를 감지
+			var scrollPosition = window.scrollY; // 또는 window.pageYOffset
+
+			// 스크롤 위치가 특정 픽셀 수 이상인 경우
+			var threshold = 200; // 원하는 스크롤 길이
+			if (scrollPosition > threshold) {
+				// 모든 열려 있는 드롭다운 메뉴를 닫기
+				var dropdowns = document.querySelectorAll(".dropdown-menu.show");
+				dropdowns.forEach(function (dropdown) {
+					if (dropdown.classList.contains("show")) {
+						// 'show' 클래스 제거
+						dropdown.classList.remove("show");
+					}
+				});
+			}
+		});
 
 	</script>
 
@@ -267,7 +332,7 @@
 							<!-- 검색창 옆 부분 인콰이어리 new 로만 보이게 하고 인콰이어리 페이지로 넘어가게 하기 -->
 							<div class="sinlge-bar inquiry">
 								<a th:href="@{/main/inbox(customerId=${#authentication.name})}" class="single-icon">
-									<i class="fa fa-envelope-o"></i><span class="total-count">new</span>
+									<i class="fa fa-envelope-o"></i><span class="total-count"></span>
 								</a>
 							</div>
 						</div>
@@ -346,8 +411,9 @@
 				<div class="col-12">
 					<!-- Product Edit & Delete Buttons for User and Manager -->
 					<!-- 240426 dy : 상품 판매자와 로그인한 ID가 동일한 경우에만 버튼 보임 -->
-					<div class="btn-edit" th:if="${product.customerId == #authentication.name}">
-						<ul class="user-custom">
+					<!-- <div class="btn-edit" th:if="${product.customerId == #authentication.name}">
+						<a class="" href="#"><i class="fa fa-cog"></i></a>
+						<ul class="user-custom ">
 							<li><a th:href="@{/main/productsUpdate(productId=${product.productId})}"
 									class="btn min user">Edit</a></li>
 							<li>
@@ -366,20 +432,46 @@
 							</th:block>
 							</li>
 						</ul>
+					</div> -->
+					<!-- 드롭다운 버튼 -->
+					<div class="for-user" th:if="${product.customerId == #authentication.name}">
+						<a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<i class="fa fa-cog"></i> <!-- 아이콘 -->
+						</a>
+						<!-- 드롭다운 메뉴 -->
+						<ul class="dropdown-menu dropdown-custom">
+							<!-- 'Edit' 링크 -->
+							<li>
+								<a th:href="@{/main/productsUpdate(productId=${product.productId})}"
+									class="dropdown-link">Edit</a>
+							</li>
+							<!-- 'Delete' 링크, 현재 페이지가 'myproducts'일 경우 -->
+							<li>
+								<th:block th:if="${currentPage eq 'myproducts'}">
+									<a onclick="return deleteProduct(this,event)"
+										th:href="@{/main/myproducts/afterDelete(customerId=${product.customerId},category=${category}, searchWord=${searchWord})}"
+										id="deleteBtn" th:data-product="${product.productId}">Delete</a>
+							</li>
+							<!-- 'Delete' 링크, 현재 페이지가 'myproducts'가 아닐 경우 -->
+							</th:block>
+							<th:block th:unless="${currentPage eq 'myproducts'}">
+								<a onclick="return deleteProduct(this,event)"
+									th:href="@{/main/list/afterDelete(category=${category}, searchWord=${searchWord})}"
+									id="deleteBtn" th:data-product="${product.productId}">Delete</a>
+							</th:block>
+							</li>
+						</ul>
 					</div>
-					<!-- Product Gallery -->
+
+					<!-- Product Gallery : 조원들이랑 상의 할 곳 -->
 					<div class="row">
 						<div class="col-lg-6 col-12">
 							<div class="product-gallery">
 								<div class="flexslider-thumbnails">
-									<ul class="slides">
-										<span th:if="${product.originalFileName}!=null">
-											<img th:src="@{/main/downloadImg(productId=${product.productId})}">
-										</span>
-										<!-- <li data-thumb="https://via.placeholder.com/600x500">
-												<img src="https://via.placeholder.com/600x500" alt="#">
-											</li> -->
-									</ul>
+									<img th:src="@{/main/images/example_img6.jpeg}" alt="">
+									<span th:if="${product.originalFileName}!=null">
+										<img th:src="@{/main/downloadImg(productId=${product.productId})}">
+									</span>
 								</div>
 							</div>
 						</div>
@@ -394,8 +486,6 @@
 										<span class="country-name">[[${product.origin}]]</span>
 										<span class="flag-container"></span>
 									</h6>
-
-
 									<h6 class="quantity">Minimum Order Quantity : <span>[[${product.moq}]]
 											[[${product.unit}]]</span></h6>
 								</div>
@@ -413,48 +503,52 @@
 					</div>
 
 					<!-- Inquiry Modal -->
-					<div class="modal fade" id="inquiryModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-						aria-hidden="true">
+					<div class="modal fade" id="inquiryModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 						<div class="modal-dialog" role="document">
 							<div class="modal-content">
 								<form class="form" th:action="@{/productDetail/sendInquiry}" method="post" id="inquiryForm" enctype="multipart/form-data">
 									<!-- Modal Header -->
 									<div class="modal-header">
-										<h4 class="modal-title">Send Message</h4>
+										<div class="modal-title">
+											<span>SENDING</span>
+										</div>
 										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 											<span aria-hidden="true">&times;</span>
 										</button>
 									</div>
 									<!-- Modal Body -->
 									<div class="modal-body">
-										<p class="caution"><i class="ti-user"></i> Reminder for Buyers: Be cautious with
+										<p>
+											<i class="ti-user"></i> Reminder for Buyers
+										<br>Be cautious with
 											pre-payment by T/T or Western Union. Do not make pre-payment to any sellers
 											unless you can fully trust the sellers.
-											More... EC21.com is NOT RESPONSIBLE for transactions between buyers and
-											sellers.</p>
+											<!-- <br> More... EC21.com is NOT RESPONSIBLE for transactions between buyers and
+											sellers. -->
+										</p>
 										<table>
 											<tr>
-												<th class="col-md-5 text-center">To</th>
+												<th class="col-md-5 to">To</th>
 												<td><input name="receiverId" id="modalReceiverId" readonly></td>
 											</tr>
 											<tr>
-												<th class="text-center">Subject <span>*</span></th>
+												<th class="">Subject <span>*</span></th>
 												<td><input type="text" name="inquiryTitle" id="modalTitle" required></td>
 											</tr>
 											<tr>
-												<th class="text-center">Category <span>*</span></th>
+												<th class="">Category <span>*</span></th>
 												<td><input type="text" name="" id="modalCategory" required></td>
 											</tr>
 											<tr>
-												<th class="text-center">Quantity <span>*</span></th>
+												<th class="">Quantity <span>*</span></th>
 												<td><input type="number" name="quantity" id="modalQuantity" required> (<span id="modalUnit"></span>) </td>
 											</tr>
 											<tr>
-												<th class="text-center">Message <span>*</span></th>
+												<th class="">Message <span>*</span></th>
 												<td><textarea class="message-field" name="inquiryContent" id="modalContent" cols="30" rows="10" required></textarea></td>
 											</tr>
 											<tr>
-												<th class="text-center">Attach File</th>
+												<th class="">Attach File</th>
 												<td><input type="file" name="uploadFile" id="modalFile" value="Upload File"></td>
 											</tr>
 											<tr>
@@ -558,14 +652,19 @@
 						<div class="single-product" th:each="dto:${list}">
 							<div class="product-img">
 								<a th:href="@{/main/productsDetail(productId=${dto.productId})}">
-									<img class="default-img" src="https://via.placeholder.com/550x750" alt="#">
-									<img class="hover-img" src="https://via.placeholder.com/550x750" alt="#">
+									<img class="default-img" th:src="@{/main/example_img5.jpeg}">
+									<img class="hover-img" th:src="@{/main/example_img6.jpeg}">
 								</a>
 							</div>
+
 							<div class="product-content">
 								<h3><a th:href="@{/main/productsDetail(productId=${dto.productId})}">[[${dto.productName}]]</a></h3>
 								<div class="product-price">
-									<span>$[[${dto.price}]]</span>
+									<span>$ [[${dto.price}]]</span>
+								</div>
+								<div class="product-seller" th:data-country =${dto.country}>
+									<img id="countryFlag" src="" alt="" style="width:20px; height:20px;">
+									<span>[[${dto.customerId}]]</span>
 								</div>
 							</div>
 						</div>
@@ -573,6 +672,8 @@
 					</div>
 				</div>
 			</div>
+			<div style="height: 50px;"></div>
+			<!-- 여기에 50px 높이의 공간이 추가됩니다 -->
 		</div>
 	</div>
 	<!-- End Most Popular Area -->
@@ -679,6 +780,26 @@
 	</footer>
 	<!-- /End Footer Area -->
 
+	<!-- Bootstrap 모달 -->
+	<div class="modal fade" id="loginAlertModal" tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">Login Required</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					You will be redirected to the login page.
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" id="redirectLoginBtn">OK</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
 	<!-- Jquery -->
 	<script th:src="@{/main/js/jquery.min.js}"></script>
 	<script th:src="@{/main/js/jquery-migrate-3.0.0.js}"></script>
@@ -686,7 +807,7 @@
 	<!-- Popper JS -->
 	<script th:src="@{/main/js/popper.min.js}"></script>
 	<!-- Bootstrap JS -->
-	<script th:src="@{/static/main/js/bootstrap.min.js}"></script>
+	<script th:src="@{/main/js/bootstrap.min.js}"></script>
 	<!-- Color JS -->
 	<script th:src="@{/main/js/colors.js}"></script>
 	<!-- Slicknav JS -->
