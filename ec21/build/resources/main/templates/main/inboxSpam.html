@@ -138,7 +138,7 @@
 			});
 
 			// 모달창 값 채우기 & 모달창 열기
-			$(document).on("click", "a[id^='modalBtn']", function () {
+			$(document).on("click", "a[id^='reportModalBtn']", function () {
 				let blockedId = $(this).attr("data-id");
 
 				// 모달 값 채우기
@@ -375,14 +375,14 @@
 								<th class="sendDate">DATE</th>
 								<th class="unspam">UNSPAM</th>
 								<th class="block">BLOCK</th>
-								<th class="report">REPORT</th>
+								<th class="">REPORT</th>
 								<th class="trash"><i class="ti-trash remove-icon"></i></th>
 							</tr>
 						</thead>
 						<tbody>
 							<!-- 240422 dy : 보낸 인콰이어리 목록 출력 -->
 							<tr th:if="${inquiryList != null and !#lists.isEmpty(inquiryList)}"
-								th:each="inquiry : ${inquiryList}">
+								th:each="inquiry,i : ${inquiryList}">
 								<!-- 저장 여부 : 클릭하면 리스트 사라짐-->
 								<td class="saved-icon"><a href="#" id="saved-icon"><i th:data-id="${inquiry.inquiryId}"
 											th:class="${inquiry.saved.name() == 'NY' or inquiry.saved.name() == 'YY'  ? 'fa fa-star' : 'ti-star'}"></i></a>
@@ -415,7 +415,7 @@
 								<!-- 신고버튼 : 누르면 신고 모달창 -->
 								<td data-title="report">
 									<span>
-										<a class="report" data-toggle="modal" data-target="#reportModal" th:id="'modalBtn'+${inquiry.inquiryId}"
+										<a class="report" data-toggle="modal" data-target="#reportModal" th:id="'reportModalBtn'+${i.index}"
 											th:data-id="${inquiry.senderId}"> report</a>
 									</span>
 								</td>
@@ -434,56 +434,7 @@
 					</span>
 				</div>
 			</div>
-			<!--/ End Inquiry Modal -->
-
-
-			<!-- Report Modal -->
-			<div class="modal fade" id="reportModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-				aria-hidden="true">
-				<div class="modal-dialog" role="document">
-					<div class="modal-content">
-						<form class="form" action="#" method="post" id="reportForm">
-							<!-- Modal Header -->
-							<div class="modal-header">
-								<h4 class="modal-title" id="modalInquiryTitle">Report</h4>
-								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-									<span aria-hidden="true">&times;</span>
-								</button>
-							</div>
-							<!-- Modal Body -->
-							<div class="modal-body">
-								<table>
-									<tr>
-										<th class="col-md-2"></th>
-										<td><span id="modalBlockedId" name="reportedId"></span>님을 신고하시겠습니까?</td>
-									</tr>
-									<tr>
-										<th class="">사유</th>
-										<td>
-											<input type="radio" name="reportCategory" value="DRUG"> 마약
-											<input type="radio" name="reportCategory" value="IPR"> 지식재산권 침해
-											<input type="radio" name="reportCategory" value="SPAM"> 다발성 이메일
-											<input type="radio" name="reportCategory" value="ETC"> 기타
-										</td>
-									</tr>
-									<tr>
-										<th class=""></th>
-										<td><textarea name="reportReason" id="modalReportReason" cols="30" rows="10"></textarea>
-										</td>
-									</tr>
-									<input type="hidden" name="managerCheck" value="N">
-								</table>
-							</div>
-							<!-- Modal Footer -->
-							<div class="modal-footer">
-								<button type="button" id="reportSubmitBtn" class="btn" data-dismiss="modal">Report</button>
-								<button type="button" id="reportCloseBtn" class="btn" data-dismiss="modal">Close</button>
-							</div>
-						</form>
-					</div>
-				</div>
-			</div>
-
+			<!--/ End inquiry List -->
 		</div>
 	</section>
 
@@ -546,6 +497,55 @@
 			</div>
 		</div>
 	</div>
+
+
+	<!-- Report Modal -->
+	<div class="modal fade" id="reportModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<form class="form" action="#" method="post" id="reportForm">
+					<!-- Modal Header -->
+					<div class="modal-header">
+						<h4 class="modal-title" id="">Report</h4>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<!-- Modal Body -->
+					<div class="modal-body">
+						<table>
+							<tr>
+								<th class="col-md-2"></th>
+								<td><span id="modalBlockedId" name="reportedId"></span>님을 신고하시겠습니까?</td>
+							</tr>
+							<tr>
+								<th class="">사유</th>
+								<td>
+									<input type="radio" name="reportCategory" value="DRUG"> 마약
+									<input type="radio" name="reportCategory" value="IPR"> 지식재산권 침해
+									<input type="radio" name="reportCategory" value="SPAM"> 다발성 이메일
+									<input type="radio" name="reportCategory" value="ETC"> 기타
+								</td>
+							</tr>
+							<tr>
+								<th class=""></th>
+								<td><textarea name="reportReason" id="modalReportReason" cols="30" rows="10"></textarea>
+								</td>
+							</tr>
+							<input type="hidden" name="managerCheck" value="N">
+						</table>
+					</div>
+					<!-- Modal Footer -->
+					<div class="modal-footer">
+						<button type="button" id="reportSubmitBtn" class="btn" data-dismiss="modal">Report</button>
+						<button type="button" id="reportCloseBtn" class="btn" data-dismiss="modal">Close</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
 	</div>
 	<!--/ End Product Style 1  -->
 
