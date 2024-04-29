@@ -84,6 +84,7 @@
 				});
 			});
 
+			// 인콰이어리 모달
 			// 모달 변수 초기화
 			var modal = $("#inquiryDetail");
 			// 닫기 버튼 이벤트
@@ -121,16 +122,42 @@
 					}
 				}); // End ajax
 			}); // End 모달 클릭 이벤트
+
+			// 신고 모달
+			// 신고 모달 변수 초기화
+			var reportModal = $("#reportModal");
+			// 닫기 버튼 이벤트
+			$("#reportCloseBtn").on("click", function (event) {
+				reportModal.hide();
+			});
+			// 모달 백그라운드 클릭 이벤트
+			$(window).on("click", function (event) {
+				if ($(event.target).is(reportModal)) {
+					reportModal.hide();
+				}
+			});
+
+			// 모달창 값 채우기 & 모달창 열기
+			$(document).on("click", "a[id^='modalBtn']", function () {
+				let blockedId = $(this).attr("data-id");
+
+				// 모달 값 채우기
+				$("#modalBlockedId").text(blockedId);
+				$("#reportSubmitBtn").on("click", submitReport);
+				// 모달열기
+				$("#reportModal").modal();
+			}); // End 모달 클릭 이벤트
+
 			init();
 		});
 
-		// 첨부 파일 다운로드
+		// inquiry modal : 첨부 파일 다운로드
 		function download() {
 			let inquiryId = $("#modalFile").attr("data-inquiryID");
 			window.location = '/inbox/downloadFile?inquiryId=' + encodeURIComponent(inquiryId);
 		}
 
-		// 스팸해제 처리하는 함수
+		// UNSPAM : 스팸해제 처리하는 함수
 		function toUnSpam(element) {
 			let inquiryId = element.getAttribute("data-id");
 			let customerId = $("#hiddenCustomerId").val();
@@ -152,7 +179,7 @@
 			}
 		}
 		
-		// senderId 블락으로 처리하는 함수
+		// BLOCK : senderId 블락으로 처리하는 함수
 		function toBlock(element) {
 			let inquiryId = element.getAttribute("data-id");
 			let senderId = element.getAttribute("data-sender");
@@ -175,7 +202,26 @@
 			}
 		}
 		
+		// REPORT : 신고 내용 GET 방식으로 보내기
+		function submitReport() {
+			let reportedId = $("#modalBlockedId").text();
+			let reportCategory = document.querySelector('input[name="reportCategory"]:checked').value;
+			let reportReason = $("#modalReportReason").val();
+			let managerCheck = 'N';
 
+			if (confirm("신고!")) {
+				$.ajax({
+					url: "/inbox/report",
+					data: { "reportedId": reportedId, "reportCategory": reportCategory, "reportReason": reportReason, "managerCheck": managerCheck },
+					method: "get",
+					success: function (resp) {
+						if (resp) {
+							$("#closeBtn").click();
+						}
+					}
+				});
+			}
+		}
 
 		// 쓰레기통으로 처리하는 함수
 		function toTrash(element) {
@@ -329,6 +375,7 @@
 								<th class="sendDate">DATE</th>
 								<th class="unspam">UNSPAM</th>
 								<th class="block">BLOCK</th>
+								<th class="report">REPORT</th>
 								<th class="trash"><i class="ti-trash remove-icon"></i></th>
 							</tr>
 						</thead>
@@ -365,6 +412,13 @@
 								<td data-title="block"><a href="javascript:void(0);" class="blockBtn"
 										th:data-id="${inquiry.inquiryId}" th:data-sender="${inquiry.senderId}" onclick="toBlock(this)"><i
 											class="fa fa-refresh"></i></a></td>
+								<!-- 신고버튼 : 누르면 신고 모달창 -->
+								<td data-title="report">
+									<span>
+										<a class="report" data-toggle="modal" data-target="#reportModal" th:id="'modalBtn'+${inquiry.inquiryId}"
+											th:data-id="${inquiry.senderId}"> report</a>
+									</span>
+								</td>
 								<!-- 누르면 삭제 되면서 쓰통으로 -->
 								<!-- <td class="action" data-title="trash"><a href="#" class="trashBtn" th:data-id="${inquiry.inquiryId}"><i class="ti-trash remove-icon"></i></a></td> -->
 								<td data-title="trash"><a href="javascript:void(0)" class="trashBtn"
@@ -380,7 +434,56 @@
 					</span>
 				</div>
 			</div>
-			<!--/ End Shopping Cart -->
+			<!--/ End Inquiry Modal -->
+
+
+			<!-- Report Modal -->
+			<div class="modal fade" id="reportModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+				aria-hidden="true">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<form class="form" action="#" method="post" id="reportForm">
+							<!-- Modal Header -->
+							<div class="modal-header">
+								<h4 class="modal-title" id="modalInquiryTitle">Report</h4>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<!-- Modal Body -->
+							<div class="modal-body">
+								<table>
+									<tr>
+										<th class="col-md-2"></th>
+										<td><span id="modalBlockedId" name="reportedId"></span>님을 신고하시겠습니까?</td>
+									</tr>
+									<tr>
+										<th class="">사유</th>
+										<td>
+											<input type="radio" name="reportCategory" value="DRUG"> 마약
+											<input type="radio" name="reportCategory" value="IPR"> 지식재산권 침해
+											<input type="radio" name="reportCategory" value="SPAM"> 다발성 이메일
+											<input type="radio" name="reportCategory" value="ETC"> 기타
+										</td>
+									</tr>
+									<tr>
+										<th class=""></th>
+										<td><textarea name="reportReason" id="modalReportReason" cols="30" rows="10"></textarea>
+										</td>
+									</tr>
+									<input type="hidden" name="managerCheck" value="N">
+								</table>
+							</div>
+							<!-- Modal Footer -->
+							<div class="modal-footer">
+								<button type="button" id="reportSubmitBtn" class="btn" data-dismiss="modal">Report</button>
+								<button type="button" id="reportCloseBtn" class="btn" data-dismiss="modal">Close</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+
 		</div>
 	</section>
 
