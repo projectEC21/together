@@ -1604,7 +1604,7 @@ span.dtr-title {
 
 
 body {
-  color: #73879C;
+  color: #000;
   background: #333;
   font-family: "Fontawesome";
   /* font-size: 13px; */
@@ -1790,7 +1790,7 @@ h3,
 }
 
 a {
-  color: #5A738E;
+  color: #000;
   text-decoration: none;
   font-size: 17px;
 }
@@ -2310,7 +2310,7 @@ h2 {
   opacity: 1;
   -webkit-transition: all .2s ease;
   transition: all .2s ease;
-  border-radius: 20px;
+  border-radius: 10px;
 }
 
 .flex {
@@ -4532,15 +4532,15 @@ ul.social li {
 }
 
 .mid {
-  height: 200px;
+
+  height: 300px;
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
 }
 
 .mid2 {
-  width: 800;
-  height: 100;
+  height: 200px;
   display: flex;
   justify-content: center;
 }
@@ -6843,6 +6843,14 @@ ul.notifications {
 
 #weeklyRegSummaryTable tr {
   text-align: center;
+}
+
+/* #weeklyRegSummaryTable .thname {
+  width: 18% !important;
+} */
+
+#weeklyRegSummaryTable td {
+  vertical-align: middle;
 }
 
 /*
