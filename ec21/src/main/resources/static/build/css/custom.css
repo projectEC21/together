@@ -6785,6 +6785,7 @@ ul.notifications {
 .modalBtn {
   border: 0px;
   background: transparent;
+  color: #6a6a6a;
 }
 
 /* 테이블 행 스타일 */
@@ -6818,6 +6819,7 @@ ul.notifications {
   /* Adjust the space between the elements */
   border: 1px solid #E6E9ED;
   background-color: white;
+  border-radius: 8px;
 }
 
 .form-inline .form-group input {
