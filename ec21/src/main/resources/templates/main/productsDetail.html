@@ -53,13 +53,10 @@
 	<link rel="stylesheet" th:href="@{/main/css/color/color2.css}">
 
 	<link rel="stylesheet" href="" id="colors">
-	<!-- modal -->
-	<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+
 
 	<!-- 240417 dy : JQuery 파일 추가 및 ajax 작업 -->
-	<script th:src="@{/script/jquery-3.7.1.min.js}"></script>
+
 
 	<!-- 240417 dy : 검색어 입력 후 돋보기 클릭 시 /main/list 요청-->
 	<script>
@@ -76,11 +73,11 @@
 		// 	$("#modalBtn").click(function(event) {
 		// 		if (!isUserLoggedIn()) {
 		// 			event.preventDefault(); // 로그인되지 않으면 모달 열기 중지
-					
+
 		// 			// 현재 페이지의 URL을 쿼리 파라미터로 추가
 		// 			let currentUrl = encodeURIComponent(window.location.href); // 현재 URL을 인코딩
 		// 			let loginUrl = `/main/login?redirect=${currentUrl}&showModal=true`; // 모달 정보 추가
-					
+
 		// 			// 리디렉션
 		// 			window.location.href = loginUrl; // 로그인 페이지로 리디렉션
 		// 		} else {
@@ -166,7 +163,7 @@
 				$("#modalTitle").val(inquiryTitle);
 				$("#modalCategory").val(category);
 				$("#modalQuantity").val(quantity);
-				$("#modalQuantity").attr("min",quantity); 	// 최소 수량 
+				$("#modalQuantity").attr("min", quantity); 	// 최소 수량 
 				$("#modalUnit").text(unit);				    // 단위
 				$("#submitBtn").on("click", submitInquiry);
 				// 모달열기
@@ -188,9 +185,9 @@
 			})
 		}
 
-		
+
 		// 인콰이어리 post로 보내기
-		function submitInquiry(){
+		function submitInquiry() {
 			if (confirm("인콰이어리 전송")) {
 				$("#inquiryForm").submit();
 			}
@@ -265,9 +262,12 @@
 						<!-- Top Right -->
 						<div class="right-content">
 							<ul class="list-main">
-								<li sec:authorize="isAnonymous()"><i class="ti-power-off"></i><a th:href="@{/main/login}">Login</a></li>
-								<li sec:authorize="isAnonymous()"><i class="ti-user"></i><a th:href="@{/main/register}">Sign up</a></li>
-								<li sec:authorize="isAuthenticated()"><i class="ti-power-off"></i><a th:href="@{/main/logout}">Logout</a></li>
+								<li sec:authorize="isAnonymous()"><i class="ti-power-off"></i><a
+										th:href="@{/main/login}">Login</a></li>
+								<li sec:authorize="isAnonymous()"><i class="ti-user"></i><a
+										th:href="@{/main/register}">Sign up</a></li>
+								<li sec:authorize="isAuthenticated()"><i class="ti-power-off"></i><a
+										th:href="@{/main/logout}">Logout</a></li>
 							</ul>
 						</div>
 						<!-- End Top Right -->
@@ -306,11 +306,16 @@
 									<!-- 240420 dy : 카테고리 선택 & 검색어 입력 시 form 태그로 상품 리스트로의 요청 걸어줌 -->
 									<select id="category" name="category">
 										<option value="total" th:selected="${category eq 'total'}">All Category</option>
-										<option value="FOOD_BEVERAGE" th:selected="${category eq 'FOOD_BEVERAGE'}">Food & Beverage</option>
-										<option value="CHEMICAL" th:selected="${category eq 'CHEMICAL'}">Chemical</option>
-										<option value="HEALTH_MEDICAL" th:selected="${category eq 'HEALTH_MEDICAL'}">Health & Medical</option>
-										<option value="ELECTRONIC" th:selected="${category eq 'ELECTRONIC'}">Electronics</option>
-										<option value="COSMETIC" th:selected="${category eq 'COSMETIC'}">Cosmetic</option>
+										<option value="FOOD_BEVERAGE" th:selected="${category eq 'FOOD_BEVERAGE'}">Food
+											& Beverage</option>
+										<option value="CHEMICAL" th:selected="${category eq 'CHEMICAL'}">Chemical
+										</option>
+										<option value="HEALTH_MEDICAL" th:selected="${category eq 'HEALTH_MEDICAL'}">
+											Health & Medical</option>
+										<option value="ELECTRONIC" th:selected="${category eq 'ELECTRONIC'}">Electronics
+										</option>
+										<option value="COSMETIC" th:selected="${category eq 'COSMETIC'}">Cosmetic
+										</option>
 									</select>
 									<input id="searchWord" name="searchWord" placeholder="What are you searching for?"
 										type="text" th:value="${searchWord}"
@@ -324,7 +329,8 @@
 						<div class="right-bar">
 							<!-- Search Form -->
 							<div class="sinlge-bar">
-								<a th:href="@{/main/myproducts(customerId=${#authentication.name})}" class="single-icon">
+								<a th:href="@{/main/myproducts(customerId=${#authentication.name})}"
+									class="single-icon">
 									<i class="fa fa-user-circle-o" aria-hidden="true"></i>
 								</a>
 							</div>
@@ -435,7 +441,8 @@
 					</div> -->
 					<!-- 드롭다운 버튼 -->
 					<div class="for-user" th:if="${product.customerId == #authentication.name}">
-						<a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
+							aria-expanded="false">
 							<i class="fa fa-cog"></i> <!-- 아이콘 -->
 						</a>
 						<!-- 드롭다운 메뉴 -->
@@ -493,8 +500,10 @@
 								<!-- Inquiry Button -->
 								<!-- 240426 dy : 판매자와 로그인한 아이디가 동일하지 않은 경우에만 보이게 -->
 								<div class="add-to-cart" th:if="${product.customerId != #authentication.name}">
-									<button class="btn" th:id="modalBtn" data-toggle="modal" data-target="#inquiryModal" th:data-quantity="${product.moq}" th:data-unit="${product.unit}"
-									th:data-id="${product.productId}" th:data-category="${product.category}" th:data-seller="${product.customerId}" th:data-title="${product.productName}">
+									<button class="btn" th:id="modalBtn" data-toggle="modal" data-target="#inquiryModal"
+										th:data-quantity="${product.moq}" th:data-unit="${product.unit}"
+										th:data-id="${product.productId}" th:data-category="${product.category}"
+										th:data-seller="${product.customerId}" th:data-title="${product.productName}">
 										Inquire Now <i class="fa fa-envelope-o"></i>
 									</button>
 								</div>
@@ -503,10 +512,12 @@
 					</div>
 
 					<!-- Inquiry Modal -->
-					<div class="modal fade" id="inquiryModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+					<div class="modal fade" id="inquiryModal" tabindex="-1" role="dialog"
+						aria-labelledby="exampleModalLabel" aria-hidden="true">
 						<div class="modal-dialog" role="document">
 							<div class="modal-content">
-								<form class="form" th:action="@{/productDetail/sendInquiry}" method="post" id="inquiryForm" enctype="multipart/form-data">
+								<form class="form" th:action="@{/productDetail/sendInquiry}" method="post"
+									id="inquiryForm" enctype="multipart/form-data">
 									<!-- Modal Header -->
 									<div class="modal-header">
 										<div class="modal-title">
@@ -520,7 +531,7 @@
 									<div class="modal-body">
 										<p>
 											<i class="ti-user"></i> Reminder for Buyers
-										<br>Be cautious with
+											<br>Be cautious with
 											pre-payment by T/T or Western Union. Do not make pre-payment to any sellers
 											unless you can fully trust the sellers.
 											<!-- <br> More... EC21.com is NOT RESPONSIBLE for transactions between buyers and
@@ -533,7 +544,8 @@
 											</tr>
 											<tr>
 												<th class="">Subject <span>*</span></th>
-												<td><input type="text" name="inquiryTitle" id="modalTitle" required></td>
+												<td><input type="text" name="inquiryTitle" id="modalTitle" required>
+												</td>
 											</tr>
 											<tr>
 												<th class="">Category <span>*</span></th>
@@ -541,15 +553,18 @@
 											</tr>
 											<tr>
 												<th class="">Quantity <span>*</span></th>
-												<td><input type="number" name="quantity" id="modalQuantity" required> (<span id="modalUnit"></span>) </td>
+												<td><input type="number" name="quantity" id="modalQuantity" required>
+													(<span id="modalUnit"></span>) </td>
 											</tr>
 											<tr>
 												<th class="">Message <span>*</span></th>
-												<td><textarea class="message-field" name="inquiryContent" id="modalContent" cols="30" rows="10" required></textarea></td>
+												<td><textarea class="message-field" name="inquiryContent"
+														id="modalContent" cols="30" rows="10" required></textarea></td>
 											</tr>
 											<tr>
 												<th class="">Attach File</th>
-												<td><input type="file" name="uploadFile" id="modalFile" value="Upload File"></td>
+												<td><input type="file" name="uploadFile" id="modalFile"
+														value="Upload File"></td>
 											</tr>
 											<tr>
 												<td class="agree-check" colspan="2">
@@ -566,7 +581,8 @@
 									<!-- Modal Footer -->
 									<div class="modal-footer">
 										<button type="button" id="submitBtn" class="btn">Send</button>
-										<button type="button" id="closeBtn" class="btn" data-dismiss="modal">Close</button>
+										<button type="button" id="closeBtn" class="btn"
+											data-dismiss="modal">Close</button>
 									</div>
 								</form>
 							</div>
@@ -583,44 +599,46 @@
 							</div>
 							<!-- Tab Content -->
 							<div class="tab-content" id="myTabContent">
-									<div class="tab-single">
-										<div class="row">
-											<div class="col-12">
-												<div class="single-des">
-													<div class="comp-info">
-														<table>
-															<tr>
-																<th class="comp-name" th:text="'About ' + ${customer.compName} + '..'" colspan="2">company name</th>
-															</tr>
-															<tr>
-																<th class="country">country</th>
-																<td class="seller-country" th:text="${customer.country}">
-																	<span id="seller-flag"></span>
-																</td>
-															</tr>
-															<tr>
-																<th>description</th>
-																<td th:text="${customer.compDesc}">디지털마스터</td>
-															</tr>
-															
-														</table>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="tab-single">
-										<div class="row">
-											<div class="col-12">
-												<div class="single-des">
-													<span class="productDesc" th:utext="${product.productDesc}">
-														LoremIpsum dummy text.
-													</span>
+								<div class="tab-single">
+									<div class="row">
+										<div class="col-12">
+											<div class="single-des">
+												<div class="comp-info">
+													<table>
+														<tr>
+															<th class="comp-name"
+																th:text="'About ' + ${customer.compName} + '..'"
+																colspan="2">company name</th>
+														</tr>
+														<tr>
+															<th class="country">country</th>
+															<td class="seller-country" th:text="${customer.country}">
+																<span id="seller-flag"></span>
+															</td>
+														</tr>
+														<tr>
+															<th>description</th>
+															<td th:text="${customer.compDesc}">디지털마스터</td>
+														</tr>
+
+													</table>
 												</div>
 											</div>
 										</div>
 									</div>
 								</div>
+								<div class="tab-single">
+									<div class="row">
+										<div class="col-12">
+											<div class="single-des">
+												<span class="productDesc" th:utext="${product.productDesc}">
+													LoremIpsum dummy text.
+												</span>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
 							<!-- /Tab Content -->
 						</div>
 					</div>
@@ -658,11 +676,13 @@
 							</div>
 
 							<div class="product-content">
-								<h3><a th:href="@{/main/productsDetail(productId=${dto.productId})}">[[${dto.productName}]]</a></h3>
+								<h3><a
+										th:href="@{/main/productsDetail(productId=${dto.productId})}">[[${dto.productName}]]</a>
+								</h3>
 								<div class="product-price">
 									<span>$ [[${dto.price}]]</span>
 								</div>
-								<div class="product-seller" th:data-country =${dto.country}>
+								<div class="product-seller" th:data-country=${dto.country}>
 									<img id="countryFlag" src="" alt="" style="width:20px; height:20px;">
 									<span>[[${dto.customerId}]]</span>
 								</div>
@@ -799,15 +819,21 @@
 			</div>
 		</div>
 	</div>
-	
+
 	<!-- Jquery -->
-	<script th:src="@{/main/js/jquery.min.js}"></script>
-	<script th:src="@{/main/js/jquery-migrate-3.0.0.js}"></script>
-	<script th:src="@{/main/js/jquery-ui.min.js}"></script>
+	<script th:src="@{/script/jquery-3.7.1.min.js}"></script>
+	<!-- <script th:src="@{/main/js/jquery.min.js}"></script> -->
+	<!-- <script th:src="@{/main/js/jquery-migrate-3.0.0.js}"></script> -->
+	<!-- <script th:src="@{/main/js/jquery-ui.min.js}"></script> -->
+
+	<!-- modal -->
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+
 	<!-- Popper JS -->
 	<script th:src="@{/main/js/popper.min.js}"></script>
 	<!-- Bootstrap JS -->
-	<script th:src="@{/main/js/bootstrap.min.js}"></script>
+	<!-- <script th:src="@{/main/js/bootstrap.min.js}"></script> -->
 	<!-- Color JS -->
 	<script th:src="@{/main/js/colors.js}"></script>
 	<!-- Slicknav JS -->
