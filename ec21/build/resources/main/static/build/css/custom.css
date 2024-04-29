@@ -5205,6 +5205,7 @@ ul.project_files li a i {
   vertical-align: middle;
   line-height: 28px;
   color: black !important;
+  font-size: 17px;
 }
 
 .view .project_progress span {
@@ -5220,6 +5221,7 @@ ul.project_files li a i {
   vertical-align: middle;
   line-height: 28px;
   color: black !important;
+  font-size: 17px;
 
 }
 
@@ -6774,6 +6776,15 @@ ul.notifications {
   padding: 12px;
   border: 1px solid #ddd;
   text-align: left;
+}
+
+#result {
+  font-size: 17px;
+}
+
+.modalBtn {
+  border: 0px;
+  background: transparent;
 }
 
 /* 테이블 행 스타일 */
