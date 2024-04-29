@@ -292,6 +292,8 @@ html {
 	/* border: 1px solid #ccc; */
 }
 
+
+
 .hero-area4 .search-bar {
 	position: absolute;
 	left: 28%;
@@ -299,7 +301,12 @@ html {
 }
 
 
-/* 카테고리 */
+/* breadcrumbs */
+.breadcrumbs .notice span {
+	font-size: 16px;
+    font-family: 'themify';
+    color: #666;
+}
 
 /* 고정 헤더 및 패딩을 위한 CSS */
 .fixed-header {
@@ -3600,6 +3607,7 @@ textarea {
 	background: #fff;
 	position: relative;
     left: 3%;
+	border: 1px solid rgba(0, 0, 0, .125);
 }
 
 .shopping-cart {
@@ -5206,6 +5214,15 @@ start Inquiry CSS
 /*======================================
 	MyInfo CSS
 ======================================*/
+.shop.myinfo img {
+	border-radius: 100%;
+    height: auto;
+    width: 17%;
+    position: relative;
+    left: 36%;
+    top: -22px;
+}
+
 .shop.myinfo h2 {
 	position: relative;
 	font-size: 40px;
@@ -5218,7 +5235,7 @@ start Inquiry CSS
 }
 
 .myinfo {
-	background: #f6f6f6;
+	border:  solid rgba(0, 0, 0, .125);
 	padding: 50px 0;
 	width: 95%;
 }
@@ -5246,14 +5263,15 @@ start Inquiry CSS
 }
 
 .shop.myinfo .form .form-group input {
-	width: 90%;
-	height: 45px;
-	line-height: 50px;
-	padding: 0 20px;
-	border-radius: 3px;
-	color: #333 !important;
-	border: none;
-	display: block;
+    width: 90%;
+    height: 45px;
+    line-height: 50px;
+    padding: 0 20px;
+    border-radius: 3px;
+    color: #333 !important;
+    border: none;
+    border-bottom: 1px solid #555;
+    display: block;
 }
 
 .shop.myinfo .form .form-group label {
