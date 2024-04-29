@@ -291,6 +291,32 @@ public class ManagerService {
     }
 
     /**
+     * 정상회원 중 검색 카테고리, 검색어에 의한 결과 리스트를 최신 가입 순으로 반환
+     * @param category
+     * @param searchWord
+     * @return
+     */
+    public List<CustomerDTO> selectNotBlacklistByCategoryAndSearch(String category, String searchWord) {
+
+        List<CustomerEntity> entities = new ArrayList<>();
+        List<CustomerDTO> result = new ArrayList<>();
+
+        if (category.equals("total")) { // 전체
+            entities = customerRepository.findBySearchTermAndNotBlacklisted(searchWord,YesOrNo.N);
+        }else if(category.equals("customerId")){ // 회원ID
+            entities = customerRepository.findByCustomerIdContainingAndBlacklistCheckOrderByCreateDateDesc(searchWord,YesOrNo.N);
+        }else{ // 회사명
+            entities = customerRepository.findByCompNameContainingAndBlacklistCheckOrderByCreateDateDesc(searchWord,YesOrNo.N);
+        }
+        
+        entities.forEach((entity)->{
+            result.add(CustomerDTO.toDTO(entity));
+        });
+        
+        return result;
+    }
+
+    /**
      * customerId에 해당하는 회원이 판매하는 상품DTO 리스트를 반환하는 함수
      * 
      * @param customerId
@@ -537,5 +563,7 @@ public class ManagerService {
 
         return result;
     }
+
+
 
 }
