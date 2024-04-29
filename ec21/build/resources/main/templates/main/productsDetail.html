@@ -475,9 +475,11 @@
 						<div class="col-lg-6 col-12">
 							<div class="product-gallery">
 								<div class="flexslider-thumbnails">
-									<img th:src="@{/main/images/example_img6.jpeg}" alt="">
 									<span th:if="${product.originalFileName}!=null">
 										<img th:src="@{/main/downloadImg(productId=${product.productId})}">
+									</span>
+									<span th:unless="${product.originalFileName}!=null">
+										<img th:src="@{/main/images/example_img6.jpeg}" alt="">
 									</span>
 								</div>
 							</div>
