@@ -50,7 +50,7 @@
 	<!-- Color CSS -->
 	<link rel="stylesheet" th:href="@{/main/css/color/color2.css}">
 
-	<link rel="stylesheet" href="#" id="colors">
+	<link rel="stylesheet" href="" id="colors">
 
 	<!-- 240420 dy : JQuery 파일 추가 및 ajax 작업 -->
 	<script th:src="@{/script/jquery-3.7.1.min.js}"></script>
@@ -226,7 +226,7 @@
 								<li><i class="ti-power-off"></i><a th:href="@{/main/login}">Login</a></li>
 								<li><i class="ti-user"></i><a th:href="@{/main/register}">Sign up</a></li>
 								<li><i class="ti-power-off"></i><a th:href="@{/main/index}">Logout</a></li>
-								<li><a th:href="@{/main/myproducts}"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a></li>
+								<li><a th:href="@{/main/myproducts(customerId=${#authentication.name})}"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a></li>
 							</ul>
 						</div>
 						<!-- End Top Right -->
