@@ -1102,11 +1102,18 @@
   visibility: hidden;
 }
 
+.nav-sm .container.body .row .page_col {
+  display: flex;
+  flex-direction: row;
+}
+
 .nav-sm .container.body .right_col {
   padding: 10px 20px;
   margin-left: 70px;
   z-index: 2;
 }
+
+
 
 .nav-sm .navbar.nav_title {
   width: 70px;
@@ -1386,6 +1393,8 @@ body .container.body .right_col {
     padding-right: 0;
   }
 
+
+
   .right_col .x_panel {
     padding: 10px !important;
     overflow-x: auto;
@@ -1604,7 +1613,7 @@ span.dtr-title {
 
 
 body {
-  color: #73879C;
+  color: #000;
   background: #333;
   font-family: "Fontawesome";
   /* font-size: 13px; */
@@ -1790,7 +1799,7 @@ h3,
 }
 
 a {
-  color: #5A738E;
+  color: #000;
   text-decoration: none;
   font-size: 17px;
 }
@@ -2310,7 +2319,7 @@ h2 {
   opacity: 1;
   -webkit-transition: all .2s ease;
   transition: all .2s ease;
-  border-radius: 20px;
+  border-radius: 10px;
 }
 
 .flex {
@@ -3074,13 +3083,13 @@ span.right {
 .count {
   background-color: white;
   font-size: 20px;
-  padding: 0 80px 0 80px;
+  /* padding: 0 80px 0 80px; */
   /* width: 250px; */
   /* border: 10px solid black; */
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 10px;
+  margin: 5px;
   border-radius: 30px;
 }
 
@@ -4532,22 +4541,23 @@ ul.social li {
 }
 
 .mid {
-  height: 200px;
+
+  height: 250px;
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
+
 }
 
 .mid2 {
-  width: 800;
-  height: 100;
+  height: 100px;
   display: flex;
   justify-content: center;
 }
 
 .Cchart {
+  height: 312px;
 
-  height: 309px;
   display: flex;
   justify-content: center;
 
@@ -5516,7 +5526,8 @@ a.hiddenanchor {
 }
 
 .left {
-  float: left;
+  display: flex;
+  flex-direction: column;
 }
 
 .calendar.left {
@@ -6730,6 +6741,10 @@ ul.notifications {
   border-radius: 30px;
 }
 
+.card-group {
+  display: flex;
+}
+
 .card-body {
   padding: 0.5rem !important;
 }
@@ -6790,6 +6805,12 @@ ul.notifications {
 .form-inline .form-group {
   margin-right: 10px;
   /* Adjust the space between the elements */
+  border: 1px solid #E6E9ED;
+  background-color: white;
+}
+
+.form-inline .form-group input {
+  border: 0px;
 }
 
 .form-inline .form-group label {
@@ -6829,6 +6850,10 @@ ul.notifications {
   flex-direction: column;
 }
 
+.similarProbaWord {
+  font-weight: bold;
+}
+
 .input-group select {
   border-top-left-radius: 25px;
   /* 상단 왼쪽 모서리 */
@@ -6843,6 +6868,14 @@ ul.notifications {
 
 #weeklyRegSummaryTable tr {
   text-align: center;
+}
+
+/* #weeklyRegSummaryTable .thname {
+  width: 18% !important;
+} */
+
+#weeklyRegSummaryTable td {
+  vertical-align: middle;
 }
 
 /*
