@@ -59,7 +59,14 @@
 	<!-- 240422 iy: 유효성 검사 완성 -->
 	<script th:src="@{/script/jquery-3.7.1.min.js}"></script>
 	<script>
-		$(document).ready(function () {
+		$(function () {
+
+			// 키업 이벤트에 대한 유효성 검사 핸들러 연결
+			$("#customerId").on('keyup', validateCustomerId);
+			$("#customerPw").on('keyup', validatePassword);
+			$("#confirmPw").on('keyup', validateConfirmPassword);
+			$("#email").on('keyup', validateEmail);
+
 			$("#submitBtn").click(function (e) {
 				e.preventDefault(); // 기본 폼 제출 방지
 
@@ -86,13 +93,11 @@
 					return;
 				}
 
+				// 회원가입 폼 submit
 				if (confirm("Are you sure you want to register?")) {
-					alert("보낸다");
 					$("#registerForm").submit();
 				}
 			});
-
-			
 
 			init();
 		});
@@ -138,12 +143,7 @@
 			return null; // 모든 검사 통과
 		}
 
-		// 키업 이벤트에 대한 유효성 검사 핸들러 연결
-		$("#customerId").on('keyup', validateCustomerId);
-		$("#customerPw").on('keyup', validatePassword);
-		$("#confirmPw").on('keyup', validateConfirmPassword);
-		$("#email").on('keyup', validateEmail);
-
+		
 		// 각 필드 유효성 검사 함수 구현
 		function validateCustomerId() {
 			var id = $("#customerId").val();
@@ -221,7 +221,7 @@
 							<ul class="list-main">
 								<li><i class="ti-power-off"></i><a th:href="@{/main/login}">Login</a></li>
 								<li><i class="ti-user"></i><a th:href="@{/main/register}">Sign up</a></li>
-								<li><i class="ti-power-off"></i><a th:href="@{/main/index}">Logout</a></li>
+								<li><i class="ti-power-off"></i><a th:href="@{/main/logout}">Logout</a></li>
 								</li>
 							</ul>
 						</div>
