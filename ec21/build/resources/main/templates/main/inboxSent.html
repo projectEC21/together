@@ -135,7 +135,7 @@
 		// 쓰레기통으로 처리하는 함수
 		function toTrash(element) {
 			let inquiryId = element.getAttribute("data-id");
-			if (confirm("쓰레기통으로 보내시겠습니까?")) {
+			if (confirm("Would you like to move this to the trash?")) {
 				$.ajax({
 					url: "/inbox/sender/toTrash",
 					data: { "inquiryId": inquiryId },
@@ -143,7 +143,7 @@
 					success: function (resp) {
 						if (resp) {
 							if (resp) {
-								alert(" 쓰레기통으로 치우기 완료");
+								alert("Processing completed");
 								// 페이지 새로 고침
 								window.location.reload();
 							}
@@ -232,7 +232,7 @@
 					<ul class="categor-list">
 						<li><a th:href="@{/main/inbox(customerId=${customerId})}">Received</a></li>
 						<li><a th:href="@{/main/inboxSent(customerId=${customerId})}" style="
-								color: #439eff;">Sent <span>([[${#lists.size(inquiryList)}]])</span></a></li>
+								color: #439eff;">Sent <span>[[${#lists.size(inquiryList)}]]</span></a></li>
 						<li><a th:href="@{/main/inboxSaved(customerId=${customerId})}">Saved</a></li>
 						<li><a th:href="@{/main/inboxSpam(customerId=${customerId})}">Spam</a></li>
 						<li><a th:href="@{/main/inboxBlock(customerId=${customerId})}">Block</a></li>
@@ -318,19 +318,18 @@
 							</tr>
 							<tr>
 								<th class="">Subject</th>
-								<td><span id="modalProductName">..</span></td>
+								<td>
+									<span id="modalCategory">..</span> /
+									<span id="modalProductName">..</span>
+								</td>
 							</tr>
-							<tr>
+							<!-- <tr>
 								<th class="">Category</th>
 								<td><span id="modalCategory">..</span></td>
-							</tr>
+							</tr> -->
 							<tr>
 								<th class="">Quantity</th>
 								<td><span id="modalQuantity"></span> (<span id="modalUnit"></span>) </td>
-							</tr>
-							<tr>
-								<th class="">Message</th>
-								<td><span><textarea id="modalInquiryContent" readonly></textarea></span></td>
 							</tr>
 							<tr>
 								<!-- 파일 부분 다운만 가능한 건 어떻게 하는지 까먹어서 우선 패스 -->
@@ -340,6 +339,13 @@
 										<a href="javascript:download();" data-inquiryId="" id="modalFile">bts.jpg</a>
 									</span>
 								</td>
+							</tr>
+							<tr>
+								<th colspan="2">Message</th>
+								<!-- <td><span><textarea id="modalInquiryContent" readonly></textarea></span></td> -->
+							</tr>
+							<tr>
+								<td class="message" colspan="2"><span id="modalInquiryContent"></span></td>
 							</tr>
 						</table>
 					</div>

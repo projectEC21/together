@@ -114,7 +114,7 @@
 			let inquiryId = element.getAttribute("data-id");
 			let senderId = element.getAttribute("data-sender");
 			let customerId = $("#hiddenCustomerId").val();
-			let data = (customerId == senderId) ? "보낸 메일함으로 이동합니다." : "받은 메일함으로 이동합니다.";
+			let data = (customerId == senderId) ? "Moving to the Sent Mail folder." : "Moving to the Inbox.";
 
 			if (confirm(data)) {
 				$.ajax({
@@ -138,7 +138,7 @@
 		function toDeleted(element) {
 			let inquiryId = element.getAttribute("data-id");
 			let customerId = $("#hiddenCustomerId").val();
-			if (confirm("완전 삭제하시겠습니까?")) {
+			if (confirm("Would you like to delete this permanently?")) {
 				$.ajax({
 					url: "/inbox/trash/getList",
 					data: { "customerId": customerId, "inquiryId": inquiryId, "change": "deleted" },
@@ -206,8 +206,7 @@
 							<!-- logo -->
 							<div class="logo">
 								<a th:href="@{/}">
-									<img th:src="@{/main/images/ec21logo.png}" alt="logo"
-										style="width: 100px; height: 30px;">
+									<img th:src="@{/main/images/ec21logo.png}" alt="logo">
 								</a>
 							</div>
 						</div>
@@ -278,7 +277,6 @@
 								<th class="sendDate">DATE</th>
 								<th class="untrash">UN TRASH</th>
 								<th class="deleted">DElETE</th>
-								<!-- <th class="deleted"><i class="ti-trash remove-icon"></i></th> -->
 							</tr>
 						</thead>
 						<tbody>
@@ -327,10 +325,6 @@
 						</tbody>
 					</table>
 					<!--/ End inquiry List -->
-					<!-- 페이징 -->
-					<span class="paging">
-						<< < 1 2 3 4 5> >>
-					</span>
 				</div>
 			</div>
 			<!--/ End Shopping Cart -->
@@ -363,19 +357,18 @@
 							</tr>
 							<tr>
 								<th class="">Subject</th>
-								<td><span id="modalProductName">..</span></td>
+								<td>
+									<span id="modalCategory">..</span> /
+									<span id="modalProductName">..</span>
+								</td>
 							</tr>
-							<tr>
+							<!-- <tr>
 								<th class="">Category</th>
 								<td><span id="modalCategory">..</span></td>
-							</tr>
+							</tr> -->
 							<tr>
 								<th class="">Quantity</th>
 								<td><span id="modalQuantity"></span> (<span id="modalUnit"></span>) </td>
-							</tr>
-							<tr>
-								<th class="">Message</th>
-								<td><span><textarea id="modalInquiryContent" readonly></textarea></span></td>
 							</tr>
 							<tr>
 								<!-- 파일 부분 다운만 가능한 건 어떻게 하는지 까먹어서 우선 패스 -->
@@ -385,6 +378,13 @@
 										<a href="javascript:download()" data-inquiryId="" id="modalFile">bts.jpg</a>
 									</span>
 								</td>
+							</tr>
+							<tr>
+								<th colspan="2">Message</th>
+								<!-- <td><span><textarea id="modalInquiryContent" readonly></textarea></span></td> -->
+							</tr>
+							<tr>
+								<td class="message" colspan="2"><span id="modalInquiryContent"></span></td>
 							</tr>
 						</table>
 					</div>

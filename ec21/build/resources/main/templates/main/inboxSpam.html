@@ -161,7 +161,7 @@
 		function toUnSpam(element) {
 			let inquiryId = element.getAttribute("data-id");
 			let customerId = $("#hiddenCustomerId").val();
-			if (confirm("스팸 해제하시겠습니까?")) {
+			if (confirm("Would you like to unmark this as spam?")) {
 				$.ajax({
 					url: "/inbox/spam/getList",
 					data: { "customerId": customerId, "inquiryId": inquiryId, "change": "unspam" },
@@ -184,7 +184,7 @@
 			let inquiryId = element.getAttribute("data-id");
 			let senderId = element.getAttribute("data-sender");
 			let customerId = $("#hiddenCustomerId").val();
-			if (confirm("[" + senderId + "] 블락 처리하시겠습니까?")) {
+			if (confirm("[" + senderId + "] Would you like to block this?")) {
 				$.ajax({
 					url: "/inbox/spam/getList",
 					data: { "customerId": customerId, "inquiryId": inquiryId, "change": "block", "senderId": senderId },
@@ -209,7 +209,7 @@
 			let reportReason = $("#modalReportReason").val();
 			let managerCheck = 'N';
 
-			if (confirm("신고!")) {
+			if (confirm("Processing completed.")) {
 				$.ajax({
 					url: "/inbox/report",
 					data: { "reportedId": reportedId, "reportCategory": reportCategory, "reportReason": reportReason, "managerCheck": managerCheck },
@@ -227,7 +227,7 @@
 		function toTrash(element) {
 			let inquiryId = element.getAttribute("data-id");
 			let customerId = $("#hiddenCustomerId").val();
-			if (confirm("쓰레기통으로 보내시겠습니까?")) {
+			if (confirm("Would you like to move this to the trash?")) {
 				$.ajax({
 					url: "/inbox/spam/getList",
 					data: { "customerId": customerId, "inquiryId": inquiryId, "change": "trash" },
@@ -452,19 +452,18 @@
 							</tr>
 							<tr>
 								<th class="">Subject</th>
-								<td><span id="modalProductName">..</span></td>
+								<td>
+									<span id="modalCategory">..</span> /
+									<span id="modalProductName">..</span>
+								</td>
 							</tr>
-							<tr>
+							<!-- <tr>
 								<th class="">Category</th>
 								<td><span id="modalCategory">..</span></td>
-							</tr>
+							</tr> -->
 							<tr>
 								<th class="">Quantity</th>
 								<td><span id="modalQuantity"></span> (<span id="modalUnit"></span>) </td>
-							</tr>
-							<tr>
-								<th class="">Message</th>
-								<td><span><textarea id="modalInquiryContent" readonly></textarea></span></td>
 							</tr>
 							<tr>
 								<!-- 파일 부분 다운만 가능한 건 어떻게 하는지 까먹어서 우선 패스 -->
@@ -474,6 +473,13 @@
 										<a href="javascript:download()" data-inquiryId="" id="modalFile">bts.jpg</a>
 									</span>
 								</td>
+							</tr>
+							<tr>
+								<th colspan="2">Message</th>
+								<!-- <td><span><textarea id="modalInquiryContent" readonly></textarea></span></td> -->
+							</tr>
+							<tr>
+								<td class="message" colspan="2"><span id="modalInquiryContent"></span></td>
 							</tr>
 						</table>
 					</div>
