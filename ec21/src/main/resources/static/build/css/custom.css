@@ -2069,6 +2069,13 @@ a:focus {
   border-right: 0;
 }
 
+#startDate,
+#endDate {
+  padding: 0;
+  width: 111px;
+  font-size: 14px;
+}
+
 .top_search .input-group-btn button {
   border-radius: 0px 25px 25px 0px;
   border: 1px solid rgba(221, 226, 232, 0.49);
@@ -4542,7 +4549,7 @@ ul.social li {
 
 .mid {
 
-  height: 250px;
+  height: 203px;
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
@@ -4556,7 +4563,7 @@ ul.social li {
 }
 
 .Cchart {
-  height: 312px;
+  height: 352px;
 
   display: flex;
   justify-content: center;
@@ -5229,7 +5236,7 @@ ul.project_files li a i {
 
 .prohibitWord {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
 }
 
 /* *********  /media gallery  **************************** */
@@ -6298,7 +6305,8 @@ ol.custom-list li {
 /** bootstrap-progressbar  **/
 .progress {
   border-radius: 30px;
-  height: 15px;
+  height: 16px;
+  border: 1px solid black;
 }
 
 .progress-bar-info {
@@ -6812,6 +6820,7 @@ ul.notifications {
   /* Adjust the space between the elements */
   border: 1px solid #E6E9ED;
   background-color: white;
+  border-radius: 10px;
 }
 
 .form-inline .form-group input {

@@ -231,7 +231,7 @@
 					<h3 Inquiry class="inquiry-title">My Inquiry</h3>
 					<ul class="categor-list">
 						<li><a th:href="@{/main/inbox(customerId=${customerId})}">Received</a></li>
-						<li><a th:href="@{/main/inboxSent(customerId=${customerId})}"  style="
+						<li><a th:href="@{/main/inboxSent(customerId=${customerId})}" style="
 								color: #439eff;">Sent</a></li>
 						<li><a th:href="@{/main/inboxSaved(customerId=${customerId})}">Saved</a></li>
 						<li><a th:href="@{/main/inboxSpam(customerId=${customerId})}">Spam</a></li>
@@ -283,7 +283,7 @@
 									</span>
 								</td>
 								<!-- 보낸 날짜 -->
-								<td class="sendDate" data-title="sendDate"><span>[[${#temporals.format(inquiry.sendDate, 'yyyy-MM-dd')}]]</span></td>
+								<td class="sendDate" data-title="sendDate"><span>[[${inquiry.sendDate}]]</span></td>
 								
 								<!-- 누르면 삭제 되면서 쓰통으로 -->
 								<!-- <td class="action" data-title="delete"><a href="#" class="trashBtn" th:data-id="${inquiry.inquiryId}"><i class="ti-trash remove-icon"></i></a></td> -->
