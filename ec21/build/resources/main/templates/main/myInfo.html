@@ -202,10 +202,6 @@
 
 <body class="js">
 
-<<<<<<< HEAD
-	<input type="hidden" name="customerId" id="customerId" th:value="${#authentication.name}">
-=======
->>>>>>> 6c31906a1e23b1076ddb11f3b2393afe93482b20
 	
 	<!-- Preloader -->
 	<div class="preloader">
@@ -243,30 +239,19 @@
 								<li sec:authorize="isAnonymous()"><i class="ti-power-off"></i><a th:href="@{/main/login}">Login</a></li>
 								<li sec:authorize="isAnonymous()"><i class="ti-user"></i><a th:href="@{/main/register}">Sign up</a></li>
 								<li sec:authorize="isAuthenticated()"><i class="ti-power-off"></i><a th:href="@{/main/logout}">Logout</a></li>
-<<<<<<< HEAD
-								<li><a th:href="@{/main/myproducts}"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a></li>
-								<li><a th:href="@{/main/inbox(customerId=${#authentication.name})}" class="single-icon">
-										<i class="fa fa-envelope-o"></i><span class="total-count"></span></li>
-							</ul>
-=======
 								<li><a th:href="@{/main/myproducts(customerId=${#authentication.name})}"><i class="fa fa-user-circle-o" aria-hidden="true"></i><span sec:authorize="isAuthenticated()">[[${#authentication.name}]]</span></a></li>
 								<li><a th:href="@{/main/inbox(customerId=${#authentication.name})}" class="single-icon">
 									<i class="fa fa-envelope-o"></i><span class="total-count"></span></li>
 								</ul>
 							</div>
 							<!-- End Top Right -->
->>>>>>> 6c31906a1e23b1076ddb11f3b2393afe93482b20
 						</div>
 					</div>
 				</div>
 			</div>
 		<!-- End Topbar -->
 	</header>
-<<<<<<< HEAD
-
-=======
 	
->>>>>>> 6c31906a1e23b1076ddb11f3b2393afe93482b20
 	<!-- myInfo -->
 	<section class="product shop section">
 		<div class="container">
@@ -305,13 +290,8 @@
 							</div>
 						</div>
 					</div>
-<<<<<<< HEAD
-				</div>	
-
-=======
 				</div>
 				<!-- 카테고리 종료 -->
->>>>>>> 6c31906a1e23b1076ddb11f3b2393afe93482b20
 				<div class="col-lg-9 col-12">
 					<div class="row">
 						<div class="shop myinfo section">
@@ -425,24 +405,6 @@
 											<div class="form-group">
 												<label>Business No</label>
 												<br>
-<<<<<<< HEAD
-
-												<div class="form-group info-btn">
-													<button class="btn" type="button" id="editButton">Edit My Account
-													</button>
-													<button class="btn" type="button" id="modifyButton"
-														style="display: none;">Modify My
-														Account
-													</button>
-													<button class="btn" type="button" id="cancelButton"
-														style="display: none;">Cancel</button>
-												</div>
-											</form>
-										</div>
-									</div>
-								</div>
-								<!--/ End Form -->
-=======
 												<input type="text" name="busiNo" th:value="${customer.busiNo}"
 												required="required" readonly>
 											</div>
@@ -463,7 +425,6 @@
 										<input type="hidden" name="customerId" id="customerId" th:value="${#authentication.name}">
 									</form>
 								</div>
->>>>>>> 6c31906a1e23b1076ddb11f3b2393afe93482b20
 							</div>
 							</div>
 							<!--/ End Form -->
