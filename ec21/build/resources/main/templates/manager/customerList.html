@@ -184,7 +184,6 @@
           $("#modalUnit").html(modalUnit);
           $("#displayMoqUnit").html(`${modalMoq} ${modalUnit}`);
 
-
           $.ajax({
             url: `https://restcountries.com/v3.1/name/${modalOrigin}`,
             method: 'GET',
@@ -382,18 +381,17 @@
                 <div class="title_right">
                   <div class="col-md-5 col-sm-5   form-group pull-right top_search">
                     <form th:action="@{/manager/customerList}" method="get">
-                      <div class="input-group">
-                        <select name="searchCategory" id="searchCategory">
-                          <option value="total" th:selected="${searchCategory eq 'total'}">전체</option>
-                          <option value="customerId" th:selected="${searchCategory eq 'customerId'}">회원ID</option>
-                          <option value="compName" th:selected="${searchCategory eq 'compName'}">회사명</option>
-                        </select>
-                        <input type="text" class="form-control" id="searchWord" name="searchWord"
-                          placeholder="Search for..." th:value="${searchWord}">
-                        <span class="input-group-btn">
-                          <button class="btn btn-default" type="submit">찾기</button>
-                        </span>
-                      </div>
+                    <div class="input-group">
+                      <select name="searchCategory" id="searchCategory">
+                        <option value="total" th:selected="${searchCategory eq 'total'}" >전체</option>
+                        <option value="customerId" th:selected="${searchCategory eq 'customerId'}">회원ID</option>
+                        <option value="compName" th:selected="${searchCategory eq 'compName'}">회사명</option>
+                      </select>
+                      <input type="text" class="form-control" id="searchWord" name="searchWord" placeholder="Search for..."  th:value="${searchWord}">
+                      <span class="input-group-btn">
+                        <button class="btn btn-default" type="submit">찾기</button>
+                      </span>
+                    </div>
                     </form>
                   </div>
                 </div>

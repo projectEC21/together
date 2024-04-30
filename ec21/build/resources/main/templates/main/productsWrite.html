@@ -287,145 +287,128 @@
 	<section class="product-area shop-sidebar product-list shop section">
 		<div class="container">
 			<div class="row">
-				<div class="col-lg-2 col-12 ">
-						<div id="accordion">
-							<div class="card">
-								<div class="card-header">
-									<a class="card-link" data-toggle="collapse" href="#account-category">My Account</a>
-								</div>
-								<div id="account-category" class="collapse show" data-parent="#accordion">
-									<div class="card-body">
-										<ul class="categor-list">
-											<li><a th:href="@{/main/myinfo(customerId=${#authentication.name})}">My Information</a></li>
-											<li><a th:href="@{/main/myproducts(customerId=${#authentication.name})}">My Products</a></li>
-											<li><a th:href="@{/main/productsWrite(customerId=${#authentication.name})}">Add A New</a></li>
-										</ul>
-									</div>
-								</div>
-							</div>
-							<div class="card">
-								<div class="card-header">
-								<a class="collapsed card-link" data-toggle="collapse" href="#product-category">To Product</a>
-							</div>
-							<div id="product-category" class="collapse" data-parent="#accordion">
-								<div class="card-body">
-									<ul class="categor-list">
-										<li><a th:href="@{/main/list(category=total)}">All</a></li>
-										<li><a th:href="@{/main/list(category=FOOD_BEVERAGE)}">Food & Beverage</a></li>
-										<li><a th:href="@{/main/list(category=CHEMICAL)}">Chemical</a></li>
-										<li><a th:href="@{/main/list(category=HEALTH_MEDICAL)}">Health & Medical</a></li>
-										<li><a th:href="@{/main/list(category=ELECTRONIC)}">Electronics</a></li>
-										<li><a th:href="@{/main/list(category=COSMETIC)}">Cosmetic</a></li>
-									</ul>
-								</div>
-							</div>
+				<!-- 사이드 바 -->
+				<div class="col-lg-2 col-md-4 col-12">
+					<div class="shop-sidebar login-form">
+						<!-- Single Widget -->
+						<div class="single-widget category">
+							<h3 class="title">My Page</h3>
+
+							<ul class="categor-list">
+                                <li><a th:href="@{/main/myinfo(customerId=${customerId})}">info</a></li>
+                                <li><a th:href="@{/main/myproducts(customerId=${customerId})}" style="color: #222; font-weight: 700;">
+                                    Products</a></li>
+                                <!-- 해당 페이지에 들어가면 색상이 더 진하게 보이게 해놓음 -->
+                            </ul>
+
 						</div>
+						<!--/ End Single Widget -->
 					</div>
 				</div>
 				<!-- 사이드 바 끝-->
 
 				<div class="col-lg-9 col-12">
-					<div class="shop product-info">
-						<div class="container">
-							<div class="col-12">
-								<div class="write-form">
-									<div class="title">
-										<!-- <h2>Add A New Product</h2> -->
-										<p>Fill out each field in English ONLY.</p>
-									</div>
-
-									<form class="form" id="insertForm" method="post" th:action="@{/main/productsInsert}" enctype="multipart/form-data">
-										<table>
-											<tr>
-												<th class="form-group"><h6>Category<span>*</span></h6></th>
-												<td>
-													<select name="category" class="category" required>
-														<option selected="selected" value="DEFAULT">----------------</option>
-														<option value="FOOD_BEVERAGE">Food & Beverage</option>
-														<option value="CHEMICAL">Chemical</option>
-														<option value="HEALTH_MEDICAL">Health & Medical</option>
-														<option value="ELECTRONIC">Electronics</option>
-														<option value="COSMETIC">Cosmetic</option>
-													</select>
-												</td>
-											</tr>
-											<tr>
-												<th class="form-group"><h6>Product Name<span>*</span></h6></th>
-												<td><input type="text" name="productName" value="" required></td>
-											</tr>
-	
-											<tr>
-												<!-- 원산지 -->
-												<th class="form-group"><h6>Origin<span>*</span></h6></th>
-												<td><input type="text" class="origin" id="origin" name="origin"
-														value="" required></td>
-											</tr>
-											<tr>
-												<!-- 가격 과 단위 처리 어떻게 할지 물어보기 -->
-												<!-- 가격 & 단위 -->
-												<th class="form-group"><h6>Price<span>*</span></h6></th>
-												<td>
-													<span>$<input type="number" step="0.001" class="price" id="price" name="price" value="" required></span>
-													<!-- <input type="text" class="unit" id="unit" name="unit" value=""> -->
-												</td>
-											</tr>
-											<!-- 최소 주문 수량 -->
-											<tr>
-												<th class="form-group"><h6>Quantity & Unit<span>*</span></h6></th>
-												<td>
-													<div class="moq-unit">
-														<input type="number" class="moq" id="moq" name="moq" value="" placeholder="amount" required>
-														<input type="text" class="unit" id="unit" name="unit" value="" placeholder="unit" required>
-													</div>
-													<p style="margin-left: 23px;">Minimum Order</p>
-												</td>   
-											</tr>
-											<!-- 단위 -->
-											<!-- <tr>
-												<th class="form-group"><h6>Unit<span>*</span></h6></th>
-												<td>
-													<input type="text" class="unit" id="unit" name="unit" value="" required>
-												</td>
-											</tr> -->
-											<tr>
-												<th class="form-group"><h6>Representative image<span>*</span></h6></th>
-												<td>
-													<input type="file" class="uploadImg" id="uploadImg" name="uploadImg" required>
-												</td>   
-											</tr>
-										<!-- / 무역 정보 작성 -->
-	
-										<!-- 상품 정보 작성 -->
-	
-											<tr>
-												<th colspan="2" class="form-group editor"><h6>Product Details<span>*</span></h6></th>
-											</tr>
-											<tr>
-												<td colspan="2">
-													<div name="editor" id="ckeditor"></div>
-													<input type="hidden" name="productDesc" id="productDesc">
-												</td>
-											</tr>
-										<!-- / 상품 정보 작성 -->
-										</div>
-										<!-- 회원ID -->
-										<input type="hidden" name="customerId" th:value="${#authentication.name}">
-										<input type="hidden" name="remoteIp" id="remoteIp">
-										<input type="hidden" name="country" id="country">
-									</table>
-	
+					<div class="row">
+						<div class="shop product-info section">
+							<div class="container">
+								<div class="row">
 									<div class="col-12">
-										<div class=" form-group submit-btn">
-											<button class="btn" id="insertBtn" type="button">Submit</button>
+										<div class="title">
+											<h2>Add A New Product</h2>
+											<p>Fill out each field in English ONLY.</p>
 										</div>
-									</div>
-								</form>
-							</div>
-						</div> <!--/ End Form -->
+								
+										<form class="form" id="insertForm" method="post" th:action="@{/main/productsInsert}" enctype="multipart/form-data">
+
+											<table>
+                                                <tr>
+                                                    <th class="form-group">Category<span>*</span></th>
+                                                    <td>
+                                                        <select name="category" class="category" required>
+                                                            <option selected="selected" value="DEFAULT">----------------</option>
+                                                            <option value="FOOD_BEVERAGE">Food & Beverage</option>
+                                                            <option value="CHEMICAL">Chemical</option>
+                                                            <option value="HEALTH_MEDICAL">Health & Medical</option>
+                                                            <option value="ELECTRONIC">Electronics</option>
+                                                            <option value="COSMETIC">Cosmetic</option>
+                                                        </select>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="form-group">Product Name<span>*</span></th>
+                                                    <td><input type="text" name="productName" value="" required></td>
+                                                </tr>
+
+                                                <tr>
+                                                    <!-- 원산지 -->
+                                                    <th class="form-group">Origin<span>*</span></th>
+                                                    <td><input type="text" class="origin" id="origin" name="origin"
+                                                            value="" required></td>
+                                                </tr>
+                                                <tr>
+                                                    <!-- 가격 과 단위 처리 어떻게 할지 물어보기 -->
+                                                    <!-- 가격 & 단위 -->
+                                                    <th class="form-group">Price<span>*</span></th>
+                                                    <td>
+                                                        <span>$<input type="number" step="0.001" class="price" id="price" name="price" value="" required></span>
+                                                        <!-- <input type="text" class="unit" id="unit" name="unit" value=""> -->
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <!-- 단위 -->
+                                                    <th class="form-group">Unit<span>*</span></th>
+                                                    <td>
+                                                        <input type="text" class="unit" id="unit" name="unit" value="" required>
+                                                    </td>
+                                                </tr>
+                                                <!-- 최소 주문 수량 -->
+                                                <tr>
+                                                    <th class="form-group">Quantity<span>*</span></th>
+                                                    <td>
+                                                        <input type="number" class="moq" id="moq" name="moq" value="" required>
+                                                        <p>Minimum Order</p>
+                                                    </td>   
+                                                </tr>
+                                                <tr>
+                                                    <th class="form-group">Representative image</th>
+                                                    <td>
+                                                        <input type="file" class="uploadImg" id="uploadImg" name="uploadImg" required>
+                                                    </td>   
+                                                </tr>
+                                            <!-- / 무역 정보 작성 -->
+
+                                            <!-- 상품 정보 작성 -->
+
+                                                <tr>
+                                                    <th colspan="2" class="form-group editor">Product Details<span>*</span></th>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2">
+                                                        <div name="editor" id="ckeditor"></div>
+                                                        <input type="hidden" name="productDesc" id="productDesc">
+                                                    </td>
+                                                </tr>
+                                            <!-- / 상품 정보 작성 -->
+                                            </div>
+                                            <!-- 회원ID -->
+                                            <input type="hidden" name="customerId" th:value="${#authentication.name}">
+                                            <input type="hidden" name="remoteIp" id="remoteIp">
+                                            <input type="hidden" name="country" id="country">
+                                        </table>
+
+										<div class="col-12">
+                                            <div class=" form-group submit-btn">
+                                                <button class="btn" id="insertBtn" type="button">Submit</button>
+                                            </div>
+                                        </div>
+									</form>
+								</div>
+							</div> <!--/ End Form -->
 					</div>
 				</div>
 			</div>
-		</section> <!--/ End Login -->
+		</div>
+	</section> <!--/ End Login -->
 
 	
 
