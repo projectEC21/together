@@ -6768,6 +6768,11 @@ ul.notifications {
   text-align: left;
 }
 
+.modalBtn {
+  border: 0px;
+  background-color: transparent;
+}
+
 /* 테이블 헤더 스타일 */
 .table-custom thead th {
   color: #ffffff;
