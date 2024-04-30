@@ -6819,7 +6819,10 @@ ul.notifications {
   /* Adjust the space between the elements */
   border: 1px solid #E6E9ED;
   background-color: white;
+<<<<<<< HEAD
   border-radius: 8px;
+=======
+>>>>>>> d3b0708c44abe8e22ceac99876ad32e2fa5e4deb
 }
 
 .form-inline .form-group input {

@@ -2786,7 +2786,11 @@ html {
 
 .shop .nice-select .list {
 	border-radius: 0px;
+<<<<<<< HEAD
 	width: 100%;
+=======
+    width: 100%;
+>>>>>>> d3b0708c44abe8e22ceac99876ad32e2fa5e4deb
 }
 
 .shop .nice-select .option.selected {
@@ -4472,8 +4476,13 @@ span.paging {
 ========================================*/
 
 .product-list.section .write-form {
+<<<<<<< HEAD
 	position: relative;
 	left: 10%;
+=======
+    position: relative;
+    left: 10%;
+>>>>>>> d3b0708c44abe8e22ceac99876ad32e2fa5e4deb
 }
 
 .product-list.section .title h2 {
@@ -4519,17 +4528,28 @@ span.paging {
 
 .product-list.section th {
 	margin-top: 20px;
+<<<<<<< HEAD
 	border: 1px solid rgba(0, 0, 0, .125);
 	padding: 30px;
 	text-align: center;
+=======
+    border: 1px solid rgba(0, 0, 0, .125);
+    padding: 30px;
+    text-align: center;
+>>>>>>> d3b0708c44abe8e22ceac99876ad32e2fa5e4deb
 	/* padding-top: 20px;
 	display: block; */
 }
 
 .product-list.section td {
 	padding: 13px;
+<<<<<<< HEAD
 	border: 1px solid rgba(0, 0, 0, .125);
 	width: 72%;
+=======
+    border: 1px solid rgba(0, 0, 0, .125);
+    width: 72%;
+>>>>>>> d3b0708c44abe8e22ceac99876ad32e2fa5e4deb
 }
 
 .product-list.section .nice-select.category {
@@ -4559,6 +4579,7 @@ span.paging {
 
 .product-list.section input.price {
 	padding-left: 5px;
+<<<<<<< HEAD
 	<<<<<<< HEAD width: 98%;
 	=======width: 91%;
 	>>>>>>>f6aa6ed4d5a949c17beb752b5d112aea92726dd8 line-height: 35px;
@@ -4580,6 +4601,27 @@ span.paging {
 .form-group h6 {
 	position: relative;
 	float: left;
+=======
+    width: 91%;
+	line-height: 35px;
+>>>>>>> d3b0708c44abe8e22ceac99876ad32e2fa5e4deb
+}
+
+.product-list.section input.moq-unit{
+	width: 95%;
+    display: inline-flex;
+}
+
+.product-list.section input.moq {
+	width: 54%;
+}
+.product-list.section input.unit {
+	width: 35%;
+}
+
+.form-group h6{
+	position: relative;
+	float: left;
 }
 
 .ck.ck-editor {
@@ -4592,12 +4634,21 @@ span.paging {
 
 .product-list.section .form .btn {
 	display: inline-block;
+<<<<<<< HEAD
 	position: relative;
 	height: 46px;
 	width: 170px;
 	color: #fff;
 	line-height: 20px;
 	left: 36%;
+=======
+    position: relative;
+    height: 46px;
+    width: 170px;
+    color: #fff;
+    line-height: 20px;
+    left: 36%;
+>>>>>>> d3b0708c44abe8e22ceac99876ad32e2fa5e4deb
 }
 
 /*======================================
@@ -4614,12 +4665,17 @@ start new Write CSS
 	font-size: 14px;
 	color: #333;
 	font-weight: 400;
+<<<<<<< HEAD
 	<<<<<<< HEAD text-align: left;
 	padding-bottom: 40px;
 	margin: 0 20px;
 	=======text-align: left;
 	padding-bottom: 40px;
 	>>>>>>>f6aa6ed4d5a949c17beb752b5d112aea92726dd8
+=======
+    text-align: left;
+    padding-bottom: 40px;
+>>>>>>> d3b0708c44abe8e22ceac99876ad32e2fa5e4deb
 }
 
 .product-list.section .product-info .title h2 {
@@ -5358,7 +5414,11 @@ start Inquiry CSS
 	line-height: 20px;
 	margin: 0 auto;
 	position: relative;
+<<<<<<< HEAD
 	left: 32%;
+=======
+    left: 32%;
+>>>>>>> d3b0708c44abe8e22ceac99876ad32e2fa5e4deb
 }
 
 /*======================================
