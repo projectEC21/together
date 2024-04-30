@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
+
 <head> 
 <!-- Meta Tag -->
 <meta charset="utf-8">
@@ -74,6 +75,7 @@
 			icon.removeClass('fa fa-star').addClass('ti-star');
 			how = "savedNo";
 		}
+
 
 		$.ajax({
 			url: "/inbox/receiver/updateSaved",
@@ -171,8 +173,8 @@
 		}
 	}
 
-
 </script>
+
 </head>
 
 <body class="js">
@@ -203,7 +205,6 @@
 							<img th:src="@{/main/images/ec21logo.png}" alt="logo">
 							<span>Inquiry</span>
 						</a>
-						
 					</div>
 				</div>
 				<!--/ End Top Left -->

@@ -178,16 +178,16 @@
 				});
 			}
 		}
-		
+
 		// BLOCK : senderId 블락으로 처리하는 함수
 		function toBlock(element) {
 			let inquiryId = element.getAttribute("data-id");
 			let senderId = element.getAttribute("data-sender");
 			let customerId = $("#hiddenCustomerId").val();
-			if (confirm("["+senderId + "] 블락 처리하시겠습니까?")) {
+			if (confirm("[" + senderId + "] 블락 처리하시겠습니까?")) {
 				$.ajax({
 					url: "/inbox/spam/getList",
-					data: { "customerId": customerId, "inquiryId": inquiryId, "change": "block", "senderId":senderId},
+					data: { "customerId": customerId, "inquiryId": inquiryId, "change": "block", "senderId": senderId },
 					method: "GET",
 					success: function (inquiryList) {
 						$("#result").replaceWith(inquiryList);
@@ -201,7 +201,7 @@
 				});
 			}
 		}
-		
+
 		// REPORT : 신고 내용 GET 방식으로 보내기
 		function submitReport() {
 			let reportedId = $("#modalBlockedId").text();

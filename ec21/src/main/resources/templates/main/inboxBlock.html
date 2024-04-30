@@ -78,13 +78,13 @@
 			// 모달창 값 채우기 & 모달창 열기
 			$(document).on("click", "a[id^='modalBtn']", function () {
 				let blockedId = $(this).attr("data-id");
-				
+
 				// 모달 값 채우기
-				$("#modalBlockedId").text(blockedId);	
-				$("#submitBtn").on("click",submitReport);			
+				$("#modalBlockedId").text(blockedId);
+				$("#submitBtn").on("click", submitReport);
 				// 모달열기
 				$("#reportModal").modal();
-					
+
 			}); // End 모달 클릭 이벤트
 
 			init();
@@ -92,17 +92,17 @@
 
 		// 신고 내용 GET 방식으로 보내기
 		function submitReport() {
-			let reportedId =$("#modalBlockedId").text();
+			let reportedId = $("#modalBlockedId").text();
 			let reportCategory = document.querySelector('input[name="reportCategory"]:checked').value;
 			let reportReason = $("#modalReportReason").val();
 			let managerCheck = 'N';
 
-			if (confirm("신고!")){
+			if (confirm("신고!")) {
 				$.ajax({
-					url:"/inbox/report",
-					data: {"reportedId":reportedId, "reportCategory":reportCategory,"reportReason":reportReason, "managerCheck":managerCheck},
-					method:"get",
-					success:function(resp){
+					url: "/inbox/report",
+					data: { "reportedId": reportedId, "reportCategory": reportCategory, "reportReason": reportReason, "managerCheck": managerCheck },
+					method: "get",
+					success: function (resp) {
 						if (resp) {
 							$("#closeBtn").click();
 						}
@@ -116,10 +116,10 @@
 			let customerId = $("#hiddenCustomerId").val();
 			let inquiryBlockId = element.getAttribute("data-id");
 			let blockedId = element.getAttribute("data-blockedId");
-			if (confirm("["+blockedId +"] 블락 해제하시겠습니까?")) {
+			if (confirm("[" + blockedId + "] 블락 해제하시겠습니까?")) {
 				$.ajax({
 					url: "/inbox/block/getList",
-					data: { "customerId": customerId ,"inquiryBlockId": inquiryBlockId },
+					data: { "customerId": customerId, "inquiryBlockId": inquiryBlockId },
 					method: "GET",
 					success: function (blockList) {
 						$("#result").replaceWith(blockList);
@@ -133,7 +133,7 @@
 				});
 			}
 		}
-		
+
 		// 인콰이어리 블락 회원 리스트 가져오기
 		function init() {
 			let customerId = $("#hiddenCustomerId").val();
@@ -153,7 +153,7 @@
 				}
 			});
 		}
-		
+
 		$(document).ready(function () {
 			$('.ipElement').each(function () { // 'ipElement' 클래스를 가진 모든 요소에 대해 반복
 				var ipElement = $(this); // 현재 반복 중인 요소
@@ -173,7 +173,7 @@
 				}
 			});
 		});
-					
+
 
 	</script>
 </head>
@@ -255,7 +255,8 @@
 						<li><a th:href="@{/main/inboxSent(customerId=${customerId})}">Sent</a></li>
 						<li><a th:href="@{/main/inboxSaved(customerId=${customerId})}">Saved</a></li>
 						<li><a th:href="@{/main/inboxSpam(customerId=${customerId})}">Spam</a></li>
-						<li><a th:href="@{/main/inboxBlock(customerId=${customerId})}"  style="color: #439eff;">Block</a></li>
+						<li><a th:href="@{/main/inboxBlock(customerId=${customerId})}" style="color: #439eff;">Block</a>
+						</li>
 						<li><a th:href="@{/main/inboxTrash(customerId=${customerId})}">Trash</a></li>
 					</ul>
 				</div>
@@ -286,11 +287,12 @@
 						</thead>
 						<tbody>
 							<!-- 240423 dy : 인콰이어리 블락 회원 정보 출력 -->
-							<tr th:if="${blockList == null and #lists.isEmpty(blockList)}"> 
+							<tr th:if="${blockList == null and #lists.isEmpty(blockList)}">
 								<td colspan="6">No result</td>
 							</tr>
 
-							<tr th:unless="${blockList == null and #lists.isEmpty(blockList)}" th:each="blocked : ${blockList}">
+							<tr th:unless="${blockList == null and #lists.isEmpty(blockList)}"
+								th:each="blocked : ${blockList}">
 								<!-- 블락된 회원 아이디 -->
 								<td class="blockedId" data-title="blockedId">
 									<span class="blockedId" th:text="${blocked.blockedId}"></span>
@@ -304,13 +306,15 @@
 								</td>
 								<!-- ip 주소인데 뒷자리 3개는 * 표 표시 -->
 								<td class="remoteIp" data-title="remoteIp">
-									<span th:if="${blocked.remoteIp != null}" th:text="${@stringProcessor.maskIpAddress(blocked.remoteIp)}"></span>
+									<span th:if="${blocked.remoteIp != null}"
+										th:text="${@stringProcessor.maskIpAddress(blocked.remoteIp)}"></span>
 								</td>
-								
+
 								<!-- unBlock -->
 								<td data-title="unBlock">
 									<a href="javascript:void(0);" class="unBlockBtn"
-										th:data-id="${blocked.inquiryBlockId}" th:data-blockedId="${blocked.blockedId}" onclick="toUnBlock(this)">
+										th:data-id="${blocked.inquiryBlockId}" th:data-blockedId="${blocked.blockedId}"
+										onclick="toUnBlock(this)">
 										<i class="fa fa-refresh"></i>
 									</a>
 								</td>
@@ -322,7 +326,7 @@
 									</span>
 								</td>
 							</tr>
-							
+
 						</tbody>
 					</table>
 					<!--/ End inquiry List -->
@@ -350,11 +354,11 @@
 						<table>
 							<tr>
 								<th class="col-md-2"></th>
-								<td ><span id="modalBlockedId" name="reportedId"></span>님을 신고하시겠습니까?</td>
+								<td><span id="modalBlockedId" name="reportedId"></span>님을 신고하시겠습니까?</td>
 							</tr>
 							<tr>
 								<th class="">사유</th>
-								<td >
+								<td>
 									<input type="radio" name="reportCategory" value="DRUG"> 마약
 									<input type="radio" name="reportCategory" value="IPR"> 지식재산권 침해
 									<input type="radio" name="reportCategory" value="SPAM"> 다발성 이메일
@@ -363,7 +367,8 @@
 							</tr>
 							<tr>
 								<th class=""></th>
-								<td><textarea name="reportReason" id="modalReportReason"  cols="30" rows="10"></textarea> </td>
+								<td><textarea name="reportReason" id="modalReportReason" cols="30" rows="10"></textarea>
+								</td>
 							</tr>
 							<input type="hidden" name="managerCheck" value="N">
 						</table>

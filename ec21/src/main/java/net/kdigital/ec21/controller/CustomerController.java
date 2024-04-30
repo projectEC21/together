@@ -67,7 +67,8 @@ public class CustomerController {
      */
     @PostMapping("/main/registerProc")
     public String registerProc(@ModelAttribute CustomerDTO customerDTO) {
-        
+        log.info("===컨트롤러야");
+        log.info("===={}",customerDTO.getCustomerId());
         // default 세팅
         customerDTO.setEnabled(YesOrNo.N);
         customerDTO.setBlacklistCheck(YesOrNo.N);

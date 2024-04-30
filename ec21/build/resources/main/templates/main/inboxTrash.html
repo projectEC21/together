@@ -114,12 +114,12 @@
 			let inquiryId = element.getAttribute("data-id");
 			let senderId = element.getAttribute("data-sender");
 			let customerId = $("#hiddenCustomerId").val();
-			let data = (customerId == senderId)? "보낸 메일함으로 이동합니다.":"받은 메일함으로 이동합니다.";
-			
+			let data = (customerId == senderId) ? "보낸 메일함으로 이동합니다." : "받은 메일함으로 이동합니다.";
+
 			if (confirm(data)) {
 				$.ajax({
 					url: "/inbox/trash/getList",
-					data: { "customerId": customerId, "inquiryId": inquiryId, "change": "untrash"},
+					data: { "customerId": customerId, "inquiryId": inquiryId, "change": "untrash" },
 					method: "GET",
 					success: function (inquiryList) {
 						$("#result").replaceWith(inquiryList);
@@ -259,7 +259,8 @@
 						<li><a th:href="@{/main/inboxSaved(customerId=${customerId})}">Saved</a></li>
 						<li><a th:href="@{/main/inboxSpam(customerId=${customerId})}">Spam</a></li>
 						<li><a th:href="@{/main/inboxBlock(customerId=${customerId})}">Block</a></li>
-						<li><a th:href="@{/main/inboxTrash(customerId=${customerId})}"  style="color: #439eff;">Trash</a></li>
+						<li><a th:href="@{/main/inboxTrash(customerId=${customerId})}" style="color: #439eff;">Trash</a>
+						</li>
 					</ul>
 				</div>
 				<!--/ End Single Widget -->
@@ -292,17 +293,20 @@
 							<!-- 240422 dy : 보낸 인콰이어리 목록 출력 -->
 							<tr th:if="${inquiryList != null and !#lists.isEmpty(inquiryList)}"
 								th:each="inquiry : ${inquiryList}">
-								
+
 								<!-- 받은/보낸 회원 ID -->
 								<td class="" data-title="">
-									<span class="" th:if="${inquiry.customerId == inquiry.senderId}" th:text="${inquiry.receiverId}"></span>
-									<span class="" th:unless="${inquiry.customerId == inquiry.senderId}" th:text="${inquiry.senderId}"></span>
+									<span class="" th:if="${inquiry.customerId == inquiry.senderId}"
+										th:text="${inquiry.receiverId}"></span>
+									<span class="" th:unless="${inquiry.customerId == inquiry.senderId}"
+										th:text="${inquiry.senderId}"></span>
 								</td>
-								
+
 								<!-- 받은/보낸 상태-->
 								<td class="" data-title="">
 									<span class="" th:if="${inquiry.customerId == inquiry.senderId}">[sent]</span>
-									<span class="" th:unless="${inquiry.customerId == inquiry.senderId}">[received]</span>
+									<span class=""
+										th:unless="${inquiry.customerId == inquiry.senderId}">[received]</span>
 								</td>
 
 								<!-- 인콰이어리 제목 -->
@@ -321,7 +325,7 @@
 								<td data-title="untrash"><a href="javascript:void(0);" class="spamBtn"
 										th:data-id="${inquiry.inquiryId}" th:data-sender="${inquiry.senderId}" onclick="toUnTrash(this)"><i
 											class="fa fa-folder-open-o"></i></a></td>
-								
+				
 								<!-- 누르면 삭제 되면서 쓰통으로 -->
 								<!-- <td class="action" data-title="trash"><a href="#" class="trashBtn" th:data-id="${inquiry.inquiryId}"><i class="ti-trash remove-icon"></i></a></td> -->
 								<td data-title="deleted"><a href="javascript:void(0)" class="trashBtn"

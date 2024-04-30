@@ -55,18 +55,7 @@ public class ProductController {
      * @return
      */
     @PostMapping("main/productsInsert")
-    public String productsInsert(
-        @ModelAttribute ProductDTO productDTO
-        // , BindingResult bindingResult
-        , RedirectAttributes attr
-        ) {
-            // if (bindingResult.hasErrors()) {
-            //     // 유효성 검사 실패 시 리다이렉트
-            //     return "redirect:/main/productsWrite"; // 유효성 검사 실패 시 리다이렉트
-            // }
-        
-
-
+    public String productsInsert(@ModelAttribute ProductDTO productDTO, RedirectAttributes attr) {
         // python Server -> DB 저장까지
         productService.insertProduct(productDTO);
 
@@ -77,8 +66,7 @@ public class ProductController {
         attr.addFlashAttribute("productList", productList);
         
         return "redirect:/main/myproducts";
-    }
-    
+    }    
 
 
     // =============================== 상품 상세 페이지 ===============================
