@@ -1,6 +1,23 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
+<head>
+	<!-- Meta Tag -->
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name='copyright' content=''>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<!-- Title Tag  -->
+	<title>EC21, Global B2B Marketplace</title>
+	<!-- Favicon -->
+	<link rel="icon" type="image/png" th:href="@{/main/images/ec21logo.png}">
+	<!-- Web Font -->
+	<link
+		href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap"
+		rel="stylesheet">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap" rel="stylesheet">
 <head> 
 <!-- Meta Tag -->
 <meta charset="utf-8">
@@ -58,7 +75,7 @@
 
 <!-- 240421 dy : ajax.. -->
 <script th:src="@{/script/jquery-3.7.1.min.js}"></script>
-<script>
+<scrip>
 
 		// saved 처리
 		$(document).on('click', '.saved-icon', function(event){
@@ -66,21 +83,12 @@
 		var icon = $(this).find('i');
 		var inquiryId = $(icon).attr("data-id");
 		var how = "";
-
-		if (icon.hasClass('ti-star')) {
-			icon.removeClass('ti-star').addClass('fa fa-star');
-			how = "savedYes";
-		} else {
-			icon.removeClass('fa fa-star').addClass('ti-star');
-			how = "savedNo";
-		}
-
-		$.ajax({
-			url: "/inbox/receiver/updateSaved",
-			data: { "inquiryId": inquiryId, "how": how },
-			method: "GET"
-		});
-		});
+				$.ajax({
+					url: "/inbox/receiver/updateSaved",
+					data: { "inquiryId": inquiryId, "how": how },
+					method: "GET"
+				});
+			});
 
 		// 모달 변수 초기화
 		var modal = $("#inquiryDetail");
@@ -171,8 +179,7 @@
 		}
 	}
 
-
-</script>
+	</script>
 </head>
 
 <body class="js">
