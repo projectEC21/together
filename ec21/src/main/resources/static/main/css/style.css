@@ -2945,6 +2945,7 @@ textarea {
 .shop.single .product-gallery {
 	margin: 30px;
 	border: 2px solid #e6e6e6;
+	height: 91%;
 }
 
 .shop.single .flexslider-thumbnails {
@@ -2959,7 +2960,7 @@ textarea {
 	left: 17%;
 	height: 400px;
 	/* border: 1px solid #f6f6f6; */
-	top: 7px;
+	top: 14px;
 }
 
 .shop.single .product-gallery .slides li {
@@ -3391,7 +3392,10 @@ textarea {
 	border-radius: 50%;
 }
 
-.shop.single .single-des p {}
+.shop.single .single-des p {
+	color: #000;
+    padding: 10px;
+}
 
 .shop.single .item-info {
 	width: 100%;
