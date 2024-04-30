@@ -67,10 +67,14 @@
 }
 
 
-.table.shopping-summery {
-	width: 100%;
+.table.shopping-summery.inquiry {
+	width: 95%;
     table-layout: fixed;
 	text-align: center;
+}
+
+.shopping-summery th.inquiryTitle {
+	width: 51%;
 }
 
 .table.shopping-summery td {
