@@ -683,8 +683,8 @@
 							</div>
 
 							<div class="product-content">
-								<h3><a
-										th:href="@{/main/productsDetail(productId=${dto.productId})}">[[${dto.productName}]]</a>
+								<h3>
+									<a th:href="@{/main/productsDetail(productId=${dto.productId})}">[[${dto.productName}]]</a>
 								</h3>
 								<div class="product-price">
 									<span>$ [[${dto.price}]]</span>
@@ -699,11 +699,12 @@
 					</div>
 				</div>
 			</div>
-			<div style="height: 50px;"></div>
-			<!-- 여기에 50px 높이의 공간이 추가됩니다 -->
 		</div>
 	</div>
 	<!-- End Most Popular Area -->
+
+	<div style="height: 50px;"></div>
+	<!-- 여기에 50px 높이의 공간이 추가됩니다 -->
 
 	<!-- Start Footer Area -->
 	<footer class="footer">
