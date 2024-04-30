@@ -50,6 +50,20 @@
 
 	<!-- Color CSS -->
 	<link rel="stylesheet" th:href="@{/main/css/color/color2.css}">
+
+	<!-- 240430 dy : JQuery 파일 추가 및 ajax 추가 -->
+	<script th:src="@{/script/jquery-3.7.1.min.js}"></script>
+	
+	<script>
+		function copy() {
+			let copyTxt = $("#mail").text();
+			// 복사
+			navigator.clipboard.writeText(copyTxt);
+			// 복사완료에 대해 Alert으로 띄우기
+			alert("복사되었습니다.");
+		}
+
+	</script>
 	
 </head>
 <body class="js">
@@ -92,13 +106,13 @@
 					<div class="container">
 						<div class="row">
 							<div class="col-lg-6 offset-lg-3 col-12">
-								<!-- Error Inner -->
 								<div class="error-inner">
-									<h2>404</h2>
-									<h5>This page cannot be founded</h5>
-									<p>Oops! The page you are looking for does not exist. It might have been moved or deleted.</p>
+									<h2></h2>
+									<h5>Unable to access site</h5>
+									<p>You have been blacklisted for some reason. If you are curious about the exact reason, please contact us by email
+										below.</p>
 									<div class="button">
-										<a th:href="@{/}" class="btn">Go Homepage</a>
+										<a href="javascript:void(0)" class="btn" onclick="copy()" id="mail">ec21@ec21.com</a>
 									</div>
 								</div>
 								<!--/ End Error Inner -->

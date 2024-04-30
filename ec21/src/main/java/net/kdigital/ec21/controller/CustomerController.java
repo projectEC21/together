@@ -1,7 +1,8 @@
 package net.kdigital.ec21.controller;
 
 import java.util.List;
- 
+import java.util.Map;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,7 +10,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.support.RequestContextUtils;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.kdigital.ec21.dto.CustomerDTO;
@@ -81,10 +84,16 @@ public class CustomerController {
      */
     @GetMapping("/main/login")
     public String login(@RequestParam(value = "error", required =false) String error,
-        @RequestParam(value = "errMessage", required = false) String errMessage,Model model) {
+        @RequestParam(value = "errMessage", required = false) String errMessage, HttpServletRequest request, Model model) {
 
         model.addAttribute("error", error);
         model.addAttribute("errMessage", errMessage);
+
+        // 이전 페이지로 되돌아가기 위한 Referer 헤더값을 세션의 prevPage attribute로 저장
+        String uri = request.getHeader("Referer");
+        if (uri != null && !uri.contains("/login")) {
+            request.getSession().setAttribute("prevPage", uri);
+        }
         
         return "main/login";
     }
