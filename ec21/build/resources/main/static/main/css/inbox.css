@@ -55,7 +55,10 @@
 }
 
 .shop-sidebar .single-widget.inquiry-category .categor-list li {
+	display: flex;
 	text-align: justify;
+    align-items: center;
+    font-size: 16px;
 }
 
 .shop-sidebar .single-widget.inquiry-category .categor-list li a {
@@ -71,9 +74,6 @@
 	background-color: rgba(0, 114, 171, 0.63);
 }
 
-.shop-sidebar .single-widget.inquiry-category .categor-list span{
-	display: block;
-}
 
 .shopping-cart .container {
 	flex: 3; /* 메인 콘텐츠가 차지할 공간 비율 설정 */
