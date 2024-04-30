@@ -282,13 +282,13 @@
 						<div class="right-bar">
 							<!-- Search Form -->
 							<div class="sinlge-bar">
-								<a th:href="@{/main/myproducts}" class="single-icon"><i class="fa fa-user-circle-o"
+								<a th:href="@{/main/myproducts(customerId=${#authentication.name})}" class="single-icon"><i class="fa fa-user-circle-o"
 										aria-hidden="true"></i></a>
 							</div>
 
 							<!-- 검색창 옆 부분 인콰이어리 new 로만 보이게 하고 인콰이어리 페이지로 넘어가게 하기 -->
 							<div class="sinlge-bar inquiry">
-								<a th:href="@{/main/inbox}" class="single-icon"><i class="fa fa-envelope-o"></i> <span
+								<a th:href="@{/main/inbox(customerId=${#authentication.name})}" class="single-icon"><i class="fa fa-envelope-o"></i> <span
 										class="total-count">new</span></a>
 							</div>
 						</div>
@@ -602,7 +602,7 @@
 	<!-- Popper JS -->
 	<script th:src="@{/main/js/popper.min.js}"></script>
 	<!-- Bootstrap JS -->
-	<script th:src="@{/static/main/js/bootstrap.min.js}"></script>
+	<script th:src="@{/main/js/bootstrap.min.js}"></script>
 	<!-- Color JS -->
 	<script th:src="@{/main/js/colors.js}"></script>
 	<!-- Slicknav JS -->

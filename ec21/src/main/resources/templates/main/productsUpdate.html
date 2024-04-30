@@ -142,7 +142,7 @@
                         <!--/ End Logo -->
                         <!-- Search Form -->
                         <div class="search-top">
-                            <div class="top-search"><a href="#0"><i class="ti-search"></i></a></div>
+                            <div class="top-search"><a href="#"><i class="ti-search"></i></a></div>
                             <!-- Search Form -->
                             <div class="search-top">
                                 <form class="search-form">
@@ -169,7 +169,7 @@
                             <li><a th:href="@{/}">Home<i class="ti-arrow-right"></i></a></li>
                             <li class="active"><a href="#">Products</a></li>
                             <li><i class="ti-arrow-right"></i></a></li>
-                            <li class="active"><a th:href="@{/main/productsWrite(customerId=${#authentication.name})}">Add a New Product</a></li>
+                            <li class="active"><a th:href="@{/main/productsWrite(customerId=${#authentication.name})}">Update Product</a></li>
                         </ul>
                     </div>
                 </div>
@@ -178,110 +178,132 @@
     </div>
     <!-- End Breadcrumbs -->
 
-    <!-- 상품 등록 화면 -->
+    <!-- 상품 수정 화면 -->
     <section class="product-area shop-sidebar product-list shop section">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-3 col-md-4 col-12">
-                    <div class="shop-sidebar login-form">
-                        <!-- Single Widget -->
-                        <div class="single-widget category">
-                            <h3 class="title">My Page</h3>
-                            <ul class="categor-list">
-                                <li><a href="#">info</a></li>
-                                <li><a th:href="@{main/myproducts(customerId=${#authentication.name})}" style="font-weight:600;">Products</a></li>
-                                <!-- 해당 페이지에 들어가면 색상이 더 진하게 보이게 해놓음
-											th : @@/myProducts -->
-                            </ul>
-                        </div>
-                        <!--/ End Single Widget -->
-                    </div>
-                </div>
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-2 col-12 ">
+						<div id="accordion">
+							<div class="card">
+								<div class="card-header">
+									<a class="card-link" data-toggle="collapse" href="#account-category">My Account</a>
+								</div>
+								<div id="account-category" class="collapse show" data-parent="#accordion">
+									<div class="card-body">
+										<ul class="categor-list">
+											<li><a th:href="@{/main/myinfo(customerId=${#authentication.name})}">My Information</a></li>
+											<li><a th:href="@{/main/myproducts(customerId=${#authentication.name})}">My Products</a></li>
+											<li><a th:href="@{/main/productsWrite(customerId=${#authentication.name})}">Add A New</a></li>
+										</ul>
+									</div>
+								</div>
+							</div>
+							<div class="card">
+								<div class="card-header">
+								<a class="collapsed card-link" data-toggle="collapse" href="#product-category">To Product</a>
+							</div>
+							<div id="product-category" class="collapse" data-parent="#accordion">
+								<div class="card-body">
+									<ul class="categor-list">
+										<li><a th:href="@{/main/list(category=total)}">All</a></li>
+										<li><a th:href="@{/main/list(category=FOOD_BEVERAGE)}">Food & Beverage</a></li>
+										<li><a th:href="@{/main/list(category=CHEMICAL)}">Chemical</a></li>
+										<li><a th:href="@{/main/list(category=HEALTH_MEDICAL)}">Health & Medical</a></li>
+										<li><a th:href="@{/main/list(category=ELECTRONIC)}">Electronics</a></li>
+										<li><a th:href="@{/main/list(category=COSMETIC)}">Cosmetic</a></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- 사이드 바 끝-->
 
                 <div class="col-lg-9 col-md-8 col-12">
-                    <div class="row">
-                        <div class="title">
-                            <h2>Add A New Product</h2>
-                            <p>Fill out each field in English ONLY.</p>
-                        </div>
-                        <!-- productsWrite 시작 -->
-                        <div class="write-form">
-                            <!-- Form -->
-                            <form class="form" id="updateForm" method="post" th:action="@{/main/productsUpdateProc}">
-                                <table>
-                                    <div class="row">
-                                        <tr>
-                                            <th class="form-group">Category<span>*</span></th>
-                                            <td>
-                                                <select name="category" class="category">
-                                                    <option value="FOOD_BEVERAGE" th:selected="${product.category.name()} == 'FOOD_BEVERAGE'">Food & Beverage</option>
-                                                    <option value="CHEMICAL" th:selected="${product.category.name()} == 'CHEMICAL'">Chemical</option>
-                                                    <option value="HEALTH_MEDICAL" th:selected="${product.category.name()} == 'HEALTH_MEDICAL'">Health & Medical</option>
-                                                    <option value="ELECTRONIC" th:selected="${product.category.name()}=='ELECTRONIC'">Electronics</option>
-                                                    <option value="COSMETIC" th:selected="${product.category.name()} == 'COSMETIC'">Cosmetic</option>
-                                                </select> 
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th class="form-group">Product Name<span>*</span></th>
-                                            <td><input type="text" name="productName" th:value="${product.productName}"></td>
-                                        </tr>
+                    <div class="shop product-info">
+						<div class="container">
+							<div class="col-12">
+                        <!-- productsUpdate 시작 -->
+                                <div class="write-form">
+                                    <!-- Form -->
+                                    <form class="form" id="updateForm" method="post" th:action="@{/main/productsUpdateProc}">
+                                        <table>
+                                            <div class="row">
+                                                <tr>
+                                                    <th class="form-group"><h6>Category<span>*</span></th>
+                                                    <td>
+                                                        <select name="category" class="category">
+                                                            <option value="FOOD_BEVERAGE" th:selected="${product.category.name()} == 'FOOD_BEVERAGE'">Food & Beverage</option>
+                                                            <option value="CHEMICAL" th:selected="${product.category.name()} == 'CHEMICAL'">Chemical</option>
+                                                            <option value="HEALTH_MEDICAL" th:selected="${product.category.name()} == 'HEALTH_MEDICAL'">Health & Medical</option>
+                                                            <option value="ELECTRONIC" th:selected="${product.category.name()}=='ELECTRONIC'">Electronics</option>
+                                                            <option value="COSMETIC" th:selected="${product.category.name()} == 'COSMETIC'">Cosmetic</option>
+                                                        </select> 
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="form-group"><h6>Product Name<span>*</span></h6></th>
+                                                    <td><input type="text" name="productName" th:value="${product.productName}"></td>
+                                                </tr>
 
-                                        <tr>
-                                            <!-- 원산지 -->
-                                            <th class="form-group">Origin<span>*</span></th>
-                                            <td><input type="text" class="origin" id="origin" name="origin" th:value="${product.origin}">
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <!-- 가격 과 단위 처리 어떻게 할지 물어보기 -->
-                                            <!-- 가격 & 단위 -->
-                                            <th class="form-group">Price<span>*</span></th>
-                                            <td>
-                                                $ <input type="text" class="price" id="price" name="price" th:value="${product.price}">
-                                                <input type="hidden" class="unit" id="unit" name="unit" th:value="${product.unit}">
-                                            </td>
-                                        </tr>
-                                        <!-- 최소 주문 수량 -->
-                                        <tr>
-                                            <th class="form-group">Quantity<span>*</span></th>
-                                            <td>
-                                                <input type="text" class="moq" id="moq" name="moq" th:value="${product.moq}">
-                                                <p>Minimum Order</p>
-                                        </tr>
-                                        <!-- / 무역 정보 작성 -->
+                                                <tr>
+                                                    <!-- 원산지 -->
+                                                    <th class="form-group"><h6>Origin<span>*</span></h6></th>
+                                                    <td><input type="text" class="origin" id="origin" name="origin" th:value="${product.origin}">
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <!-- 가격 과 단위 처리 어떻게 할지 물어보기 -->
+                                                    <!-- 가격 & 단위 -->
+                                                    <th class="form-group"><h6>Price<span>*</span></h6></th>
+                                                    <td>
+                                                        $ <input type="text" class="price" id="price" name="price" th:value="${product.price}">
+                                                    </td>
+                                                </tr>
+                                                <!-- 최소 주문 수량 -->
+                                                <tr>
+                                                    <th class="form-group"><h6>Quantity<span>*</span></h6></th>
+                                                    <td>
+                                                        <input type="text" class="moq" id="moq" name="moq" th:value="${product.moq}">
+                                                        <input type="hidden" class="unit" id="unit" name="unit" th:value="${product.unit}">
+                                                        <p style="margin-left: 23px;">Minimum Order</p>
+                                                </tr>
+                                                <!-- / 무역 정보 작성 -->
 
-                                        <!-- 상품 정보 작성 -->
-                                        <tr>
-                                            <th colspan="2" class="form-group editor">Product Details<span>*</span></th>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2">
-                                                <div name="editor" id="ckeditor" ></div>
-                                            </td>
-                                        </tr>
-                                        <!-- / 상품 정보 작성 -->
-                                        
-                                        <input type="hidden" id="productDesc"  name="productDesc">
-                                        <input type="hidden" name="productId" th:value="${product.productId}">
-                                        <input type="hidden" name="customerId" th:value="${product.customerId}">
-                                    </div>
-                                </table>
-                                <div class="col-12">
-                                    <div class=" form-group submit-btn">
-                                        <button class="btn" id="submitBtn" type="button">Submit</button>
-                                    </div>
+                                                <!-- 상품 정보 작성 -->
+                                                <tr>
+                                                    <th colspan="2" class="form-group editor"><h6>Product Details<span>*</span></h6></th>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2">
+                                                        <div name="editor" id="ckeditor" ></div>
+                                                    </td>
+                                                </tr>
+                                                <!-- / 상품 정보 작성 -->
+                                                
+                                                <input type="hidden" id="productDesc"  name="productDesc">
+                                                <input type="hidden" name="productId" th:value="${product.productId}">
+                                                <input type="hidden" name="customerId" th:value="${product.customerId}">
+                                            </div>
+                                        </table>
+                                        <div class="col-12">
+                                            <div class=" form-group submit-btn">
+                                                <button class="btn" id="submitBtn" type="button">Submit</button>
+                                            </div>
 
+                                        </div>
+                                    </form>
+                                    <!--/ End Form -->
                                 </div>
-                            </form>
-                            <!--/ End Form -->
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        </sesction>
-        <!--/ End Write -->
+    </sesction>
+    <!--/ End update -->
+    <div style="height: 50px;"></div>
 
         <!-- Start Footer Area -->
         <footer class="footer">
@@ -374,7 +396,7 @@
                             </div>
                             <div class="col-lg-6 col-12">
                                 <div class="right">
-                                    <img th:src="@{/images/payments.png}" alt="#">
+                                    <img th:src="@{/main/images/payments.png}" alt="#">
                                 </div>
                             </div>
                         </div>
@@ -392,7 +414,7 @@
         <!-- Popper JS -->
         <script th:src="@{/main/js/popper.min.js}"></script>
         <!-- Bootstrap JS -->
-        <script th:src="@{/static/main/js/bootstrap.min.js}"></script>
+        <script th:src="@{/main/js/bootstrap.min.js}"></script>
         <!-- Color JS -->
         <script th:src="@{/main/js/colors.js}"></script>
         <!-- Slicknav JS -->

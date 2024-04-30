@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.kdigital.ec21.service.ProductService;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 
 @Controller
@@ -32,6 +34,25 @@ public class MainController {
 		model.addAttribute("list", dtoList);
 		return "main/index";
 	}
+
+	/**
+	 * 블랙리스트 회원인 경우 로그인 후 화면
+	 * @return
+	 */
+	@GetMapping("/blacklist")
+	public String blacklist() {
+		return "blacklist";
+	}
+
+	/**
+	 * 탈퇴한 회원인 경우 로그인 후 화면
+	 * @return
+	 */
+	@GetMapping("/withdrawalAccount")
+	public String withdrawalAccount() {
+		return "withdrawalAccount";
+	}
+	
 
 }
 

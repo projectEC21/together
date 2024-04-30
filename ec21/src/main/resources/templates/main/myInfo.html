@@ -202,7 +202,6 @@
 
 <body class="js">
 
-	<input type="hidden" name="customerId" id="customerId" th:value="${#authentication.name}">
 	
 	<!-- Preloader -->
 	<div class="preloader">
@@ -214,7 +213,7 @@
 		</div>
 	</div>
 	<!-- End Preloader -->
-
+	
 	<!-- Header -->
 	<header class="header shop">
 		<!-- Topbar -->
@@ -240,19 +239,19 @@
 								<li sec:authorize="isAnonymous()"><i class="ti-power-off"></i><a th:href="@{/main/login}">Login</a></li>
 								<li sec:authorize="isAnonymous()"><i class="ti-user"></i><a th:href="@{/main/register}">Sign up</a></li>
 								<li sec:authorize="isAuthenticated()"><i class="ti-power-off"></i><a th:href="@{/main/logout}">Logout</a></li>
-								<li><a th:href="@{/main/myproducts}"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a></li>
+								<li><a th:href="@{/main/myproducts(customerId=${#authentication.name})}"><i class="fa fa-user-circle-o" aria-hidden="true"></i><span sec:authorize="isAuthenticated()">[[${#authentication.name}]]</span></a></li>
 								<li><a th:href="@{/main/inbox(customerId=${#authentication.name})}" class="single-icon">
-										<i class="fa fa-envelope-o"></i><span class="total-count"></span></li>
-							</ul>
+									<i class="fa fa-envelope-o"></i><span class="total-count"></span></li>
+								</ul>
+							</div>
+							<!-- End Top Right -->
 						</div>
-						<!-- End Top Right -->
 					</div>
 				</div>
 			</div>
-		</div>
 		<!-- End Topbar -->
 	</header>
-
+	
 	<!-- myInfo -->
 	<section class="product shop section">
 		<div class="container">
@@ -291,8 +290,8 @@
 							</div>
 						</div>
 					</div>
-				</div>	
-
+				</div>
+				<!-- 카테고리 종료 -->
 				<div class="col-lg-9 col-12">
 					<div class="row">
 						<div class="shop myinfo section">
@@ -300,162 +299,144 @@
 								<div class="row">
 									<div class="col-12">
 										<!-- Shop Top -->
+										<div class="user-image">
+											<img th:src="@{/main/images/user.png}" alt="">
+										</div>
 										<h2>Personal Info</h2>
 										<!-- Form -->
+										
+										<div>
+											<form class="form" method="post" id="updateForm" th:action="@{/main/myinfo/updateCustomer}">
+											
 
-										<div class="">
-											<form class="form" method="post" id="updateForm"
-												th:action="@{/main/myinfo/updateCustomer}">
-
-												<div class="form-group">
-													<label>ID</label>
-													<input type="text" name="customerId" id="customerId"
-														th:value="${customer.customerId}" required="required" readonly>
+											<div class="form-group">
+												<label>ID</label>
+												<input type="text" name="customerId" id="customerId"
+												th:value="${customer.customerId}" required="required" readonly>
+											</div>
+											
+											<div class="form-group">
+												<label for="customerPw">Password</label>
+												<input type="password" id="customerPw" name="customerPw"
+												th:value="${customer.customerPw}" required="required" readonly>
+												<span class="validation-message"></span>
+											</div>
+											
+											
+											<div class="form-group">
+												<label>Confirm Password</label>
+												<input type="password" id="confirmPw" name="confirmPw"
+												required="required" readonly>
+												<span class="validation-message"></span>
+											</div>
+											
+											<div class="form-group">
+												<label>Name</label>
+												<input type="text" id="customerName" name="customerName"
+												th:value="${customer.customerName}" required="required"
+												readonly>
+											</div>
+											
+											<div class="form-group">
+												<label>Email</label>
+												<input type="text" id="email" name="email"
+												th:value="${customer.email}" required="required" readonly>
+												<span class="validation-message"></span>
+											</div>
+											
+											<div class="form-group">
+												<label>Department<span>*</span></label>
+												<input type="text" id="customerDepartment" name="customerDepartment"
+												th:value="${customer.customerDepartment}" required="required"
+												readonly>
+											</div>
+											
+											<div class="form-group">
+												<label class="gubun">I am a</label>
+												<div>
+													<input type="radio" class="gubun"
+													th:checked="${customer.customerGubun.name() == 'B'}" name="customerGubun" value="B" disabled>
+													Buyer
+													<input type="radio" class="gubun"
+													th:checked="${customer.customerGubun.name() == 'S'}" name="customerGubun" value="S" disabled>
+													Seller
+													<input type="radio" class="gubun" th:checked="${customer.customerGubun.name() == 'A'}"
+													name="customerGubun" value="A" disabled>
+													Seller & Buyer
 												</div>
-
-												<div class="form-group">
-													<label for="customerPw">Password</label>
-													<input type="password" id="customerPw" name="customerPw"
-														th:value="${customer.customerPw}" required="required" readonly>
-													<span class="validation-message"></span>
-												</div>
-
-
-												<div class="form-group">
-													<label>Confirm Password</label>
-													<input type="password" id="confirmPw" name="confirmPw"
-														required="required" readonly>
-													<span class="validation-message"></span>
-												</div>
-
-												<div class="form-group">
-													<label>Name</label>
-													<input type="text" id="customerName" name="customerName"
-														th:value="${customer.customerName}" required="required"
-														readonly>
-												</div>
-
-												<div class="form-group">
-													<label>Email</label>
-													<input type="text" id="email" name="email"
-														th:value="${customer.email}" required="required" readonly>
-													<span class="validation-message"></span>
-												</div>
-
-												<div class="form-group">
-													<label>Department<span>*</span></label>
-													<input type="text" id="customerDepartment" name="customerDepartment"
-														th:value="${customer.customerDepartment}" required="required"
-														readonly>
-												</div>
-
-												<div class="form-group">
-													<label class="gubun">I am a</label>
-													<div>
-														<input type="radio" class="gubun"
-															th:checked="${customer.customerGubun.name() == 'B'}"
-															name="customerGubun" value="B" disabled>
-														Buyer
-														<input type="radio" class="gubun"
-															th:checked="${customer.customerGubun.name() == 'S'}"
-															name="customerGubun" value="S" disabled>
-														Seller
-														<input type="radio" class="gubun"
-															th:checked="${customer.customerGubun.name() == 'A'}"
-															name="customerGubun" value="A" disabled>
-														Seller & Buyer
-													</div>
-												</div>
-
-
+											</div>
+												
 												<!-- 회사 정보 -->
-
-
 												<div class="form-group title">
 													<label>Company Information</label>
 												</div>
-
-
+												
+												
 												<div class="form-group">
 													<label>Company Name</label>
-
-													<input type="text" id="compName" name="compName"
-														th:value="${customer.compName}" required="required" readonly>
+													<input type="text" id="compName" name="compName" th:value="${customer.compName}" required="required" readonly>
 												</div>
-
+												
 												<div class="form-group">
-													<label>Company
-														Description</label> <br>
-													<input type="textarea" id="compDesc" name="compDesc"
-														th:value="${customer.compDesc}" required="required" readonly>
-												</div>
-
+													<label>Company Description</label> <br>
+														<input type="textarea" id="compDesc" name="compDesc" th:value="${customer.compDesc}" required="required" readonly>
+													</div>
+													
+													<div class="form-group">
+														<label>Company Url</label><br>
+														<input type="text" id="compUrl" name="compUrl" th:value="${customer.compUrl}" required="required" readonly>
+													</div>
+				
 												<div class="form-group">
-													<label>Company Url</label>
-													<br>
-													<input type="text" id="compUrl" name="compUrl"
-														th:value="${customer.compUrl}" required="required" readonly>
+													<label>Company Address</label><br>
+													<input type="text" id="address" name="address" th:value="${customer.address}" required="required" readonly>
 												</div>
-
-												<div class="form-group">
-													<label>Company Address</label>
-													<br>
-													<input type="text" id="address" name="address"
-														th:value="${customer.address}" required="required" readonly>
-												</div>
-
+												
 												<div class="form-group">
 													<label>Zip No</label> <br>
-													<input type="text" id="zipNo" name="zipNo"
-														th:value="${customer.zipNo}" required="required" readonly>
+													<input type="text" id="zipNo" name="zipNo" th:value="${customer.zipNo}" required="required" readonly>
 												</div>
-
+												
 												<div class="form-group">
 													<label>Fax No</label> <br>
-													<input type="text" name="faxNo" th:value="${customer.faxNo}"
-														required="required" readonly>
+													<input type="text" name="faxNo" th:value="${customer.faxNo}" required="required" readonly>
 												</div>
-
-												<div class="form-group">
-													<label>Business No</label>
-													<br>
-													<input type="text" name="busiNo" th:value="${customer.busiNo}"
-														required="required" readonly>
-												</div>
-
-												<div class="form-group">
-													<label>Trade No</label> <br>
-													<input type="text" name="tradeNo" th:value="${customer.tradeNo}"
-														required="required" readonly>
-												</div>
-
-
+											
+											<div class="form-group">
+												<label>Business No</label>
 												<br>
-
-												<div class="form-group info-btn">
-													<button class="btn" type="button" id="editButton">Edit My Account
-													</button>
-													<button class="btn" type="button" id="modifyButton"
-														style="display: none;">Modify My
-														Account
-													</button>
-													<button class="btn" type="button" id="cancelButton"
-														style="display: none;">Cancel</button>
-												</div>
-											</form>
-										</div>
-									</div>
+												<input type="text" name="busiNo" th:value="${customer.busiNo}"
+												required="required" readonly>
+											</div>
+											
+											<div class="form-group">
+												<label>Trade No</label> <br>
+												<input type="text" name="tradeNo" th:value="${customer.tradeNo}"
+												required="required" readonly>
+											</div>
+											
+											<br>
+											
+											<div class="form-group info-btn">
+												<button class="btn" type="button" id="editButton">Edit My Account</button>
+												<button class="btn" type="button" id="modifyButton" style="display: none;">Modify My Account</button>
+												<button class="btn" type="button" id="cancelButton" style="display: none;">Cancel</button>
+											</div>
+										<input type="hidden" name="customerId" id="customerId" th:value="${#authentication.name}">
+									</form>
 								</div>
-								<!--/ End Form -->
 							</div>
+							</div>
+							<!--/ End Form -->
 						</div>
-					</div>
+					</div>	
 				</div>
 			</div>
 		</div>
 	</section>
-	<!--/ End Login -->
 
+
+	
 	<!-- Start Footer Area -->
 	<footer class="footer">
 		<!-- Footer Top -->
@@ -548,7 +529,7 @@
 						</div>
 						<div class="col-lg-6 col-12">
 							<div class="right">
-								<!-- <img th:src="@{/images/payments.png}" alt="#"> -->
+								<img th:src="@{/main/images/payments.png}" alt="#">
 							</div>
 						</div>
 					</div>
@@ -565,7 +546,7 @@
 	<!-- Popper JS -->
 	<script th:src="@{/main/js/popper.min.js}"></script>
 	<!-- Bootstrap JS -->
-	<!-- <script th:src="@{/static/main/js/bootstrap.min.js}"></script> -->
+	<script th:src="@{/main/js/bootstrap.min.js}"></script>
 	<!-- Color JS -->
 	<script th:src="@{/main/js/colors.js}"></script>
 	<!-- Slicknav JS -->

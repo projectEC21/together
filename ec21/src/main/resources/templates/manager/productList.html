@@ -126,13 +126,13 @@
       }
     }
 
-    function filteredList(){
+    function filteredList() {
       let filter = $(this).attr("data-value");
       let category = $("#category").val();
       let searchWord = $("#searchWord").val();
       $.ajax({
         url: "/manager/productList/getList",
-        data: { "category": category, "searchWord": searchWord, "filter":filter},
+        data: { "category": category, "searchWord": searchWord, "filter": filter },
         method: "GET",
         success: function (list) {
           $("#result").replaceWith(list);
@@ -368,9 +368,7 @@
                             value="이상">
                         </td>
                       </tr>
-                      <tr id="details1" class="collapse">
-                        <td colspan="2">Details Content Here</td>
-                      </tr>
+
                     </tbody>
                   </table>
 
