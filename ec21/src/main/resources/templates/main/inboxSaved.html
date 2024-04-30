@@ -71,9 +71,9 @@
 
 				$.ajax({
 					url: "/inbox/saved/getList",
-					data: { "inquiryId": inquiryId, "customerId": customerId, "change":"saved"},
+					data: { "inquiryId": inquiryId, "customerId": customerId, "change": "saved" },
 					method: "GET",
-					success:function(inquiryList){
+					success: function (inquiryList) {
 						$("#result").replaceWith(inquiryList);
 						// 리스트 사이즈 
 						var htmlString = inquiryList;
@@ -107,7 +107,7 @@
 					method: "GET",
 					success: function (dto) {
 						// 모달 값 채우기
-						$("#modalFile").attr("data-inquiryId",dto.inquiryId);
+						$("#modalFile").attr("data-inquiryId", dto.inquiryId);
 						$("#modalInquiryTitle").text(dto.inquiryTitle);
 						$("#modalReceiverId").text(dto.receiverId);
 						$("#modalSenderId").text(dto.senderId);
@@ -138,7 +138,7 @@
 			if (confirm("쓰레기통으로 보내시겠습니까?")) {
 				$.ajax({
 					url: "/inbox/saved/getList",
-					data: { "customerId":customerId, "inquiryId": inquiryId, "change":"trash" },
+					data: { "customerId": customerId, "inquiryId": inquiryId, "change": "trash" },
 					method: "GET",
 					success: function (inquiryList) {
 						$("#result").replaceWith(inquiryList);
@@ -158,21 +158,21 @@
 			let customerId = $("#hiddenCustomerId").val();
 			console.log(customerId);
 			$.ajax({
-				url:"/inbox/saved/getList",
-				method:"GET",
-				data : {"customerId":customerId},
-				success:function(inquiryList){
+				url: "/inbox/saved/getList",
+				method: "GET",
+				data: { "customerId": customerId },
+				success: function (inquiryList) {
 					console.log(inquiryList);
 					$("#result").replaceWith(inquiryList);
-					
+
 					// 리스트 사이즈 
 					var htmlString = inquiryList;
 					var parser = new DOMParser();
 					var doc = parser.parseFromString(htmlString, 'text/html');
 					var trCount = doc.querySelectorAll('tr').length;
-					$("#listSize").text(trCount-1); // thead의 tr도 포함된 개수이기 때문에 -1해줌
-				
-									
+					$("#listSize").text(trCount - 1); // thead의 tr도 포함된 개수이기 때문에 -1해줌
+
+
 				}
 			})
 		}
@@ -217,11 +217,14 @@
 						<!-- Top Right -->
 						<div class="right-content">
 							<ul class="list-main">
-								<li sec:authorize="isAnonymous()"><i class="ti-power-off"></i><a th:href="@{/main/login}">Login</a></li>
-								<li sec:authorize="isAnonymous()"><i class="ti-user"></i><a th:href="@{/main/register}">Sign up</a></li>
-								<li sec:authorize="isAuthenticated()"><i class="ti-power-off"></i><a th:href="@{/main/logout}">Logout</a></li>
-								<li sec:authorize="isAuthenticated()"><a th:href="@{/main/myproducts}"><i class="fa fa-user-circle-o"
-											aria-hidden="true"></i></a></li>
+								<li sec:authorize="isAnonymous()"><i class="ti-power-off"></i><a
+										th:href="@{/main/login}">Login</a></li>
+								<li sec:authorize="isAnonymous()"><i class="ti-user"></i><a
+										th:href="@{/main/register}">Sign up</a></li>
+								<li sec:authorize="isAuthenticated()"><i class="ti-power-off"></i><a
+										th:href="@{/main/logout}">Logout</a></li>
+								<li sec:authorize="isAuthenticated()"><a th:href="@{/main/myproducts}"><i
+											class="fa fa-user-circle-o" aria-hidden="true"></i></a></li>
 							</ul>
 						</div>
 						<!-- End Top Right -->
@@ -255,7 +258,7 @@
 					<h3 Inquiry class="inquiry-title">My Inquiry</h3>
 					<ul class="categor-list">
 						<li><a th:href="@{/main/inbox(customerId=${customerId})}">Received</a></li>
-						<li><a th:href="@{/main/inboxSent(customerId=${customerId})}" >Sent</a></li>
+						<li><a th:href="@{/main/inboxSent(customerId=${customerId})}">Sent</a></li>
 						<li><a th:href="@{/main/inboxSaved(customerId=${customerId})}" style="
 								color: #439eff;">Saved</a></li>
 						<li><a th:href="@{/main/inboxSpam(customerId=${customerId})}">Spam</a></li>
@@ -267,7 +270,7 @@
 			</aside>
 
 			<!-- My inquiry List -->
-			<div class="shopping-cart section" >
+			<div class="shopping-cart section">
 				<div class="container">
 					<!-- Shop Top -->
 					<div class="shop-top">
@@ -290,7 +293,8 @@
 						</thead>
 						<tbody>
 							<!-- 240422 dy : 보낸 인콰이어리 목록 출력 -->
-							<tr th:if="${inquiryList != null and !#lists.isEmpty(inquiryList)}" th:each="inquiry : ${inquiryList}">
+							<tr th:if="${inquiryList != null and !#lists.isEmpty(inquiryList)}"
+								th:each="inquiry : ${inquiryList}">
 								<!-- 저장 여부 : 클릭하면 리스트 사라짐-->
 								<td class="saved-icon"><a href="#" id="saved-icon"><i th:data-id="${inquiry.inquiryId}"
 											th:class="${inquiry.saved.name() == 'NY' or inquiry.saved.name() == 'YN' or inquiry.saved.name() == 'YY'  ? 'fa fa-star' : 'ti-star'}"></i></a>
@@ -298,14 +302,17 @@
 
 								<!-- 받은/보낸 회원 ID -->
 								<td class="" data-title="">
-									<span class="" th:if="${inquiry.customerId == inquiry.senderId}" th:text="${inquiry.receiverId}"></span>
-									<span class="" th:unless="${inquiry.customerId == inquiry.senderId}" th:text="${inquiry.senderId}"></span>
+									<span class="" th:if="${inquiry.customerId == inquiry.senderId}"
+										th:text="${inquiry.receiverId}"></span>
+									<span class="" th:unless="${inquiry.customerId == inquiry.senderId}"
+										th:text="${inquiry.senderId}"></span>
 								</td>
-								
+
 								<!-- 받은/보낸 상태-->
 								<td class="" data-title="">
 									<span class="" th:if="${inquiry.customerId == inquiry.senderId}">[sent]</span>
-									<span class="" th:unless="${inquiry.customerId == inquiry.senderId}">[received]</span>
+									<span class=""
+										th:unless="${inquiry.customerId == inquiry.senderId}">[received]</span>
 								</td>
 
 								<!-- 인콰이어리 제목 -->
@@ -318,7 +325,7 @@
 								</td>
 								<!-- 보낸 날짜 -->
 								<td class="sendDate" data-title="sendDate"><span>[[${inquiry.sendDate}]]</span></td>
-								
+
 								<!-- 누르면 삭제 되면서 쓰통으로 -->
 								<!-- <td class="action" data-title="delete"><a href="#" class="trashBtn" th:data-id="${inquiry.inquiryId}"><i class="ti-trash remove-icon"></i></a></td> -->
 								<td data-title="trash"><a href="javascript:void(0)" class="trashBtn"
@@ -383,7 +390,7 @@
 								<th class="">Attach File</th>
 								<td>
 									<span>
-										<a href="javascript:download();" data-inquiryId=""  id="modalFile">bts.jpg</a>
+										<a href="javascript:download();" data-inquiryId="" id="modalFile">bts.jpg</a>
 									</span>
 								</td>
 							</tr>
