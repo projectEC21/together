@@ -174,13 +174,6 @@
 			}
 		}
 
-
-
-
-
-
-
-
 	</script>
 </head>
 
@@ -226,7 +219,7 @@
 										th:href="@{/main/register}">Sign up</a></li>
 								<li sec:authorize="isAuthenticated()"><i class="ti-power-off"></i><a
 										th:href="@{/main/logout}">Logout</a></li>
-								<li sec:authorize="isAuthenticated()"><a th:href="@{/main/myproducts}"><i
+								<li sec:authorize="isAuthenticated()"><a th:href="@{/main/myproducts(customerId=${#authentication.name})}"><i
 											class="fa fa-user-circle-o" aria-hidden="true"></i></a></li>
 							</ul>
 						</div>
@@ -261,7 +254,7 @@
 					<h3 Inquiry class="inquiry-title">My Inquiry</h3>
 					<ul class="categor-list">
 						<li><a th:href="@{/main/inbox(customerId=${#authentication.name})}" style="
-								color: #439eff;">Received</a></li>
+								color: #439eff;">Received <span>([[${#lists.size(inquiryList)}]])</span></a></li>
 						<li><a th:href="@{/main/inboxSent(customerId=${#authentication.name})}">Sent</a></li>
 						<li><a th:href="@{/main/inboxSaved(customerId=${#authentication.name})}">Saved</a></li>
 						<li><a th:href="@{/main/inboxSpam(customerId=${#authentication.name})}">Spam</a></li>
@@ -275,14 +268,6 @@
 			<!-- My inquiry List -->
 			<div class="shopping-cart section">
 				<div class="container">
-					<!-- Shop Top -->
-					<div class="shop-top">
-						<div class="shop-shorter">
-							<div class="single-shorter">
-								<label>Show :<span> [[${#lists.size(inquiryList)}]]</span></label>
-							</div>
-						</div>
-					</div>
 					<table class="table shopping-summery">
 						<thead>
 							<tr class="main-hading">
@@ -329,10 +314,6 @@
 						</tbody>
 					</table>
 					<!--/ End inquiry List -->
-					<!-- 페이징 -->
-					<span class="paging">
-						<< < 1 2 3 4 5> >>
-					</span>
 				</div>
 			</div>
 			<!--/ End Shopping Cart -->
