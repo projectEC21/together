@@ -136,14 +136,6 @@
 								<li sec:authorize="isAnonymous()"><i class="ti-user"></i><a th:href="@{/main/register}">Sign up</a></li>
 								<li sec:authorize="isAuthenticated()"><i class="ti-power-off"></i><a th:href="@{/main/logout}">Logout</a></li>
 								<li><a th:href="@{/main/myproducts(customerId=${#authentication.name})}"><i class="fa fa-user-circle-o" aria-hidden="true"></i><span sec:authorize="isAuthenticated()">[[${#authentication.name}]]</span> </a></li>
-								<li sec:authorize="isAnonymous()"><i class="ti-power-off"></i><a
-										th:href="@{/main/login}">Login</a></li>
-								<li sec:authorize="isAnonymous()"><i class="ti-user"></i><a
-										th:href="@{/main/register}">Sign up</a></li>
-								<li sec:authorize="isAuthenticated()"><i class="ti-power-off"></i><a
-										th:href="@{/main/logout}">Logout</a></li>
-								<li><a th:href="@{/main/myproducts}"><i class="fa fa-user-circle-o"
-											aria-hidden="true"></i></a></li>
 								<li><a th:href="@{/main/inbox(customerId=${#authentication.name})}" class="single-icon">
 										<i class="fa fa-envelope-o"></i><span class="total-count"></span></li>
 							</ul>
@@ -260,11 +252,15 @@
 													<div class="product-img">
 														<a
 															th:href="@{/main/productsDetail(productId = ${product.productId})}">
+															<span th:if="${product.originalFileName}!=null">
+																<img th:src="@{/main/downloadImg(productId=${product.productId})}">
+															</span>
 															<!-- 이미지는 대표 이미로 받는 걸 default로 에디터로 받는 걸 호버링으로 놓을 예정 -->
-															<img class="default-img"
-																th:src="@{/main/images/example_img1.jpeg}" alt="#">
-															<img class="hover-img"
-																th:src="@{/main/images/example_img2.jpeg}" alt="#">
+															<span th:unless="${product.originalFileName}!=null">
+																<!-- 인덱스와 동일함 -->
+																<img class="default-img" th:src="@{/main/images/example_img1.jpeg}" alt="#">
+																<img class="hover-img" th:src="@{/main/images/example_img2.jpeg}" alt="#">
+															</span>
 														</a>
 													</div>
 													<div class="product-content">
