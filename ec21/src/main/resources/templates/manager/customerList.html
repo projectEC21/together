@@ -130,22 +130,21 @@
                                       <td>${item.category}</td>
                                       <td>
                                         <a href="#" id ="productList" class="productLink"
-                                        data-product-name="${item.productName}"  
-                                        data-product-category="${item.category}" 
-                                        data-product-desc="${item.escapedProductDesc}"
-                                        data-price="${item.price}"
-                                        data-moq="${item.moq}"
-                                        data-unit="${item.unit}"
-                                        data-origin="${item.origin}">
+                                        data-product-id="${item.productId}"> 
                                         ${item.productName}
                                         </a>
-
-                                        
                                       </td>
                                       <td >${label}</td>
                                     </tr>`;
-                });
-              }
+                                    // data-product-name="${item.productName}"  
+                                    // data-product-category="${item.category}" 
+                                    // data-product-desc="${item.escapedProductDesc}"
+                                    // data-price="${item.price}"
+                                    // data-moq="${item.moq}"
+                                    // data-unit="${item.unit}"
+                                    // data-origin="${item.origin}">
+                    });
+                    }
               tableContent += '</tbody>';
             }
             // 모달 컨텐츠 업데이트
@@ -165,40 +164,47 @@
 
         // 두 번째 모달 열기 버튼 클릭 이벤트
         $(document).on("click", "a[id^='productList']", function () {
-          let modalProductDesc = $(this).data("product-desc");  // 데이터 속성에서 설명 읽기
+          let modalProductId = $(this).data("product-id");  // 데이터 속성에서 상품ID 읽기
+          // let modalProductDesc = $(this).data("product-desc");  // 데이터 속성에서 설명 읽기
 
-          let modalProductName = $(this).data("product-name");
-          let modalProductCategory = $(this).data("product-category");
-          let modalPrice = $(this).data("price");
-          let modalOrigin = $(this).data("origin");
-          let modalUnit = $(this).data("unit");
-          let modalMoq = $(this).data("moq");
-          $("#myModal2").modal('show'); // 두 번째 모달을 엽니다.
-
-          $("#modalProductName").html(modalProductName);
-          $("#modalProductCategory").html(modalProductCategory);
-          $("#modalProductDesc").html(modalProductDesc);
-          $("#modalPrice").html(modalPrice);
-          $("#modalOrigin").html(modalOrigin);
-          $("#modalMoq").html(modalMoq);
-          $("#modalUnit").html(modalUnit);
-          $("#displayMoqUnit").html(`${modalMoq} ${modalUnit}`);
-
-
+          // let modalProductName = $(this).data("product-name");
+          // let modalProductCategory = $(this).data("product-category");
+          // let modalPrice = $(this).data("price");
+          // let modalOrigin = $(this).data("origin");
+          // let modalUnit = $(this).data("unit");
+          // let modalMoq = $(this).data("moq");
           $.ajax({
-            url: `https://restcountries.com/v3.1/name/${modalOrigin}`,
-            method: 'GET',
-            success: function (data) {
-              let countryCode = data[0].cca2; // 국가 코드
-              let flagImageUrl = `https://flagsapi.com/${countryCode}/shiny/64.png`;
-              $("#countryFlag").attr("src", flagImageUrl);
-              $("#countryFlag").attr("alt", `${modalOrigin} Flag`);
-              console.log(countryCode);
-            },
-            error: function () {
-              console.log("Error retrieving country data");
+            url : "/manager/customerList/forSecondModal",
+            data:{"productId":modalProductId},
+            success: function (resp) {
+              $("#modalProductName").html(resp.productName);
+              $("#modalProductCategory").html(resp.category);
+              $("#modalProductDesc").html(resp.productDesc);
+              $("#modalPrice").html(resp.price);
+              $("#modalOrigin").html(resp.origin);
+              $("#modalMoq").html(resp.moq);
+              $("#modalUnit").html(resp.unit);
+              $("#displayMoqUnit").html(`${resp.moq} ${resp.unit}`);
+  
+              $.ajax({
+                url: `https://restcountries.com/v3.1/name/${resp.origin}`,
+                method: 'GET',
+                success: function (data) {
+                  let countryCode = data[0].cca2; // 국가 코드
+                  let flagImageUrl = `https://flagsapi.com/${countryCode}/shiny/64.png`;
+                  $("#countryFlag").attr("src", flagImageUrl);
+                  $("#countryFlag").attr("alt", `${modalOrigin} Flag`);
+                  console.log(countryCode);
+                },
+                error: function () {
+                  console.log("Error retrieving country data");
+                }
+              });
+
+              $("#myModal2").modal('show'); // 두 번째 모달을 엽니다.
             }
           });
+          
         });
 
       });
@@ -558,7 +564,7 @@
               </li> -->
               <li>
                 <span class="dtr-title">Price:</span>
-                <span id="modalPrice">-</span>
+                <span id="modalPrice">-</span> $
               </li>
               <!-- <li>
                 <span class="dtr-title">Origin:</span>
