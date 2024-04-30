@@ -3,6 +3,7 @@
 
 <head>
 	<!-- Meta Tag -->
+	<!-- Meta Tag -->
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name='copyright' content=''>
@@ -24,6 +25,11 @@
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Fjalla+One&display=swap" rel="stylesheet">
 
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Fjalla+One&display=swap" rel="stylesheet">
+
+	<!-- StyleSheet -->
 	<!-- StyleSheet -->
 
 	<!-- Bootstrap -->
@@ -64,6 +70,7 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
 
+
 	<script>
 		$(function () {
 			$("#searchBtn").on("click", search);
@@ -82,6 +89,7 @@
 
 
 		document.addEventListener("scroll", function () {
+		document.addEventListener("scroll", function () {
 			const header = document.querySelector(".header-inner");
 			const scrollPosition = window.scrollY;
 
@@ -92,7 +100,9 @@
 				header.classList.remove("fixed-header");
 				document.body.classList.remove("header-padding");
 			}
+			}
 		});
+
 
 	</script>
 </head>
@@ -109,6 +119,7 @@
 	</div>
 	<!-- End Preloader -->
 
+
 	<!-- Header -->
 	<header class="header shop">
 		<!-- Topbar -->
@@ -123,6 +134,8 @@
 								<a th:href="@{/}">
 									<img th:src="@{/main/images/ec21logo.png}" alt="logo"
 										style="width: 100px; height: 30px;">
+									<img th:src="@{/main/images/ec21logo.png}" alt="logo"
+										style="width: 100px; height: 30px;">
 								</a>
 							</div>
 						</div>
@@ -132,14 +145,10 @@
 						<!-- Top Right -->
 						<div class="right-content">
 							<ul class="list-main">
-								<li sec:authorize="isAnonymous()"><i class="ti-power-off"></i><a
-										th:href="@{/main/login}">Login</a></li>
-								<li sec:authorize="isAnonymous()"><i class="ti-user"></i><a
-										th:href="@{/main/register}">Sign up</a></li>
-								<li sec:authorize="isAuthenticated()"><i class="ti-power-off"></i><a
-										th:href="@{/main/logout}">Logout</a></li>
-								<li><a th:href="@{/main/myproducts}"><i class="fa fa-user-circle-o"
-											aria-hidden="true"></i></a></li>
+								<li sec:authorize="isAnonymous()"><i class="ti-power-off"></i><a th:href="@{/main/login}">Login</a></li>
+								<li sec:authorize="isAnonymous()"><i class="ti-user"></i><a th:href="@{/main/register}">Sign up</a></li>
+								<li sec:authorize="isAuthenticated()"><i class="ti-power-off"></i><a th:href="@{/main/logout}">Logout</a></li>
+								<li><a th:href="@{/main/myproducts(customerId=${#authentication.name})}"><i class="fa fa-user-circle-o" aria-hidden="true"></i><span sec:authorize="isAuthenticated()">[[${#authentication.name}]]</span> </a></li>
 								<li><a th:href="@{/main/inbox(customerId=${#authentication.name})}" class="single-icon">
 										<i class="fa fa-envelope-o"></i><span class="total-count"></span></li>
 							</ul>
@@ -151,8 +160,11 @@
 		</div>
 		<!-- End Topbar -->
 
+
 		<!-- Start Area 4 -->
 		<section class="hero-area4">
+			<h2 class="main-title"> Fraud Detection and Prevention <br>Trusted E-Commerce Website</h2>
+			<!-- <h2 class="main-title">Trusted E-Commerce Website</h2> -->
 			<h2 class="main-title"> Fraud Detection and Prevention <br>Trusted E-Commerce Website</h2>
 			<!-- <h2 class="main-title">Trusted E-Commerce Website</h2> -->
 			<div>
@@ -176,7 +188,13 @@
 								<option value="total" th:selected="${category eq 'total'}">All Category</option>
 								<option value="FOOD_BEVERAGE" th:selected="${category eq 'FOOD_BEVERAGE'}">Food &
 									Beverage</option>
+								<option value="FOOD_BEVERAGE" th:selected="${category eq 'FOOD_BEVERAGE'}">Food &
+									Beverage</option>
 								<option value="CHEMICAL" th:selected="${category eq 'CHEMICAL'}">Chemical</option>
+								<option value="HEALTH_MEDICAL" th:selected="${category eq 'HEALTH_MEDICAL'}">Health &
+									Medical</option>
+								<option value="ELECTRONIC" th:selected="${category eq 'ELECTRONIC'}">Electronics
+								</option>
 								<option value="HEALTH_MEDICAL" th:selected="${category eq 'HEALTH_MEDICAL'}">Health &
 									Medical</option>
 								<option value="ELECTRONIC" th:selected="${category eq 'ELECTRONIC'}">Electronics
@@ -205,11 +223,17 @@
 								<nav class="navbar navbar-expand-lg">
 									<div class="navbar-collapse">
 										<div class="nav-inner">
+									<div class="navbar-collapse">
+										<div class="nav-inner">
 											<ul class="nav main-menu menu navbar-nav">
 												<li><a th:href="@{/main/list(category=total)}">All</a></li>
 												<li><a th:href="@{/main/list(category=FOOD_BEVERAGE)}">Food &
 														Beverage</a></li>
+												<li><a th:href="@{/main/list(category=FOOD_BEVERAGE)}">Food &
+														Beverage</a></li>
 												<li><a th:href="@{/main/list(category=CHEMICAL)}">Chemical</a></li>
+												<li><a th:href="@{/main/list(category=HEALTH_MEDICAL)}">Health &
+														Medical</a></li>
 												<li><a th:href="@{/main/list(category=HEALTH_MEDICAL)}">Health &
 														Medical</a></li>
 												<li><a th:href="@{/main/list(category=ELECTRONIC)}">Electronics</a></li>
@@ -219,12 +243,14 @@
 									</div>
 								</nav>
 								<!--/ End Main Menu -->
+								<!--/ End Main Menu -->
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
+		<!--/ End Header Inner -->
 		<!--/ End Header Inner -->
 	</header>
 
@@ -256,20 +282,30 @@
 													<div class="product-img">
 														<a
 															th:href="@{/main/productsDetail(productId = ${product.productId})}">
+															<span th:if="${product.originalFileName}!=null">
+																<img th:src="@{/main/downloadImg(productId=${product.productId})}">
+															</span>
 															<!-- 이미지는 대표 이미로 받는 걸 default로 에디터로 받는 걸 호버링으로 놓을 예정 -->
-															<img class="default-img"
-																th:src="@{/main/images/example_img1.jpeg}" alt="#">
-															<img class="hover-img"
-																th:src="@{/main/images/example_img2.jpeg}" alt="#">
+															<span th:unless="${product.originalFileName}!=null">
+																<!-- 인덱스와 동일함 -->
+																<img class="default-img" th:src="@{/main/images/example_img1.jpeg}" alt="#">
+																<img class="hover-img" th:src="@{/main/images/example_img2.jpeg}" alt="#">
+															</span>
 														</a>
 													</div>
 													<div class="product-content">
 														<h3><a
 																th:href="@{/main/productsDetail(productId = ${product.productId})}">[[${product.productName}]]</a>
 														</h3>
+														<h3><a
+																th:href="@{/main/productsDetail(productId = ${product.productId})}">[[${product.productName}]]</a>
+														</h3>
 														<div class="product-price">
 															<span>$ [[${product.price}]]</span>
 														</div>
+														<div class="product-seller" th:data-country=${product.country}>
+															<img id="countryFlag" src="" alt=""
+																style="width:20px; height:20px;">
 														<div class="product-seller" th:data-country=${product.country}>
 															<img id="countryFlag" src="" alt=""
 																style="width:20px; height:20px;">
@@ -437,6 +473,7 @@
 	<script th:src="@{/main/js/magnific-popup.js}"></script>
 	<!-- Fancybox JS -->
 	<!-- <script th:src="@{/main/js/facnybox.min.js}"></script> -->
+	<!-- <script th:src="@{/main/js/facnybox.min.js}"></script> -->
 	<!-- Waypoints JS -->
 	<script th:src="@{/main/js/waypoints.min.js}"></script>
 	<!-- Countdown JS -->
@@ -459,5 +496,6 @@
 	<script th:src="@{/main/js/myFunction.js}"></script>
 
 </body>
+
 
 </html>

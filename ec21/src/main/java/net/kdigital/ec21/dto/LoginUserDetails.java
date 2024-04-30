@@ -114,7 +114,14 @@ public class LoginUserDetails implements UserDetails{
         return true;
     }
 
-    
+    // 탈퇴 여부
+    public YesOrNo getEnabled() {
+        return enabled;
+    }
 
-    
+    // 블랙리스트 여부
+    public YesOrNo getBlacklistCheck() {
+        return blacklistCheck;
+    }
+
 }
