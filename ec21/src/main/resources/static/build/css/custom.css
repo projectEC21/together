@@ -5205,7 +5205,6 @@ ul.project_files li a i {
   vertical-align: middle;
   line-height: 28px;
   color: black !important;
-  font-size: 17px;
 }
 
 .view .project_progress span {
@@ -5221,7 +5220,6 @@ ul.project_files li a i {
   vertical-align: middle;
   line-height: 28px;
   color: black !important;
-  font-size: 17px;
 
 }
 
@@ -6778,16 +6776,6 @@ ul.notifications {
   text-align: left;
 }
 
-#result {
-  font-size: 17px;
-}
-
-.modalBtn {
-  border: 0px;
-  background: transparent;
-  color: #6a6a6a;
-}
-
 /* 테이블 행 스타일 */
 .table-custom tbody tr:nth-child(odd) {
   background-color: #f8f9fc;
@@ -6819,10 +6807,6 @@ ul.notifications {
   /* Adjust the space between the elements */
   border: 1px solid #E6E9ED;
   background-color: white;
-<<<<<<< HEAD
-  border-radius: 8px;
-=======
->>>>>>> d3b0708c44abe8e22ceac99876ad32e2fa5e4deb
 }
 
 .form-inline .form-group input {
