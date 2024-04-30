@@ -255,7 +255,7 @@
 						<li><a th:href="@{/main/inboxSent(customerId=${customerId})}">Sent</a></li>
 						<li><a th:href="@{/main/inboxSaved(customerId=${customerId})}">Saved</a></li>
 						<li><a th:href="@{/main/inboxSpam(customerId=${customerId})}">Spam</a></li>
-						<li><a th:href="@{/main/inboxBlock(customerId=${customerId})}" style="color: #439eff;">Block</a>
+						<li><a th:href="@{/main/inboxBlock(customerId=${customerId})}" style="color: #439eff;">Block <span id="listSize"></span></a>
 						</li>
 						<li><a th:href="@{/main/inboxTrash(customerId=${customerId})}">Trash</a></li>
 					</ul>
@@ -266,14 +266,6 @@
 			<!-- My inquiry List -->
 			<div class="shopping-cart section">
 				<div class="container">
-					<!-- Shop Top -->
-					<div class="shop-top">
-						<div class="shop-shorter">
-							<div class="single-shorter">
-								<label>Show : <span id="listSize"></span></label>
-							</div>
-						</div>
-					</div>
 					<table class="table shopping-summery inquiry" id="result">
 						<thead>
 							<tr class="main-hading">
