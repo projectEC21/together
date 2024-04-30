@@ -193,14 +193,11 @@
 						<!-- Top Right -->
 						<div class="right-content">
 							<ul class="list-main">
-								<li sec:authorize="isAnonymous()"><i class="ti-power-off"></i><a
-										th:href="@{/main/login}">Login</a></li>
-								<li sec:authorize="isAnonymous()"><i class="ti-user"></i><a
-										th:href="@{/main/register}">Sign up</a></li>
-								<li sec:authorize="isAuthenticated()"><i class="ti-power-off"></i><a
-										th:href="@{/main/logout}">Logout</a></li>
-								<li sec:authorize="isAuthenticated()"><a th:href="@{/main/myproducts(customerId=${#authentication.name})}"><i
-											class="fa fa-user-circle-o" aria-hidden="true"></i></a></li>
+								<li sec:authorize="isAnonymous()"><i class="ti-power-off"></i><a th:href="@{/main/login}">Login</a></li>
+								<li sec:authorize="isAnonymous()"><i class="ti-user"></i><a th:href="@{/main/register}">Sign up</a></li>
+								<li sec:authorize="isAuthenticated()"><i class="ti-power-off"></i><a th:href="@{/main/logout}">Logout</a></li>
+								<li sec:authorize="isAuthenticated()"><a th:href="@{/main/myproducts}"><i class="fa fa-user-circle-o"
+											aria-hidden="true"></i><span sec:authorize="isAuthenticated()">[[${#authentication.name}]]</span></a></li>
 							</ul>
 						</div>
 						<!-- End Top Right -->
@@ -248,14 +245,6 @@
 			<!-- My inquiry List -->
 			<div class="shopping-cart section">
 				<div class="container">
-					<!-- Shop Top -->
-					<div class="shop-top">
-						<div class="shop-shorter">
-							<div class="single-shorter">
-								<label>Show :<span> [[${#lists.size(inquiryList)}]]</span></label>
-							</div>
-						</div>
-					</div>
 					<table class="table shopping-summery inquiry">
 						<thead>
 							<tr class="main-hading">
