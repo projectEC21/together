@@ -5,16 +5,27 @@
 	margin-left: -85px;
 }
 
+.topbar .top-left a.logo {
+	display: flex;
+    align-items: center;
+}
+
 .topbar .top-left .logo img{
 	width: 100px;
     height: 30px;
-	margin-top: -2px;
-	transform: translate(50%, 0); /* 로고를 가로로 10% 이동 */
+    margin-top: -2px;
+    /* transform: translate(50%, 0); */
+    position: relative;
+    left: 45%;
 } 
 
-.topbar .top-left .logo span{
-	display: inline-block;
-	font-size: 15px;
+.topbar .top-left .logo span {
+    font-size: 24px;
+    text-transform: uppercase;
+    position: relative;
+    left: 53%;
+    font-family: sans-serif;
+    font-weight: bolder;
 }
 
 .main-container {
@@ -48,7 +59,7 @@
 }
 
 .shop-sidebar .single-widget.inquiry-category .categor-list li a {
-    display: inline-block;
+    display: block;
     color: #fff;
     font-weight: 400;
     font-size: 16px;
@@ -58,6 +69,10 @@
 
 .shop-sidebar .single-widget.inquiry-category .categor-list li:hover {
 	background-color: rgba(0, 114, 171, 0.63);
+}
+
+.shop-sidebar .single-widget.inquiry-category .categor-list span{
+	display: block;
 }
 
 .shopping-cart .container {

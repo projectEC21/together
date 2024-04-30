@@ -199,7 +199,7 @@
 				<div class="top-left">
 					<!-- logo -->
 					<div class="logo">
-						<a th:href="@{/}">
+						<a class="logo" th:href="@{/}">
 							<img th:src="@{/main/images/ec21logo.png}" alt="logo">
 							<span>Inquiry</span>
 						</a>
@@ -249,8 +249,8 @@
 			<div class="single-widget inquiry-category">
 				<ul class="categor-list">
 					<li><a th:href="@{/main/inbox(customerId=${#authentication.name})}" style="
-					color: #439eff;">Received</a></li>
-					<li><a th:href="@{/main/inboxSent(customerId=${#authentication.name})}" >Sent</a></li>
+					color: #439eff;">Received</a> <span>[[${#lists.size(inquiryList)}]]</span> </li>
+					<li><a th:href="@{/main/inboxSent(customerId=${#authentication.name})}" >Sent</a> </li>
 					<li><a th:href="@{/main/inboxSaved(customerId=${#authentication.name})}" >Saved</a></li>
 					<li><a th:href="@{/main/inboxSpam(customerId=${#authentication.name})}" >Spam</a></li>
 					<li><a th:href="@{/main/inboxBlock(customerId=${#authentication.name})}" >Block</a></li>
@@ -263,15 +263,7 @@
 		<!-- My inquiry List -->
 		<div class="shopping-cart section">
 			<div class="container">
-				<!-- Shop Top -->
-				<div class="shop-top">
-					<div class="shop-shorter">
-					<div class="single-shorter">
-						<label>Show :<span> [[${#lists.size(inquiryList)}]]</span></label>
-					</div>
-					</div>
-				</div>
-					<table class="table shopping-summery inquiry">
+				<table class="table shopping-summery inquiry">
 					<thead>
 						<tr class="main-hading">
 							<th class="saved-icon"></th>
@@ -308,17 +300,17 @@
 							<td data-title="trash"><a href="javascript:void(0)" class="trashBtn" th:data-id="${inquiry.inquiryId}" onclick="toTrash(this)"><i class="ti-trash remove-icon"></i></a></td>
 						</tr>
 					</tbody>
-					</table>
-					<!--/ End inquiry List -->
-					<!-- 페이징 -->
-					<span class="paging"> 
-					<< < 1 2 3 4 5 > >> 
-					</span>
-				</div>
+				</table>
+				<!--/ End inquiry List -->
+				<!-- 페이징 -->
+				<span class="paging"> 
+				<< < 1 2 3 4 5 > >> 
+				</span>
 			</div>
-		<!--/ End Shopping Cart -->
 		</div>
-	</section>
+	<!--/ End Shopping Cart -->
+	</div>
+</section>
 
 	<!-- Inquiry Modal -->
 	<div class="modal fade" id="inquiryDetail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

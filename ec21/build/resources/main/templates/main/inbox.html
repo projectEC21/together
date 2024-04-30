@@ -199,7 +199,7 @@
 				<div class="top-left">
 					<!-- logo -->
 					<div class="logo">
-						<a th:href="@{/}">
+						<a class="logo" th:href="@{/}">
 							<img th:src="@{/main/images/ec21logo.png}" alt="logo">
 							<span>Inquiry</span>
 						</a>
@@ -249,8 +249,8 @@
 			<div class="single-widget inquiry-category">
 				<ul class="categor-list">
 					<li><a th:href="@{/main/inbox(customerId=${#authentication.name})}" style="
-					color: #439eff;">Received</a></li>
-					<li><a th:href="@{/main/inboxSent(customerId=${#authentication.name})}" >Sent</a></li>
+					color: #439eff;">Received</a> <span>[[${#lists.size(inquiryList)}]]</span> </li>
+					<li><a th:href="@{/main/inboxSent(customerId=${#authentication.name})}" >Sent</a> </li>
 					<li><a th:href="@{/main/inboxSaved(customerId=${#authentication.name})}" >Saved</a></li>
 					<li><a th:href="@{/main/inboxSpam(customerId=${#authentication.name})}" >Spam</a></li>
 					<li><a th:href="@{/main/inboxBlock(customerId=${#authentication.name})}" >Block</a></li>
@@ -266,9 +266,9 @@
 				<!-- Shop Top -->
 				<div class="shop-top">
 					<div class="shop-shorter">
-					<div class="single-shorter">
-						<label>Show :<span> [[${#lists.size(inquiryList)}]]</span></label>
-					</div>
+						<div class="single-shorter">
+							<label>Show :<span> [[${#lists.size(inquiryList)}]]</span></label>
+						</div>
 					</div>
 				</div>
 					<table class="table shopping-summery inquiry">
