@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
-<head> 
+<head>
 	<!-- Meta Tag -->
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,11 +9,13 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<!-- Title Tag  -->
-	<title>EC21, Global B2B Marketplace</title> 
+	<title>EC21, Global B2B Marketplace</title>
 	<!-- Favicon -->
 	<link rel="icon" type="image/png" th:href="@{/main/images/ec21logo.png}">
 	<!-- Web Font -->
-	<link href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap" rel="stylesheet">
+	<link
+		href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap"
+		rel="stylesheet">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap" rel="stylesheet">
 
@@ -55,14 +57,14 @@
 	<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
-	
+
 	<!-- 240421 dy : ajax.. -->
 	<script th:src="@{/script/jquery-3.7.1.min.js}"></script>
 	<script>
 		$(function () {
 
 			// saved 처리
-			$(document).on('click', '.saved-icon', function(event){
+			$(document).on('click', '.saved-icon', function (event) {
 				event.preventDefault();
 				var icon = $(this).find('i');
 				var inquiryId = $(icon).attr("data-id");
@@ -89,7 +91,7 @@
 			$("#closeBtn").on("click", function (event) {
 				modal.hide();
 			});
-			 // 모달 백그라운드 클릭 이벤트
+			// 모달 백그라운드 클릭 이벤트
 			$(window).on("click", function (event) {
 				if ($(event.target).is(modal)) {
 					modal.hide();
@@ -133,13 +135,13 @@
 		// 스팸으로 처리하는 함수
 		function toSpam(element) {
 			let inquiryId = element.getAttribute("data-id");
-			if(confirm("스팸으로 처리하시겠습니까?")){
+			if (confirm("스팸으로 처리하시겠습니까?")) {
 				$.ajax({
-					url:"/inbox/receiver/toSpam",
-					data:{"inquiryId": inquiryId},
-					method:"GET",
+					url: "/inbox/receiver/toSpam",
+					data: { "inquiryId": inquiryId },
+					method: "GET",
 					success: function (resp) {
-						if(resp){
+						if (resp) {
 							if (resp) {
 								alert("스팸 처리 완료");
 								// 페이지 새로 고침
@@ -150,17 +152,17 @@
 				});
 			}
 		}
-		
+
 		// 쓰레기통으로 처리하는 함수
 		function toTrash(element) {
 			let inquiryId = element.getAttribute("data-id");
-			if(confirm("쓰레기통으로 보내시겠습니까?")){
+			if (confirm("쓰레기통으로 보내시겠습니까?")) {
 				$.ajax({
-					url:"/inbox/receiver/toTrash",
-					data:{"inquiryId":inquiryId},
-					method:"GET",
+					url: "/inbox/receiver/toTrash",
+					data: { "inquiryId": inquiryId },
+					method: "GET",
 					success: function (resp) {
-						if(resp){
+						if (resp) {
 							if (resp) {
 								alert(" 쓰레기통으로 치우기 완료");
 								// 페이지 새로 고침
@@ -173,8 +175,8 @@
 		}
 
 
-		
-		
+
+
 
 
 
@@ -207,7 +209,8 @@
 							<!-- logo -->
 							<div class="logo">
 								<a th:href="@{/}">
-									<img th:src="@{/main/images/ec21logo.png}" alt="logo" style="width: 100px; height: 30px;">
+									<img th:src="@{/main/images/ec21logo.png}" alt="logo"
+										style="width: 100px; height: 30px;">
 								</a>
 							</div>
 						</div>
@@ -217,10 +220,14 @@
 						<!-- Top Right -->
 						<div class="right-content">
 							<ul class="list-main">
-								<li sec:authorize="isAnonymous()"><i class="ti-power-off"></i><a th:href="@{/main/login}">Login</a></li>
-								<li sec:authorize="isAnonymous()"><i class="ti-user"></i><a th:href="@{/main/register}">Sign up</a></li>
-								<li sec:authorize="isAuthenticated()"><i class="ti-power-off"></i><a th:href="@{/main/logout}">Logout</a></li>
-								<li  sec:authorize="isAuthenticated()"><a th:href="@{/main/myproducts}"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a></li>
+								<li sec:authorize="isAnonymous()"><i class="ti-power-off"></i><a
+										th:href="@{/main/login}">Login</a></li>
+								<li sec:authorize="isAnonymous()"><i class="ti-user"></i><a
+										th:href="@{/main/register}">Sign up</a></li>
+								<li sec:authorize="isAuthenticated()"><i class="ti-power-off"></i><a
+										th:href="@{/main/logout}">Logout</a></li>
+								<li sec:authorize="isAuthenticated()"><a th:href="@{/main/myproducts}"><i
+											class="fa fa-user-circle-o" aria-hidden="true"></i></a></li>
 							</ul>
 						</div>
 						<!-- End Top Right -->
@@ -247,143 +254,153 @@
 
 	<!-- 인콰이어리 목록 -->
 	<section class="inquiry-area">
-			<div class="main-container">
-				<aside class="shop-sidebar">
-					<!-- Single Widget 인콰이어리 카테고리 -->
-					<div class="single-widget inquiry-category">
-						<h3 Inquiry class="inquiry-title">My Inquiry</h3>
-						<ul class="categor-list">
-							<li><a th:href="@{/main/inbox(customerId=${#authentication.name})}" style="
+		<div class="main-container">
+			<aside class="shop-sidebar">
+				<!-- Single Widget 인콰이어리 카테고리 -->
+				<div class="single-widget inquiry-category">
+					<h3 Inquiry class="inquiry-title">My Inquiry</h3>
+					<ul class="categor-list">
+						<li><a th:href="@{/main/inbox(customerId=${#authentication.name})}" style="
 								color: #439eff;">Received</a></li>
-							<li><a th:href="@{/main/inboxSent(customerId=${#authentication.name})}" >Sent</a></li>
-							<li><a th:href="@{/main/inboxSaved(customerId=${#authentication.name})}" >Saved</a></li>
-							<li><a th:href="@{/main/inboxSpam(customerId=${#authentication.name})}" >Spam</a></li>
-							<li><a th:href="@{/main/inboxBlock(customerId=${#authentication.name})}" >Block</a></li>
-							<li><a th:href="@{/main/inboxTrash(customerId=${#authentication.name})}" >Trash</a></li>
-						</ul>
-					</div>
-					<!--/ End Single Widget -->
-				</aside>
+						<li><a th:href="@{/main/inboxSent(customerId=${#authentication.name})}">Sent</a></li>
+						<li><a th:href="@{/main/inboxSaved(customerId=${#authentication.name})}">Saved</a></li>
+						<li><a th:href="@{/main/inboxSpam(customerId=${#authentication.name})}">Spam</a></li>
+						<li><a th:href="@{/main/inboxBlock(customerId=${#authentication.name})}">Block</a></li>
+						<li><a th:href="@{/main/inboxTrash(customerId=${#authentication.name})}">Trash</a></li>
+					</ul>
+				</div>
+				<!--/ End Single Widget -->
+			</aside>
 
-				<!-- My inquiry List -->
-				<div class="shopping-cart section">
-					<div class="container">
-						<!-- Shop Top -->
-						<div class="shop-top">
-							<div class="shop-shorter">
-								<div class="single-shorter">
-									<label>Show :<span> [[${#lists.size(inquiryList)}]]</span></label>
-								</div>
+			<!-- My inquiry List -->
+			<div class="shopping-cart section">
+				<div class="container">
+					<!-- Shop Top -->
+					<div class="shop-top">
+						<div class="shop-shorter">
+							<div class="single-shorter">
+								<label>Show :<span> [[${#lists.size(inquiryList)}]]</span></label>
 							</div>
 						</div>
-							<table class="table shopping-summery">
-								<thead>
-									<tr class="main-hading">
-										<th class="saved-icon"></th>
-										<th class="sendId">Sender</th>
-										<th class="inquiryTitle" colspan="2">TITLE</th>
-										<th class="sendData">DATE</th>
-										<th class="spam">SPAM</th>
-										<th class="trash"><i class="ti-trash remove-icon"></i></th>
-									</tr>
-								</thead>
-								<tbody>
-									<!-- 240423 dy : 받은 인콰이어리 목록 출력 -->
-									<tr th:if="${inquiryList != null and !#lists.isEmpty(inquiryList)}" th:each="inquiry : ${inquiryList}">
-										<!-- 저장 여부 : 클릭하면 색상 변하게 해둠-->
-										<td class="saved-icon"><a href="#" id="saved-icon"><i th:data-id="${inquiry.inquiryId}" th:class="${inquiry.saved.name() == 'NY' or inquiry.saved.name() == 'YY'  ? 'fa fa-star' : 'ti-star'}"></i></a></td>
-										
-										<!-- 담당자명-> senderId -->
-										<td class="senderId" data-title="senderId"><span class="senderId">[[${inquiry.senderId}]]</span></td>
-										<!-- 인콰이어리 제목 -->
-										<td   data-title="inquiryTitle" colspan="2">
-												<!-- <a id="inquiryTitle" data-toggle="modal" data-target="#inquiryDetail" th:data-id="${inquiry.inquiryId}">[[${inquiry.inquiryTitle}]]</a> -->
-												<a class="inquiryTitle" data-toggle="modal" data-target="#inquiryDetail" th:id="'modalBtn'+${inquiry.inquiryId}" th:data-id="${inquiry.inquiryId}">
-													[[${inquiry.inquiryTitle}]]</a>
-										</td>
-										<!-- 보낸 날짜 -->
-										<td class="sendDate" data-title="sendDate"><span>[[${inquiry.sendDate}]]</span></td>
-										<!-- 누르면 삭제 되면서 스팸함으로 -->
-										<!-- <td class="action" data-title="spam"><a href="#" class="spamBtn" th:data-id="${inquiry.inquiryId}"><i class="fa fa-refresh"></i></a></td> -->
-										<td data-title="spam"><a href="javascript:void(0);" class="spamBtn" th:data-id="${inquiry.inquiryId}" onclick="toSpam(this)" ><i class="fa fa-refresh"></i></a></td>
-										<!-- 누르면 삭제 되면서 쓰통으로 -->
-										<!-- <td class="action" data-title="trash"><a href="#" class="trashBtn" th:data-id="${inquiry.inquiryId}"><i class="ti-trash remove-icon"></i></a></td> -->
-										<td data-title="trash"><a href="javascript:void(0)" class="trashBtn" th:data-id="${inquiry.inquiryId}" onclick="toTrash(this)"><i class="ti-trash remove-icon"></i></a></td>
-									</tr>
-								</tbody>
-							</table>
-							<!--/ End inquiry List -->
-							<!-- 페이징 -->
-							<span class="paging"> 
-								<< < 1 2 3 4 5 > >> 
-							</span>
-						</div>
 					</div>
-				<!--/ End Shopping Cart -->
-			</div>
-		</section>
+					<table class="table shopping-summery">
+						<thead>
+							<tr class="main-hading">
+								<th class="saved-icon"></th>
+								<th class="sendId">Sender</th>
+								<th class="inquiryTitle" colspan="2">TITLE</th>
+								<th class="sendData">DATE</th>
+								<th class="spam">SPAM</th>
+								<th class="trash"><i class="ti-trash remove-icon"></i></th>
+							</tr>
+						</thead>
+						<tbody>
+							<!-- 240423 dy : 받은 인콰이어리 목록 출력 -->
+							<tr th:if="${inquiryList != null and !#lists.isEmpty(inquiryList)}"
+								th:each="inquiry : ${inquiryList}">
+								<!-- 저장 여부 : 클릭하면 색상 변하게 해둠-->
+								<td class="saved-icon"><a href="#" id="saved-icon"><i th:data-id="${inquiry.inquiryId}"
+											th:class="${inquiry.saved.name() == 'NY' or inquiry.saved.name() == 'YY'  ? 'fa fa-star' : 'ti-star'}"></i></a>
+								</td>
 
-		<!-- Inquiry Modal -->
-		<div class="modal fade" id="inquiryDetail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content" >
-					<form class="form" action="#" method="post">
-						<!-- Modal Header -->
-						<div class="modal-header">
-							<h4 class="modal-title" id="modalInquiryTitle">인콰이어리 제목</h4>
-							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-							</button>
-						</div>
-						<!-- Modal Body -->
-						<div class="modal-body" >
-							<table>
-								<input type="hidden" name="" id="modalInquiryId">
-								<tr>
-									<th class="col-md-2">To</th>
-									<td id="modalReceiverId" >zettlernb (Ningbo Zettler Electronics Co., Ltd.)</td>
-								</tr>
-								<tr>
-									<th class="">From</th>
-									<td id="modalSenderId" ></td>
-								</tr>
-								<tr>
-									<th class="">Subject</th>
-									<td><span id="modalProductName">..</span></td>
-								</tr>
-								<tr>
-									<th class="">Category</th>
-									<td><span id="modalCategory">..</span></td>
-								</tr>
-								<tr>
-									<th class="">Quantity</th>
-									<td><span id="modalQuantity"></span> (<span id="modalUnit"></span>) </td>
-								</tr>
-								<tr>
-									<th class="">Message</th>
-									<td><span><textarea id="modalInquiryContent" readonly ></textarea></span></td>
-								</tr>
-								<tr>
-									<!-- 파일 부분 다운만 가능한 건 어떻게 하는지 까먹어서 우선 패스 -->
-									<th class="">Attach File</th>
-									<td>
-										<span>
-											<a href="javascript:download();" data-inquiryId="" id="modalFile">bts.jpg</a>
-										</span>
-									</td>
-								</tr>
-							</table>
-						</div>
-						<!-- Modal Footer -->
-						<div class="modal-footer">
-							<button type="button" id="closeBtn" class="btn" data-dismiss="modal">Close</button>
-						</div>
-					</form>
+								<!-- 담당자명-> senderId -->
+								<td class="senderId" data-title="senderId"><span
+										class="senderId">[[${inquiry.senderId}]]</span></td>
+								<!-- 인콰이어리 제목 -->
+								<td data-title="inquiryTitle" colspan="2">
+									<!-- <a id="inquiryTitle" data-toggle="modal" data-target="#inquiryDetail" th:data-id="${inquiry.inquiryId}">[[${inquiry.inquiryTitle}]]</a> -->
+									<a class="inquiryTitle" data-toggle="modal" data-target="#inquiryDetail"
+										th:id="'modalBtn'+${inquiry.inquiryId}" th:data-id="${inquiry.inquiryId}">
+										[[${inquiry.inquiryTitle}]]</a>
+								</td>
+								<!-- 보낸 날짜 -->
+								<td class="sendDate" data-title="sendDate"><span>[[${inquiry.sendDate}]]</span></td>
+								<!-- 누르면 삭제 되면서 스팸함으로 -->
+								<!-- <td class="action" data-title="spam"><a href="#" class="spamBtn" th:data-id="${inquiry.inquiryId}"><i class="fa fa-refresh"></i></a></td> -->
+								<td data-title="spam"><a href="javascript:void(0);" class="spamBtn"
+										th:data-id="${inquiry.inquiryId}" onclick="toSpam(this)"><i
+											class="fa fa-refresh"></i></a></td>
+								<!-- 누르면 삭제 되면서 쓰통으로 -->
+								<!-- <td class="action" data-title="trash"><a href="#" class="trashBtn" th:data-id="${inquiry.inquiryId}"><i class="ti-trash remove-icon"></i></a></td> -->
+								<td data-title="trash"><a href="javascript:void(0)" class="trashBtn"
+										th:data-id="${inquiry.inquiryId}" onclick="toTrash(this)"><i
+											class="ti-trash remove-icon"></i></a></td>
+							</tr>
+						</tbody>
+					</table>
+					<!--/ End inquiry List -->
+					<!-- 페이징 -->
+					<span class="paging">
+						<< < 1 2 3 4 5> >>
+					</span>
 				</div>
+			</div>
+			<!--/ End Shopping Cart -->
+		</div>
+	</section>
+
+	<!-- Inquiry Modal -->
+	<div class="modal fade" id="inquiryDetail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<form class="form" action="#" method="post">
+					<!-- Modal Header -->
+					<div class="modal-header">
+						<h4 class="modal-title" id="modalInquiryTitle">인콰이어리 제목</h4>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<!-- Modal Body -->
+					<div class="modal-body">
+						<table>
+							<input type="hidden" name="" id="modalInquiryId">
+							<tr>
+								<th class="col-md-2">To</th>
+								<td id="modalReceiverId">zettlernb (Ningbo Zettler Electronics Co., Ltd.)</td>
+							</tr>
+							<tr>
+								<th class="">From</th>
+								<td id="modalSenderId"></td>
+							</tr>
+							<tr>
+								<th class="">Subject</th>
+								<td><span id="modalProductName">..</span></td>
+							</tr>
+							<tr>
+								<th class="">Category</th>
+								<td><span id="modalCategory">..</span></td>
+							</tr>
+							<tr>
+								<th class="">Quantity</th>
+								<td><span id="modalQuantity"></span> (<span id="modalUnit"></span>) </td>
+							</tr>
+							<tr>
+								<th class="">Message</th>
+								<td><span><textarea id="modalInquiryContent" readonly></textarea></span></td>
+							</tr>
+							<tr>
+								<!-- 파일 부분 다운만 가능한 건 어떻게 하는지 까먹어서 우선 패스 -->
+								<th class="">Attach File</th>
+								<td>
+									<span>
+										<a href="javascript:download();" data-inquiryId="" id="modalFile">bts.jpg</a>
+									</span>
+								</td>
+							</tr>
+						</table>
+					</div>
+					<!-- Modal Footer -->
+					<div class="modal-footer">
+						<button type="button" id="closeBtn" class="btn" data-dismiss="modal">Close</button>
+					</div>
+				</form>
 			</div>
 		</div>
 	</div>
-		<!--/ End Product Style 1  -->
+	</div>
+	<!--/ End Product Style 1  -->
 
 
 	<!-- Jquery -->
