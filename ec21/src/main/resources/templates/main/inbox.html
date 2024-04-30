@@ -59,7 +59,6 @@
 <!-- 240421 dy : ajax.. -->
 <script th:src="@{/script/jquery-3.7.1.min.js}"></script>
 <script>
-	$(function () {
 
 		// saved 처리
 		$(document).on('click', '.saved-icon', function(event){
@@ -200,9 +199,11 @@
 				<div class="top-left">
 					<!-- logo -->
 					<div class="logo">
-					<a th:href="@{/}">
-						<img th:src="@{/main/images/ec21logo.png}" alt="logo" style="width: 100px; height: 30px;">
-					</a>
+						<a th:href="@{/}">
+							<img th:src="@{/main/images/ec21logo.png}" alt="logo">
+							<span>Inquiry</span>
+						</a>
+						
 					</div>
 				</div>
 				<!--/ End Top Left -->
@@ -214,7 +215,8 @@
 					<li sec:authorize="isAnonymous()"><i class="ti-power-off"></i><a th:href="@{/main/login}">Login</a></li>
 					<li sec:authorize="isAnonymous()"><i class="ti-user"></i><a th:href="@{/main/register}">Sign up</a></li>
 					<li sec:authorize="isAuthenticated()"><i class="ti-power-off"></i><a th:href="@{/main/logout}">Logout</a></li>
-					<li  sec:authorize="isAuthenticated()"><a th:href="@{/main/myproducts}"><i class="fa fa-user-circle-o" aria-hidden="true"></i><span sec:authorize="isAuthenticated()">[[${#authentication.name}]]</span></a></li>
+					<li  sec:authorize="isAuthenticated()"><a th:href="@{/main/myproducts}"><i class="fa fa-user-circle-o" aria-hidden="true"></i>
+						<span sec:authorize="isAuthenticated()">[[${#authentication.name}]]</span></a></li>
 					</ul>
 				</div>
 				<!-- End Top Right -->
@@ -245,7 +247,6 @@
 		<aside class="shop-sidebar">
 			<!-- Single Widget 인콰이어리 카테고리 -->
 			<div class="single-widget inquiry-category">
-				<h3 Inquiry class="inquiry-title">My Inquiry</h3>
 				<ul class="categor-list">
 					<li><a th:href="@{/main/inbox(customerId=${#authentication.name})}" style="
 					color: #439eff;">Received</a></li>
@@ -274,7 +275,7 @@
 					<thead>
 						<tr class="main-hading">
 							<th class="saved-icon"></th>
-							<th class="sendId">Sender</th>
+							<th class="sendId">SENDER</th>
 							<th class="inquiryTitle" colspan="2">TITLE</th>
 							<th class="sendData">DATE</th>
 							<th class="spam">SPAM</th>
@@ -296,10 +297,12 @@
 									[[${inquiry.inquiryTitle}]]</a>
 							</td>
 							<!-- 보낸 날짜 -->
-							<td class="sendDate" data-title="sendDate"><span>[[${inquiry.sendDate}]]</span></td>
+							
+							<td class="sendDate" data-title="sendDate"><span>[[${#temporals.format(inquiry.sendDate, 'yyyy-MM-dd')}]]</span></td>
+							<!-- <td class="sendDate" data-title="sendDate"><span>[[${inquiry.sendDate}]]</span></td> -->
 							<!-- 누르면 삭제 되면서 스팸함으로 -->
 							<!-- <td class="action" data-title="spam"><a href="#" class="spamBtn" th:data-id="${inquiry.inquiryId}"><i class="fa fa-refresh"></i></a></td> -->
-							<td data-title="spam"><a href="javascript:void(0);" class="spamBtn" th:data-id="${inquiry.inquiryId}" onclick="toSpam(this)" ><i class="fa fa-refresh"></i></a></td>
+							<td data-title="spam"><a href="javascript:void(0);" class="spamBtn" th:data-id="${inquiry.inquiryId}" onclick="toSpam(this)" ><i class="fa fa-minus-square"></i></a></td>
 							<!-- 누르면 삭제 되면서 쓰통으로 -->
 							<!-- <td class="action" data-title="trash"><a href="#" class="trashBtn" th:data-id="${inquiry.inquiryId}"><i class="ti-trash remove-icon"></i></a></td> -->
 							<td data-title="trash"><a href="javascript:void(0)" class="trashBtn" th:data-id="${inquiry.inquiryId}" onclick="toTrash(this)"><i class="ti-trash remove-icon"></i></a></td>
