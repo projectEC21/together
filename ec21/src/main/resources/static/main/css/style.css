@@ -286,7 +286,7 @@ html {
 }
 
 .hero-area4 {
-	background: url("../images/main_image1.jpg") fixed;
+	background: url("../images/main_image4.jpg") fixed;
 	background-size: 100%;
 	height: 72vh;
 	/* padding: 20px; */
@@ -296,7 +296,7 @@ html {
 
 .hero-area4:before {
 	content: '';
-	background: linear-gradient(to bottom, rgb(27 50 85), transparent);
+	background: linear-gradient(to bottom, rgb(30 43 46 / 85%), transparent);
 	position: absolute;
 	top: 0;
 	width: 100%;
@@ -565,7 +565,7 @@ html {
 .header.shop .list-main li i {
 	display: inline-block;
 	margin-right: 4px;
-	font-size: 15px;
+	font-size: 16px;
 	color: #F7941D;
 	position: relative;
 	top: 1px;
@@ -578,6 +578,7 @@ html {
 
 .header.shop .list-main li a {
 	color: #333;
+	font-size: 14px;
 }
 
 .header.shop .list-main li a:hover {
@@ -6479,7 +6480,7 @@ start Inquiry CSS
 	left: 229px;
 	color: white;
 	font-family: sans-serif;
-	animation: slide 4s;
+	animation: slide 3s;
 	text-align: center;
 	margin: 19px;
 }
@@ -6496,11 +6497,11 @@ start Inquiry CSS
 
 @keyframes slide {
 	from {
-		left: -381px;
+		left: -200px;
 	}
 
 	to {
-		left: 381px
+		left: 200px
 	}
 }
 
