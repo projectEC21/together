@@ -101,14 +101,14 @@
 
 <body class="js">
 	<!-- Preloader -->
-	<div class="preloader">
+	<!-- <div class="preloader">
 		<div class="preloader-inner">
 			<div class="preloader-icon">
 				<span></span>
 				<span></span>
 			</div>
 		</div>
-	</div>
+	</div> -->
 	<!-- End Preloader -->
 
 	<!-- Header -->
@@ -260,8 +260,7 @@
 															<!-- 이미지는 대표 이미로 받는 걸 default로 에디터로 받는 걸 호버링으로 놓을 예정 -->
 															<span th:unless="${product.originalFileName}!=null">
 																<!-- 인덱스와 동일함 -->
-																<img class="default-img" th:src="@{/main/images/example_img1.jpeg}" alt="#">
-																<img class="hover-img" th:src="@{/main/images/example_img2.jpeg}" alt="#">
+																<img class="default-img" src="https://via.placeholder.com/550x750" alt="#">
 															</span>
 														</a>
 													</div>
