@@ -61,7 +61,7 @@
 	<!-- 240417 dy : 검색어 입력 후 돋보기 클릭 시 /main/list 요청-->
 
 	<!-- jQuery 라이브러리 로드 -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> -->
 
 
 	<script>
@@ -93,6 +93,8 @@
 				document.body.classList.remove("header-padding");
 			}
 		});
+
+
 
 	</script>
 </head>
@@ -271,8 +273,7 @@
 															<span>$ [[${product.price}]]</span>
 														</div>
 														<div class="product-seller" th:data-country=${product.country}>
-															<img id="countryFlag" src="" alt=""
-																style="width:20px; height:20px;">
+															<img id="countryFlag" src="" alt="">
 															<span>[[${product.customerId}]]</span>
 														</div>
 													</div>
