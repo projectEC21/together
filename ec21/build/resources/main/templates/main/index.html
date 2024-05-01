@@ -61,7 +61,7 @@
 	<!-- 240417 dy : 검색어 입력 후 돋보기 클릭 시 /main/list 요청-->
 
 	<!-- jQuery 라이브러리 로드 -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> -->
 
 
 	<script>
@@ -80,33 +80,19 @@
 			})
 		}
 
-
-		document.addEventListener("scroll", function () {
-			const header = document.querySelector(".header-inner");
-			const scrollPosition = window.scrollY;
-
-			if (scrollPosition > 150) { // 스크롤 위치가 100px 이상이면
-				header.classList.add("fixed-header");
-				document.body.classList.add("header-padding");
-			} else { // 스크롤 위치가 100px 미만이면
-				header.classList.remove("fixed-header");
-				document.body.classList.remove("header-padding");
-			}
-		});
-
 	</script>
 </head>
 
 <body class="js">
 	<!-- Preloader -->
-	<div class="preloader">
+	<!-- <div class="preloader">
 		<div class="preloader-inner">
 			<div class="preloader-icon">
 				<span></span>
 				<span></span>
 			</div>
 		</div>
-	</div>
+	</div> -->
 	<!-- End Preloader -->
 
 	<!-- Header -->
@@ -201,7 +187,7 @@
 								<nav class="navbar navbar-expand-lg">
 									<div class="navbar-collapse">
 										<div class="nav-inner">
-											<ul class="nav main-menu menu navbar-nav">
+											<ul class="nav main-menu menu navbar-nav" style="left: 3%;">
 												<li><a th:href="@{/main/list(category=total)}">All</a></li>
 												<li><a th:href="@{/main/list(category=FOOD_BEVERAGE)}">Food &
 														Beverage</a></li>
@@ -258,8 +244,7 @@
 															<!-- 이미지는 대표 이미로 받는 걸 default로 에디터로 받는 걸 호버링으로 놓을 예정 -->
 															<span th:unless="${product.originalFileName}!=null">
 																<!-- 인덱스와 동일함 -->
-																<img class="default-img" th:src="@{/main/images/example_img1.jpeg}" alt="#">
-																<img class="hover-img" th:src="@{/main/images/example_img2.jpeg}" alt="#">
+																<img class="default-img" src="https://via.placeholder.com/550x750" alt="#">
 															</span>
 														</a>
 													</div>
@@ -268,11 +253,10 @@
 																th:href="@{/main/productsDetail(productId = ${product.productId})}">[[${product.productName}]]</a>
 														</h3>
 														<div class="product-price">
-															<span>$ [[${product.price}]]</span>
+															<span>$[[${product.price}]]</span>
 														</div>
-														<div class="product-seller" th:data-country=${product.country}>
-															<img id="countryFlag" src="" alt=""
-																style="width:20px; height:20px;">
+														<div class="product-seller" th:data-country="${product.country}">
+															<img class="countryFlag" src="" alt="" style="width:20px; height:20px;">
 															<span>[[${product.customerId}]]</span>
 														</div>
 													</div>

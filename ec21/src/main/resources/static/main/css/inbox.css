@@ -82,7 +82,7 @@
 
 .inquiry-area .shopping-cart {
 	background: #f5f5f5;
-	padding: 10px;
+	padding: 0px;
 	width: 100%;
 }
 
@@ -226,7 +226,7 @@
 }
 
 #reportModal .modal-body {
-    max-height: 411px;
+    max-height: 460px;;
     margin: 0px;
 }
 
