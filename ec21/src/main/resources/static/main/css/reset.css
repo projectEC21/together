@@ -292,6 +292,8 @@ big {
 .breadcrumbs .bread-inner {
 	z-index: 22;
 	text-align: left;
+	position: relative;
+    left: 28px;
 }
 .breadcrumbs .bread-list {
 	display: inline-block;
@@ -575,7 +577,7 @@ ul,ul li{
 }
 
 li > ul,
-li > o
+li > o {
 
 	margin-left: 1.5em;
 }
@@ -701,6 +703,9 @@ a:hover, a:active {
     display: flex;
     justify-content: center;
 	padding-right: 100px;
+	justify-content: center;
+    position: relative;
+    left: 3%;
 }
 
 .main-navigation {
