@@ -59,7 +59,14 @@
 	<!-- 240422 iy: 유효성 검사 완성 -->
 	<script th:src="@{/script/jquery-3.7.1.min.js}"></script>
 	<script>
-		$(document).ready(function () {
+		$(function () {
+
+			// 키업 이벤트에 대한 유효성 검사 핸들러 연결
+			$("#customerId").on('keyup', validateCustomerId);
+			$("#customerPw").on('keyup', validatePassword);
+			$("#confirmPw").on('keyup', validateConfirmPassword);
+			$("#email").on('keyup', validateEmail);
+
 			$("#submitBtn").click(function (e) {
 				e.preventDefault(); // 기본 폼 제출 방지
 
@@ -86,91 +93,15 @@
 					return;
 				}
 
+				// 회원가입 폼 submit
 				if (confirm("Are you sure you want to register?")) {
 					$("#registerForm").submit();
 				}
 			});
 
-			function findFirstEmptyInput() {
-				var firstEmptyInput = null;
-				$('input[required], textarea[required], select[required]').each(function () {
-					if (!$(this).val()) {
-						firstEmptyInput = {
-							id: $(this).attr('id'), // id를 직접 가져옴
-							label: $(this).closest('.form-group').find('label').text().trim() // 연관된 라벨의 텍스트를 가져옴
-						};
-						return false; // 루프 탈출
-					}
-				});
-				return firstEmptyInput;
-			}
-
-			function validateRadioButtons() {
-				// 'customerGubun' 이름을 가진 라디오 버튼 그룹의 선택 여부 확인
-				return $('input[type="radio"][name="customerGubun"]:checked').length > 0;
-			}
-
-
-			// 모든 필드 유효성 검사 및 첫 번째 유효하지 않은 필드 찾기
-			function validateAllFieldsAndFindFirstInvalid() {
-				if (!validateCustomerId()) return "customerId";
-				if (!validatePassword()) return "customerPw";
-				if (!validateConfirmPassword()) return "confirmPw";
-				if (!validateEmail()) return "email";
-				return null; // 모든 검사 통과
-			}
-
-			// 키업 이벤트에 대한 유효성 검사 핸들러 연결
-			$("#customerId").on('keyup', validateCustomerId);
-			$("#customerPw").on('keyup', validatePassword);
-			$("#confirmPw").on('keyup', validateConfirmPassword);
-			$("#email").on('keyup', validateEmail);
-
-			// 각 필드 유효성 검사 함수 구현
-			function validateCustomerId() {
-				var id = $("#customerId").val();
-				var isValid = /^[a-zA-Z0-9]{4,10}$/.test(id);
-				$("#confirmID").text(isValid ? "This ID is available." : "ID must be 4-10 characters long, consisting of letters and numbers only.")
-					.css("color", isValid ? "green" : "red");
-				return isValid;
-			}
-
-			function validatePassword() {
-				var password = $("#customerPw").val();
-				var isValid = /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,10}$/.test(password);
-				$("#passwordHelp").text(isValid ? "Your password is valid." : "Password must include 6-10 characters with letters, numbers, and special characters.")
-					.css("color", isValid ? "green" : "red");
-				return isValid;
-			}
-
-			function validateConfirmPassword() {
-				var password = $("#customerPw").val();
-				var confirmPassword = $("#confirmPw").val();
-				var isValid = password === confirmPassword;
-				$("#confirmPasswordHelp").text(isValid ? "Passwords match." : "Passwords do not match.")
-					.css("color", isValid ? "green" : "red");
-				return isValid;
-			}
-
-			function validateEmail() {
-				var email = $("#email").val();
-				var isValid = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/.test(email);
-				$("#emailHelp").text(isValid ? "Valid email address." : "Invalid email address.")
-					.css("color", isValid ? "green" : "red");
-				return isValid;
-			}
-
-			function validateRadioButtons() {
-				var radios = $('input[type="radio"][name="customerGubun"]');
-				if (radios.filter(':checked').length === 0) {
-					radios.first().focus(); // 첫 번째 라디오 버튼에 포커스 설정
-					return false;
-				}
-				return true;
-			}
-
 			init();
 		});
+
 
 		function init() {
 			$.ajax({
@@ -181,6 +112,79 @@
 			}).fail(function () {
 				alert("로딩하는데 실패하였습니다.");
 			});
+		}
+
+		function findFirstEmptyInput() {
+			var firstEmptyInput = null;
+			$('input[required], textarea[required], select[required]').each(function () {
+				if (!$(this).val()) {
+					firstEmptyInput = {
+						id: $(this).attr('id'), // id를 직접 가져옴
+						label: $(this).closest('.form-group').find('label').text().trim() // 연관된 라벨의 텍스트를 가져옴
+					};
+					return false; // 루프 탈출
+				}
+			});
+			return firstEmptyInput;
+		}
+
+		function validateRadioButtons() {
+			// 'customerGubun' 이름을 가진 라디오 버튼 그룹의 선택 여부 확인
+			return $('input[type="radio"][name="customerGubun"]:checked').length > 0;
+		}
+
+
+		// 모든 필드 유효성 검사 및 첫 번째 유효하지 않은 필드 찾기
+		function validateAllFieldsAndFindFirstInvalid() {
+			if (!validateCustomerId()) return "customerId";
+			if (!validatePassword()) return "customerPw";
+			if (!validateConfirmPassword()) return "confirmPw";
+			if (!validateEmail()) return "email";
+			return null; // 모든 검사 통과
+		}
+
+		
+		// 각 필드 유효성 검사 함수 구현
+		function validateCustomerId() {
+			var id = $("#customerId").val();
+			var isValid = /^[a-zA-Z0-9]{4,10}$/.test(id);
+			$("#confirmID").text(isValid ? "This ID is available." : "ID must be 4-10 characters long, consisting of letters and numbers only.")
+				.css("color", isValid ? "green" : "red");
+			return isValid;
+		}
+
+		function validatePassword() {
+			var password = $("#customerPw").val();
+			var isValid = /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,10}$/.test(password);
+			$("#passwordHelp").text(isValid ? "Your password is valid." : "Password must include 6-10 characters with letters, numbers, and special characters.")
+				.css("color", isValid ? "green" : "red");
+			return isValid;
+		}
+
+		function validateConfirmPassword() {
+			var password = $("#customerPw").val();
+			var confirmPassword = $("#confirmPw").val();
+			var isValid = password === confirmPassword;
+			$("#confirmPasswordHelp").text(isValid ? "Passwords match." : "Passwords do not match.")
+				.css("color", isValid ? "green" : "red");
+			return isValid;
+		}
+
+		function validateEmail() {
+			var email = $("#email").val();
+			var isValid = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/.test(email);
+			$("#emailHelp").text(isValid ? "Valid email address." : "Invalid email address.")
+				.css("color", isValid ? "green" : "red");
+			return isValid;
+		}
+
+		function validateRadioButtons() {
+			var radios = $('input[type="radio"][name="customerGubun"]');
+			if (radios.filter(':checked').length === 0) {
+				radios.first().focus(); // 첫 번째 라디오 버튼에 포커스 설정
+				return false;
+			}
+			return true;
 		}
 	</script>
 
@@ -217,7 +221,7 @@
 							<ul class="list-main">
 								<li><i class="ti-power-off"></i><a th:href="@{/main/login}">Login</a></li>
 								<li><i class="ti-user"></i><a th:href="@{/main/register}">Sign up</a></li>
-								<li><i class="ti-power-off"></i><a th:href="@{/main/index}">Logout</a></li>
+								<li><i class="ti-power-off"></i><a th:href="@{/main/logout}">Logout</a></li>
 								</li>
 							</ul>
 						</div>

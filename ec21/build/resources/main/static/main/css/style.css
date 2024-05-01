@@ -4563,9 +4563,8 @@ span.paging {
 
 .product-list.section input.price {
 	padding-left: 5px;
-	<<<<<<< HEAD width: 98%;
-	=======width: 91%;
-	>>>>>>>f6aa6ed4d5a949c17beb752b5d112aea92726dd8 line-height: 35px;
+	width: 91%;
+	line-height: 35px;
 }
 
 .product-list.section input.moq-unit {
@@ -4618,12 +4617,11 @@ start new Write CSS
 	font-size: 14px;
 	color: #333;
 	font-weight: 400;
-	<<<<<<< HEAD text-align: left;
+	text-align: left;
 	padding-bottom: 40px;
 	margin: 0 20px;
-	=======text-align: left;
+	text-align: left;
 	padding-bottom: 40px;
-	>>>>>>>f6aa6ed4d5a949c17beb752b5d112aea92726dd8
 }
 
 .product-list.section .product-info .title h2 {
@@ -6287,7 +6285,10 @@ start Inquiry CSS
     border: 1px solid #F79424;
     color: #fff;
     padding: 11px 28px;
+<<<<<<< HEAD
 	fon
+=======
+>>>>>>> b4445a771ae7a099663e5eb1d919a24437b41817
 }
 
 .error-page .button .btn:hover {

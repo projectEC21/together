@@ -29,7 +29,7 @@
 	<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"> -->
 	<!-- <link th:href="@{../vendors/font-awesome/css/font-awesome.min.css}" rel="stylesheet"> -->
 	<!-- Fancybox -->
-	<link rel="stylesheet" th:href="@{/main/css/jquery.fancybox.min.css}">
+	<link rel="stylesheet" th:href="@{/main/css/fancybox.min.css}">
 	<!-- Themify Icons -->
 	<link rel="stylesheet" th:href="@{/main/css/themify-icons.css}">
 	<!-- Nice Select CSS -->
@@ -114,12 +114,12 @@
 			let inquiryId = element.getAttribute("data-id");
 			let senderId = element.getAttribute("data-sender");
 			let customerId = $("#hiddenCustomerId").val();
-			let data = (customerId == senderId)? "보낸 메일함으로 이동합니다.":"받은 메일함으로 이동합니다.";
-			
+			let data = (customerId == senderId) ? "Moving to the Sent Mail folder." : "Moving to the Inbox.";
+
 			if (confirm(data)) {
 				$.ajax({
 					url: "/inbox/trash/getList",
-					data: { "customerId": customerId, "inquiryId": inquiryId, "change": "untrash"},
+					data: { "customerId": customerId, "inquiryId": inquiryId, "change": "untrash" },
 					method: "GET",
 					success: function (inquiryList) {
 						$("#result").replaceWith(inquiryList);
@@ -138,7 +138,7 @@
 		function toDeleted(element) {
 			let inquiryId = element.getAttribute("data-id");
 			let customerId = $("#hiddenCustomerId").val();
-			if (confirm("완전 삭제하시겠습니까?")) {
+			if (confirm("Would you like to delete this permanently?")) {
 				$.ajax({
 					url: "/inbox/trash/getList",
 					data: { "customerId": customerId, "inquiryId": inquiryId, "change": "deleted" },
@@ -206,8 +206,7 @@
 							<!-- logo -->
 							<div class="logo">
 								<a th:href="@{/}">
-									<img th:src="@{/main/images/ec21logo.png}" alt="logo"
-										style="width: 100px; height: 30px;">
+									<img th:src="@{/main/images/ec21logo.png}" alt="logo">
 								</a>
 							</div>
 						</div>
@@ -221,7 +220,7 @@
 								<li sec:authorize="isAnonymous()"><i class="ti-user"></i><a th:href="@{/main/register}">Sign up</a></li>
 								<li sec:authorize="isAuthenticated()"><i class="ti-power-off"></i><a th:href="@{/main/logout}">Logout</a></li>
 								<li sec:authorize="isAuthenticated()"><a th:href="@{/main/myproducts}"><i class="fa fa-user-circle-o"
-											aria-hidden="true"></i></a></li>
+											aria-hidden="true"></i><span sec:authorize="isAuthenticated()">[[${#authentication.name}]]</span></a></li>
 							</ul>
 						</div>
 						<!-- End Top Right -->
@@ -259,7 +258,8 @@
 						<li><a th:href="@{/main/inboxSaved(customerId=${customerId})}">Saved</a></li>
 						<li><a th:href="@{/main/inboxSpam(customerId=${customerId})}">Spam</a></li>
 						<li><a th:href="@{/main/inboxBlock(customerId=${customerId})}">Block</a></li>
-						<li><a th:href="@{/main/inboxTrash(customerId=${customerId})}"  style="color: #439eff;">Trash</a></li>
+						<li><a th:href="@{/main/inboxTrash(customerId=${customerId})}" style="color: #439eff;">Trash <span id="listSize"></span></a>
+						</li>
 					</ul>
 				</div>
 				<!--/ End Single Widget -->
@@ -268,41 +268,35 @@
 			<!-- My inquiry List -->
 			<div class="shopping-cart section">
 				<div class="container">
-					<!-- Shop Top -->
-					<div class="shop-top">
-						<div class="shop-shorter">
-							<div class="single-shorter">
-								<label>Show : <span id="listSize"></span></label>
-							</div>
-						</div>
-					</div>
-					<table class="table shopping-summery" id="result">
+					<table class="table shopping-summery inquiry" id="result">
 						<thead>
 							<tr class="main-hading">
 								<th class="">ID</th>
 								<th class="state"></th>
 								<th class="inquiryTitle" colspan="2">TITLE</th>
 								<th class="sendDate">DATE</th>
-								<th class="untrash">UNTRASH</th>
+								<th class="untrash">UN TRASH</th>
 								<th class="deleted">DElETE</th>
-								<!-- <th class="deleted"><i class="ti-trash remove-icon"></i></th> -->
 							</tr>
 						</thead>
 						<tbody>
 							<!-- 240422 dy : 보낸 인콰이어리 목록 출력 -->
 							<tr th:if="${inquiryList != null and !#lists.isEmpty(inquiryList)}"
 								th:each="inquiry : ${inquiryList}">
-								
+
 								<!-- 받은/보낸 회원 ID -->
 								<td class="" data-title="">
-									<span class="" th:if="${inquiry.customerId == inquiry.senderId}" th:text="${inquiry.receiverId}"></span>
-									<span class="" th:unless="${inquiry.customerId == inquiry.senderId}" th:text="${inquiry.senderId}"></span>
+									<span class="" th:if="${inquiry.customerId == inquiry.senderId}"
+										th:text="${inquiry.receiverId}"></span>
+									<span class="" th:unless="${inquiry.customerId == inquiry.senderId}"
+										th:text="${inquiry.senderId}"></span>
 								</td>
-								
+
 								<!-- 받은/보낸 상태-->
 								<td class="" data-title="">
 									<span class="" th:if="${inquiry.customerId == inquiry.senderId}">[sent]</span>
-									<span class="" th:unless="${inquiry.customerId == inquiry.senderId}">[received]</span>
+									<span class=""
+										th:unless="${inquiry.customerId == inquiry.senderId}">[received]</span>
 								</td>
 
 								<!-- 인콰이어리 제목 -->
@@ -314,14 +308,14 @@
 									</span>
 								</td>
 								<!-- 보낸 날짜 -->
-								<td class="sendDate" data-title="sendDate"><span>[[${inquiry.sendDate}]]</span></td>
+								<td class="sendDate" data-title="sendDate"><span>[[${#temporals.format(inquiry.sendDate, 'yyyy-MM-dd')}]]</span></td>
 								
 								<!-- 누르면 스팸 해제 후 삭제 되면서 스팸함에서 사라짐 -->
 								<!-- <td class="action" data-title="unspam"><a href="#" class="spamBtn" th:data-id="${inquiry.inquiryId}"><i class="fa fa-refresh"></i></a></td> -->
 								<td data-title="untrash"><a href="javascript:void(0);" class="spamBtn"
 										th:data-id="${inquiry.inquiryId}" th:data-sender="${inquiry.senderId}" onclick="toUnTrash(this)"><i
-											class="fa fa-refresh"></i></a></td>
-								
+											class="fa fa-folder-open-o"></i></a></td>
+
 								<!-- 누르면 삭제 되면서 쓰통으로 -->
 								<!-- <td class="action" data-title="trash"><a href="#" class="trashBtn" th:data-id="${inquiry.inquiryId}"><i class="ti-trash remove-icon"></i></a></td> -->
 								<td data-title="deleted"><a href="javascript:void(0)" class="trashBtn"
@@ -331,10 +325,6 @@
 						</tbody>
 					</table>
 					<!--/ End inquiry List -->
-					<!-- 페이징 -->
-					<span class="paging">
-						<< < 1 2 3 4 5> >>
-					</span>
 				</div>
 			</div>
 			<!--/ End Shopping Cart -->
@@ -367,19 +357,18 @@
 							</tr>
 							<tr>
 								<th class="">Subject</th>
-								<td><span id="modalProductName">..</span></td>
+								<td>
+									<span id="modalCategory">..</span> /
+									<span id="modalProductName">..</span>
+								</td>
 							</tr>
-							<tr>
+							<!-- <tr>
 								<th class="">Category</th>
 								<td><span id="modalCategory">..</span></td>
-							</tr>
+							</tr> -->
 							<tr>
 								<th class="">Quantity</th>
 								<td><span id="modalQuantity"></span> (<span id="modalUnit"></span>) </td>
-							</tr>
-							<tr>
-								<th class="">Message</th>
-								<td><span><textarea id="modalInquiryContent" readonly></textarea></span></td>
 							</tr>
 							<tr>
 								<!-- 파일 부분 다운만 가능한 건 어떻게 하는지 까먹어서 우선 패스 -->
@@ -389,6 +378,13 @@
 										<a href="javascript:download()" data-inquiryId="" id="modalFile">bts.jpg</a>
 									</span>
 								</td>
+							</tr>
+							<tr>
+								<th colspan="2">Message</th>
+								<!-- <td><span><textarea id="modalInquiryContent" readonly></textarea></span></td> -->
+							</tr>
+							<tr>
+								<td class="message" colspan="2"><span id="modalInquiryContent"></span></td>
 							</tr>
 						</table>
 					</div>
@@ -429,7 +425,7 @@
 	<!-- Nice Select JS -->
 	<script th:src="@{/main/js/nicesellect.js}"></script>
 	<!-- Ytplayer JS -->
-	<script th:src="@{/main/js/ytplayer.min.js}"></script>
+	<!-- <script th:src="@{/main/js/ytplayer.min.js}"></script> -->
 	<!-- Flex Slider JS -->
 	<script th:src="@{/main/js/flex-slider.js}"></script>
 	<!-- ScrollUp JS -->

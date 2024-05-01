@@ -357,7 +357,7 @@
                 </a>
                 <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
                   <a class="dropdown-item" th:href=@{/}><i class="fa fa-home pull-right"></i> Home</a>
-                  <a class="dropdown-item" th:href="@{main/logout}"><i class="fa fa-sign-out pull-right"></i> Log
+                  <a class="dropdown-item" th:href="@{/main/logout}"><i class="fa fa-sign-out pull-right"></i> Log
                     Out</a>
                 </div>
               </li>
@@ -453,32 +453,54 @@
                           <!-- 이상검출도: [[${product.lstmPredictProba}]] % -->
                           <div>
                             <!-- 이상검출도: -->
-
                             <!-- [[${#numbers.formatDecimal(product.lstmPredictProba * 100, 1, 2)} + ' %']] -->
+<<<<<<< HEAD
                             <div class="progress">
                               <div class="progress-bar progress-bar-striped" role="progressbar"
+=======
+                            <div style=" display: flex; ">
+                              <p style=" padding: 0; margin: 0; font-size: 18px; color: black;">예측값:</p>
+                              <div style="
+                              text-align: right;
+                              padding-left: 77px;
+                              font-size: 20px;
+                          ">[[${#numbers.formatDecimal(product.lstmPredictProba * 100, 1, 2)}]]%</div>
+                            </div>
+                            <div class=" progress">
+                              <div class="progress-bar" role="progressbar"
+>>>>>>> b4445a771ae7a099663e5eb1d919a24437b41817
                                 th:style="'width:' + ${#numbers.formatDecimal(product.lstmPredictProba * 100, 1, 2)} + '%;'"
                                 th:data-valuenow="${#numbers.formatDecimal(product.lstmPredictProba * 100, 1, 2)}"
                                 aria-valuemin="0" aria-valuemax="100">
-                                [[${#numbers.formatDecimal(product.lstmPredictProba * 100, 1, 2)} + ' %']]
+
+                              </div>
+                            </div>
+                            <div>
+                              <div class="prohibitWord">
+                                <p style="
+                              font-size: 19px;
+                          ">이상단어검출:</p>
+                                <span class style="
+                          padding-left: 23px;
+    font-size: 20px;
+                          ">[[${product.similarProba}]] %</span>
+
+                              </div>
+                              <div class="prohibit" th:if="${product.prohibitWord != null}">
+                                <!-- <p>이상단어 검출:</p> -->
+
+                                <div class="similarProbaWord" th:if="${product.similarProba > 90 ? 'badge-danger' : 
+                              product.similarProba > 75 ? 'badge-orange' : 
+                              product.similarProba > 50 ? 'badge-warning' : 'badge-secondary'}"
+                                  style="font-size: 19px;">
+                                  [[${product.prohibitWord}]] ([[${product.prohibitReason}]])
+
+                                </div>
                               </div>
 
                             </div>
-                            <div class="prohibitWord">
-                              <div class="prohibit" th:if="${product.prohibitWord != null}">
-                                <!-- <p>이상단어 검출:</p> -->
-                                <div class="similarProbaWord" th:if="${product.similarProba > 90 ? 'badge-danger' : 
-                                  product.similarProba > 75 ? 'badge-orange' : 
-                                  product.similarProba > 50 ? 'badge-warning' : 'badge-secondary'}">
-                                  [[${product.prohibitWord}]] ([[${product.prohibitReason}]])
-                                  <span class="badge badge-secondary">[[${product.similarProba}]] %</span>
-                                </div>
-
-                              </div>
-                              <div th:unless="${product.prohibitWord != null}">
-                                이상단어 미검출
-                              </div>
-
+                            <div th:unless="${product.prohibitWord != null}" style="font-size: 19px;">
+                              미검출
                             </div>
 
                             <!--

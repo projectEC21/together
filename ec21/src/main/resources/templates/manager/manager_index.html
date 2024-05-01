@@ -81,7 +81,7 @@
 
           // 테이블 헤더 생성
           var thead = $("<tr class='weeklySummary'>");
-          thead.append(`<th class='thname' style=" width: 18% !important; ">Category / Date</th>`); // 첫 번째 빈 헤더
+          thead.append(`<th class='thname' style=" width: 14% !important; "> - </th>`); // 첫 번째 빈 헤더
           data.forEach(function (item) {
             thead.append("<th>" + item.date + "</th>"); // 각 일자를 헤더로 추가
           });
@@ -89,7 +89,8 @@
 
           // 상품 수 행
           var productRow = $("<tr>");
-          productRow.append(`<td style="height: 67px;">등록 상품 수</td>`); // '상품 수' 라벨
+          productRow.append(`<td style="    height: 67px;
+    width: 130px;">등록 상품 수</td>`); // '상품 수' 라벨
           data.forEach(function (item) {
             productRow.append(`<td style="height: 67px;">` + item.productCnt + "</td>"); // 각 일자별 상품 수
           });
@@ -181,7 +182,7 @@
         lineChartInstance.destroy(); // 기존 차트가 있다면 제거
       }
 
-      var gradientFill = ctx.createLinearGradient(0, 0, 0, 180);
+      var gradientFill = ctx.createLinearGradient(0, 0, 0, 150);
       gradientFill.addColorStop(0, "rgba(54, 162, 235, 1)");
       gradientFill.addColorStop(1, "rgba(54, 162, 235, 0.1)");
 
@@ -303,14 +304,14 @@
               position: 'bottom', // 범례의 위치를 오른쪽으로 변경
               align: 'center',
               labels: {
-                boxWidth: 10, // 범례 색상 상자의 너비
-                padding: 10, // 범례 항목 간의 패딩
-                boxWidth: 50, // 범례 색상 상자의 너비
+                boxWidth: 5, // 범례 색상 상자의 너비
+                padding: 8, // 범례 항목 간의 패딩
+                boxWidth: 30, // 범례 색상 상자의 너비
                 // 범례 항목 간의 패딩
                 usePointStyle: true
 
               },
-              cutoutPercentage: 100
+              // cutoutPercentage: 100
             }
           }
         },
@@ -354,24 +355,6 @@
           });
 
 
-          new Chart(document.getElementById("registerProduct"), {
-            type: 'line',
-            data: {
-              labels: createDates,
-              datasets: [{
-                label: "전체 상품 등록 수",
-                borderColor: 'rgba(54, 162, 235, 1)', // 파란색 선
-                backgroundColor: 'rgba(54, 162, 235, 0.2)', // 파란색 배경 (선 아래 채우기)
-                pointBorderColor: 'rgba(54, 162, 235, 1)', // 파란색 포인트 테두리
-                pointBackgroundColor: 'rgba(54, 162, 235, 1)', // 파란색 포인트 배경
-                pointHoverBackgroundColor: '#fff', // 포인트 호버 배경
-                pointHoverBorderColor: 'rgba(220,220,220,1)', // 포인트 호버 테두리
-                pointBorderWidth: 1,
-                data: counts,
-                lineTension: 0.4
-              }]
-            }
-          })
 
         },
         error: function (jqXHR, textStatus, errorThrown) {
@@ -573,7 +556,7 @@
                 </a>
                 <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
                   <a class="dropdown-item" th:href=@{/}><i class="fa fa-home pull-right"></i> Home</a>
-                  <a class="dropdown-item" th:href="@{main/logout}"><i class="fa fa-sign-out pull-right"></i> Log
+                  <a class="dropdown-item" th:href="@{/main/logout}"><i class="fa fa-sign-out pull-right"></i> Log
                     Out</a>
                 </div>
               </li>
@@ -695,6 +678,7 @@
                 <div class=" x_panel shadow">
                   <div class="x_title">
                     <h2>일자별 상품등록 개수</h2>
+
                     <div class="clearfix"></div>
                   </div>
                   <div class="x_content ">
@@ -716,7 +700,7 @@
                   </div>
                   <div class="x_content ">
                     <div class="mid">
-                      <canvas id="doughnutChart" height="100"></canvas>
+                      <canvas id="doughnutChart" height="100" width="250"></canvas>
                     </div>
                   </div>
                 </div>
@@ -790,7 +774,9 @@
               </div>
 
               <div class="col-md-12 mb-2">
-                <div class="x_panel shadow">
+                <div class="x_panel shadow" style="
+                height: 310px;
+            ">
 
                   <div>
                     <div class="x_title">
