@@ -6435,7 +6435,7 @@ start Inquiry CSS
 	font-size: 3.5em;
 	position: absolute;
 	top: 174px;
-	left: 381px;
+	left: 249px;
 	color: white;
 	font-family: sans-serif;
 	animation: slide 5s;
@@ -6455,11 +6455,11 @@ start Inquiry CSS
 
 @keyframes slide {
 	from {
-		left: -409px;
+		left: -381px;
 	}
 
 	to {
-		left: 409px
+		left: 381px
 	}
 }
 
