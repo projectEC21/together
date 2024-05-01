@@ -95,6 +95,40 @@
 		});
 
 
+		$(document).ready(function () {
+			$('.product-content').each(function () {
+				var countryName = $(this).data("country");
+				var $this = $(this); // 현재 .product-seller 요소를 $this 변수에 저장
+				
+				console.log('되나요   ?? '+countryName);
+				console.log($this);
+
+				if (countryName) {
+					// AJAX 요청을 통해 국가 정보를 가져옵니다.
+					$.ajax({
+						url: `https://restcountries.com/v3.1/name/${countryName}`,
+						method: 'GET',
+						success: function (data) {
+							if (data && data.length > 0) {
+								var countryCode = data[0].cca2.toLowerCase();
+								var flagImageUrl = `https://flagcdn.com/${countryCode}.svg`;
+								// $this 범위 내의 .countryFlag 이미지 src를 업데이트합니다.
+								$this.find(".countryFlag").attr('src', flagImageUrl).attr('alt', `${countryName} Flag`);
+							} else {
+								console.warn('No data for country: ' + countryName);
+								$this.find(".countryFlag").attr('src', '').attr('alt', 'Flag not available');
+							}
+						},
+						error: function () {
+							console.error('Error retrieving country data.');
+							$this.find(".countryFlag").attr('src', '').attr('alt', 'Error loading flag');
+						}
+					});
+				}
+			});
+		});
+
+
 
 	</script>
 </head>
@@ -272,7 +306,7 @@
 															<span>$ [[${product.price}]]</span>
 														</div>
 														<div class="product-seller" th:data-country=${product.country}>
-															<img id="countryFlag" src="" alt="">
+															<img class="countryFlag" src="" alt="" style="width:20px; height:20px;">
 															<span>[[${product.customerId}]]</span>
 														</div>
 													</div>
