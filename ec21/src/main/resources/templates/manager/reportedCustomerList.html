@@ -185,14 +185,14 @@
                 <li><a><i class="fa fa-edit"></i> 상품관리 <span class="fa fa-chevron-down"></span></a>
                   <ul class="nav child_menu">
                     <li><a th:href="@{/manager/productList}">전체 상품 조회</a></li>
-                    <li><a th:href="@{/manager/modelPredict}">모델로 이상상품 판별</a></li>
+                    <li><a th:href="@{/manager/modelPredict}">모델 결과 조회</a></li>
                   </ul>
                 </li>
                 <li><a><i class="fa fa-users"></i> 회원관리 <span class="fa fa-chevron-down"></span></a>
                   <ul class="nav child_menu">
-                    <li><a th:href="@{/manager/customerList}">전체회원</a></li>
-                    <li><a th:href="@{/manager/reportedCustomerList}">신고당한회원</a></li>
-                    <li><a th:href="@{/manager/blackList}">블랙리스트회원</a></li>
+                    <li><a th:href="@{/manager/customerList}">전체 회원 조회</a></li>
+                    <li><a th:href="@{/manager/reportedCustomerList}">신고 회원 조회</a></li>
+                    <li><a th:href="@{/manager/blackList}">블랙 회원 조회</a></li>
                   </ul>
                 </li>
               </ul>
@@ -233,13 +233,13 @@
       <!-- page content -->
       <div class="right_col" role="main">
         <div class="">
-          <div class="page-title">
+          <!-- <div class="page-title">
             <div class="title_left">
               <h3>Member <small>회원관리</small></h3>
             </div>
 
 
-          </div>
+          </div> -->
 
           <div class="clearfix"></div>
 
@@ -248,7 +248,7 @@
             <div class="col-md-12 col-sm-12  ">
               <div class="x_panel">
                 <div class="x_title">
-                  <h2>신고당한회원관리</h2>
+                  <h3>신고 회원 조회</h3>
 
                   <div class="clearfix"></div>
                 </div>
@@ -319,11 +319,11 @@
                             th:value="${reportedCustomer.reportCustomerId}">
                           <input type="hidden" name="" class="reportedId" th:value="${reportedCustomer.reportedId}">
                           <!--블랙 버튼 클릭 시 팝업창? (신고 테이블의 관리자 처리 여부 변경 , 블랙리스트로 변경할 고객ID )-->
-                          <input class="btn btn-hover color-8 blackBtn" type="button"
+                          <input class="btn btn-black btn-xs toNormal" type="button"
                             th:data-report-category="${reportedCustomer.reportCategory}"
                             th:data-report-reason="${reportedCustomer.reportReason}" value="블랙">
                           <!--정상 버튼 클릭 시 (신고 테이블의 관리자 처리 여부 변경) -->
-                          <input class="btn btn-hover color-9 normalBtn" type="button"
+                          <input class="btn btn-info btn-xs toNormal" type="button"
                             th:data-report-category="${reportedCustomer.reportCategory}"
                             th:data-report-reason="${reportedCustomer.reportReason}" value="정상">
                         </td>

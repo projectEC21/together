@@ -216,14 +216,14 @@
                 <li><a><i class="fa fa-edit"></i> 상품관리 <span class="fa fa-chevron-down"></span></a>
                   <ul class="nav child_menu">
                     <li><a th:href="@{/manager/productList}">전체 상품 조회</a></li>
-                    <li><a th:href="@{/manager/modelPredict}">모델로 이상상품 판별</a></li>
+                    <li><a th:href="@{/manager/modelPredict}">모델 결과 조회</a></li>
                   </ul>
                 </li>
                 <li><a><i class="fa fa-users"></i> 회원관리 <span class="fa fa-chevron-down"></span></a>
                   <ul class="nav child_menu">
-                    <li><a th:href="@{/manager/customerList}">전체회원</a></li>
-                    <li><a th:href="@{/manager/reportedCustomerList}">신고당한회원</a></li>
-                    <li><a th:href="@{/manager/blackList}">블랙리스트회원</a></li>
+                    <li><a th:href="@{/manager/customerList}">전체 회원 조회</a></li>
+                    <li><a th:href="@{/manager/reportedCustomerList}">신고 회원 조회</a></li>
+                    <li><a th:href="@{/manager/blackList}">블랙 회원 조회</a></li>
                   </ul>
                 </li>
               </ul>
@@ -264,11 +264,11 @@
       <!-- page content -->
       <div class="right_col" role="main">
         <div class="">
-          <div class="page-title">
+          <!-- <div class="page-title">
             <div class="title_left">
               <h3>Products <small>전체 상품 조회</small></h3>
             </div>
-          </div>
+          </div> -->
 
           <div class="clearfix"></div>
 
@@ -276,7 +276,7 @@
             <div class="col-md-12 col-sm-12  ">
               <div class="x_panel">
                 <div class="x_title">
-                  <h2>전체 상품 조회</h2>
+                  <h3>전체 상품 조회</h3>
                   <div class="clearfix"></div>
                 </div>
 
@@ -303,10 +303,10 @@
 
                 <div class="x_content">
                   <div>
-                    <a class="filter" th:data-value="total">전체</a>|
-                    <a class="filter" th:data-value="unprocessedList">미처리</a>|
-                    <a class="filter" th:data-value="normalList">정상</a>|
-                    <a class="filter" th:data-value="weirdList">이상</a>|
+                    <a class="filter" th:data-value="total"  style="cursor:pointer;">전체 </a>|
+                    <a class="filter" th:data-value="unprocessedList"  style="cursor:pointer;">미처리 </a>|
+                    <a class="filter" th:data-value="normalList"  style="cursor:pointer;">정상 </a>|
+                    <a class="filter" th:data-value="weirdList" style="cursor:pointer;">이상 </a>|
                   </div>
                   <!-- <a href="" id="predictTotal">전체</a> | <a href="" id="predictWeird">이상</a> | <a href="" id="predictNormal"> 정상</a> -->
                   <!-- <div class="row">
