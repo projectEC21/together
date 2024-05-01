@@ -29,6 +29,7 @@ public class SecurityConfig {
                 "/main/registerProc",
                 "/main/login",
                 "/main/list",
+                "/main/downloadImg",
                 "/main/productsDetail",
                 "/build/**",
                 "/data/**",
