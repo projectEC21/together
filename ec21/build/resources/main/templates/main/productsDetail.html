@@ -480,7 +480,7 @@
 										<img th:src="@{/main/downloadImg(productId=${product.productId})}">
 									</span>
 									<span th:unless="${product.originalFileName}!=null">
-										<img th:src="@{/main/images/example_img6.jpeg}" alt="">
+										<img src="https://via.placeholder.com/550x750" alt="">
 									</span>
 								</div>
 							</div>
@@ -681,8 +681,7 @@
 										<img th:src="@{/main/downloadImg(productId=${dto.productId})}">
 									</span>
 									<span th:unless="${dto.originalFileName}!=null">
-										<img class="default-img" th:src="@{/main/images/example_img5.jpeg}">
-										<img class="hover-img" th:src="@{/main/images/example_img6.jpeg}">
+										<img class="default-img" src="https://via.placeholder.com/550x750">
 									</span>
 								</a>
 							</div>
