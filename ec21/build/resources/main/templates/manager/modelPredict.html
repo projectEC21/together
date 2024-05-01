@@ -77,12 +77,10 @@
     $(document).ready(function () {
       // AJAX 호출 이후 또는 문서가 준비된 후에 progress-bar 요소에 대한 로직을 실행
 
-
       $("#category").on("change", search);
       $("#searchWord").on("keyup", search);
       $(".wordPlusBtn").on("click", wordPlus);
-      init();
-
+      
       // 240418 iy: 모달 기능 구현 
       // 모달 변수 초기화
       var modal = $("#myModal");
@@ -162,7 +160,7 @@
         });
       });
 
-
+      init();
     });
     // 240418 iy: 모달 기능 구현 끝
 
@@ -180,7 +178,8 @@
             if (resp) {
               alert("정상 상품으로 등록되었습니다.");
               // 페이지 새로고침
-              window.location.reload();
+              // window.location.reload();
+              search();
             }
           }
         });
@@ -201,7 +200,8 @@
             if (resp) {
               alert("이상 상품으로 등록되었습니다.");
               // 페이지 새로고침
-              window.location.reload();
+              //window.location.reload();
+              search();
             }
           }
         });
@@ -429,7 +429,7 @@
                         <th class="column-title">상품내용</th>
                         <!-- <th class="column-title" style="width: 20%;">예측값</th> -->
                         <th class="column-title">금지어</th>
-                        <th class="column-title">#Edit</th>
+                        <th class="column-title"></th>
                       </tr>
                     </thead>
 

@@ -50,8 +50,11 @@
           ('0' + date.getDate()).slice(-2);
       }
 
+      var today = new Date("2024-04-01");
+
       // input 태그에 날짜를 설정합니다.
-      $('#startDate').val(toLocalDateStr(firstDayOfMonth));
+      // $('#startDate').val(toLocalDateStr(firstDayOfMonth));
+      $('#startDate').val(today);
       $('#endDate').val(toLocalDateStr(currentDate));
 
       // 페이지 로드 시 차트를 업데이트합니다.
@@ -81,18 +84,18 @@
 
           // 테이블 헤더 생성
           var thead = $("<tr class='weeklySummary'>");
-          thead.append(`<th class='thname' style=" width: 14% !important; "> - </th>`); // 첫 번째 빈 헤더
+          thead.append(`<th class='thname' style=" width: 15% !important; "> - </th>`); // 첫 번째 빈 헤더
           data.forEach(function (item) {
-            thead.append(`<th style="font-size: 18px">` + item.date + "</th>"); // 각 일자를 헤더로 추가
+            thead.append(`<th style="font-size: 15px; width: 15%;">` + item.date + "</th>"); // 각 일자를 헤더로 추가
           });
           table.append(thead);
 
           // 상품 수 행
           var productRow = $("<tr>");
           productRow.append(`<td style="    height: 67px;
-    font-size:18px">등록 상품</td>`); // '상품 수' 라벨
+    font-size:15px">등록 상품</td>`); // '상품 수' 라벨
           data.forEach(function (item) {
-            productRow.append(`<td style="height: 67px; font-size:28px">` + item.productCnt + "</td>"); // 각 일자별 상품 수
+            productRow.append(`<td style="height: 67px; font-size:15px">` + item.productCnt + "</td>"); // 각 일자별 상품 수
           });
           table.append(productRow);
 
@@ -100,7 +103,7 @@
           var customerRow = $("<tr>");
           customerRow.append(`<td style="height: 67px; font-size:18px">회원 가입</td>`); // '회원 수' 라벨
           data.forEach(function (item) {
-            customerRow.append(`<td style="font-size:26px">` + item.customerCnt + "</td>"); // 각 일자별 회원 수
+            customerRow.append(`<td style="font-size:15px">` + item.customerCnt + "</td>"); // 각 일자별 회원 수
           });
           table.append(customerRow);
         },

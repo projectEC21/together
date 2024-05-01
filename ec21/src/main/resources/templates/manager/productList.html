@@ -43,7 +43,6 @@
       $(".filter").on("click", filteredList);
       $("#category").on("change", search);
       $("#searchWord").on("keyup", search);
-      init();
 
       // 두 번째 모달 열기 버튼 클릭 이벤트
       $(document).on("click", "a[id^='productList']", function () {
@@ -86,6 +85,7 @@
           }
         });
       });
+      init();
     });
 
     function productNormal() {
@@ -100,7 +100,8 @@
             if (resp) {
               alert("정상 상품으로 등록되었습니다.");
               // 페이지 새로고침
-              window.location.reload();
+              // window.location.reload();
+              search();
             }
           }
         });
@@ -119,7 +120,8 @@
             if (resp) {
               alert("이상 상품으로 등록되었습니다.");
               // 페이지 새로고침
-              window.location.reload();
+              // window.location.reload();
+              search();
             }
           }
         });

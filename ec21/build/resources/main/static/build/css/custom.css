@@ -13890,7 +13890,7 @@ button {
 .toWeird {
   margin-bottom: 10px;
   margin-left: 13px;
-  width: 86px;
+  width: 64px;
   height: 39px;
 }
 
@@ -13900,11 +13900,11 @@ button {
   border-color: #333;
 }
 
-#product {
+/* #product {
   display: flex;
   align-items: center;
   flex-direction: column;
-}
+} */
 
 #product #productName {
   font-size: 20px;
@@ -13937,7 +13937,8 @@ button {
 }
 
 .modelPredict {
-  width: 302px;
+      width: 327px;
+        padding-left: 32px;
 }
 
 #startDate, #endDate{
