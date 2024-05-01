@@ -97,7 +97,7 @@
 			let reportReason = $("#modalReportReason").val();
 			let managerCheck = 'N';
 
-			if (confirm("신고!")) {
+			if (confirm("Processing completed.")) {
 				$.ajax({
 					url: "/inbox/report",
 					data: { "reportedId": reportedId, "reportCategory": reportCategory, "reportReason": reportReason, "managerCheck": managerCheck },
@@ -180,15 +180,16 @@
 
 <body class="js">
 	<input type="hidden" id="hiddenCustomerId" th:value="${customerId}">
+
 	<!-- Preloader -->
-	<div class="preloader">
+	<!-- <div class="preloader">
 		<div class="preloader-inner">
 			<div class="preloader-icon">
 				<span></span>
 				<span></span>
 			</div>
 		</div>
-	</div>
+	</div> -->
 	<!-- End Preloader -->
 
 	<!-- Header -->

@@ -237,14 +237,14 @@
 	<input type="hidden" name="" id="loginUser" th:value="${#authentication.name}">
 	<!-- 지우지.. 마시오.. css 다 사라짐요.. -->
 	<!-- Preloader -->
-	<div class="preloader">
+	<!-- <div class="preloader">
 		<div class="preloader-inner">
 			<div class="preloader-icon">
 				<span></span>
 				<span></span>
 			</div>
 		</div>
-	</div>
+	</div> -->
 	<!-- End Preloader -->
 
 	<!-- Header -->
@@ -560,9 +560,13 @@
 													(<span id="modalUnit"></span>) </td>
 											</tr>
 											<tr>
-												<th class="">Message <span>*</span></th>
-												<td><textarea class="message-field" name="inquiryContent"
-														id="modalContent" cols="30" rows="10" required></textarea></td>
+												<th colspan="2">Message <span>*</span></th>
+											</tr>
+											<tr>
+												<td colspan="2" >
+													<textarea class="message-field" name="inquiryContent"
+														id="modalContent" cols="30" rows="10" required></textarea>
+												</td>
 											</tr>
 											<tr>
 												<th class="">Attach File</th>

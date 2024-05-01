@@ -184,14 +184,14 @@
 	<input type="hidden" id="hiddenCustomerId" th:value="${customerId}">
 
 	<!-- Preloader -->
-	<div class="preloader">
+	<!-- <div class="preloader">
 		<div class="preloader-inner">
 			<div class="preloader-icon">
 				<span></span>
 				<span></span>
 			</div>
 		</div>
-	</div>
+	</div> -->
 	<!-- End Preloader -->
 
 	<!-- Header -->
@@ -309,7 +309,8 @@
 									<span>
 										<!-- <a id="inquiryTitle" data-toggle="modal" data-target="#inquiryDetail" th:data-id="${inquiry.inquiryId}">[[${inquiry.inquiryTitle}]]</a> -->
 										<a class="inquiryTitle" th:id="'modalBtn'+${inquiry.inquiryId}"
-											th:data-id="${inquiry.inquiryId}">[[${inquiry.inquiryTitle}]]</a>
+											th:data-id="${inquiry.inquiryId}"
+											style=" position: relative; max-width: 106%; left: -40px;">[[${inquiry.inquiryTitle}]]</a>
 									</span>
 								</td>
 								<!-- 보낸 날짜 -->

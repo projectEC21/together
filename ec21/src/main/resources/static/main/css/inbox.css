@@ -16,7 +16,7 @@
     margin-top: -2px;
     /* transform: translate(50%, 0); */
     position: relative;
-    left: 45%;
+    left: 105%;
 } 
 
 .topbar .top-left .logo span {
@@ -107,8 +107,8 @@
     font-size: 16px;
 }
 .table.shopping-summery a.inquiryTitle {
-	width: 600px;
-    max-width: 100%;
+    width: 600px;
+    max-width: 70%;
     display: -webkit-inline-box;
     text-align: -webkit-left;
     cursor: pointer;
@@ -118,6 +118,7 @@
     text-overflow: ellipsis;
     font-size: 16px;
 }
+
 
 .table.shopping-summery a.inquiryTitle:hover {
 	font-weight: bolder;
@@ -186,7 +187,7 @@
 }
 
 #reportModal .modal-body td {
-	padding: 10px;
+    padding-top: 30px;
 }
 
 #modalBlockedId {
@@ -215,9 +216,18 @@
 	font-size: 16px;
 }
 
+#reportModal .modal-content{
+    width: 95%;
+}
+
 #reportModal .modal-body span {
 	padding-right: 20px;
     font-size: 18px;
+}
+
+#reportModal .modal-body {
+    max-height: 411px;
+    margin: 0px;
 }
 
 #inquiryDetail  .modal-body textarea {
