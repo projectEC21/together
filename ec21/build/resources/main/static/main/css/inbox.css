@@ -187,7 +187,7 @@
 }
 
 #reportModal .modal-body td {
-	padding: 10px;
+    padding-top: 30px;
 }
 
 #modalBlockedId {
@@ -226,7 +226,7 @@
 }
 
 #reportModal .modal-body {
-    max-height: 411px;
+    max-height: 460px;;
     margin: 0px;
 }
 
