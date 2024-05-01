@@ -114,12 +114,13 @@ public class ProductController {
      * 상세 페이지에서 인콰이어리 모달창에서 전송된 정보 받아서 DB에 저장
      */
     @PostMapping("/productDetail/sendInquiry")
-    public String getMethodName(@ModelAttribute InquiryDTO inquiryDTO) {
+    public String getMethodName(@ModelAttribute InquiryDTO inquiryDTO, RedirectAttributes attr) {
         log.info("인콰이어리 폼 받았어");
         log.info(inquiryDTO.getReceiverId());
 
         inquiryService.insertinquiry(inquiryDTO);
 
+        attr.addAttribute("productId", inquiryDTO.getProductId());
         return "redirect:/main/productsDetail";
     }
     
