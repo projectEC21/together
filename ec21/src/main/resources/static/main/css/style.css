@@ -6496,11 +6496,11 @@ start Inquiry CSS
 
 @keyframes slide {
 	from {
-		left: -409px;
+		left: -381px;
 	}
 
 	to {
-		left: 400px
+		left: 381px
 	}
 }
 
