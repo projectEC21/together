@@ -710,8 +710,8 @@ pre code {
     display: flex;
     -ms-flex-wrap: wrap;
     flex-wrap: wrap;
-    margin-right: -35px;
-    margin-left: 35px
+    margin-right: -15px;
+    margin-left: 15px;
 }
 
 .no-gutters {
@@ -4290,7 +4290,7 @@ tbody.collapse.show {
 }
 
 .card-body li a{
-    font-size: 17px
+    font-size: 16px
 }
 .card-body li a:hover {
     color: #666;

@@ -80,7 +80,7 @@ public class ManagerBoardService {
     }
 
     public List<Map<String, Object>> getTopSimilarWordCounts() {
-        int pageSize = 3; // 상위 3개만 가져옴
+        int pageSize = 5; // 상위 3개만 가져옴
         Pageable pageable = PageRequest.of(0, pageSize, Sort.Direction.DESC, "count");
 
         Page<Object[]> results = productRepository.countSimilarWords(pageable);

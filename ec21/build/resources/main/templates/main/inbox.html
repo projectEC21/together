@@ -180,14 +180,14 @@
 <body class="js">
 
 <!-- Preloader -->
-<div class="preloader">
+<!-- <div class="preloader">
 	<div class="preloader-inner">
 		<div class="preloader-icon">
 		<span></span>
 		<span></span>
 		</div>
 	</div>
-</div>
+</div> -->
 <!-- End Preloader -->
 
 <!-- Header -->
@@ -201,8 +201,8 @@
 				<div class="top-left">
 					<!-- logo -->
 					<div class="logo">
-						<a class="logo" th:href="@{/}">
-							<img th:src="@{/main/images/ec21logo.png}" alt="logo">
+						<a class="logo" th:href="@{/}" >
+							<img th:src="@{/main/images/ec21logo.png}" alt="logo" style="left: 44%;">
 						</a>
 					</div>
 				</div>
@@ -215,7 +215,7 @@
 					<li sec:authorize="isAnonymous()"><i class="ti-power-off"></i><a th:href="@{/main/login}">Login</a></li>
 					<li sec:authorize="isAnonymous()"><i class="ti-user"></i><a th:href="@{/main/register}">Sign up</a></li>
 					<li sec:authorize="isAuthenticated()"><i class="ti-power-off"></i><a th:href="@{/main/logout}">Logout</a></li>
-					<li  sec:authorize="isAuthenticated()"><a th:href="@{/main/myproducts}"><i class="fa fa-user-circle-o" aria-hidden="true"></i>
+					<li  sec:authorize="isAuthenticated()"><a th:href="@{/main/myproducts(customerId=${#authentication.name})}"><i class="fa fa-user-circle-o" aria-hidden="true"></i>
 						<span sec:authorize="isAuthenticated()">[[${#authentication.name}]]</span></a></li>
 					</ul>
 				</div>

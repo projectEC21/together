@@ -138,14 +138,14 @@
                 <li><a><i class="fa fa-edit"></i> 상품관리 <span class="fa fa-chevron-down"></span></a>
                   <ul class="nav child_menu">
                     <li><a th:href="@{/manager/productList}">전체 상품 조회</a></li>
-                    <li><a th:href="@{/manager/modelPredict}">모델로 이상상품 판별</a></li>
+                    <li><a th:href="@{/manager/modelPredict}">모델 결과 조회</a></li>
                   </ul>
                 </li>
                 <li><a><i class="fa fa-users"></i> 회원관리 <span class="fa fa-chevron-down"></span></a>
                   <ul class="nav child_menu">
-                    <li><a th:href="@{/manager/customerList}">전체회원</a></li>
-                    <li><a th:href="@{/manager/reportedCustomerList}">신고당한회원</a></li>
-                    <li><a th:href="@{/manager/blackList}">블랙리스트회원</a></li>
+                    <li><a th:href="@{/manager/customerList}">전체 회원 조회</a></li>
+                    <li><a th:href="@{/manager/reportedCustomerList}">신고 회원 조회</a></li>
+                    <li><a th:href="@{/manager/blackList}">블랙 회원 조회</a></li>
                   </ul>
                 </li>
               </ul>
@@ -186,13 +186,13 @@
       <!-- page content -->
       <div class="right_col" role="main">
         <div class="">
-          <div class="page-title">
+          <!-- <div class="page-title">
             <div class="title_left">
               <h3>Member <small>회원관리</small></h3>
             </div>
 
 
-          </div>
+          </div> -->
 
 
           <div class="row" style="display: block;">
@@ -200,7 +200,7 @@
             <div class="col-md-12 col-sm-12  ">
               <div class="x_panel">
                 <div class="x_title">
-                  <h2>블랙리스트회원관리</h2>
+                  <h3>블랙 회원 조회</h2>
 
                   <div class="clearfix"></div>
                 </div>
@@ -227,17 +227,17 @@
                 <div class="x_content">
                   <div class="table-responsive">
 
-                    <table class="table table-striped jambo_table bulk_action">
+                    <table class="table table-striped jambo_table bulk_action" style="width: 100%;">
                       <thead>
                         <tr class="headings">
-                          <th>no</th>
-                          <th class="column-title">구분</th>
+                          <th class="column-title">no</th>
+                          <th class="column-title" style="width: 8%;">구분</th>
                           <th class="column-title"> 회원 ID </th>
-                          <th class="column-title">담당자명</th>
+                          <th class="column-title" style="width: 9%;">담당자명</th>
                           <th class="column-title">회사명</th>
                           <th class="column-title">부서명</th>
                           <th class="column-title">국가IP</th>
-                          <th class="column-title">블랙카테고리</th>
+                          <th class="column-title" style="width: 9%;">블랙 <br> 카테고리</th>
                           <th class="column-title">신고횟수</th>
                           <th class="column-title no-link last"><span class="nobr">버튼</span>
                           </th>

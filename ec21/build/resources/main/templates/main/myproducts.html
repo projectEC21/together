@@ -77,14 +77,14 @@
 	<input type="hidden" name="customerId" id="customerId" th:value="${#authentication.name}">
 	
 	<!-- Preloader -->
-	<div class="preloader">
+	<!-- <div class="preloader">
 		<div class="preloader-inner">
 			<div class="preloader-icon">
 				<span></span>
 				<span></span>
 			</div>
 		</div>
-	</div>
+	</div> -->
 	<!-- End Preloader -->
 
 	<!-- Header -->
@@ -112,7 +112,8 @@
 								<li sec:authorize="isAnonymous()"><i class="ti-power-off"></i><a th:href="@{/main/login}">Login</a></li>
 								<li sec:authorize="isAnonymous()"><i class="ti-user"></i><a th:href="@{/main/register}">Sign up</a></li>
 								<li sec:authorize="isAuthenticated()"><i class="ti-power-off"></i><a th:href="@{/main/logout}">Logout</a></li>
-								<li><a th:href="@{/main/myproducts(customerId=${#authentication.name})}"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a></li>
+								<li><a th:href="@{/main/myproducts(customerId=${#authentication.name})}"><i class="fa fa-user-circle-o" aria-hidden="true"></i>
+									<span sec:authorize="isAuthenticated()">[[${#authentication.name}]]</span></a></li>
 								<li><a th:href="@{/main/inbox(customerId=${#authentication.name})}" class="single-icon">
 										<i class="fa fa-envelope-o"></i><span class="total-count"></span></li>
 							</ul>
@@ -141,7 +142,7 @@
 	<!-- End Breadcrumbs -->
 
 	<!-- 내 상품 목록 -->
-	<section class="product shop section">
+	<section class="product shop section" style="min-height: 100vh;">
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-2 col-12 ">
@@ -181,7 +182,7 @@
 				</div>		
 
 				<!-- 올린 상품 리스트 -->
-				<div class="col-lg-9 col-12">
+				<div class="col-lg-10 col-12">
 					<table class="table shopping-summery" id="result">
 						<thead>
 							<tr class="main-hading">
@@ -201,13 +202,17 @@
 									<span class="image" th:if="${product.originalFileName}!=null">
 										<img th:src="@{/main/downloadImg(productId=${product.productId})}">
 									</span>
-									<!-- <span>[[${i.count}]]</span> -->
+									<span th:unless="${product.originalFileName}!=null">
+										<!-- 인덱스와 동일함 -->
+										<img class="default-img" src="https://via.placeholder.com/550x750"
+											alt="#">
+									</span>
 								</td>
 								<td class="product-info" data-title="Description">
 									<span class="product-name">
 										<a th:href="@{/main/productsDetail(productId=${product.productId},currentPage='myproducts')}">[[${product.productName}]]</a>
 									</span>
-									<span class="product-desc"><a th:utext="${product.productDesc}"></a></span>
+									<span class="product-desc"><a th:utext="${product.productDesc}" th:href="@{/main/productsDetail(productId=${product.productId},currentPage='myproducts')}"></a></span>
 								</td>
 								<td class="price" data-title="Price">
 									<span>$[[${product.price}]]</span>

@@ -184,14 +184,14 @@
 	<input type="hidden" id="hiddenCustomerId" th:value="${customerId}">
 
 	<!-- Preloader -->
-	<div class="preloader">
+	<!-- <div class="preloader">
 		<div class="preloader-inner">
 			<div class="preloader-icon">
 				<span></span>
 				<span></span>
 			</div>
 		</div>
-	</div>
+	</div> -->
 	<!-- End Preloader -->
 
 	<!-- Header -->
@@ -207,7 +207,7 @@
 							<div class="logo">
 								<a th:href="@{/}">
 									<img th:src="@{/main/images/ec21logo.png}" alt="logo"
-										style="width: 100px; height: 30px;">
+									style="left: 44%;">
 								</a>
 							</div>
 						</div>
@@ -220,7 +220,7 @@
 								<li sec:authorize="isAnonymous()"><i class="ti-power-off"></i><a th:href="@{/main/login}">Login</a></li>
 								<li sec:authorize="isAnonymous()"><i class="ti-user"></i><a th:href="@{/main/register}">Sign up</a></li>
 								<li sec:authorize="isAuthenticated()"><i class="ti-power-off"></i><a th:href="@{/main/logout}">Logout</a></li>
-								<li sec:authorize="isAuthenticated()"><a th:href="@{/main/myproducts}"><i class="fa fa-user-circle-o"
+								<li sec:authorize="isAuthenticated()"><a th:href="@{/main/myproducts(customerId=${#authentication.name})}"><i class="fa fa-user-circle-o"
 											aria-hidden="true"></i><span sec:authorize="isAuthenticated()">[[${#authentication.name}]]</span></a></li>
 							</ul>
 						</div>
@@ -309,7 +309,8 @@
 									<span>
 										<!-- <a id="inquiryTitle" data-toggle="modal" data-target="#inquiryDetail" th:data-id="${inquiry.inquiryId}">[[${inquiry.inquiryTitle}]]</a> -->
 										<a class="inquiryTitle" th:id="'modalBtn'+${inquiry.inquiryId}"
-											th:data-id="${inquiry.inquiryId}">[[${inquiry.inquiryTitle}]]</a>
+											th:data-id="${inquiry.inquiryId}"
+											style=" position: relative; max-width: 106%; left: -40px;">[[${inquiry.inquiryTitle}]]</a>
 									</span>
 								</td>
 								<!-- 보낸 날짜 -->

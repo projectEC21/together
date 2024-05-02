@@ -50,8 +50,11 @@
           ('0' + date.getDate()).slice(-2);
       }
 
+      var today = new Date("2024-04-01");
+
       // input 태그에 날짜를 설정합니다.
-      $('#startDate').val(toLocalDateStr(firstDayOfMonth));
+      // $('#startDate').val(toLocalDateStr(firstDayOfMonth));
+      $('#startDate').val(today);
       $('#endDate').val(toLocalDateStr(currentDate));
 
       // 페이지 로드 시 차트를 업데이트합니다.
@@ -81,26 +84,26 @@
 
           // 테이블 헤더 생성
           var thead = $("<tr class='weeklySummary'>");
-          thead.append(`<th class='thname' style=" width: 14% !important; "> - </th>`); // 첫 번째 빈 헤더
+          thead.append(`<th class='thname' style=" width: 15% !important; "> - </th>`); // 첫 번째 빈 헤더
           data.forEach(function (item) {
-            thead.append("<th>" + item.date + "</th>"); // 각 일자를 헤더로 추가
+            thead.append(`<th style="font-size: 15px; width: 15%;">` + item.date + "</th>"); // 각 일자를 헤더로 추가
           });
           table.append(thead);
 
           // 상품 수 행
           var productRow = $("<tr>");
           productRow.append(`<td style="    height: 67px;
-    width: 130px;">등록 상품 수</td>`); // '상품 수' 라벨
+    font-size:15px">등록 상품</td>`); // '상품 수' 라벨
           data.forEach(function (item) {
-            productRow.append(`<td style="height: 67px;">` + item.productCnt + "</td>"); // 각 일자별 상품 수
+            productRow.append(`<td style="height: 67px; font-size:15px">` + item.productCnt + "</td>"); // 각 일자별 상품 수
           });
           table.append(productRow);
 
           // 회원 수 행
           var customerRow = $("<tr>");
-          customerRow.append(`<td style="height: 67px;">가입 회원 수</td>`); // '회원 수' 라벨
+          customerRow.append(`<td style="height: 67px; font-size:18px">회원 가입</td>`); // '회원 수' 라벨
           data.forEach(function (item) {
-            customerRow.append("<td>" + item.customerCnt + "</td>"); // 각 일자별 회원 수
+            customerRow.append(`<td style="font-size:15px">` + item.customerCnt + "</td>"); // 각 일자별 회원 수
           });
           table.append(customerRow);
         },
@@ -297,17 +300,16 @@
               // xPadding: 15,
               // yPadding: 15,
               displayColors: false,
-              caretPadding: 2,
+              caretPadding: 1,
             },
             legend: {
               display: true, // 범례 표시 여부
               position: 'bottom', // 범례의 위치를 오른쪽으로 변경
               align: 'center',
               labels: {
-                boxWidth: 5, // 범례 색상 상자의 너비
                 padding: 8, // 범례 항목 간의 패딩
-                boxWidth: 30, // 범례 색상 상자의 너비
-                // 범례 항목 간의 패딩
+                // boxWidth: 60, // 범례 색상 상자의 너비
+                fontSize: 6,
                 usePointStyle: true
 
               },
@@ -523,14 +525,14 @@
                 <li><a><i class="fa fa-edit"></i> 상품관리 <span class="fa fa-chevron-down"></span></a>
                   <ul class="nav child_menu">
                     <li><a th:href="@{/manager/productList}">전체 상품 조회</a></li>
-                    <li><a th:href="@{/manager/modelPredict}">모델로 이상상품 판별</a></li>
+                    <li><a th:href="@{/manager/modelPredict}">모델 결과 조회</a></li>
                   </ul>
                 </li>
                 <li><a><i class="fa fa-users"></i> 회원관리 <span class="fa fa-chevron-down"></span></a>
                   <ul class="nav child_menu">
-                    <li><a th:href="@{/manager/customerList}">전체회원</a></li>
-                    <li><a th:href="@{/manager/reportedCustomerList}">신고당한회원</a></li>
-                    <li><a th:href="@{/manager/blackList}">블랙리스트회원</a></li>
+                    <li><a th:href="@{/manager/customerList}">전체 회원 조회</a></li>
+                    <li><a th:href="@{/manager/reportedCustomerList}">신고 회원 조회</a></li>
+                    <li><a th:href="@{/manager/blackList}">블랙 회원 조회</a></li>
                   </ul>
                 </li>
               </ul>
@@ -574,10 +576,8 @@
         <!-- 240413 dy : id값 부여하고 ajax로 값 꽂아 넣기 -->
         <!-- 상품, 회원 count -->
         <div class="row">
-          <div class="page_col">
-            <div class="right">
-              <!-- 좌측 -->
-              <div class="col-sm-12 col-md-8 mb-2">
+
+              <div class="col-sm-12 col-md-12 mb-2">
                 <div class="card-group">
                   <div class="card border-left-primary shadow radius">
                     <div class="card-body">
@@ -604,7 +604,7 @@
                         <div class="col mr-2 main">
                           <div class="text-xs font-weight-bold text-primary text-uppercase mb-1 ">
                             <i class=" fa fa-warning"></i>
-                            <a th:href="@{/manager/modelPredict}">당일 이상상품 등록
+                            <a th:href="@{/manager/modelPredict}">당일 이상상품
                               수</a>
 
                           </div>
@@ -643,7 +643,7 @@
                         <div class="col mr-2 main">
                           <div class="text-xs font-weight-bold text-primary text-uppercase mb-1 ">
                             <i class="fa fa-bullhorn"></i>
-                            <a th:href="@{/manager/reportedCustomerList}">미처리된 신고
+                            <a th:href="@{/manager/reportedCustomerList}">미처리 신고
                               개수</a>
                           </div>
                           <div class="count" id="unprocessedReport">
@@ -660,7 +660,6 @@
               </div>
 
               <!--날짜 선택박스 -->
-              <!--날짜 선택박스 끝 -->
               <div class="col-md-8 mb-2">
                 <div class="form-inline">
                   <div class="form-group">
@@ -673,11 +672,13 @@
                   </div>
                 </div>
               </div>
+              <!--날짜 선택박스 끝 -->
+
               <!-- 일자별 상품등록 개수 라인 그래프-->
-              <div class="col-md-5 mb-2">
+              <div class="col-md-7 mb-2">
                 <div class=" x_panel shadow">
                   <div class="x_title">
-                    <h2>일자별 상품등록 개수</h2>
+                    <h2>상품등록 현황</h2>
 
                     <div class="clearfix"></div>
                   </div>
@@ -692,23 +693,75 @@
               <!-- 일자별 상품등록 개수 라인 그래프 끝 -->
 
               <!-- 일자별 상품등록 개수 도넛 그래프 -->
-              <div class="col-md-3 mb-2 ">
+              <div class="col-md-5 mb-2 ">
                 <div class=" x_panel shadow">
                   <div class="x_title">
-                    <h2>일자별 상품등록 개수</h2>
+                    <h2>카테고리별 상품등록</h2>
                     <div class="clearfix"></div>
                   </div>
                   <div class="x_content ">
                     <div class="mid">
-                      <canvas id="doughnutChart" height="100" width="250"></canvas>
+                      <canvas id="doughnutChart" height="400px;"></canvas>
                     </div>
                   </div>
                 </div>
               </div>
               <!-- 일자별 상품등록 개수 도넛 그래프 끝 -->
 
+<div class="col-md-7 mb-2">
+  <div class=" x_panel shadow">
+    <div class="x_title">
+      <h2>카테고리별 상품 판별 개수</h2>
+      <div class="clearfix"></div>
+    </div>
+
+
+    <div class="x_content">
+      <div class="Cchart">
+        <!-- bar chart -->
+        <canvas id="categoryProduct" height="350px" width="400px"></canvas>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="col-md-5 mb-2">
+  <div class="x_panel shadow flex" style="flex-direction: column;">
+
+    <div style="    height: 419px;">
+      <div class="x_title">
+        <h2>금지어 top5</h2>
+        <div class="clearfix"></div>
+      </div>
+
+      <div class="x_content">
+        <div>
+          <div>
+        <table id="prohibitedWordsTable" class="table table-striped jambo_table table-bordered ">
+          <thead>
+            <tr>
+              <th class="column-title">금지어</th>
+              <th class="column-title">횟수</th>
+            </tr>
+          </thead>
+          <tbody id="similarWordsTable">
+            <tr>
+              <td></td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    </div>
+    </div>
+
+  </div>
+</div>
+
               <!-- 주간요약 -->
-              <div class="col-md-8 mb-2">
+              <div class="col-md-12 mb-2">
                 <div class="x_panel shadow flex">
 
                   <div>
@@ -748,61 +801,10 @@
                 </div>
               </div>
               <!-- 주간요약 끝 -->
-            </div>
-            <!-- 좌측 끝-->
 
 
-            <!-- 우측 -->
-            <div class="left">
 
-              <div class="col-md-12 mb-2">
-                <div class=" x_panel shadow">
-                  <div class="x_title">
-                    <h2>카테고리별 이상/ 정상상품 판별 개수</h2>
-                    <div class="clearfix"></div>
-                  </div>
-
-
-                  <div class="x_content">
-                    <div class="Cchart">
-                      <!-- bar chart -->
-                      <canvas id="categoryProduct" height="350px" width="400px"></canvas>
-                    </div>
-
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-md-12 mb-2">
-                <div class="x_panel shadow" style="
-                height: 310px;
-            ">
-
-                  <div>
-                    <div class="x_title">
-                      <h2>금지어 top5</h2>
-                      <div class="clearfix"></div>
-                    </div>
-
-                    <div class="x_content">
-                      <table id="prohibitedWordsTable" class="table table-striped jambo_table table-bordered ">
-                        <thead>
-                          <tr>
-                            <th class="column-title">금지어</th>
-                            <th class="column-title">횟수</th>
-                          </tr>
-                        </thead>
-                        <tbody id="similarWordsTable">
-                          <tr>
-                            <td></td>
-                            <td></td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              
 
 
             </div>
