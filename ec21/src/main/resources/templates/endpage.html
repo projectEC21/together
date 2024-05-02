@@ -52,33 +52,181 @@
 	<link rel="stylesheet" th:href="@{/main/css/color/color2.css}">
 
 	<style>
-		
+		.col-lg-3 {
+			max-width: 20%;
+		}
+
+		.end-timing {
+			margin-bottom: 50px;
+		}
 	</style>
 	
 </head>
 <body class="js">	
-	<!-- Error Page -->
-	<section class="error-page">
-		<div class="table">
-			<div class="table-cell">
-				<div class="container">
-					<div class="row">
-						<div class="col-lg-6 offset-lg-3 col-12">
-							<!-- Error Inner -->
-							<video autoplay muted width="100%">
-								<source th:src="@{/main/images/end_video.mp4}" type="video/mp4">
-							</video>
-									<span>지금까지 EC21 그리고 1조의 발표를 마치겠습니다.</span>
-									<br>
-									<h2> 감사합니다😊</h2>
-							<!--/ End Error Inner -->
-						</div>
-					</div>
-				</div>
+	<section class="end-timing section">
+		<div class="container">
+			<div>
+				<img th:src="@{/main/images/endpage_3.webp}" alt="">
+				<h3></h3>
 			</div>
 		</div>
 	</section>
-	<!--/ End Error Page -->
+
+	<!-- Start Team -->
+	<section id="team" class="team section">
+		<div class="container">
+			<div class="row">
+				<div class="col-12">
+					<div class="section-title">
+						<h1>들어주셔서 감사합니다.</h1>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<!-- Single Team -->
+				<div class="col-lg-3 col-md-6 col-12">
+					<div class="single-team">
+						<!-- Image -->
+						<div class="image">
+							<img th:src="@{/main/images/ec21logo.png}" alt="#" style="height: 200px; width: 180px;">
+						</div>
+						<!-- End Image -->
+						<div class="info-head">
+							<!-- Info Box -->
+							<div class="info-box">
+								<h4 class="name"><a href="#">EC21</a></h4>
+								<span class="designation">협업 기업</span>
+							</div>
+							<!-- End Info Box -->
+							<!-- Social -->
+							<div class="social-links">
+								<ul class="social">
+									<li><a href="#"><i class="fa fa-facebook-f"></i></a></li>
+									<li><a href="#"><i class="fa fa-twitter"></i></a></li>
+									<li><a href="#"><i class="fa fa-behance"></i></a></li>
+									<li><a href="#"><i class="fa fa-instagram"></i></a></li>
+								</ul>
+							</div>
+							<!-- End Social -->
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-3 col-md-6 col-12">
+					<div class="single-team">
+						<!-- Image -->
+						<div class="image">
+							<img th:src="@{/main/images/pairi.jpeg}" alt="#">
+						</div>
+						<!-- End Image -->
+						<div class="info-head">
+							<!-- Info Box -->
+							<div class="info-box">
+								<h4 class="name"><a href="#">김도연B</a></h4>
+								<span class="designation">1조/막내</span>
+							</div>
+							<!-- End Info Box -->
+							<!-- Social -->
+							<div class="social-links">
+								<ul class="social">
+									<li><a href="#"><i class="fa fa-facebook-f"></i></a></li>
+									<li><a href="#"><i class="fa fa-twitter"></i></a></li>
+									<li><a href="#"><i class="fa fa-behance"></i></a></li>
+									<li><a href="#"><i class="fa fa-instagram"></i></a></li>
+								</ul>
+							</div>
+							<!-- End Social -->
+						</div>
+					</div>
+				</div>	
+				<!-- End Single Team -->
+				<div class="col-lg-3 col-md-6 col-12">
+					<div class="single-team">
+						<!-- Image -->
+						<div class="image">
+							<img th:src="@{/main/images/kobugi.jpeg}" alt="#">
+						</div>
+						<!-- End Image -->
+						<div class="info-head">
+							<!-- Info Box -->
+							<div class="info-box">
+								<h4 class="name"><a href="#">김인영</a></h4>
+								<span class="designation">1조</span>
+							</div>
+							<!-- End Info Box -->
+							<!-- Social -->
+							<div class="social-links">
+								<ul class="social">
+									<li><a href="#"><i class="fa fa-facebook-f"></i></a></li>
+									<li><a href="#"><i class="fa fa-twitter"></i></a></li>
+									<li><a href="#"><i class="fa fa-behance"></i></a></li>
+									<li><a href="#"><i class="fa fa-instagram"></i></a></li>
+								</ul>
+							</div>
+							<!-- End Social -->
+						</div>
+					</div>
+				</div>	
+				<!-- End Single Team -->
+				<div class="col-lg-3 col-md-6 col-12">
+					<div class="single-team">
+						<!-- Image -->
+						<div class="image">
+							<img th:src="@{/main/images/pikachu.jpeg}" alt="#">
+						</div>
+						<!-- End Image -->
+						<div class="info-head">
+							<!-- Info Box -->
+							<div class="info-box">
+								<h4 class="name"><a href="#">김희진</a></h4>
+								<span class="designation">1조/반장</span>
+							</div>
+							<!-- End Info Box -->
+							<!-- Social -->
+							<div class="social-links">
+								<ul class="social">
+									<li><a href="#"><i class="fa fa-facebook-f"></i></a></li>
+									<li><a href="#"><i class="fa fa-twitter"></i></a></li>
+									<li><a href="#"><i class="fa fa-behance"></i></a></li>
+									<li><a href="#"><i class="fa fa-instagram"></i></a></li>
+								</ul>
+							</div>
+							<!-- End Social -->
+						</div>
+					</div>
+				</div>	
+				<!-- End Single Team -->
+				<div class="col-lg-3 col-md-6 col-12">
+					<div class="single-team">
+						<!-- Image -->
+						<div class="image">
+							<img th:src="@{/main/images/isanghae.jpeg}" alt="#">
+						</div>
+						<!-- End Image -->
+						<div class="info-head">
+							<!-- Info Box -->
+							<div class="info-box">
+								<h4 class="name"><a href="#">윤주영</a></h4>
+								<span class="designation">1조</span>
+							</div>
+							<!-- End Info Box -->
+							<!-- Social -->
+							<div class="social-links">
+								<ul class="social">
+									<li><a href="#"><i class="fa fa-facebook-f"></i></a></li>
+									<li><a href="#"><i class="fa fa-twitter"></i></a></li>
+									<li><a href="#"><i class="fa fa-behance"></i></a></li>
+									<li><a href="#"><i class="fa fa-instagram"></i></a></li>
+								</ul>
+							</div>
+							<!-- End Social -->
+						</div>
+					</div>
+				</div>	
+				<!-- End Single Team -->
+			</div>	
+		</div>
+	</section>
+	<!--/ End Team Area -->
 		
 <!-- Start Footer Area -->
 <footer class="footer">
