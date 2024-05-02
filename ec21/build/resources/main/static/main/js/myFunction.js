@@ -119,76 +119,118 @@ document.addEventListener("scroll", function () {
     }
 });
 
-$(document).ready(function () {
-    // 각 제품 콘텐츠 요소 내에서 작동합니다.
-    $('.product-content').each(function () {
-        let $this = $(this);
-        let countryName = originContainer.find('.product-seller').attr('data-country'); // data-country 속성에서 국가 이름을 가져옵니다.
-        let $flagContainer = $this.find('.countryFlag');  // 국기 이미지를 업데이트할 컨테이너를 찾습니다.
+// $(document).ready(function () {
+//     // 각 제품 콘텐츠 요소 내에서 작동합니다.
+//     $('.product-content').each(function () {
+//         let $this = $(this);
+//         let countryName = originContainer.find('.product-seller').attr('data-country'); // data-country 속성에서 국가 이름을 가져옵니다.
+//         let $flagContainer = $this.find('.countryFlag');  // 국기 이미지를 업데이트할 컨테이너를 찾습니다.
 
-        console.log($this.find('.product-seller').attr('data-country'));
-        console.log($flagContainer);
+//         console.log($this.find('.product-seller').attr('data-country'));
+//         console.log($flagContainer);
 
-        // 국가 이름을 기반으로 AJAX 요청을 통해 국가 정보를 가져옵니다.
-        if (countryName) {
-            $.ajax({
-                url: `https://restcountries.com/v3.1/name/${countryName}`,
-                method: 'GET',
-                success: function (data) {
-                    if (data && data.length > 0) {
-                        let countryCode = data[0].cca2.toLowerCase();
-                        let flagImageUrl = `https://flagcdn.com/${countryCode}.svg`;  // 변경된 API를 사용하여 국기 URL을 생성합니다.
-                        $flagContainer.attr('src', flagImageUrl);  // 이미지 태그의 src 속성을 업데이트
-                        $flagContainer.attr('alt', `${countryName} Flag`);  // alt 속성을 업데이트
-                    } else {
-                        clearFlag($flagContainer);  // 국가 데이터가 없거나 오류 시 플래그 컨테이너를 비웁니다.
-                    }
-                },
-                error: function () {
-                    clearFlag($flagContainer);  // AJAX 요청 오류 시 플래그 컨테이너를 비웁니다.
-                }
-            });
-        }
-    });
-});
+//         // 국가 이름을 기반으로 AJAX 요청을 통해 국가 정보를 가져옵니다.
+//         if (countryName) {
+//             $.ajax({
+//                 url: `https://restcountries.com/v3.1/name/${countryName}`,
+//                 method: 'GET',
+//                 success: function (data) {
+//                     if (data && data.length > 0) {
+//                         let countryCode = data[0].cca2.toLowerCase();
+//                         let flagImageUrl = `https://flagcdn.com/${countryCode}.svg`;  // 변경된 API를 사용하여 국기 URL을 생성합니다.
+//                         $flagContainer.attr('src', flagImageUrl);  // 이미지 태그의 src 속성을 업데이트
+//                         $flagContainer.attr('alt', `${countryName} Flag`);  // alt 속성을 업데이트
+//                     } else {
+//                         clearFlag($flagContainer);  // 국가 데이터가 없거나 오류 시 플래그 컨테이너를 비웁니다.
+//                     }
+//                 },
+//                 error: function () {
+//                     clearFlag($flagContainer);  // AJAX 요청 오류 시 플래그 컨테이너를 비웁니다.
+//                 }
+//             });
+//         }
+//     });
+// });
 
-function clearFlag($flagContainer) {
-    $flagContainer.attr({
-        'src': '',
-        'alt': ''
-    });
-}
+// function clearFlag($flagContainer) {
+//     $flagContainer.attr({
+//         'src': '',
+//         'alt': ''
+//     });
+// }
 
 /**********************************
  * 메인 화면에 국기 이미지 넣기 -----  완성
  ***********************************/
+// create by 주영
+// $(document).ready(function () {
+//     $('.product-seller').each(function () {
+//         var countryName = $(this).data("country");
+//         var $this = $(this); // 현재 .product-seller 요소를 $this 변수에 저장
+
+//         if (countryName) {
+//             // AJAX 요청을 통해 국가 정보를 가져옵니다.
+//             $.ajax({
+//                 url: `https://restcountries.com/v3.1/name/${countryName}`,
+//                 method: 'GET',
+//                 success: function (data) {
+//                     if (data && data.length > 0) {
+//                         var countryCode = data[0].cca2.toLowerCase();
+//                         var flagImageUrl = `https://flagcdn.com/${countryCode}.svg`;
+//                         // $this 범위 내의 .countryFlag 이미지 src를 업데이트합니다.
+//                         $this.find(".countryFlag").attr('src', flagImageUrl).attr('alt', `${countryName} Flag`);
+//                     } else {
+//                         console.warn('No data for country: ' + countryName);
+//                         $this.find(".countryFlag").attr('src', '').attr('alt', 'Flag not available');
+//                     }
+//                 },
+//                 error: function () {
+//                     console.error('Error retrieving country data.');
+//                     $this.find(".countryFlag").attr('src', '').attr('alt', 'Error loading flag');
+//                 }
+//             });
+//         }
+//     });
+// });
+
+// edit by 도연 (240502)
 $(document).ready(function () {
     $('.product-seller').each(function () {
-        var countryName = $(this).data("country");
+        var productId = $(this).data("productid");
         var $this = $(this); // 현재 .product-seller 요소를 $this 변수에 저장
 
-        if (countryName) {
-            // AJAX 요청을 통해 국가 정보를 가져옵니다.
-            $.ajax({
-                url: `https://restcountries.com/v3.1/name/${countryName}`,
-                method: 'GET',
-                success: function (data) {
-                    if (data && data.length > 0) {
-                        var countryCode = data[0].cca2.toLowerCase();
-                        var flagImageUrl = `https://flagcdn.com/${countryCode}.svg`;
-                        // $this 범위 내의 .countryFlag 이미지 src를 업데이트합니다.
-                        $this.find(".countryFlag").attr('src', flagImageUrl).attr('alt', `${countryName} Flag`);
-                    } else {
-                        console.warn('No data for country: ' + countryName);
-                        $this.find(".countryFlag").attr('src', '').attr('alt', 'Flag not available');
-                    }
-                },
-                error: function () {
-                    console.error('Error retrieving country data.');
-                    $this.find(".countryFlag").attr('src', '').attr('alt', 'Error loading flag');
+        $.ajax({
+            url: "/main/index/getCountry",
+            data:{"productId":productId},
+            method:"GET",
+            success:function (country) {
+                if (country) {
+                    // AJAX 요청을 통해 국가 정보를 가져옵니다.
+                    $.ajax({
+                        url: `https://restcountries.com/v3.1/name/${country}`,
+                        method: 'GET',
+                        success: function (data) {
+                            if (data && data.length > 0) {
+                                var countryCode = data[0].cca2.toLowerCase();
+                                var flagImageUrl = `https://flagcdn.com/${countryCode}.svg`;
+
+                                // $this 범위 내의 .countryFlag 이미지 src를 업데이트합니다.
+                                $this.find(".countryFlag").attr('src', flagImageUrl).attr('alt', `${country} Flag`);
+                            } else {
+                                console.warn('No data for country: ' + country);
+                                $this.find(".countryFlag").attr('src', '').attr('alt', 'Flag not available');
+                            }
+                        },
+                        error: function () {
+                            console.error('Error retrieving country data.');
+                            $this.find(".countryFlag").attr('src', '').attr('alt', 'Error loading flag');
+                        }
+                    });
                 }
-            });
-        }
+                
+            }
+        });
+
     });
 });
 

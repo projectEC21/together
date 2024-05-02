@@ -37,7 +37,8 @@ public interface ProductRepository extends JpaRepository<ProductEntity, String> 
         @Query("SELECT p FROM ProductEntity p WHERE " +
                         "LOWER(p.customerEntity.customerId) LIKE %:searchWord% OR " +
                         "LOWER(p.productId) LIKE %:searchWord% OR " +
-                        "LOWER(p.productName) LIKE %:searchWord%")
+                        "LOWER(p.productName) LIKE %:searchWord% AND " +
+                        "p.productDelete = 'N'")
         List<ProductEntity> findByMultipleFieldsContaining(@Param("searchWord") String searchWord, Sort sort);
 
         // 전달받은 카테고리에 해당하는 상품 중 회원ID, 상품ID, 상품명에 전달받은 검색어가 포함된 상품들을 정렬 조건순으로 반환
@@ -45,7 +46,8 @@ public interface ProductRepository extends JpaRepository<ProductEntity, String> 
                         "p.category = :category AND " + // 카테고리 조건 추가
                         "(LOWER(p.customerEntity.customerId) LIKE %:searchWord% OR " +
                         "LOWER(p.productId) LIKE %:searchWord% OR " +
-                        "LOWER(p.productName) LIKE %:searchWord%)")
+                        "LOWER(p.productName) LIKE %:searchWord%) AND "+
+                        "p.productDelete = 'N'")
         List<ProductEntity> findByCategoryAndMultipleFieldsContaining(
                         @Param("category") ProductCategory category, // 카테고리 파라미터 추가
                         @Param("searchWord") String searchWord,
@@ -57,7 +59,7 @@ public interface ProductRepository extends JpaRepository<ProductEntity, String> 
                 "(LOWER(p.customerEntity.customerId) LIKE %:searchWord% OR " +
                 "LOWER(p.productId) LIKE %:searchWord% OR " +
                 "LOWER(p.productName) LIKE %:searchWord%) AND " +
-                "p.judge IS NULL")
+                "p.judge IS NULL AND p.productDelete = 'N'")
         List<ProductEntity> findByMultipleFieldsContainingAndJudgeIsNull(@Param("searchWord") String searchWord, Sort sort);
         // 카테고리와 검색어가 존재하는 경우
         @Query("SELECT p FROM ProductEntity p WHERE " +
@@ -65,7 +67,7 @@ public interface ProductRepository extends JpaRepository<ProductEntity, String> 
                 "LOWER(p.productId) LIKE %:searchWord% OR " +
                 "LOWER(p.productName) LIKE %:searchWord%) AND " +
                 "p.judge IS NULL AND " +
-                "p.category = :category")
+                "p.category = :category AND p.productDelete = 'N'")
         List<ProductEntity> findByMultipleFieldsContainingAndJudgeIsNullAndCategory(
                 @Param("searchWord") String searchWord,
                 @Param("category") ProductCategory category,
@@ -76,7 +78,7 @@ public interface ProductRepository extends JpaRepository<ProductEntity, String> 
                         "(LOWER(p.customerEntity.customerId) LIKE %:searchWord% OR " +
                         "LOWER(p.productId) LIKE %:searchWord% OR " +
                         "LOWER(p.productName) LIKE %:searchWord%) AND " +
-                        "p.judge = 'Y'")
+                        "p.judge = 'Y' AND p.productDelete = 'N'")
         List<ProductEntity> findByMultipleFieldsContainingAndJudgeIsY(@Param("searchWord") String searchWord,
                         Sort sort);
 
@@ -86,7 +88,7 @@ public interface ProductRepository extends JpaRepository<ProductEntity, String> 
                         "LOWER(p.productId) LIKE %:searchWord% OR " +
                         "LOWER(p.productName) LIKE %:searchWord%) AND " +
                         "p.judge = 'Y' AND " +
-                        "p.category = :category")
+                        "p.category = :category AND p.productDelete = 'N'")
         List<ProductEntity> findByMultipleFieldsContainingAndJudgeIsYAndCategory(
                         @Param("searchWord") String searchWord,
                         @Param("category") ProductCategory category,
@@ -98,7 +100,7 @@ public interface ProductRepository extends JpaRepository<ProductEntity, String> 
                         "(LOWER(p.customerEntity.customerId) LIKE %:searchWord% OR " +
                         "LOWER(p.productId) LIKE %:searchWord% OR " +
                         "LOWER(p.productName) LIKE %:searchWord%) AND " +
-                        "p.judge = 'N'")
+                        "p.judge = 'N' AND p.productDelete = 'N' ")
         List<ProductEntity> findByMultipleFieldsContainingAndJudgeIsN(@Param("searchWord") String searchWord,
                         Sort sort);
 
@@ -108,7 +110,7 @@ public interface ProductRepository extends JpaRepository<ProductEntity, String> 
                         "LOWER(p.productId) LIKE %:searchWord% OR " +
                         "LOWER(p.productName) LIKE %:searchWord%) AND " +
                         "p.judge = 'N' AND " +
-                        "p.category = :category")
+                        "p.category = :category AND p.productDelete = 'N'")
         List<ProductEntity> findByMultipleFieldsContainingAndJudgeIsNAndCategory(
                         @Param("searchWord") String searchWord,
                         @Param("category") ProductCategory category,
@@ -130,7 +132,7 @@ public interface ProductRepository extends JpaRepository<ProductEntity, String> 
                         "LOWER(p.productId) LIKE %:searchWord% OR " +
                         "LOWER(p.productName) LIKE %:searchWord%) AND " +
                         "p.lstmPredict = false AND " +
-                        "p.judge IS NULL " +
+                        "p.judge IS NULL AND p.productDelete = 'N' " +
                         "ORDER BY p.createDate DESC")
         List<ProductEntity> findByMultipleFieldsContainingOrderByCreateDateDesc(@Param("searchWord") String searchWord);
 
@@ -143,7 +145,7 @@ public interface ProductRepository extends JpaRepository<ProductEntity, String> 
                         "LOWER(p.productId) LIKE %:searchWord% OR " +
                         "LOWER(p.productName) LIKE %:searchWord%) AND " +
                         "p.lstmPredict = false AND " +
-                        "p.judge IS NULL " +
+                        "p.judge IS NULL AND p.productDelete = 'N' " +
                         "ORDER BY p.createDate DESC")
         List<ProductEntity> findByCategoryAndMultipleFieldsContainingOrderByCreateDateDesc(
                         @Param("category") ProductCategory category, @Param("searchWord") String searchWord);
@@ -159,8 +161,7 @@ public interface ProductRepository extends JpaRepository<ProductEntity, String> 
                         @Param("blacklistCheck") YesOrNo blacklistCheck,
                         Pageable pageable);
 
-        // ============================ 메인 카테고리별 상품 목록 화면
-        // =================================
+        // ================ 메인 카테고리별 상품 목록 화면 ===================
 
         // 상품명에 전달받은 검색어가 포함된 상품들 중
         // judge==Y & productDelete==N & customerEntity의 blacklistCheck == N 인 상품들을
@@ -186,8 +187,7 @@ public interface ProductRepository extends JpaRepository<ProductEntity, String> 
                         @Param("searchWord") String searchWord,
                         @Param("category") ProductCategory category);
 
-        // ============================ 메인 카테고리별 상품 목록 화면
-        // =================================
+        // ============== 메인 카테고리별 상품 목록 화면 ===================
 
         // 전달받은 카테고리에 해당하고 전달받은 상품id에 해당하는 상품은 제외한 상품들 중
         // 상위(조회수, lstmPredictProba, 등록일) 5개 상품 데이터 조회를 위해 Pageable 사용
@@ -200,8 +200,7 @@ public interface ProductRepository extends JpaRepository<ProductEntity, String> 
                         @Param("productId") String productId,
                         Pageable pageable);
 
-        // ============================ 관리자페이지 mainboard 화면
-        // =================================
+        // =============== 관리자페이지 mainboard 화면 ====================
         // 상품등록일자별 카운트하여 전달
         @Query(value = "SELECT TO_CHAR(TRUNC(create_date), 'YYYY-MM-DD') as truncated_date, COUNT(*) as count " +
                         "FROM product " +
@@ -209,8 +208,7 @@ public interface ProductRepository extends JpaRepository<ProductEntity, String> 
                         "ORDER BY TRUNC(create_date)", nativeQuery = true)
         List<Object[]> countProductsByCreationDate();
 
-        // ============================ 관리자페이지 mainboard 화면
-        // =================================
+        // ============= 관리자페이지 mainboard 화면 =====================
         // 카테고리별 장상/이상 개수 전달
         @Query(value = "SELECT category, " +
                         "SUM(CASE WHEN lstm_predict = 0 THEN 1 ELSE 0 END) AS judge_0_count, " +
@@ -219,8 +217,7 @@ public interface ProductRepository extends JpaRepository<ProductEntity, String> 
                         "GROUP BY category ORDER BY category", nativeQuery = true)
         List<Object[]> findCategoryCounts();
 
-        // ============================ 관리자페이지 mainboard 화면
-        // =================================
+        // ============ 관리자페이지 mainboard 화면 =================
         // 등록된 상품의 등록일자, 카테고리별 개수를 전달.
         @Query(value = "SELECT TRUNC(create_date) as truncated_date, category, COUNT(*) as count " +
                         "FROM product " +
@@ -231,8 +228,7 @@ public interface ProductRepository extends JpaRepository<ProductEntity, String> 
         List<Object[]> countProductsByCategoryAndDateRange(@Param("startDate") LocalDateTime startDate,
                         @Param("endDate") LocalDateTime endDate);
 
-        // ============================ 관리자페이지 mainboard 화면
-        // =================================
+        // ============ 관리자페이지 mainboard 화면 ==================
         // 금지어 top 10
         @Query(value = "SELECT similar_word, COUNT(*) as count " +
                         "FROM prohibit_similar_word " +

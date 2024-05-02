@@ -8,8 +8,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
@@ -45,8 +43,7 @@ import net.kdigital.ec21.repository.ReportCustomerRepository;
 @RequiredArgsConstructor
 @Slf4j
 public class ManagerService {
-    // ==================================== Repository
-    // ====================================
+    // ======================= Repository =======================
     private final ProductRepository productRepository;
     private final CustomerRepository customerRepository;
     private final ReportCustomerRepository reportCustomerRepository;
@@ -54,8 +51,7 @@ public class ManagerService {
     private final ProhibitSimilarWordRepository prohibitSimilarWordRepository;
     private final ProhibitWordRepository prohibitWordRepository;
 
-    // ==================================== 메인 보드
-    // ====================================
+    // ========================= 메인 보드 =========================
 
     /**
      * 당일 등록된 상품 개수, 당일 이상상품 개수, 당일 등록한 고객 수, 미처리된 신고 개수 반환하는 함수
@@ -88,8 +84,7 @@ public class ManagerService {
         return result;
     }
 
-    // ==================================== 상품관리
-    // ======================================
+    // ========================= 상품관리 ===========================
 
     /**
      * 모든 상품 DTO 리스트로 반환하는 함수
