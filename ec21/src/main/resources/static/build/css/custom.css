@@ -4567,19 +4567,18 @@ ul.social li {
   justify-content: center;
 }
 
-<<<<<<< HEAD .mid {
-  height: 223px;
+.mid {
+  height: 210px;
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
 
 }
 
-=======>>>>>>>643e32bfad3171b4f27215b61519d4eb0a3aef8d doughnut-mid {
-  height: 200px;
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
+height: 200px;
+display: flex;
+justify-content: center;
+flex-wrap: wrap;
 }
 
 .mid2 {
