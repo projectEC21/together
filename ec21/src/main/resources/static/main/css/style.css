@@ -1208,7 +1208,7 @@ html {
 	margin-right: 30px;
 	position: relative;
 	float: none;
-	left: 5%;
+	left: -1%;
 }
 
 .header.shop .nav li:last-child {
