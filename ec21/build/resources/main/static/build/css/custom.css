@@ -2586,6 +2586,8 @@ h3.degrees {
   margin-bottom: 0;
 }
 
+<<<<<<< HEAD
+
 /* *********  tables styling  ******************************* */
 .bulk-actions {
   display: none;
@@ -2846,6 +2848,8 @@ div.box {
   border: 1px solid #8080FF;
   background-color: #E5E5FF;
 }
+
+=======>>>>>>>643e32bfad3171b4f27215b61519d4eb0a3aef8d
 
 /* *********  /tables styling  ****************************** */
 /* *********  /dashboard widget  **************************** */
@@ -4563,7 +4567,7 @@ ul.social li {
   justify-content: center;
 }
 
-.mid {
+<<<<<<< HEAD .mid {
   height: 223px;
   display: flex;
   justify-content: center;
@@ -4571,7 +4575,7 @@ ul.social li {
 
 }
 
-doughnut-mid {
+=======>>>>>>>643e32bfad3171b4f27215b61519d4eb0a3aef8d doughnut-mid {
   height: 200px;
   display: flex;
   justify-content: center;
@@ -5474,6 +5478,8 @@ ul.project_files li a i {
 .product_social ul li a i {
   font-size: 35px;
 }
+
+
 
 /* *********  /ecommerce  **************************** */
 /** login **/
@@ -13959,7 +13965,7 @@ button {
 }
 
 .modelPredict {
-  width: 327px;
+  <<<<<<< HEAD width: 327px;
   padding-left: 32px;
 }
 
@@ -14018,4 +14024,12 @@ button {
   margin-left: 18px; */
   font-size: 17px;
   margin-left: 14px;
+  =======width: 327px;
+  padding-left: 32px;
+}
+
+#startDate,
+#endDate {
+  background-color: transparent;
+  >>>>>>>643e32bfad3171b4f27215b61519d4eb0a3aef8d
 }

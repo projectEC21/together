@@ -84,17 +84,14 @@
 
           // 테이블 헤더 생성
           var thead = $("<tr class='weeklySummary'>");
-
           thead.append(`<th class='thname' style=" width: 9% !important; background: #0072ab;  "></th>`); // 첫 번째 빈 헤더
           data.forEach(function (item) {
             thead.append(`<th style="font-size: 15px; width: 11%;">` + item.date + "</th>"); // 각 일자를 헤더로 추가
-
           });
           table.append(thead);
 
           // 상품 수 행
           var productRow = $("<tr>");
-
           productRow.append(`<td style="height: 67px; font-size:15px font-weight: bold; background: #0072ab; color: white">등록 상품</td>`); // '상품 수' 라벨
           data.forEach(function (item) {
             productRow.append(`<td style="height: 67px; font-size:15px">` + item.productCnt + "</td>"); // 각 일자별 상품 수
@@ -610,7 +607,8 @@
         <!-- 240413 dy : id값 부여하고 ajax로 값 꽂아 넣기 -->
         <!-- 상품, 회원 count -->
         <div class="row">
-          <<<<<<< HEAD=======<div class="col-sm-12 col-md-12 mb-2">
+
+          <div class="col-sm-12 col-md-12 mb-2">
             <div class="card-group">
               <div class="card border-left-primary shadow radius">
                 <div class="card-body">
@@ -621,481 +619,259 @@
                         <a th:href="@{/manager/productList}">당일 등록 상품
                           수
                         </a>
-                        >>>>>>> 643e32bfad3171b4f27215b61519d4eb0a3aef8d
-
-                        <div class="col-sm-12 col-md-12 mb-2">
-                          <div class="card-group">
-                            <div class="card border-left-primary shadow radius">
-                              <div class="card-body">
-                                <div class="row no-gutters align-items-center">
-                                  <div class="col mr-2 main">
-                                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1 ">
-                                      <i class=" fa fa-edit"></i>
-                                      <a th:href="@{/manager/productList}">당일 등록 상품
-                                        수
-                                      </a>
-
-                                    </div>
-                                    <<<<<<< HEAD <div class="count" id="todayRegisteredProd">
-                                  </div>
-                                  <!-- 지난 주 대비 증감률-->
-                                  <!-- <span class="count_bottom"><i class="blue"><i class="fa fa-sort-asc"></i>4% </i> From last Week</span> -->
-                                  =======
-                                </div>
-                              </div>
-
-                              <div class="card border-left-primary shadow radius">
-                                <div class="card-body">
-                                  <div class="row no-gutters align-items-center">
-                                    <div class="col mr-2 main">
-                                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1 ">
-                                        <i class=" fa fa-warning"></i>
-                                        <a th:href="@{/manager/modelPredict}">당일 이상상품
-                                          수</a>
-
-                                      </div>
-                                      <div class="count" id="todayWeirdProd">
-
-                                      </div>
-                                      <!-- 지난 주 대비 증감률-->
-                                      <!-- <span class="count_bottom"><i class="blue"><i class="fa fa-sort-asc"></i>4% </i> From last Week</span> -->
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-
-                              <div class="card border-left-primary shadow radius">
-                                <div class="card-body">
-                                  <div class="row no-gutters align-items-center">
-                                    <div class="col mr-2 main">
-                                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1 ">
-                                        <i class=" fa fa-user"></i>
-                                        <a th:href="@{/manager/customerList}">당일 회원 가입 수</a>
-
-                                      </div>
-                                      <div class="count" id="todayRegisteredCustomer">
-
-                                      </div>
-                                      <!-- 지난 주 대비 증감률-->
-                                      <!-- <span class="count_bottom"><i class="blue"><i class="fa fa-sort-asc"></i>4% </i> From last Week</span> -->
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-
-                              <div class="card border-left-primary shadow radius">
-                                <div class="card-body">
-                                  <div class="row no-gutters align-items-center">
-                                    <div class="col mr-2 main">
-                                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1 ">
-                                        <i class="fa fa-bullhorn"></i>
-                                        <a th:href="@{/manager/reportedCustomerList}">미처리 신고
-                                          개수</a>
-                                      </div>
-                                      <div class="count" id="unprocessedReport">
-
-                                      </div>
-                                      <!-- 지난 주 대비 증감률-->
-                                      <!-- <span class="count_bottom"><i class="blue"><i class="fa fa-sort-asc"></i>4% </i> From last Week</span> -->
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-
-                            </div>
-                          </div>
-
-                          <!--날짜 선택박스 -->
-                          <div class="col-md-8 mb-2">
-                            <div class="form-inline">
-                              <div class="form-group">
-                                <!-- <label for="startDate">Start Date:</label> -->
-                                <input type="date" id="startDate" class="form-control mx-sm-3"> |
-                                <!-- </div> -->
-                                <!-- <div class="form-group"> -->
-                                <!-- <label for="endDate">End Date:</label> -->
-                                <input type="date" id="endDate" class="form-control mx-sm-3">
-                              </div>
-                            </div>
-                          </div>
-                          <!--날짜 선택박스 끝 -->
-
-                          <!-- 일자별 상품등록 개수 라인 그래프-->
-                          <div class="col-md-7 mb-2">
-                            <div class=" x_panel shadow">
-                              <div class="x_title">
-                                <h2>상품등록 현황</h2>
-
-                                <div class="clearfix"></div>
-                              </div>
-                              <div class="x_content ">
-                                <!-- <button onclick="updateCharts()">Update Charts</button> -->
-                                <div class="mid">
-                                  <canvas id="lineChart" width="800" height="400"></canvas>
-                                  >>>>>>> 643e32bfad3171b4f27215b61519d4eb0a3aef8d
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-
-                          <<<<<<< HEAD <div class="card border-left-primary shadow radius">
-                            <div class="card-body">
-                              <div class="row no-gutters align-items-center">
-                                <div class="col mr-2 main">
-                                  <div class="text-xs font-weight-bold text-primary text-uppercase mb-1 ">
-                                    <i class=" fa fa-warning"></i>
-                                    <a th:href="@{/manager/modelPredict}">당일 이상상품
-                                      수</a>
-
-                                    =======
-                                    <!-- 일자별 상품등록 개수 도넛 그래프 -->
-                                    <div class="col-md-5 mb-2 ">
-                                      <div class=" x_panel shadow">
-                                        <div class="x_title">
-                                          <h2>카테고리별 상품등록</h2>
-                                          <div class="clearfix"></div>
-                                        </div>
-                                        <div class="x_content ">
-                                          <div class="mid">
-                                            <canvas id="doughnutChart" height="400px;"></canvas>
-                                          </div>
-                                        </div>
-                                      </div>
-                                    </div>
-                                    <!-- 일자별 상품등록 개수 도넛 그래프 끝 -->
-
-                                    <div class="col-md-7 mb-2">
-                                      <div class=" x_panel shadow">
-                                        <div class="x_title">
-                                          <h2>카테고리별 상품 판별 개수</h2>
-                                          <div class="clearfix"></div>
-                                        </div>
-
-
-                                        <div class="x_content">
-                                          <div class="Cchart">
-                                            <!-- bar chart -->
-                                            <canvas id="categoryProduct" height="350px" width="400px"></canvas>
-                                          </div>
-
-                                        </div>
-                                      </div>
-                                    </div>
-
-                                    <div class="col-md-5 mb-2">
-                                      <div class="x_panel shadow flex" style="flex-direction: column;">
-
-                                        <div style="    height: 419px;">
-                                          <div class="x_title">
-                                            <h2>금지어 top5</h2>
-                                            <div class="clearfix"></div>
-                                          </div>
-
-                                          <div class="x_content">
-                                            <div>
-                                              <div>
-                                                <table id="prohibitedWordsTable"
-                                                  class="table table-striped jambo_table table-bordered ">
-                                                  <thead>
-                                                    <tr>
-                                                      <th class="column-title">금지어</th>
-                                                      <th class="column-title">횟수</th>
-                                                    </tr>
-                                                  </thead>
-                                                  <tbody id="similarWordsTable">
-                                                    <tr>
-                                                      <td></td>
-                                                      <td></td>
-                                                    </tr>
-                                                  </tbody>
-                                                </table>
-                                              </div>
-                                            </div>
-                                          </div>
-                                        </div>
-
-                                      </div>
-                                    </div>
-
-                                    <!-- 주간요약 -->
-                                    <div class="col-md-12 mb-2">
-                                      <div class="x_panel shadow flex">
-
-                                        <div>
-                                          <div class="x_title">
-                                            <h2>주간 요약</h2>
-                                            <div class="clearfix"></div>
-                                          </div>
-
-                                          <div class="x_content">
-                                            <div>
-                                              <div class="">
-                                                <table class="table table-striped jambo_table table-bordered"
-                                                  id="originalTable">
-                                                  <!-- <thead> -->
-                                                  <!-- <tr> -->
-                                                  <!-- <th class="column-title">일자</th>
-                              <th class="column-title">상품</th>
-                              <th class="column-title">회원</th> -->
-                                                  <!-- </tr>
-                          </thead> -->
-                                                  <tbody id="weeklyRegSummaryTable">
-                                                    <tr>
-                                                      <td>2023-04-01</td>
-                                                      <td>컴퓨터</td>
-                                                      <td>홍길동</td>
-                                                    </tr>
-                                                    <tr>
-                                                      <td>2023-04-02</td>
-                                                      <td>키보드</td>
-                                                      <td>김철수</td>
-                                                    </tr>
-                                                  </tbody>
-                                                </table>
-                                              </div>
-                                              >>>>>>> 643e32bfad3171b4f27215b61519d4eb0a3aef8d
-                                            </div>
-                                            <div class="count" id="todayWeirdProd">
-
-                                            </div>
-                                            <!-- 지난 주 대비 증감률-->
-                                            <!-- <span class="count_bottom"><i class="blue"><i class="fa fa-sort-asc"></i>4% </i> From last Week</span> -->
-                                          </div>
-                                        </div>
-                                      </div>
-                                    </div>
-                                    <<<<<<< HEAD <div class="card border-left-primary shadow radius">
-                                      <div class="card-body">
-                                        <div class="row no-gutters align-items-center">
-                                          <div class="col mr-2 main">
-                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1 ">
-                                              <i class=" fa fa-user"></i>
-                                              <a th:href="@{/manager/customerList}">당일 회원 가입 수</a>
-
-                                            </div>
-                                            <div class="count" id="todayRegisteredCustomer">
-
-                                            </div>
-                                            <!-- 지난 주 대비 증감률-->
-                                            <!-- <span class="count_bottom"><i class="blue"><i class="fa fa-sort-asc"></i>4% </i> From last Week</span> -->
-                                          </div>
-                                        </div>
-                                      </div>
-                                  </div>
-
-                                  <div class="card border-left-primary shadow radius">
-                                    <div class="card-body">
-                                      <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2 main">
-                                          <div class="text-xs font-weight-bold text-primary text-uppercase mb-1 ">
-                                            <i class="fa fa-bullhorn"></i>
-                                            <a th:href="@{/manager/reportedCustomerList}">미처리 신고
-                                              개수</a>
-                                          </div>
-                                          <div class="count" id="unprocessedReport">
-
-                                          </div>
-                                          <!-- 지난 주 대비 증감률-->
-                                          <!-- <span class="count_bottom"><i class="blue"><i class="fa fa-sort-asc"></i>4% </i> From last Week</span> -->
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-
-                                </div>
-                              </div>
-
-
-                              <!-- 일자별 상품등록 개수 라인 그래프-->
-                              <div class="col-md-7 mb-2">
-                                <div class=" x_panel shadow">
-                                  <div class="title-line">
-                                    <div>
-                                      <h2 class="productLine">상품등록 현황</h2>
-                                      <!--날짜 선택박스 -->
-                                      <div class="form-inline">
-                                        <div class="form-group">
-                                          <!-- <label for="startDate">Start Date:</label> -->
-                                          <input type="date" id="startDate" class="form-control mx-sm-3">|
-                                          <!-- </div> -->
-                                          <!-- <div class="form-group"> -->
-                                          <!-- <label for="endDate">End Date:</label> -->
-                                          <input type="date" id="endDate" class="form-control mx-sm-3">
-                                        </div>
-                                      </div>
-                                      <!--날짜 선택박스 끝 -->
-                                    </div>
-                                    <div class="clearfix"></div>
-                                  </div>
-
-                                  <div class="x_content ">
-                                    <!-- <button onclick="updateCharts()">Update Charts</button> -->
-                                    <div class="mid">
-                                      <canvas id="lineChart" width="800" height="400"></canvas>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                              <!-- 일자별 상품등록 개수 라인 그래프 끝 -->
-
-                              <!-- 일자별 상품등록 개수 도넛 그래프 -->
-                              <div class="col-md-5 mb-2 ">
-                                <div class=" x_panel shadow">
-                                  <div class="x_title">
-                                    <h2>카테고리별 상품등록</h2>
-                                    <div class="clearfix"></div>
-                                  </div>
-                                  <div class="x_content ">
-                                    <div class="doughnut-legend">
-                                      <canvas id="doughnutChart"></canvas>
-                                      <div id="chartLegend" class="chart-legend">
-                                        <div class="legend-row"></div>
-
-                                      </div>
-
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                              <!-- 일자별 상품등록 개수 도넛 그래프 끝 -->
-
-                              <div class="col-md-7 mb-2">
-                                <div class=" x_panel shadow">
-                                  <div style="height: 368px;">
-                                    <div class="x_title">
-                                      <h2>카테고리별 상품 판별 개수</h2>
-                                      <div class="clearfix"></div>
-                                    </div>
-
-                                    <div class="x_content">
-                                      <div class="Cchart">
-                                        <!-- bar chart -->
-                                        <canvas id="categoryProduct"></canvas>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-
-                              <div class="col-md-5 mb-2">
-                                <div class="x_panel shadow flex" style="flex-direction: column;">
-
-                                  <div style="height: 368px;">
-                                    <div class="x_title">
-                                      <h2>금지어 top5</h2>
-                                      <div class="clearfix"></div>
-                                    </div>
-
-                                    <div class="x_content">
-                                      <div>
-                                        <div>
-                                          <table id="prohibitedWordsTable"
-                                            class="table table-striped jambo_table table-bordered ">
-                                            <thead>
-                                              <tr>
-                                                <th class="column-title">금지어</th>
-                                                <th class="column-title">횟수</th>
-                                              </tr>
-                                            </thead>
-                                            <tbody id="similarWordsTable">
-                                              <tr>
-                                                <td></td>
-                                                <td></td>
-                                              </tr>
-                                            </tbody>
-                                          </table>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-                                  =======
-                                  <!-- 주간요약 끝 -->
-
-
-
-
-                                  >>>>>>> 643e32bfad3171b4f27215b61519d4eb0a3aef8d
-
-                                </div>
-                              </div>
-
-                              <!-- 주간요약 -->
-                              <div class="col-md-12 mb-2">
-                                <div class="x_panel shadow">
-
-                                  <div>
-                                    <div class="x_title">
-                                      <h2>주간 요약</h2>
-                                      <div class="clearfix"></div>
-                                    </div>
-
-                                    <div class="x_content">
-                                      <div>
-                                        <div class="">
-                                          <table class="table table-striped jambo_table table-bordered"
-                                            id="originalTable">
-                                            <!-- <thead> -->
-                                            <!-- <tr> -->
-                                            <!-- <th class="column-title">일자</th>
-                              <th class="column-title">상품</th>
-                              <th class="column-title">회원</th> -->
-                                            <!-- </tr>
-                          </thead> -->
-                                            <tbody id="weeklyRegSummaryTable">
-                                              <tr>
-                                                <td>2023-04-01</td>
-                                                <td>컴퓨터</td>
-                                                <td>홍길동</td>
-                                              </tr>
-                                              <tr>
-                                                <td>2023-04-02</td>
-                                                <td>키보드</td>
-                                                <td>김철수</td>
-                                              </tr>
-                                            </tbody>
-                                          </table>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                              <!-- 주간요약 끝 -->
-
-
-
-
-
-
-                            </div>
-                        </div>
-                        <!-- 우측 끝-->
 
                       </div>
+                      <div class="count" id="todayRegisteredProd"></div>
+                      <!-- 지난 주 대비 증감률-->
+                      <!-- <span class="count_bottom"><i class="blue"><i class="fa fa-sort-asc"></i>4% </i> From last Week</span> -->
                     </div>
                   </div>
+                </div>
+              </div>
 
-                  <!-- jQuery -->
+              <div class="card border-left-primary shadow radius">
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2 main">
+                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1 ">
+                        <i class=" fa fa-warning"></i>
+                        <a th:href="@{/manager/modelPredict}">당일 이상상품
+                          수</a>
 
-                  <!-- Bootstrap -->
-                  <script th:src="@{/vendors/bootstrap/dist/js/bootstrap.bundle.min.js}"></script>
-                  <!-- FastClick -->
-                  <script th:src="@{/vendors/fastclick/lib/fastclick.js}"></script>
+                      </div>
+                      <div class="count" id="todayWeirdProd">
 
-                  <!-- Chart.js -->
-                  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script> -->
-                  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                      </div>
+                      <!-- 지난 주 대비 증감률-->
+                      <!-- <span class="count_bottom"><i class="blue"><i class="fa fa-sort-asc"></i>4% </i> From last Week</span> -->
+                    </div>
+                  </div>
+                </div>
+              </div>
 
-                  <!-- bootstrap-progressbar -->
-                  <script th:src="@{/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js}"></script>
-                  <!-- iCheck -->
-                  <script th:src="@{/vendors/iCheck/icheck.min.js}"></script>
+              <div class="card border-left-primary shadow radius">
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2 main">
+                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1 ">
+                        <i class=" fa fa-user"></i>
+                        <a th:href="@{/manager/customerList}">당일 회원 가입 수</a>
 
-                  <!-- bootstrap-daterangepicker -->
-                  <script th:src="@{/vendors/moment/min/moment.min.js}"></script>
+                      </div>
+                      <div class="count" id="todayRegisteredCustomer">
 
-                  <!-- Custom Theme Scripts -->
-                  <script th:src="@{/build/js/custom.js}"></script>
+                      </div>
+                      <!-- 지난 주 대비 증감률-->
+                      <!-- <span class="count_bottom"><i class="blue"><i class="fa fa-sort-asc"></i>4% </i> From last Week</span> -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="card border-left-primary shadow radius">
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2 main">
+                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1 ">
+                        <i class="fa fa-bullhorn"></i>
+                        <a th:href="@{/manager/reportedCustomerList}">미처리 신고
+                          개수</a>
+                      </div>
+                      <div class="count" id="unprocessedReport">
+
+                      </div>
+                      <!-- 지난 주 대비 증감률-->
+                      <!-- <span class="count_bottom"><i class="blue"><i class="fa fa-sort-asc"></i>4% </i> From last Week</span> -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+
+          <!-- 일자별 상품등록 개수 라인 그래프-->
+          <div class="col-md-7 mb-2">
+            <div class=" x_panel shadow">
+              <div class="title-line">
+                <div>
+                  <h2 class="productLine">상품등록 현황</h2>
+                  <!--날짜 선택박스 -->
+                  <div class="form-inline">
+                    <div class="form-group">
+                      <!-- <label for="startDate">Start Date:</label> -->
+                      <input type="date" id="startDate" class="form-control mx-sm-3">|
+                      <!-- </div> -->
+                      <!-- <div class="form-group"> -->
+                      <!-- <label for="endDate">End Date:</label> -->
+                      <input type="date" id="endDate" class="form-control mx-sm-3">
+                    </div>
+                  </div>
+                  <!--날짜 선택박스 끝 -->
+                </div>
+                <div class="clearfix"></div>
+              </div>
+
+              <div class="x_content ">
+                <!-- <button onclick="updateCharts()">Update Charts</button> -->
+                <div class="mid">
+                  <canvas id="lineChart" width="800" height="400"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- 일자별 상품등록 개수 라인 그래프 끝 -->
+
+          <!-- 일자별 상품등록 개수 도넛 그래프 -->
+          <div class="col-md-5 mb-2 ">
+            <div class=" x_panel shadow">
+              <div class="x_title">
+                <h2>카테고리별 상품등록</h2>
+                <div class="clearfix"></div>
+              </div>
+              <div class="x_content ">
+                <div class="doughnut-legend">
+                  <canvas id="doughnutChart"></canvas>
+                  <div id="chartLegend" class="chart-legend">
+                    <div class="legend-row"></div>
+
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- 일자별 상품등록 개수 도넛 그래프 끝 -->
+
+          <div class="col-md-7 mb-2">
+            <div class=" x_panel shadow">
+              <div style="height: 368px;">
+                <div class="x_title">
+                  <h2>카테고리별 상품 판별 개수</h2>
+                  <div class="clearfix"></div>
+                </div>
+
+                <div class="x_content">
+                  <div class="Cchart">
+                    <!-- bar chart -->
+                    <canvas id="categoryProduct"></canvas>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-5 mb-2">
+            <div class="x_panel shadow flex" style="flex-direction: column;">
+
+              <div style="height: 368px;">
+                <div class="x_title">
+                  <h2>금지어 top5</h2>
+                  <div class="clearfix"></div>
+                </div>
+
+                <div class="x_content">
+                  <div>
+                    <div>
+                      <table id="prohibitedWordsTable" class="table table-striped jambo_table table-bordered ">
+                        <thead>
+                          <tr>
+                            <th class="column-title">금지어</th>
+                            <th class="column-title">횟수</th>
+                          </tr>
+                        </thead>
+                        <tbody id="similarWordsTable">
+                          <tr>
+                            <td></td>
+                            <td></td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- 주간요약 -->
+          <div class="col-md-12 mb-2">
+            <div class="x_panel shadow">
+
+              <div>
+                <div class="x_title">
+                  <h2>주간 요약</h2>
+                  <div class="clearfix"></div>
+                </div>
+
+                <div class="x_content">
+                  <div>
+                    <div class="">
+                      <table class="table table-striped jambo_table table-bordered" id="originalTable">
+                        <!-- <thead> -->
+                        <!-- <tr> -->
+                        <!-- <th class="column-title">일자</th>
+                              <th class="column-title">상품</th>
+                              <th class="column-title">회원</th> -->
+                        <!-- </tr>
+                          </thead> -->
+                        <tbody id="weeklyRegSummaryTable">
+                          <tr>
+                            <td>2023-04-01</td>
+                            <td>컴퓨터</td>
+                            <td>홍길동</td>
+                          </tr>
+                          <tr>
+                            <td>2023-04-02</td>
+                            <td>키보드</td>
+                            <td>김철수</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- 주간요약 끝 -->
+
+
+
+
+
+
+        </div>
+      </div>
+      <!-- 우측 끝-->
+
+    </div>
+  </div>
+  </div>
+
+  <!-- jQuery -->
+
+  <!-- Bootstrap -->
+  <script th:src="@{/vendors/bootstrap/dist/js/bootstrap.bundle.min.js}"></script>
+  <!-- FastClick -->
+  <script th:src="@{/vendors/fastclick/lib/fastclick.js}"></script>
+
+  <!-- Chart.js -->
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script> -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- bootstrap-progressbar -->
+  <script th:src="@{/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js}"></script>
+  <!-- iCheck -->
+  <script th:src="@{/vendors/iCheck/icheck.min.js}"></script>
+
+  <!-- bootstrap-daterangepicker -->
+  <script th:src="@{/vendors/moment/min/moment.min.js}"></script>
+
+  <!-- Custom Theme Scripts -->
+  <script th:src="@{/build/js/custom.js}"></script>
 
 </body>
 
