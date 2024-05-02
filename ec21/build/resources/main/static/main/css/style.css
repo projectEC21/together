@@ -1205,11 +1205,10 @@ html {
 }
 
 .header.shop .nav li {
-	margin-right: 40px;
+	margin-right: 30px;
 	position: relative;
 	float: none;
-	position: relative;
-	left: 0%;
+	left: 5%;
 }
 
 .header.shop .nav li:last-child {
