@@ -155,7 +155,7 @@
 									<div class="card-body">
 										<ul class="categor-list">
 											<li><a th:href="@{/main/myinfo(customerId=${#authentication.name})}">My Information</a></li>
-											<li><a th:href="@{/main/myproducts(customerId=${#authentication.name})}">My Products</a></li>
+											<li><a th:href="@{/main/myproducts(customerId=${#authentication.name})}">My Products (<span th:text="${#lists.size(productList)}"></span>)</a></li>
 											<li><a th:href="@{/main/productsWrite(customerId=${#authentication.name})}">Add A New</a></li>
 										</ul>
 									</div>

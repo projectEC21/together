@@ -89,9 +89,11 @@
 
 
 .table.shopping-summery.inquiry {
-    width: 95%;
+    width: 100%;
     table-layout: fixed;
     text-align: center;
+    position: relative;
+    left: 0%;
 }
 
 .shopping-summery.inquiry th {

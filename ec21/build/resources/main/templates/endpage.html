@@ -55,18 +55,72 @@
 		.col-lg-3 {
 			max-width: 20%;
 		}
+
+		.end-timing {
+			margin-bottom: 50px;
+		}
+		
+
+		.end-timing1 img, .end-timing2 img{
+			max-width: 40%;
+			margin: 30px;
+			
+		}
+		
+		.end-timing1 .left {
+			background: url(../main/images/endpage_3.webp) fixed;
+			background-size: 50%;
+			width: 90%;
+			min-height: 86vh;
+			margin: -7px 0;
+		}
+
+		.end-timing2 .left,
+		.end-timing1 .right {
+			font-family: "IBM Plex Sans KR";
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+		
+		.end-timing2 .right {
+			background: url(../main/images/endpage_4.webp) fixed;
+			background-size: 50%;
+			width: 100%;
+			min-height: 82vh;
+			margin: 30px 0;			
+		}
+		
+
+
 	</style>
 	
 </head>
 <body class="js">	
-	<section class="end-timing section">
+	<section class="end-timing1 section">
 		<div class="container">
-			<div>
-				<img th:src="@{/main/images/endpage_3.webp}" alt="">
+			<div class="row">
+				<div class="col-lg-6 left" >
+				</div>
+				<div class="col-lg-6 right">
+					<h4>관리자의 업무 효율성 증가 효과</h4>
+				</div>
 			</div>
 		</div>
 	</section>
-
+	
+	<section class="end-timing2 section">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-6 left" >
+					<h4>B2B시장 내 경쟁력 강화 효과</h4>
+				</div>
+				<div class="col-lg-6 right">
+				</div>
+			</div>
+		</div>
+	</section>
+			
 	<!-- Start Team -->
 	<section id="team" class="team section">
 		<div class="container">
@@ -83,7 +137,7 @@
 					<div class="single-team">
 						<!-- Image -->
 						<div class="image">
-							<img th:src="@{/main/images/ec21logo.png}" alt="#" style="height: 200px; width: 180px;">
+							<img th:src="@{/main/images/ec21logo.png}" alt="" style="height: 200px; width: 180px;">
 						</div>
 						<!-- End Image -->
 						<div class="info-head">
@@ -93,47 +147,9 @@
 								<span class="designation">협업 기업</span>
 							</div>
 							<!-- End Info Box -->
-							<!-- Social -->
-							<div class="social-links">
-								<ul class="social">
-									<li><a href="#"><i class="fa fa-facebook-f"></i></a></li>
-									<li><a href="#"><i class="fa fa-twitter"></i></a></li>
-									<li><a href="#"><i class="fa fa-behance"></i></a></li>
-									<li><a href="#"><i class="fa fa-instagram"></i></a></li>
-								</ul>
-							</div>
-							<!-- End Social -->
 						</div>
 					</div>
 				</div>
-				<div class="col-lg-3 col-md-6 col-12">
-					<div class="single-team">
-						<!-- Image -->
-						<div class="image">
-							<img th:src="@{/main/images/pairi.jpeg}" alt="#">
-						</div>
-						<!-- End Image -->
-						<div class="info-head">
-							<!-- Info Box -->
-							<div class="info-box">
-								<h4 class="name"><a href="#">김도연B</a></h4>
-								<span class="designation">1조/막내</span>
-							</div>
-							<!-- End Info Box -->
-							<!-- Social -->
-							<div class="social-links">
-								<ul class="social">
-									<li><a href="#"><i class="fa fa-facebook-f"></i></a></li>
-									<li><a href="#"><i class="fa fa-twitter"></i></a></li>
-									<li><a href="#"><i class="fa fa-behance"></i></a></li>
-									<li><a href="#"><i class="fa fa-instagram"></i></a></li>
-								</ul>
-							</div>
-							<!-- End Social -->
-						</div>
-					</div>
-				</div>	
-				<!-- End Single Team -->
 				<div class="col-lg-3 col-md-6 col-12">
 					<div class="single-team">
 						<!-- Image -->
@@ -148,16 +164,6 @@
 								<span class="designation">1조</span>
 							</div>
 							<!-- End Info Box -->
-							<!-- Social -->
-							<div class="social-links">
-								<ul class="social">
-									<li><a href="#"><i class="fa fa-facebook-f"></i></a></li>
-									<li><a href="#"><i class="fa fa-twitter"></i></a></li>
-									<li><a href="#"><i class="fa fa-behance"></i></a></li>
-									<li><a href="#"><i class="fa fa-instagram"></i></a></li>
-								</ul>
-							</div>
-							<!-- End Social -->
 						</div>
 					</div>
 				</div>	
@@ -176,16 +182,24 @@
 								<span class="designation">1조/반장</span>
 							</div>
 							<!-- End Info Box -->
-							<!-- Social -->
-							<div class="social-links">
-								<ul class="social">
-									<li><a href="#"><i class="fa fa-facebook-f"></i></a></li>
-									<li><a href="#"><i class="fa fa-twitter"></i></a></li>
-									<li><a href="#"><i class="fa fa-behance"></i></a></li>
-									<li><a href="#"><i class="fa fa-instagram"></i></a></li>
-								</ul>
+						</div>
+					</div>
+				</div>	
+				<!-- End Single Team -->
+				<div class="col-lg-3 col-md-6 col-12">
+					<div class="single-team">
+						<!-- Image -->
+						<div class="image">
+							<img th:src="@{/main/images/pairi.jpeg}" alt="#">
+						</div>
+						<!-- End Image -->
+						<div class="info-head">
+							<!-- Info Box -->
+							<div class="info-box">
+								<h4 class="name"><a href="#">김도연B</a></h4>
+								<span class="designation">1조/막내</span>
 							</div>
-							<!-- End Social -->
+							<!-- End Info Box -->
 						</div>
 					</div>
 				</div>	
@@ -204,16 +218,6 @@
 								<span class="designation">1조</span>
 							</div>
 							<!-- End Info Box -->
-							<!-- Social -->
-							<div class="social-links">
-								<ul class="social">
-									<li><a href="#"><i class="fa fa-facebook-f"></i></a></li>
-									<li><a href="#"><i class="fa fa-twitter"></i></a></li>
-									<li><a href="#"><i class="fa fa-behance"></i></a></li>
-									<li><a href="#"><i class="fa fa-instagram"></i></a></li>
-								</ul>
-							</div>
-							<!-- End Social -->
 						</div>
 					</div>
 				</div>	
