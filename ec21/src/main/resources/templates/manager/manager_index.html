@@ -328,7 +328,7 @@
         const percentage = ((value / data.reduce((a, b) => a + b, 0)) * 100).toFixed(2) + '%';
         const item = document.createElement('div');
         item.className = 'legend-item';
-        item.innerHTML = `<div class="legend-group"><div class="legend-color-box" style="background-color:${colors[index]} "></div><span>${label}</span></div><span class="legend-value">${value}</span>  `;
+        item.innerHTML = `<div class="legend-group"><div class="legend-color-box" style="background-color:${colors[index]} "></div><span class="label">${label}</span><span class="legend-value">${value}</span></div>  `;
         // (${percentage})
         legend.appendChild(item);
       });
@@ -727,7 +727,7 @@
           <div class="col-md-5 mb-2 ">
             <div class=" x_panel shadow">
               <div class="x_title">
-                <h2>카테고리별 상품등록</h2>
+                <h2>카테고리별 상품등록 수</h2>
                 <div class="clearfix"></div>
               </div>
               <div class="x_content ">
