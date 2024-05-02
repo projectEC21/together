@@ -5239,8 +5239,8 @@ start Inquiry CSS
 }
 
 .team .single-team .image img {
-	height: 100%;
-	width: 100%;
+	height: 200px;
+    width: 180px;
 }
 
 .team .single-team .info-box {
