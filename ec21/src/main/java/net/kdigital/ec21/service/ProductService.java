@@ -410,5 +410,15 @@ public class ProductService {
         return result;
     }
 
+    /**
+     * productId에 해당하는 상품을 올린 고객의 나라 반환
+     * @param productId
+     * @return
+     */
+    public String getCustomerCountry(String productId) {
+        ProductEntity productEntity = productRepository.findById(productId).get();
+        return productEntity.getCustomerEntity().getCountry();
+    }
+
     
 }

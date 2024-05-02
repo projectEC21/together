@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.kdigital.ec21.service.ProductService;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 
 
@@ -34,6 +35,20 @@ public class MainController {
 		model.addAttribute("list", dtoList);
 		return "main/index";
 	}
+
+	/**
+	 * ajax : 상품을 올린 고객의 나라 반환
+	 * @param productId
+	 * @return
+	 */
+	@ResponseBody
+	@GetMapping("/main/index/getCountry")
+	public String getMethodName(@RequestParam(name = "productId") String productId) {
+		String country = mainPageService.getCustomerCountry(productId);
+		log.info("============={}",country);
+		return country;
+	}
+	
 
 	/**
 	 * 블랙리스트 회원인 경우 로그인 후 화면
