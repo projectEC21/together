@@ -106,7 +106,58 @@ $(document).ready(function () {
 //     });
 // });
 
+document.addEventListener("scroll", function () {
+    const header = document.querySelector(".header-inner");
+    const scrollPosition = window.scrollY;
 
+    if (scrollPosition > 150) { // 스크롤 위치가 100px 이상이면
+        header.classList.add("fixed-header");
+        document.body.classList.add("header-padding");
+    } else { // 스크롤 위치가 100px 미만이면
+        header.classList.remove("fixed-header");
+        document.body.classList.remove("header-padding");
+    }
+});
+
+$(document).ready(function () {
+    // 각 제품 콘텐츠 요소 내에서 작동합니다.
+    $('.product-content').each(function () {
+        let $this = $(this);
+        let countryName = originContainer.find('.product-seller').attr('data-country'); // data-country 속성에서 국가 이름을 가져옵니다.
+        let $flagContainer = $this.find('.countryFlag');  // 국기 이미지를 업데이트할 컨테이너를 찾습니다.
+
+        console.log($this.find('.product-seller').attr('data-country'));
+        console.log($flagContainer);
+
+        // 국가 이름을 기반으로 AJAX 요청을 통해 국가 정보를 가져옵니다.
+        if (countryName) {
+            $.ajax({
+                url: `https://restcountries.com/v3.1/name/${countryName}`,
+                method: 'GET',
+                success: function (data) {
+                    if (data && data.length > 0) {
+                        let countryCode = data[0].cca2.toLowerCase();
+                        let flagImageUrl = `https://flagcdn.com/${countryCode}.svg`;  // 변경된 API를 사용하여 국기 URL을 생성합니다.
+                        $flagContainer.attr('src', flagImageUrl);  // 이미지 태그의 src 속성을 업데이트
+                        $flagContainer.attr('alt', `${countryName} Flag`);  // alt 속성을 업데이트
+                    } else {
+                        clearFlag($flagContainer);  // 국가 데이터가 없거나 오류 시 플래그 컨테이너를 비웁니다.
+                    }
+                },
+                error: function () {
+                    clearFlag($flagContainer);  // AJAX 요청 오류 시 플래그 컨테이너를 비웁니다.
+                }
+            });
+        }
+    });
+});
+
+function clearFlag($flagContainer) {
+    $flagContainer.attr({
+        'src': '',
+        'alt': ''
+    });
+}
 
 /**********************************
  * 메인 화면에 국기 이미지 넣기 -----  완성

@@ -305,9 +305,7 @@
 										</span>
 										<span th:unless="${product.originalFileName}!=null">
 											<!-- 인덱스와 동일함 -->
-											<img class="default-img" th:src="@{/main/images/example_img3.jpeg}"
-												alt="#">
-											<img class="hover-img" th:src="@{/main/images/example_img4.jpeg}"
+											<img class="default-img" src="https://via.placeholder.com/550x750"
 												alt="#">
 										</span>
 									</a>
@@ -320,7 +318,7 @@
 										<span>$[[${product.price}]]</span>
 									</div>
 									<div class="product-seller" th:data-country="${product.country}">
-										<img class="countryFlag" src="#" alt="" style="width:20px; height:20px;">
+										<img class="countryFlag" src="" alt="" style="width:20px; height:20px;">
 
 										<span>[[${product.customerId}]]</span>
 									</div>
