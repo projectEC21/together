@@ -126,20 +126,20 @@
 
 		// 인콰이어리 post로 보내기
 		function submitInquiry() {
-			if (confirm("인콰이어리 전송")) {
+			if (confirm("The inquiry has been sent.")) {
 				$("#inquiryForm").submit();
 			}
 		}
 
 		function deleteProduct(element, event) {
 			let productId = element.getAttribute("data-product");
-			if (confirm("정말 삭제하시겠습니까?")) {
+			if (confirm("Are you sure you want to delete?")) {
 				$.ajax({
 					url: "/main/productsDelete",
 					data: { "productId": productId },
 					success: function (resp) {
 						if (resp) {
-							alert("삭제가 완료되었습니다.");
+							alert("The post has been deleted.");
 							return true;
 						}
 					}
