@@ -2586,7 +2586,6 @@ h3.degrees {
   margin-bottom: 0;
 }
 
-<<<<<<< HEAD
 
 /* *********  tables styling  ******************************* */
 .bulk-actions {
@@ -2849,7 +2848,6 @@ div.box {
   background-color: #E5E5FF;
 }
 
-=======>>>>>>>643e32bfad3171b4f27215b61519d4eb0a3aef8d
 
 /* *********  /tables styling  ****************************** */
 /* *********  /dashboard widget  **************************** */
@@ -13964,71 +13962,56 @@ button {
 }
 
 .modelPredict {
-  <<<<<<< HEAD width: 327px;
+  width: 327px;
   padding-left: 32px;
 }
 
 
-
-.chart-legend {
-  display: flex;
-  flex-direction: column;
-  align-items: start;
+#startDate,
+#endDate {
+  background-color: transparent;
 }
 
-/* .chart-legend>div {
-
-} */
-
-.legend-item {
-
-  /* margin-bottom: 5px;
-  font-size: 13px;
-  flex-direction: column; */
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-
-}
-
-.legend-group {
-  /* display: flex;
-  align-items: center; */
-  display: flex;
-  /* align-items: center; */
-  flex-direction: row;
-}
-
-.legend-item>div>span {
-  color: #434242;
-  ;
-}
-
-.legend-color-box {
-  margin-right: 5px;
-  width: 13px;
-  height: 12px;
+.doughnut{
+    height: 165px;
+    display: flex;
 }
 
 .doughnut-legend {
   height: 200px;
   display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  flex-direction: column;
+
+}
+
+.legend-group {
+  display: flex;
+}
+
+.chartLegend {
+  margin-left: 30px;
+}
+
+.legend-color-box {
+  width: 18px;
+  height: 18px;
+}
+
+
+.legend-item {
+  margin: 4px;
 }
 
 .legend-value {
-  /* font-size: 16px;
-  margin-left: 18px; */
-  font-size: 17px;
-  margin-left: 14px;
-  =======width: 327px;
-  padding-left: 32px;
+  margin-left: 30px;
+  font-size: 18px;
 }
 
-#startDate,
-#endDate {
-  background-color: transparent;
-  >>>>>>>643e32bfad3171b4f27215b61519d4eb0a3aef8d
+.label {
+  width: 119px;
+}
+
+.chart-legend {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
