@@ -97,7 +97,7 @@
 			let reportReason = $("#modalReportReason").val();
 			let managerCheck = 'N';
 
-			if (confirm("신고!")) {
+			if (confirm("Processing completed.")) {
 				$.ajax({
 					url: "/inbox/report",
 					data: { "reportedId": reportedId, "reportCategory": reportCategory, "reportReason": reportReason, "managerCheck": managerCheck },
@@ -116,7 +116,7 @@
 			let customerId = $("#hiddenCustomerId").val();
 			let inquiryBlockId = element.getAttribute("data-id");
 			let blockedId = element.getAttribute("data-blockedId");
-			if (confirm("[" + blockedId + "] 블락 해제하시겠습니까?")) {
+			if (confirm("[" + blockedId + "] Would you like to unblock this?")) {
 				$.ajax({
 					url: "/inbox/block/getList",
 					data: { "customerId": customerId, "inquiryBlockId": inquiryBlockId },
@@ -180,15 +180,16 @@
 
 <body class="js">
 	<input type="hidden" id="hiddenCustomerId" th:value="${customerId}">
+
 	<!-- Preloader -->
-	<div class="preloader">
+	<!-- <div class="preloader">
 		<div class="preloader-inner">
 			<div class="preloader-icon">
 				<span></span>
 				<span></span>
 			</div>
 		</div>
-	</div>
+	</div> -->
 	<!-- End Preloader -->
 
 	<!-- Header -->
@@ -203,8 +204,7 @@
 							<!-- logo -->
 							<div class="logo">
 								<a th:href="@{/}">
-									<img th:src="@{/main/images/ec21logo.png}" alt="logo"
-										style="width: 100px; height: 30px;">
+									<img th:src="@{/main/images/ec21logo.png}" alt="logo">
 								</a>
 							</div>
 						</div>
@@ -214,14 +214,11 @@
 						<!-- Top Right -->
 						<div class="right-content">
 							<ul class="list-main">
-								<li sec:authorize="isAnonymous()"><i class="ti-power-off"></i><a
-										th:href="@{/main/login}">Login</a></li>
-								<li sec:authorize="isAnonymous()"><i class="ti-user"></i><a
-										th:href="@{/main/register}">Sign up</a></li>
-								<li sec:authorize="isAuthenticated()"><i class="ti-power-off"></i><a
-										th:href="@{/main/logout}">Logout</a></li>
-								<li sec:authorize="isAuthenticated()"><a th:href="@{/main/myproducts}"><i
-											class="fa fa-user-circle-o" aria-hidden="true"></i></a></li>
+								<li sec:authorize="isAnonymous()"><i class="ti-power-off"></i><a th:href="@{/main/login}">Login</a></li>
+								<li sec:authorize="isAnonymous()"><i class="ti-user"></i><a th:href="@{/main/register}">Sign up</a></li>
+								<li sec:authorize="isAuthenticated()"><i class="ti-power-off"></i><a th:href="@{/main/logout}">Logout</a></li>
+								<li sec:authorize="isAuthenticated()"><a th:href="@{/main/myproducts(customerId=${#authentication.name})}"><i class="fa fa-user-circle-o" aria-hidden="true"></i>
+									<span sec:authorize="isAuthenticated()">[[${#authentication.name}]]</span></a></li>
 							</ul>
 						</div>
 						<!-- End Top Right -->
@@ -258,7 +255,7 @@
 						<li><a th:href="@{/main/inboxSent(customerId=${customerId})}">Sent</a></li>
 						<li><a th:href="@{/main/inboxSaved(customerId=${customerId})}">Saved</a></li>
 						<li><a th:href="@{/main/inboxSpam(customerId=${customerId})}">Spam</a></li>
-						<li><a th:href="@{/main/inboxBlock(customerId=${customerId})}" style="color: #439eff;">Block</a>
+						<li><a th:href="@{/main/inboxBlock(customerId=${customerId})}" style="color: #439eff;">Block <span id="listSize"></span></a>
 						</li>
 						<li><a th:href="@{/main/inboxTrash(customerId=${customerId})}">Trash</a></li>
 					</ul>
@@ -269,22 +266,14 @@
 			<!-- My inquiry List -->
 			<div class="shopping-cart section">
 				<div class="container">
-					<!-- Shop Top -->
-					<div class="shop-top">
-						<div class="shop-shorter">
-							<div class="single-shorter">
-								<label>Show : <span id="listSize"></span></label>
-							</div>
-						</div>
-					</div>
-					<table class="table shopping-summery" id="result">
+					<table class="table shopping-summery inquiry" id="result">
 						<thead>
 							<tr class="main-hading">
 								<th>BLOCKED MEMBER ID</th>
 								<th>COMPANY NAME</th>
 								<th>COUNTRY</th>
 								<th>REMOTE IP</th>
-								<th>UNBLOCK</th>
+								<th>UN BLOCK</th>
 								<th>REPORT</th>
 							</tr>
 						</thead>
@@ -318,16 +307,14 @@
 									<a href="javascript:void(0);" class="unBlockBtn"
 										th:data-id="${blocked.inquiryBlockId}" th:data-blockedId="${blocked.blockedId}"
 										onclick="toUnBlock(this)">
-										<i class="fa fa-refresh"></i>
+										<i class="fa fa-mail-reply"></i>
 									</a>
 								</td>
 								<!-- 신고버튼 -->
 								<td data-title="report">
 									<span>
-										<a class="report" data-toggle="modal" data-target="#reportModal"
-											th:id="'modalBtn'+${blocked.inquiryBlockId}"
-											th:data-id="${blocked.blockedId}">
-											report</a>
+										<a class="report" data-toggle="modal" data-target="#reportModal" th:id="'modalBtn'+${blocked.inquiryBlockId}" th:data-id="${blocked.blockedId}">
+											<i class="fa fa-paper-plane-o"></i></a>
 									</span>
 								</td>
 							</tr>
@@ -348,31 +335,31 @@
 			<div class="modal-content">
 				<form class="form" action="#" method="post" id="reportForm">
 					<!-- Modal Header -->
-					<div class="modal-header">
+					<div class="modal-header" style="height: 10px;">
 						<h4 class="modal-title" id="modalInquiryTitle">Report</h4>
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 							<span aria-hidden="true">&times;</span>
 						</button>
 					</div>
 					<!-- Modal Body -->
-					<div class="modal-body">
+					<div class="modal-body" style="height: 20%;">
 						<table>
 							<tr>
-								<th class="col-md-2"></th>
-								<td><span id="modalBlockedId" name="reportedId"></span>님을 신고하시겠습니까?</td>
+								<td colspan="2">Would you like to report <span id="modalBlockedId" name="reportedId"></span>?</td>
 							</tr>
 							<tr>
-								<th class="">사유</th>
-								<td>
-									<input type="radio" name="reportCategory" value="DRUG"> 마약
-									<input type="radio" name="reportCategory" value="IPR"> 지식재산권 침해
-									<input type="radio" name="reportCategory" value="SPAM"> 다발성 이메일
-									<input type="radio" name="reportCategory" value="ETC"> 기타
+								<th class="" colspan="2">Report Reason</th>
+							</tr>
+							<tr>
+								<td colspan="2">
+									<input type="radio" name="reportCategory" value="DRUG"> <span>Drug</span>
+									<input type="radio" name="reportCategory" value="IPR"> <span>Intellectual Property Rights</span>
+									<input type="radio" name="reportCategory" value="SPAM"> <span>Multiple Emails</span>
+									<input type="radio" name="reportCategory" value="ETC"> <span>etc</span> 
 								</td>
 							</tr>
 							<tr>
-								<th class=""></th>
-								<td><textarea name="reportReason" id="modalReportReason" cols="30" rows="10"></textarea>
+								<td colspan="2"><textarea name="reportReason" id="modalReportReason" cols="30" rows="10"></textarea>
 								</td>
 							</tr>
 							<input type="hidden" name="managerCheck" value="N">

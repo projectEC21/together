@@ -37,7 +37,7 @@ public class CustomerController {
      * 
      * @return
      */
-    @GetMapping("/main/register")
+    @GetMapping("main/register")
     public String register(@RequestParam(name = "category", defaultValue = "total") String category,
             @RequestParam(name = "searchWord", defaultValue = "") String searchWord, Model model) {
         
@@ -53,7 +53,7 @@ public class CustomerController {
      * @return
      */
     @ResponseBody
-    @GetMapping("/main/register/confirmId")
+    @GetMapping("main/register/confirmId")
     public Boolean confirmId(@RequestParam(name = "customerId") String customerId) {
         return customerService.isExistId(customerId);
     }
@@ -65,7 +65,7 @@ public class CustomerController {
      * @param customerDTO
      * @return
      */
-    @PostMapping("/main/registerProc")
+    @PostMapping("main/registerProc")
     public String registerProc(@ModelAttribute CustomerDTO customerDTO) {
         log.info("===컨트롤러야");
         log.info("===={}",customerDTO.getCustomerId());
@@ -83,7 +83,7 @@ public class CustomerController {
      * 
      * @return
      */
-    @GetMapping("/main/login")
+    @GetMapping("main/login")
     public String login(@RequestParam(value = "error", required =false) String error,
         @RequestParam(value = "errMessage", required = false) String errMessage, HttpServletRequest request, Model model) {
 
@@ -110,7 +110,7 @@ public class CustomerController {
      * 
      * @return
      */
-    @GetMapping("/main/myproducts")
+    @GetMapping("main/myproducts")
     public String myProducts(@RequestParam(name = "customerId", defaultValue = "jooyoungyoon") String customerId,
             @RequestParam(name = "category", defaultValue = "total") String category,
             @RequestParam(name = "searchWord", defaultValue = "") String searchWord, Model model) {
@@ -163,7 +163,7 @@ public class CustomerController {
      * 
      * @return
      */
-    @GetMapping("/main/myinfo")
+    @GetMapping("main/myinfo")
     public String myinfo(@RequestParam(name = "customerId", defaultValue = "jooyoungyoon") String customerId,
             Model model) {
         if (!model.containsAttribute("customerDTO")){
@@ -180,7 +180,7 @@ public class CustomerController {
      * @param attr
      * @return
      */
-    @PostMapping("/main/myinfo/updateCustomer")
+    @PostMapping("main/myinfo/updateCustomer")
     public String updateCustomer(@ModelAttribute CustomerDTO dto, RedirectAttributes attr) {
         CustomerDTO customerDTO =  customerService.updateCustomer(dto);
         attr.addFlashAttribute("customer", customerDTO);

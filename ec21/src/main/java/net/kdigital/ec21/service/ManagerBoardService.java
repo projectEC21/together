@@ -80,7 +80,7 @@ public class ManagerBoardService {
     }
 
     public List<Map<String, Object>> getTopSimilarWordCounts() {
-        int pageSize = 5; // 상위 5개만 가져옴
+        int pageSize = 5; // 상위 3개만 가져옴
         Pageable pageable = PageRequest.of(0, pageSize, Sort.Direction.DESC, "count");
 
         Page<Object[]> results = productRepository.countSimilarWords(pageable);
@@ -105,8 +105,9 @@ public class ManagerBoardService {
         // 데이터 포맷 형식
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yy/MM/dd (E)", Locale.KOREAN);
 
-        // 5일 동안의 값
-        for (int i = 1; i <= 5; i++) {
+        // 7일 동안의 값 (ACS)
+        // for (int i = 1; i <= 7; i++) {
+        for (int i = 7; i >= 1; i--) {
             // count
             Long productCnt = productRepository.countByCreateDateBetween(todayStart.minusDays(i),
                     todayEnd.minusDays(i));

@@ -29,7 +29,7 @@
 	<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"> -->
 	<!-- <link th:href="@{../vendors/font-awesome/css/font-awesome.min.css}" rel="stylesheet"> -->
 	<!-- Fancybox -->
-	<link rel="stylesheet" th:href="@{/main/css/jquery.fancybox.min.css}">
+	<link rel="stylesheet" th:href="@{/main/css/fancybox.min.css}">
 	<!-- Themify Icons -->
 	<link rel="stylesheet" th:href="@{/main/css/themify-icons.css}">
 	<!-- Nice Select CSS -->
@@ -161,7 +161,7 @@
 		function toUnSpam(element) {
 			let inquiryId = element.getAttribute("data-id");
 			let customerId = $("#hiddenCustomerId").val();
-			if (confirm("스팸 해제하시겠습니까?")) {
+			if (confirm("Would you like to unmark this as spam?")) {
 				$.ajax({
 					url: "/inbox/spam/getList",
 					data: { "customerId": customerId, "inquiryId": inquiryId, "change": "unspam" },
@@ -184,7 +184,7 @@
 			let inquiryId = element.getAttribute("data-id");
 			let senderId = element.getAttribute("data-sender");
 			let customerId = $("#hiddenCustomerId").val();
-			if (confirm("[" + senderId + "] 블락 처리하시겠습니까?")) {
+			if (confirm("[" + senderId + "] Would you like to block this?")) {
 				$.ajax({
 					url: "/inbox/spam/getList",
 					data: { "customerId": customerId, "inquiryId": inquiryId, "change": "block", "senderId": senderId },
@@ -209,7 +209,7 @@
 			let reportReason = $("#modalReportReason").val();
 			let managerCheck = 'N';
 
-			if (confirm("신고!")) {
+			if (confirm("Processing completed.")) {
 				$.ajax({
 					url: "/inbox/report",
 					data: { "reportedId": reportedId, "reportCategory": reportCategory, "reportReason": reportReason, "managerCheck": managerCheck },
@@ -227,7 +227,7 @@
 		function toTrash(element) {
 			let inquiryId = element.getAttribute("data-id");
 			let customerId = $("#hiddenCustomerId").val();
-			if (confirm("쓰레기통으로 보내시겠습니까?")) {
+			if (confirm("Would you like to move this to the trash?")) {
 				$.ajax({
 					url: "/inbox/spam/getList",
 					data: { "customerId": customerId, "inquiryId": inquiryId, "change": "trash" },
@@ -273,14 +273,14 @@
 	<input type="hidden" id="hiddenCustomerId" th:value="${customerId}">
 
 	<!-- Preloader -->
-	<div class="preloader">
+	<!-- <div class="preloader">
 		<div class="preloader-inner">
 			<div class="preloader-icon">
 				<span></span>
 				<span></span>
 			</div>
 		</div>
-	</div>
+	</div> -->
 	<!-- End Preloader -->
 
 	<!-- Header -->
@@ -306,14 +306,11 @@
 						<!-- Top Right -->
 						<div class="right-content">
 							<ul class="list-main">
-								<li sec:authorize="isAnonymous()"><i class="ti-power-off"></i><a
-										th:href="@{/main/login}">Login</a></li>
-								<li sec:authorize="isAnonymous()"><i class="ti-user"></i><a
-										th:href="@{/main/register}">Sign up</a></li>
-								<li sec:authorize="isAuthenticated()"><i class="ti-power-off"></i><a
-										th:href="@{/main/logout}">Logout</a></li>
-								<li sec:authorize="isAuthenticated()"><a th:href="@{/main/myproducts}"><i
-											class="fa fa-user-circle-o" aria-hidden="true"></i></a></li>
+								<li sec:authorize="isAnonymous()"><i class="ti-power-off"></i><a th:href="@{/main/login}">Login</a></li>
+								<li sec:authorize="isAnonymous()"><i class="ti-user"></i><a th:href="@{/main/register}">Sign up</a></li>
+								<li sec:authorize="isAuthenticated()"><i class="ti-power-off"></i><a th:href="@{/main/logout}">Logout</a></li>
+								<li sec:authorize="isAuthenticated()"><a th:href="@{/main/myproducts(customerId=${#authentication.name})}"><i class="fa fa-user-circle-o"
+											aria-hidden="true"></i><span sec:authorize="isAuthenticated()">[[${#authentication.name}]]</span></a></li>
 							</ul>
 						</div>
 						<!-- End Top Right -->
@@ -350,7 +347,7 @@
 						<li><a th:href="@{/main/inboxSent(customerId=${customerId})}">Sent</a></li>
 						<li><a th:href="@{/main/inboxSaved(customerId=${customerId})}">Saved</a></li>
 						<li><a th:href="@{/main/inboxSpam(customerId=${customerId})}" style="
-								color: #439eff;">Spam</a></li>
+								color: #439eff;">Spam <span id="listSize"></span></a></li>
 						<li><a th:href="@{/main/inboxBlock(customerId=${customerId})}">Block</a></li>
 						<li><a th:href="@{/main/inboxTrash(customerId=${customerId})}">Trash</a></li>
 					</ul>
@@ -361,25 +358,17 @@
 			<!-- My inquiry List -->
 			<div class="shopping-cart section">
 				<div class="container">
-					<!-- Shop Top -->
-					<div class="shop-top">
-						<div class="shop-shorter">
-							<div class="single-shorter">
-								<label>Show : <span id="listSize"></span></label>
-							</div>
-						</div>
-					</div>
-					<table class="table shopping-summery" id="result">
+					<table class="table shopping-summery inquiry" id="result">
 						<thead>
 							<tr class="main-hading">
 								<th class="saved-icon"></th>
 								<th class="">ID</th>
 								<th class="inquiryTitle" colspan="2">TITLE</th>
 								<th class="sendDate">DATE</th>
-								<th class="unspam">UNSPAM</th>
+								<th class="unspam">UN SPAM</th>
 								<th class="block">BLOCK</th>
 								<th class="">REPORT</th>
-								<th class="trash"><i class="ti-trash remove-icon"></i></th>
+								<th class="trash">Trash</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -404,23 +393,22 @@
 									</span>
 								</td>
 								<!-- 보낸 날짜 -->
-								<td class="sendDate" data-title="sendDate"><span>[[${inquiry.sendDate}]]</span></td>
+								<td class="sendDate" data-title="sendDate"><span>[[${#temporals.format(inquiry.sendDate, 'yyyy-MM-dd')}]]</span></td>
 								<!-- 누르면 스팸 해제 후 삭제 되면서 스팸함에서 사라짐 -->
 								<!-- <td class="action" data-title="unspam"><a href="#" class="spamBtn" th:data-id="${inquiry.inquiryId}"><i class="fa fa-refresh"></i></a></td> -->
 								<td data-title="unspam"><a href="javascript:void(0);" class="spamBtn"
 										th:data-id="${inquiry.inquiryId}" onclick="toUnSpam(this)"><i
-											class="fa fa-refresh"></i></a></td>
+											class="fa fa-plus-square"></i></a></td>
 								<!-- 누르면 블락 처리 후 삭제 되면서 스팸함에서 사라짐 -->
 								<!-- <td class="action" data-title="block"><a href="#" class="blockBtn" th:data-id="${inquiry.inquiryId}"><i class="fa fa-refresh"></i></a></td> -->
 								<td data-title="block"><a href="javascript:void(0);" class="blockBtn"
-										th:data-id="${inquiry.inquiryId}" th:data-sender="${inquiry.senderId}"
-										onclick="toBlock(this)"><i class="fa fa-refresh"></i></a></td>
+										th:data-id="${inquiry.inquiryId}" th:data-sender="${inquiry.senderId}" onclick="toBlock(this)"><i
+											class="fa fa-remove"></i></a></td>
 								<!-- 신고버튼 : 누르면 신고 모달창 -->
 								<td data-title="report">
 									<span>
-										<a class="report" data-toggle="modal" data-target="#reportModal"
-											th:id="'reportModalBtn'+${i.index}" th:data-id="${inquiry.senderId}">
-											report</a>
+										<a class="report" data-toggle="modal" data-target="#reportModal" th:id="'reportModalBtn'+${i.index}"
+											th:data-id="${inquiry.senderId}"><i class="fa fa-paper-plane-o"></i></a>
 									</span>
 								</td>
 								<!-- 누르면 삭제 되면서 쓰통으로 -->
@@ -432,10 +420,6 @@
 						</tbody>
 					</table>
 					<!--/ End inquiry List -->
-					<!-- 페이징 -->
-					<span class="paging">
-						<< < 1 2 3 4 5> >>
-					</span>
 				</div>
 			</div>
 			<!--/ End inquiry List -->
@@ -468,19 +452,18 @@
 							</tr>
 							<tr>
 								<th class="">Subject</th>
-								<td><span id="modalProductName">..</span></td>
+								<td>
+									<span id="modalCategory">..</span> /
+									<span id="modalProductName">..</span>
+								</td>
 							</tr>
-							<tr>
+							<!-- <tr>
 								<th class="">Category</th>
 								<td><span id="modalCategory">..</span></td>
-							</tr>
+							</tr> -->
 							<tr>
 								<th class="">Quantity</th>
 								<td><span id="modalQuantity"></span> (<span id="modalUnit"></span>) </td>
-							</tr>
-							<tr>
-								<th class="">Message</th>
-								<td><span><textarea id="modalInquiryContent" readonly></textarea></span></td>
 							</tr>
 							<tr>
 								<!-- 파일 부분 다운만 가능한 건 어떻게 하는지 까먹어서 우선 패스 -->
@@ -490,6 +473,13 @@
 										<a href="javascript:download()" data-inquiryId="" id="modalFile">bts.jpg</a>
 									</span>
 								</td>
+							</tr>
+							<tr>
+								<th colspan="2">Message</th>
+								<!-- <td><span><textarea id="modalInquiryContent" readonly></textarea></span></td> -->
+							</tr>
+							<tr>
+								<td class="message" colspan="2"><span id="modalInquiryContent"></span></td>
 							</tr>
 						</table>
 					</div>
@@ -520,21 +510,21 @@
 					<div class="modal-body">
 						<table>
 							<tr>
-								<th class="col-md-2"></th>
-								<td><span id="modalBlockedId" name="reportedId"></span>님을 신고하시겠습니까?</td>
+								<td colspan="2">Would you like to report <span id="modalBlockedId" name="reportedId"></span>?</td>
 							</tr>
 							<tr>
-								<th class="">사유</th>
-								<td>
-									<input type="radio" name="reportCategory" value="DRUG"> 마약
-									<input type="radio" name="reportCategory" value="IPR"> 지식재산권 침해
-									<input type="radio" name="reportCategory" value="SPAM"> 다발성 이메일
-									<input type="radio" name="reportCategory" value="ETC"> 기타
+								<th class="" colspan="2">Report Reason</th>
+							</tr>
+							<tr>
+								<td colspan="2">
+									<input type="radio" name="reportCategory" value="DRUG"> <span>Drug</span>
+									<input type="radio" name="reportCategory" value="IPR"> <span>Intellectual Property Rights</span>
+									<input type="radio" name="reportCategory" value="SPAM"> <span>Multiple Emails</span>
+									<input type="radio" name="reportCategory" value="ETC"> <span>etc</span> 
 								</td>
 							</tr>
 							<tr>
-								<th class=""></th>
-								<td><textarea name="reportReason" id="modalReportReason" cols="30" rows="10"></textarea>
+								<td colspan="2"><textarea name="reportReason" id="modalReportReason" cols="30" rows="10"></textarea>
 								</td>
 							</tr>
 							<input type="hidden" name="managerCheck" value="N">
@@ -579,7 +569,7 @@
 	<!-- Nice Select JS -->
 	<script th:src="@{/main/js/nicesellect.js}"></script>
 	<!-- Ytplayer JS -->
-	<script th:src="@{/main/js/ytplayer.min.js}"></script>
+	<!-- <script th:src="@{/main/js/ytplayer.min.js}"></script> -->
 	<!-- Flex Slider JS -->
 	<script th:src="@{/main/js/flex-slider.js}"></script>
 	<!-- ScrollUp JS -->

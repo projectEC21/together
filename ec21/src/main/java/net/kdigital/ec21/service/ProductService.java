@@ -57,7 +57,6 @@ public class ProductService {
         // Pageable에 정렬조건과 조회 개수 조건 담아서 보냄
         Pageable topEight = PageRequest.of(0, 8, Sort.by(
                 Sort.Order.desc("hitCount"),
-                Sort.Order.desc("lstmPredictProba"),
                 Sort.Order.desc("createDate")));
         Page<ProductEntity> productPage = productRepository.findTopProductsByJudgeAndBlacklistCheckAndNotDeleted(
                 YesOrNo.Y,

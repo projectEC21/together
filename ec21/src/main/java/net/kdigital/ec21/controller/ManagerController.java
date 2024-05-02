@@ -22,6 +22,7 @@ import net.kdigital.ec21.dto.ModelPredictModalDTO;
 import net.kdigital.ec21.dto.ProductDTO;
 import net.kdigital.ec21.dto.ReportedCustomerWithInfoDTO;
 import net.kdigital.ec21.service.ManagerService;
+import net.kdigital.ec21.service.ProductService;
 
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -36,6 +37,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Slf4j
 public class ManagerController {
 	private final ManagerService managerService;
+	private final ProductService productService;
 
 	// ============================= 메인보드 =============================
 	/**
@@ -223,6 +225,13 @@ public class ManagerController {
 		return mapper.writeValueAsString(result);
 	}
 
+	@ResponseBody
+	@GetMapping("/manager/customerList/forSecondModal")
+	public ProductDTO forSecondModal(@RequestParam(name = "productId")String productId){
+		return productService.getProduct(productId);
+	}
+
+	
 	/**
 	 * 전달받은 customerId에 해당하는 회원 블랙리스트 처리 요청
 	 * 
