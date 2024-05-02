@@ -2586,7 +2586,6 @@ h3.degrees {
   margin-bottom: 0;
 }
 
-<<<<<<< HEAD
 
 /* *********  tables styling  ******************************* */
 .bulk-actions {
@@ -2849,7 +2848,6 @@ div.box {
   background-color: #E5E5FF;
 }
 
-=======>>>>>>>643e32bfad3171b4f27215b61519d4eb0a3aef8d
 
 /* *********  /tables styling  ****************************** */
 /* *********  /dashboard widget  **************************** */
@@ -13972,6 +13970,11 @@ button {
 #startDate,
 #endDate {
   background-color: transparent;
+}
+
+.doughnut{
+    height: 165px;
+    display: flex;
 }
 
 .doughnut-legend {
