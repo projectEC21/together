@@ -53,6 +53,14 @@ public class MainController {
 		return "withdrawalAccount";
 	}
 	
+	/**
+	 * 마지막 화면
+	 * @return
+	 */
+	@GetMapping("/endpage")
+	public String endpage() {
+		return "endpage";
+	}
 
 }
 

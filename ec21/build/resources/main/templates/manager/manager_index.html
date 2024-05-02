@@ -54,7 +54,7 @@
 
       // input 태그에 날짜를 설정합니다.
       // $('#startDate').val(toLocalDateStr(firstDayOfMonth));
-      $('#startDate').val(today);
+      $('#startDate').val(toLocalDateStr(today));
       $('#endDate').val(toLocalDateStr(currentDate));
 
       // 페이지 로드 시 차트를 업데이트합니다.
@@ -84,16 +84,15 @@
 
           // 테이블 헤더 생성
           var thead = $("<tr class='weeklySummary'>");
-          thead.append(`<th class='thname' style=" width: 15% !important; "> - </th>`); // 첫 번째 빈 헤더
+          thead.append(`<th class='thname' style=" width: 9% !important; background: #0072ab;  "></th>`); // 첫 번째 빈 헤더
           data.forEach(function (item) {
-            thead.append(`<th style="font-size: 15px; width: 15%;">` + item.date + "</th>"); // 각 일자를 헤더로 추가
+            thead.append(`<th style="font-size: 15px; width: 11%;">` + item.date + "</th>"); // 각 일자를 헤더로 추가
           });
           table.append(thead);
 
           // 상품 수 행
           var productRow = $("<tr>");
-          productRow.append(`<td style="    height: 67px;
-    font-size:15px">등록 상품</td>`); // '상품 수' 라벨
+          productRow.append(`<td style="height: 67px; font-size:15px font-weight: bold; background: #0072ab; color: white">등록 상품</td>`); // '상품 수' 라벨
           data.forEach(function (item) {
             productRow.append(`<td style="height: 67px; font-size:15px">` + item.productCnt + "</td>"); // 각 일자별 상품 수
           });
@@ -101,7 +100,7 @@
 
           // 회원 수 행
           var customerRow = $("<tr>");
-          customerRow.append(`<td style="height: 67px; font-size:18px">회원 가입</td>`); // '회원 수' 라벨
+          customerRow.append(`<td style="height: 67px; font-size:15px font-weight: bold; background: #0072ab; color: white">회원 가입</td>`); // '회원 수' 라벨
           data.forEach(function (item) {
             customerRow.append(`<td style="font-size:15px">` + item.customerCnt + "</td>"); // 각 일자별 회원 수
           });
@@ -252,45 +251,33 @@
       // 차트의 라벨과 데이터를 추출합니다.
       const chartLabels = Object.keys(categoryData);
       const chartData = chartLabels.map(label => categoryData[label]);
+      const backgroundColors = ['#0287BE', '#47C6E8', '#F7C74B', '#FDE775', '#F0E6B4'];
 
       const ctx = document.getElementById('doughnutChart').getContext('2d');
 
       // 기존 차트가 있다면 제거
-      if (doughnutChartInstance) {
-        doughnutChartInstance.destroy();
+      if (window.doughnutChartInstance) {
+        window.doughnutChartInstance.destroy();
       }
 
       // 도넛 차트 생성
-      doughnutChartInstance = new Chart(ctx, {
+      window.doughnutChartInstance = new Chart(ctx, {
         type: 'doughnut',
         data: {
           labels: chartLabels,
           datasets: [{
             label: 'Category Counts',
             data: chartData,
-            backgroundColor: [
-              '#0287BE',
-              '#47C6E8',
-              '#F7C74B',
-              '#FDE775',
-              '#F0E6B4'
-            ],
-            borderColor: [
-              '#0287BE',
-              '#47C6E8',
-              '#F7C74B',
-              '#FDE775',
-              '#F0E6B4'
-            ],
-            borderWidth: 1,
-            weight: 1
+            backgroundColor: backgroundColors,
+            // borderColor: chartColors,
+            // borderWidth: 2,
           }]
         },
         options: {
           responsive: true,
           // cutoutPercentage: 90, // 숫자가 커질 수록 굵기가 줄어든다.
-          maintainAspectRatio: true,
-          aspectRatio: 1,
+          // maintainAspectRatio: true,
+          // aspectRatio: 1,
           plugins: {
             tooltips: {
               backgroundColor: "rgb(255,255,255)",
@@ -300,23 +287,67 @@
               // xPadding: 15,
               // yPadding: 15,
               displayColors: false,
-              caretPadding: 1,
+              caretPadding: 10,
             },
             legend: {
-              display: true, // 범례 표시 여부
+              display: false, // 범례 표시 여부
               position: 'bottom', // 범례의 위치를 오른쪽으로 변경
-              align: 'center',
-              labels: {
-                padding: 8, // 범례 항목 간의 패딩
-                // boxWidth: 60, // 범례 색상 상자의 너비
-                fontSize: 6,
-                usePointStyle: true
-
-              },
-              // cutoutPercentage: 100
-            }
+              // align: 'center',
+              // labels: {
+              //   generateLabels: function (chart) {
+              //     const datasets = chart.data.datasets[0];
+              //     return chart.data.labels.map((label, index) => {
+              //       const value = datasets.data[index];
+              //       const total = datasets.data.reduce((total, item) => total + item, 0);
+              //       const percentage = ((value / total) * 100).toFixed(2) + '%';
+              //       return {
+              //         text: label + ' $' + value.toFixed(2) + ' (' + percentage + ')',
+              //         fillStyle: datasets.backgroundColor[index],
+              //         strokeStyle: datasets.borderColor[index],
+              //         lineWidth: datasets.borderWidth
+              //       };
+              //     });
+              //   }
+              // }
+            },
           }
-        },
+        }
+      });
+
+
+      // HTML 범례 업데이트
+      updateHTMLLegend(chartLabels, chartData, backgroundColors);
+    }
+
+    function updateHTMLLegend(labels, data, colors) {
+      const legend = document.getElementById('chartLegend');
+      legend.innerHTML = ''; // 범례 초기화
+
+      labels.forEach((label, index) => {
+        const value = data[index];
+        const percentage = ((value / data.reduce((a, b) => a + b, 0)) * 100).toFixed(2) + '%';
+        const item = document.createElement('div');
+        item.className = 'legend-item';
+        item.innerHTML = `<div class="legend-group"><div class="legend-color-box" style="background-color:${colors[index]} "></div><span>${label}</span></div><span class="legend-value">${value}</span>  `;
+        // (${percentage})
+        legend.appendChild(item);
+      });
+    }
+
+
+    function generateLegend(labels, data, colors) {
+      const legend = document.getElementById('legend');
+      legend.innerHTML = ''; // 기존 범례 내용을 지웁니다.
+      labels.forEach((label, index) => {
+        const value = data[index];
+        const color = colors[index];
+        const percentage = ((value / data.reduce((a, b) => a + b, 0)) * 100).toFixed(2) + '%';
+        const legendItem = document.createElement('div');
+        const colorBox = document.createElement('span');
+        colorBox.style.backgroundColor = color;
+        legendItem.appendChild(colorBox);
+        legendItem.innerHTML += `${label}: $${value.toFixed(2)} (${percentage})`;
+        legend.appendChild(legendItem);
       });
     }
 
@@ -577,265 +608,270 @@
         <!-- 상품, 회원 count -->
         <div class="row">
 
-              <div class="col-sm-12 col-md-12 mb-2">
-                <div class="card-group">
-                  <div class="card border-left-primary shadow radius">
-                    <div class="card-body">
-                      <div class="row no-gutters align-items-center">
-                        <div class="col mr-2 main">
-                          <div class="text-xs font-weight-bold text-primary text-uppercase mb-1 ">
-                            <i class=" fa fa-edit"></i>
-                            <a th:href="@{/manager/productList}">당일 등록 상품
-                              수
-                            </a>
+          <div class="col-sm-12 col-md-12 mb-2">
+            <div class="card-group">
+              <div class="card border-left-primary shadow radius">
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2 main">
+                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1 ">
+                        <i class=" fa fa-edit"></i>
+                        <a th:href="@{/manager/productList}">당일 등록 상품
+                          수
+                        </a>
 
-                          </div>
-                          <div class="count" id="todayRegisteredProd"></div>
-                          <!-- 지난 주 대비 증감률-->
-                          <!-- <span class="count_bottom"><i class="blue"><i class="fa fa-sort-asc"></i>4% </i> From last Week</span> -->
-                        </div>
                       </div>
-                    </div>
-                  </div>
-
-                  <div class="card border-left-primary shadow radius">
-                    <div class="card-body">
-                      <div class="row no-gutters align-items-center">
-                        <div class="col mr-2 main">
-                          <div class="text-xs font-weight-bold text-primary text-uppercase mb-1 ">
-                            <i class=" fa fa-warning"></i>
-                            <a th:href="@{/manager/modelPredict}">당일 이상상품
-                              수</a>
-
-                          </div>
-                          <div class="count" id="todayWeirdProd">
-
-                          </div>
-                          <!-- 지난 주 대비 증감률-->
-                          <!-- <span class="count_bottom"><i class="blue"><i class="fa fa-sort-asc"></i>4% </i> From last Week</span> -->
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="card border-left-primary shadow radius">
-                    <div class="card-body">
-                      <div class="row no-gutters align-items-center">
-                        <div class="col mr-2 main">
-                          <div class="text-xs font-weight-bold text-primary text-uppercase mb-1 ">
-                            <i class=" fa fa-user"></i>
-                            <a th:href="@{/manager/customerList}">당일 회원 가입 수</a>
-
-                          </div>
-                          <div class="count" id="todayRegisteredCustomer">
-
-                          </div>
-                          <!-- 지난 주 대비 증감률-->
-                          <!-- <span class="count_bottom"><i class="blue"><i class="fa fa-sort-asc"></i>4% </i> From last Week</span> -->
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="card border-left-primary shadow radius">
-                    <div class="card-body">
-                      <div class="row no-gutters align-items-center">
-                        <div class="col mr-2 main">
-                          <div class="text-xs font-weight-bold text-primary text-uppercase mb-1 ">
-                            <i class="fa fa-bullhorn"></i>
-                            <a th:href="@{/manager/reportedCustomerList}">미처리 신고
-                              개수</a>
-                          </div>
-                          <div class="count" id="unprocessedReport">
-
-                          </div>
-                          <!-- 지난 주 대비 증감률-->
-                          <!-- <span class="count_bottom"><i class="blue"><i class="fa fa-sort-asc"></i>4% </i> From last Week</span> -->
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                </div>
-              </div>
-
-              <!--날짜 선택박스 -->
-              <div class="col-md-8 mb-2">
-                <div class="form-inline">
-                  <div class="form-group">
-                    <!-- <label for="startDate">Start Date:</label> -->
-                    <input type="date" id="startDate" class="form-control mx-sm-3"> |
-                    <!-- </div> -->
-                    <!-- <div class="form-group"> -->
-                    <!-- <label for="endDate">End Date:</label> -->
-                    <input type="date" id="endDate" class="form-control mx-sm-3">
-                  </div>
-                </div>
-              </div>
-              <!--날짜 선택박스 끝 -->
-
-              <!-- 일자별 상품등록 개수 라인 그래프-->
-              <div class="col-md-7 mb-2">
-                <div class=" x_panel shadow">
-                  <div class="x_title">
-                    <h2>상품등록 현황</h2>
-
-                    <div class="clearfix"></div>
-                  </div>
-                  <div class="x_content ">
-                    <!-- <button onclick="updateCharts()">Update Charts</button> -->
-                    <div class="mid">
-                      <canvas id="lineChart" width="800" height="400"></canvas>
+                      <div class="count" id="todayRegisteredProd"></div>
+                      <!-- 지난 주 대비 증감률-->
+                      <!-- <span class="count_bottom"><i class="blue"><i class="fa fa-sort-asc"></i>4% </i> From last Week</span> -->
                     </div>
                   </div>
                 </div>
               </div>
-              <!-- 일자별 상품등록 개수 라인 그래프 끝 -->
 
-              <!-- 일자별 상품등록 개수 도넛 그래프 -->
-              <div class="col-md-5 mb-2 ">
-                <div class=" x_panel shadow">
-                  <div class="x_title">
-                    <h2>카테고리별 상품등록</h2>
-                    <div class="clearfix"></div>
-                  </div>
-                  <div class="x_content ">
-                    <div class="mid">
-                      <canvas id="doughnutChart" height="400px;"></canvas>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <!-- 일자별 상품등록 개수 도넛 그래프 끝 -->
+              <div class="card border-left-primary shadow radius">
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2 main">
+                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1 ">
+                        <i class=" fa fa-warning"></i>
+                        <a th:href="@{/manager/modelPredict}">당일 이상상품
+                          수</a>
 
-<div class="col-md-7 mb-2">
-  <div class=" x_panel shadow">
-    <div class="x_title">
-      <h2>카테고리별 상품 판별 개수</h2>
-      <div class="clearfix"></div>
-    </div>
-
-
-    <div class="x_content">
-      <div class="Cchart">
-        <!-- bar chart -->
-        <canvas id="categoryProduct" height="350px" width="400px"></canvas>
-      </div>
-
-    </div>
-  </div>
-</div>
-
-<div class="col-md-5 mb-2">
-  <div class="x_panel shadow flex" style="flex-direction: column;">
-
-    <div style="    height: 419px;">
-      <div class="x_title">
-        <h2>금지어 top5</h2>
-        <div class="clearfix"></div>
-      </div>
-
-      <div class="x_content">
-        <div>
-          <div>
-        <table id="prohibitedWordsTable" class="table table-striped jambo_table table-bordered ">
-          <thead>
-            <tr>
-              <th class="column-title">금지어</th>
-              <th class="column-title">횟수</th>
-            </tr>
-          </thead>
-          <tbody id="similarWordsTable">
-            <tr>
-              <td></td>
-              <td></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-    </div>
-    </div>
-
-  </div>
-</div>
-
-              <!-- 주간요약 -->
-              <div class="col-md-12 mb-2">
-                <div class="x_panel shadow flex">
-
-                  <div>
-                    <div class="x_title">
-                      <h2>주간 요약</h2>
-                      <div class="clearfix"></div>
-                    </div>
-
-                    <div class="x_content">
-                      <div>
-                        <div class="">
-                          <table class="table table-striped jambo_table table-bordered" id="originalTable">
-                            <!-- <thead> -->
-                            <!-- <tr> -->
-                            <!-- <th class="column-title">일자</th>
-                              <th class="column-title">상품</th>
-                              <th class="column-title">회원</th> -->
-                            <!-- </tr>
-                          </thead> -->
-                            <tbody id="weeklyRegSummaryTable">
-                              <tr>
-                                <td>2023-04-01</td>
-                                <td>컴퓨터</td>
-                                <td>홍길동</td>
-                              </tr>
-                              <tr>
-                                <td>2023-04-02</td>
-                                <td>키보드</td>
-                                <td>김철수</td>
-                              </tr>
-                            </tbody>
-                          </table>
-                        </div>
                       </div>
+                      <div class="count" id="todayWeirdProd">
+
+                      </div>
+                      <!-- 지난 주 대비 증감률-->
+                      <!-- <span class="count_bottom"><i class="blue"><i class="fa fa-sort-asc"></i>4% </i> From last Week</span> -->
                     </div>
                   </div>
                 </div>
               </div>
-              <!-- 주간요약 끝 -->
 
+              <div class="card border-left-primary shadow radius">
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2 main">
+                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1 ">
+                        <i class=" fa fa-user"></i>
+                        <a th:href="@{/manager/customerList}">당일 회원 가입 수</a>
 
+                      </div>
+                      <div class="count" id="todayRegisteredCustomer">
 
-              
+                      </div>
+                      <!-- 지난 주 대비 증감률-->
+                      <!-- <span class="count_bottom"><i class="blue"><i class="fa fa-sort-asc"></i>4% </i> From last Week</span> -->
+                    </div>
+                  </div>
+                </div>
+              </div>
 
+              <div class="card border-left-primary shadow radius">
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2 main">
+                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1 ">
+                        <i class="fa fa-bullhorn"></i>
+                        <a th:href="@{/manager/reportedCustomerList}">미처리 신고
+                          개수</a>
+                      </div>
+                      <div class="count" id="unprocessedReport">
+
+                      </div>
+                      <!-- 지난 주 대비 증감률-->
+                      <!-- <span class="count_bottom"><i class="blue"><i class="fa fa-sort-asc"></i>4% </i> From last Week</span> -->
+                    </div>
+                  </div>
+                </div>
+              </div>
 
             </div>
           </div>
-          <!-- 우측 끝-->
+
+
+          <!-- 일자별 상품등록 개수 라인 그래프-->
+          <div class="col-md-7 mb-2">
+            <div class=" x_panel shadow">
+              <div class="title-line">
+                <div>
+                  <h2 class="productLine">상품등록 현황</h2>
+                  <!--날짜 선택박스 -->
+                  <div class="form-inline">
+                    <div class="form-group">
+                      <!-- <label for="startDate">Start Date:</label> -->
+                      <input type="date" id="startDate" class="form-control mx-sm-3">|
+                      <!-- </div> -->
+                      <!-- <div class="form-group"> -->
+                      <!-- <label for="endDate">End Date:</label> -->
+                      <input type="date" id="endDate" class="form-control mx-sm-3">
+                    </div>
+                  </div>
+                  <!--날짜 선택박스 끝 -->
+                </div>
+                <div class="clearfix"></div>
+              </div>
+
+              <div class="x_content ">
+                <!-- <button onclick="updateCharts()">Update Charts</button> -->
+                <div class="mid">
+                  <canvas id="lineChart" width="800" height="400"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- 일자별 상품등록 개수 라인 그래프 끝 -->
+
+          <!-- 일자별 상품등록 개수 도넛 그래프 -->
+          <div class="col-md-5 mb-2 ">
+            <div class=" x_panel shadow">
+              <div class="x_title">
+                <h2>카테고리별 상품등록</h2>
+                <div class="clearfix"></div>
+              </div>
+              <div class="x_content ">
+                <div class="doughnut-legend">
+                  <canvas id="doughnutChart"></canvas>
+                  <div id="chartLegend" class="chart-legend">
+                    <div class="legend-row"></div>
+
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- 일자별 상품등록 개수 도넛 그래프 끝 -->
+
+          <div class="col-md-7 mb-2">
+            <div class=" x_panel shadow">
+              <div style="height: 368px;">
+                <div class="x_title">
+                  <h2>카테고리별 상품 판별 개수</h2>
+                  <div class="clearfix"></div>
+                </div>
+
+                <div class="x_content">
+                  <div class="Cchart">
+                    <!-- bar chart -->
+                    <canvas id="categoryProduct"></canvas>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-5 mb-2">
+            <div class="x_panel shadow flex" style="flex-direction: column;">
+
+              <div style="height: 368px;">
+                <div class="x_title">
+                  <h2>금지어 top5</h2>
+                  <div class="clearfix"></div>
+                </div>
+
+                <div class="x_content">
+                  <div>
+                    <div>
+                      <table id="prohibitedWordsTable" class="table table-striped jambo_table table-bordered ">
+                        <thead>
+                          <tr>
+                            <th class="column-title">금지어</th>
+                            <th class="column-title">횟수</th>
+                          </tr>
+                        </thead>
+                        <tbody id="similarWordsTable">
+                          <tr>
+                            <td></td>
+                            <td></td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- 주간요약 -->
+          <div class="col-md-12 mb-2">
+            <div class="x_panel shadow">
+
+              <div>
+                <div class="x_title">
+                  <h2>주간 요약</h2>
+                  <div class="clearfix"></div>
+                </div>
+
+                <div class="x_content">
+                  <div>
+                    <div class="">
+                      <table class="table table-striped jambo_table table-bordered" id="originalTable">
+                        <!-- <thead> -->
+                        <!-- <tr> -->
+                        <!-- <th class="column-title">일자</th>
+                              <th class="column-title">상품</th>
+                              <th class="column-title">회원</th> -->
+                        <!-- </tr>
+                          </thead> -->
+                        <tbody id="weeklyRegSummaryTable">
+                          <tr>
+                            <td>2023-04-01</td>
+                            <td>컴퓨터</td>
+                            <td>홍길동</td>
+                          </tr>
+                          <tr>
+                            <td>2023-04-02</td>
+                            <td>키보드</td>
+                            <td>김철수</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- 주간요약 끝 -->
+
+
+
+
+
 
         </div>
       </div>
+      <!-- 우측 끝-->
+
     </div>
+  </div>
+  </div>
 
-    <!-- jQuery -->
+  <!-- jQuery -->
 
-    <!-- Bootstrap -->
-    <script th:src="@{/vendors/bootstrap/dist/js/bootstrap.bundle.min.js}"></script>
-    <!-- FastClick -->
-    <script th:src="@{/vendors/fastclick/lib/fastclick.js}"></script>
+  <!-- Bootstrap -->
+  <script th:src="@{/vendors/bootstrap/dist/js/bootstrap.bundle.min.js}"></script>
+  <!-- FastClick -->
+  <script th:src="@{/vendors/fastclick/lib/fastclick.js}"></script>
 
-    <!-- Chart.js -->
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script> -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Chart.js -->
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script> -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    <!-- bootstrap-progressbar -->
-    <script th:src="@{/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js}"></script>
-    <!-- iCheck -->
-    <script th:src="@{/vendors/iCheck/icheck.min.js}"></script>
+  <!-- bootstrap-progressbar -->
+  <script th:src="@{/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js}"></script>
+  <!-- iCheck -->
+  <script th:src="@{/vendors/iCheck/icheck.min.js}"></script>
 
-    <!-- bootstrap-daterangepicker -->
-    <script th:src="@{/vendors/moment/min/moment.min.js}"></script>
+  <!-- bootstrap-daterangepicker -->
+  <script th:src="@{/vendors/moment/min/moment.min.js}"></script>
 
-    <!-- Custom Theme Scripts -->
-    <script th:src="@{/build/js/custom.js}"></script>
+  <!-- Custom Theme Scripts -->
+  <script th:src="@{/build/js/custom.js}"></script>
 
 </body>
 

@@ -29,7 +29,7 @@
 	<!-- Font Awesome -->
 	<link rel="stylesheet" th:href="@{/main/css/font-awesome.css}">
 	<!-- Fancybox -->
-	<link rel="stylesheet" th:href="@{/main/css/jquery.fancybox.css}">
+	<link rel="stylesheet" th:href="@{/main/css/fancybox.css}">
 	<!-- Themify Icons -->
 	<link rel="stylesheet" th:href="@{/main/css/themify-icons.css}">
 	<!-- Nice Select CSS -->
@@ -85,17 +85,6 @@
 	
 </head>
 <body class="js">
-	
-	<!-- Preloader -->
-	<div class="preloader">
-		<div class="preloader-inner">
-			<div class="preloader-icon">
-				<span></span>
-				<span></span>
-			</div>
-		</div>
-	</div>
-	<!-- End Preloader -->
 		
 	<!-- Error Page -->
 	<section class="error-page">
@@ -110,7 +99,7 @@
 									If you are curious about the exact reason, please contact us by email below.</p>
 								<div class="button">
 									<a href="javascript:void(0)" class="btn" data-placement="bottom" onclick="copy()" id="mail">Click to Copy the Email</a>
-									<a th:href="@{/main/endpage}" class="btn" id="main">Go to the Main Page</a>
+									<a th:href="@{/endpage}" class="btn" id="main">Go to the Main Page</a>
 								</div>
 							</div>
 							<!--/ End Error Inner -->

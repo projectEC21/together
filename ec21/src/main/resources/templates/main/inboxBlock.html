@@ -202,7 +202,7 @@
 						<!-- Top Left -->
 						<div class="top-left">
 							<!-- logo -->
-							<div class="logo" >
+							<div class="logo">
 								<a th:href="@{/}">
 									<img th:src="@{/main/images/ec21logo.png}" alt="logo" style="left: 44%;">
 								</a>
@@ -214,11 +214,17 @@
 						<!-- Top Right -->
 						<div class="right-content">
 							<ul class="list-main">
-								<li sec:authorize="isAnonymous()"><i class="ti-power-off"></i><a th:href="@{/main/login}">Login</a></li>
-								<li sec:authorize="isAnonymous()"><i class="ti-user"></i><a th:href="@{/main/register}">Sign up</a></li>
-								<li sec:authorize="isAuthenticated()"><i class="ti-power-off"></i><a th:href="@{/main/logout}">Logout</a></li>
-								<li sec:authorize="isAuthenticated()"><a th:href="@{/main/myproducts(customerId=${#authentication.name})}"><i class="fa fa-user-circle-o" aria-hidden="true"></i>
-									<span sec:authorize="isAuthenticated()">[[${#authentication.name}]]</span></a></li>
+								<li sec:authorize="isAnonymous()"><i class="ti-power-off"></i><a
+										th:href="@{/main/login}">Login</a></li>
+								<li sec:authorize="isAnonymous()"><i class="ti-user"></i><a
+										th:href="@{/main/register}">Sign up</a></li>
+								<li sec:authorize="isAuthenticated()"><i class="ti-power-off"></i><a
+										th:href="@{/main/logout}">Logout</a></li>
+								<li sec:authorize="isAuthenticated()"><a
+										th:href="@{/main/myproducts(customerId=${#authentication.name})}"><i
+											class="fa fa-user-circle-o" aria-hidden="true"></i>
+										<span sec:authorize="isAuthenticated()">[[${#authentication.name}]]</span></a>
+								</li>
 							</ul>
 						</div>
 						<!-- End Top Right -->
@@ -255,7 +261,8 @@
 						<li><a th:href="@{/main/inboxSent(customerId=${customerId})}">Sent</a></li>
 						<li><a th:href="@{/main/inboxSaved(customerId=${customerId})}">Saved</a></li>
 						<li><a th:href="@{/main/inboxSpam(customerId=${customerId})}">Spam</a></li>
-						<li><a th:href="@{/main/inboxBlock(customerId=${customerId})}" style="color: #439eff;">Block <span id="listSize"></span></a>
+						<li><a th:href="@{/main/inboxBlock(customerId=${customerId})}" style="color: #439eff;">Block
+								<span id="listSize"></span></a>
 						</li>
 						<li><a th:href="@{/main/inboxTrash(customerId=${customerId})}">Trash</a></li>
 					</ul>
@@ -313,7 +320,9 @@
 								<!-- 신고버튼 -->
 								<td data-title="report">
 									<span>
-										<a class="report" data-toggle="modal" data-target="#reportModal" th:id="'modalBtn'+${blocked.inquiryBlockId}" th:data-id="${blocked.blockedId}">
+										<a class="report" data-toggle="modal" data-target="#reportModal"
+											th:id="'modalBtn'+${blocked.inquiryBlockId}"
+											th:data-id="${blocked.blockedId}">
 											<i class="fa fa-paper-plane-o"></i></a>
 									</span>
 								</td>
@@ -345,7 +354,8 @@
 					<div class="modal-body" style="height: 20%;">
 						<table>
 							<tr>
-								<td colspan="2">Would you like to report <span id="modalBlockedId" name="reportedId"></span>?</td>
+								<td colspan="2">Would you like to report <span id="modalBlockedId"
+										name="reportedId"></span>?</td>
 							</tr>
 							<tr>
 								<th class="" colspan="2">Report Reason</th>
@@ -353,13 +363,15 @@
 							<tr>
 								<td colspan="2">
 									<input type="radio" name="reportCategory" value="DRUG"> <span>Drug</span>
-									<input type="radio" name="reportCategory" value="IPR"> <span>Intellectual Property Rights</span>
+									<input type="radio" name="reportCategory" value="IPR"> <span>Intellectual Property
+										Rights</span>
 									<input type="radio" name="reportCategory" value="SPAM"> <span>Multiple Emails</span>
-									<input type="radio" name="reportCategory" value="ETC"> <span>etc</span> 
+									<input type="radio" name="reportCategory" value="ETC"> <span>etc</span>
 								</td>
 							</tr>
 							<tr>
-								<td colspan="2"><textarea name="reportReason" id="modalReportReason" cols="30" rows="10"></textarea>
+								<td colspan="2"><textarea name="reportReason" id="modalReportReason" cols="30"
+										rows="10"></textarea>
 								</td>
 							</tr>
 							<input type="hidden" name="managerCheck" value="N">

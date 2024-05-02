@@ -2069,12 +2069,7 @@ a:focus {
   border-right: 0;
 }
 
-#startDate,
-#endDate {
-  padding: 0;
-  width: 111px;
-  font-size: 14px;
-}
+
 
 .top_search .input-group-btn button {
   border-radius: 0px 25px 25px 0px;
@@ -2591,6 +2586,8 @@ h3.degrees {
   margin-bottom: 0;
 }
 
+<<<<<<< HEAD
+
 /* *********  tables styling  ******************************* */
 .bulk-actions {
   display: none;
@@ -2702,10 +2699,26 @@ table.display {
   width: 100%;
 }
 
-/* 모델로 이상상품조회 05.01*/
-.table-bordered th {
-  border: 0 !important;
+.title-line {
+  border-bottom: 2px solid #E6E9ED;
+  padding: 1px 5px 6px;
 }
+
+.title-line>div>h2 {
+  margin: 5px 0 6px;
+  float: left;
+  display: block;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  font-size: 1.3em;
+}
+
+/* 모델로 이상상품조회 05.01*/
+/* .table-bordered th,
+.table-bordered td {
+  border: 0 !important;
+} */
 
 table.display thead th {
   padding: 8px 18px 8px 10px;
@@ -2835,6 +2848,8 @@ div.box {
   border: 1px solid #8080FF;
   background-color: #E5E5FF;
 }
+
+=======>>>>>>>643e32bfad3171b4f27215b61519d4eb0a3aef8d
 
 /* *********  /tables styling  ****************************** */
 /* *********  /dashboard widget  **************************** */
@@ -3758,6 +3773,10 @@ legend {
   margin-bottom: 10px;
 }
 
+.title_right .form-group {
+  margin-bottom: 0px;
+}
+
 .validate {
   margin-top: 10px;
 }
@@ -4549,11 +4568,17 @@ ul.social li {
 }
 
 .mid {
-height: 223px;
+  height: 210px;
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
 
+}
+
+height: 200px;
+display: flex;
+justify-content: center;
+flex-wrap: wrap;
 }
 
 .mid2 {
@@ -5453,6 +5478,8 @@ ul.project_files li a i {
   font-size: 35px;
 }
 
+
+
 /* *********  /ecommerce  **************************** */
 /** login **/
 .login {
@@ -6304,6 +6331,7 @@ ol.custom-list li {
 /** jQuery Smart Wizard  **/
 /** bootstrap-progressbar  **/
 .progress {
+  width: 136px;
   border-radius: 30px;
   height: 16px;
   border: 1px solid #00000078;
@@ -6816,11 +6844,10 @@ ul.notifications {
   margin-bottom: 20px;
 }
 
-.form-inline .form-group {
+/* .form-inline .form-group {
   margin-right: 10px;
-  /* Adjust the space between the elements */
   border-radius: 10px;
-}
+} */
 
 .form-inline .form-group input {
   border: 0px;
@@ -9186,11 +9213,17 @@ a:focus {
   border-right: 0;
 }
 
+.form-group {
+  margin-left: 141px;
+}
+
 #startDate,
 #endDate {
+  width: 102px;
+  font-size: 13px;
+  background-color: transparent;
+  margin: 0px 4px 0px 4px !important;
   padding: 0;
-  width: 111px;
-  font-size: 14px;
 }
 
 .top_search .input-group-btn button {
@@ -10622,9 +10655,9 @@ legend {
   padding-right: 45px;
 }
 
-.form-group {
+/* .form-group {
   margin-bottom: 10px;
-}
+} */
 
 .validate {
   margin-top: 10px;
@@ -11424,7 +11457,7 @@ ul.social li {
 }
 
 .Cchart {
-  height: 352px;
+  height: 303px;
 
   display: flex;
   justify-content: center;
@@ -13596,12 +13629,6 @@ ul.notifications {
   margin-bottom: 20px;
 }
 
-
-
-.form-inline .form-group input {
-  border: 0px;
-}
-
 .form-inline .form-group label {
   margin-right: 5px;
 }
@@ -13937,10 +13964,71 @@ button {
 }
 
 .modelPredict {
-      width: 327px;
-        padding-left: 32px;
+  <<<<<<< HEAD width: 327px;
+  padding-left: 32px;
 }
 
-#startDate, #endDate{
+
+
+.chart-legend {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+}
+
+/* .chart-legend>div {
+
+} */
+
+.legend-item {
+
+  /* margin-bottom: 5px;
+  font-size: 13px;
+  flex-direction: column; */
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+}
+
+.legend-group {
+  /* display: flex;
+  align-items: center; */
+  display: flex;
+  /* align-items: center; */
+  flex-direction: row;
+}
+
+.legend-item>div>span {
+  color: #434242;
+  ;
+}
+
+.legend-color-box {
+  margin-right: 5px;
+  width: 13px;
+  height: 12px;
+}
+
+.doughnut-legend {
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  flex-direction: column;
+}
+
+.legend-value {
+  /* font-size: 16px;
+  margin-left: 18px; */
+  font-size: 17px;
+  margin-left: 14px;
+  =======width: 327px;
+  padding-left: 32px;
+}
+
+#startDate,
+#endDate {
   background-color: transparent;
+  >>>>>>>643e32bfad3171b4f27215b61519d4eb0a3aef8d
 }

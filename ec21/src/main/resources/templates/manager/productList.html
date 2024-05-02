@@ -305,9 +305,9 @@
 
                 <div class="x_content">
                   <div>
-                    <a class="filter" th:data-value="total"  style="cursor:pointer;">전체 </a>|
-                    <a class="filter" th:data-value="unprocessedList"  style="cursor:pointer;">미처리 </a>|
-                    <a class="filter" th:data-value="normalList"  style="cursor:pointer;">정상 </a>|
+                    <a class="filter" th:data-value="total" style="cursor:pointer;">전체 </a>|
+                    <a class="filter" th:data-value="unprocessedList" style="cursor:pointer;">미처리 </a>|
+                    <a class="filter" th:data-value="normalList" style="cursor:pointer;">정상 </a>|
                     <a class="filter" th:data-value="weirdList" style="cursor:pointer;">이상 </a>|
                   </div>
                   <!-- <a href="" id="predictTotal">전체</a> | <a href="" id="predictWeird">이상</a> | <a href="" id="predictNormal"> 정상</a> -->
@@ -325,11 +325,7 @@
                         <th class="column-title">상품 카테고리 </th>
                         <th class=" column-title" style="width: 70px;">LSTM 예측값 </th>
                         <th class="column-title" style="width: 70px;">최종값 </th>
-                        <th class="column-title no-link last" style="width: 13%;"><span class="nobr">버튼</span>
-                        </th>
-                        <th class="bulk-actions" colspan="7">
-                          <a class="antoo" style="color:#fff; font-weight:500;">Bulk Actions ( <span class="action-cnt">
-                            </span> ) <i class="fa fa-chevron-down"></i></a>
+                        <th class="column-title no-link last" style="width: 13%;"><span class="nobr"></span>
                         </th>
                       </tr>
                     </thead>
@@ -357,8 +353,8 @@
                         <td class=" " th:if="${product.lstmPredict==false}">이상</td>
                         <td class=" " th:unless="${product.lstmPredict==false}"> 정상</td>
 
-                        <td class="a-right a-right" th:if="${product.judge == null}">미처리</td>
-                        <td class="a-right a-right" th:unless="${product.judge == null}">
+                        <td class="a-right" th:if="${product.judge == null}">미처리</td>
+                        <td class="a-right" th:unless="${product.judge == null}">
                           <span th:if="${product.judge.name() == 'N'}">이상</span>
                           <span th:unless="${product.judge.name() == 'N'}">정상</span>
                         </td>
