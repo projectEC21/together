@@ -45,7 +45,6 @@ public class MainController {
 	@GetMapping("/main/index/getCountry")
 	public String getMethodName(@RequestParam(name = "productId") String productId) {
 		String country = mainPageService.getCustomerCountry(productId);
-		log.info("============={}",country);
 		return country;
 	}
 	

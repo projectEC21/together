@@ -162,6 +162,7 @@ document.addEventListener("scroll", function () {
 /**********************************
  * 메인 화면에 국기 이미지 넣기 -----  완성
  ***********************************/
+// create by 주영
 // $(document).ready(function () {
 //     $('.product-seller').each(function () {
 //         var countryName = $(this).data("country");
@@ -191,12 +192,11 @@ document.addEventListener("scroll", function () {
 //         }
 //     });
 // });
+
+// edit by 도연 (240502)
 $(document).ready(function () {
     $('.product-seller').each(function () {
-        var countryName = $(this).data("country");
-        console.log("==========="+countryName);
         var productId = $(this).data("productid");
-        console.log("==========="+productId);
         var $this = $(this); // 현재 .product-seller 요소를 $this 변수에 저장
 
         $.ajax({
@@ -204,7 +204,6 @@ $(document).ready(function () {
             data:{"productId":productId},
             method:"GET",
             success:function (country) {
-                console.log(country);
                 if (country) {
                     // AJAX 요청을 통해 국가 정보를 가져옵니다.
                     $.ajax({
