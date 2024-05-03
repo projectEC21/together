@@ -621,7 +621,7 @@
                   <td id="similarWord">[[${item.similarWord}]]</td>
                   <td>[[${item.prohibitWord}]] ([[${item.prohibitReason}]])</td>
                   <td>[[${item.similarProba}]]%</td>
-                  <td><input type="button" value="금지어단어추가" class="wordPlusBtn" th:data-word="${item.similarWord}"
+                  <td><input type="button" value="" class="btn wordPlusBtn" th:data-word="${item.similarWord}"
                       th:data-reason="${item.prohibitReason}"> </td>
                 </tr>
                 <tr th:unless="${list != null and not #lists.isEmpty(list)}">
@@ -637,7 +637,6 @@
         <!-- 모달창의 푸터부분의 시작 -->
         <!-- 푸터부에는 닫기부분이 위치하게 된다.  -->
         <div class="modal-footer">
-          <button type="button" class="" id="liveToastBtn2"></button>
           <button type="button" class="btn btn-danger btn-xs" id="closeBtn" data-dismiss="modal">닫기</button>
         </div>
         <!-- 모달창의 푸터부분의 끝 -->
