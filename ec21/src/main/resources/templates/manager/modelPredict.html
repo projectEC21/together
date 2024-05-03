@@ -40,7 +40,8 @@
   <!-- 240414 dy : JQuery 파일 추가 및 ajax 추가 -->
   <!-- 240415 dy : 카테고리와 검색어 기능 구현 -->
   <script th:src="@{/script/jquery-3.7.1.min.js}"></script>
-  <script>
+  
+<script>
     function updateProgressBarColors() {
       $('.progress-bar').each(function () {
         var width = parseFloat($(this).attr('data-valuenow'));
@@ -311,6 +312,8 @@
 
 
   </script>
+
+  
 </head>
 
 <body class="nav-md">
@@ -332,7 +335,7 @@
               <img th:src="@{/production/images/user.jpeg}" alt="..." class="img-circle profile_img">
             </div>
             <div class="profile_info">
-              <h2>관리자</h2>
+              <h2>이길아 님</h2>
             </div>
           </div>
           <!-- /menu profile quick info -->
@@ -621,7 +624,7 @@
                   <td id="similarWord">[[${item.similarWord}]]</td>
                   <td>[[${item.prohibitWord}]] ([[${item.prohibitReason}]])</td>
                   <td>[[${item.similarProba}]]%</td>
-                  <td><input type="button" value="금지어 사전 추가" class="btn wordPlusBtn" th:data-word="${item.similarWord}"
+                  <td><input type="button" value="금지어 사전 추가" class="btn btn-info btn-xs similarWordBtn" th:data-word="${item.similarWord}"
                       th:data-reason="${item.prohibitReason}"> </td>
                 </tr>
                 <tr th:unless="${list != null and not #lists.isEmpty(list)}">
@@ -671,7 +674,7 @@
 
 
   <!--fontawesome-->
-  <script src="https://kit.fontawesome.com/6b7fc4123a.js" crossorigin="anonymous"></script>
+  <script src="https://kit.fontawesome.com/6b7fc4123a.js" crossorigin="anonymous"></script
   <!-- jQuery -->
   <script th:src="@{/vendors/jquery/dist/jquery.min.js}"></script>
   <!-- Bootstrap -->
