@@ -14040,6 +14040,7 @@ button {
   -webkit-line-clamp: 2;
   overflow: hidden;
   text-overflow: ellipsis;
+  font-family: 'IBM Plex Sans KR' !important;
 }
 
 #product #productDesc {

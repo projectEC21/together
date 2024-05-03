@@ -613,7 +613,7 @@
                   <th>유사단어</th>
                   <th>금지어리스트 단어 (카테고리)</th>
                   <th>유사도</th>
-                  <th>금지어 사전 추가</th>
+                  <th></th>
                 </tr>
               </thead>
               <tbody>
@@ -621,7 +621,7 @@
                   <td id="similarWord">[[${item.similarWord}]]</td>
                   <td>[[${item.prohibitWord}]] ([[${item.prohibitReason}]])</td>
                   <td>[[${item.similarProba}]]%</td>
-                  <td><input type="button" value="" class="btn wordPlusBtn" th:data-word="${item.similarWord}"
+                  <td><input type="button" value="금지어 사전 추가" class="btn wordPlusBtn" th:data-word="${item.similarWord}"
                       th:data-reason="${item.prohibitReason}"> </td>
                 </tr>
                 <tr th:unless="${list != null and not #lists.isEmpty(list)}">
