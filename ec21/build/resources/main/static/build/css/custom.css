@@ -7183,27 +7183,7 @@ button {
 
 
 /*
-=========== 이상 검출도 바 ===========
-*/
-.progress-top .progress-bar-warning {
-  background-color: rgb(255 166 14) !important;
-  color: #333;
-}
 
-.progress-top .progress-bar-orange {
-  background-color: rgba(255, 127, 80, 1) !important;
-}
-
-.progress-top .progress-bar-red {
-  background-color: rgb(240 68 37) !important;
-}
-
-.progress-top .progress-bar-danger {
-  background-color: rgb(226 41 7) !important;
-}
-
-/*
-=========== 이상 검출도 바 끝 ===========
 */
 
 /*
@@ -13961,21 +13941,37 @@ button {
 /*
 =========== 이상 검출도 바 ===========
 */
+
+.progresss-top {
+animation: progressAnimationStrike 10s;
+}
+
+@keyframes progressAnimationStrike {
+  from {
+    width: 0
+  }
+
+  to {
+    width: 100%
+  }
+}
+
+
 .progress-top .progress-bar-warning {
-  background-color: rgb(255 166 14) !important;
+  background-color: rgb(255 166 14) ;
   color: #333;
 }
 
 .progress-top .progress-bar-orange {
-  background-color: rgba(255, 127, 80, 1) !important;
+  background-color: rgba(255, 127, 80, 1) ;
 }
 
 .progress-top .progress-bar-red {
-  background-color: rgb(240 68 37) !important;
+  background-color: rgb(240 68 37) ;
 }
 
 .progress-top .progress-bar-danger {
-  background-color: rgb(226 41 7) !important;
+  background-color: rgb(226 41 7) ;
 }
 
 /*
@@ -14040,6 +14036,7 @@ button {
   -webkit-line-clamp: 2;
   overflow: hidden;
   text-overflow: ellipsis;
+  font-family: 'IBM Plex Sans KR' !important;
 }
 
 #product #productDesc {
@@ -14124,4 +14121,46 @@ button {
 padding: 0.3px;
     padding-top: 1em;
       padding-bottom: 1em;
+}
+
+.toast-container {
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 10000;
+  width: 330px;
+}
+
+.toast-header {
+  height: 36px;
+}
+
+.toast-desc {
+  height: 57px;
+  font-size: 16px;
+}
+
+.me-auto {
+  font-size: 18px;
+  margin: 0px 8px 0px 8px;
+}
+
+.toast-header>small {
+  margin: 0px 8px 0px 0px;
+}
+
+.toastTable>#liveToastBtn {
+  background: #0072ab;
+  color: white;
+  width: 64px;
+  height: 29px;
+  cursor: default;
+  outline: none;
+  border: none;
+}
+
+#modalTable>tr>td>.similarWordBtn{
+display: flex;
+  justify-content: center;
+  align-items: center;
 }
