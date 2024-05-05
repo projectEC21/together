@@ -80,6 +80,18 @@
 			})
 		}
 
+		// JavaScript
+		document.addEventListener('DOMContentLoaded', function() {
+			var userLoggedInId = document.cookie.replace(/(?:(?:^|.*;\s*)userId\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+			var spanElement = document.querySelector('.total-count');
+			
+			if (userLoggedInId !== 'juujee07') {
+				spanElement.style.display = 'none'; // 아이디가 'juujee07'가 아닐 경우 숨기기
+			} else {
+				spanElement.style.display = 'inline-block'; // 아이디가 'juujee07'일 경우 보이기
+			}
+		});
+
 
 	</script>
 </head>
@@ -124,7 +136,7 @@
 								<li sec:authorize="isAuthenticated()"><i class="ti-power-off"></i><a th:href="@{/main/logout}">Logout</a></li>
 								<li><a th:href="@{/main/myproducts(customerId=${#authentication.name})}"><i class="fa fa-user-circle-o" aria-hidden="true"></i><span sec:authorize="isAuthenticated()">[[${#authentication.name}]]</span> </a></li>
 								<li><a th:href="@{/main/inbox(customerId=${#authentication.name})}" class="single-icon">
-										<i class="fa fa-envelope-o"></i><span class="total-count"></span></li>
+										<i class="fa fa-envelope-o"></i><span class="total-count" th:if="${#authentication.name == 'juujee07'}"></span></li>
 							</ul>
 						</div>
 						<!-- End Top Right -->

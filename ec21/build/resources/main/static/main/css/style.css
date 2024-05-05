@@ -5216,6 +5216,7 @@ start Inquiry CSS
 ========================================*/
 .team {
 	background: #F6F7FB;
+	margin: 50px 0;
 }
 
 .team .title-line {
@@ -5235,7 +5236,7 @@ start Inquiry CSS
 }
 
 .team .single-team .info-head {
-	padding: 35px 30px;
+	padding: 25px 25px;
 }
 
 .team .single-team .image img {
@@ -5249,11 +5250,11 @@ start Inquiry CSS
 
 .team .single-team .info-box .name {
 	display: block;
-	font-size: 17px;
-	color: #333;
-	font-weight: 500;
-	margin-bottom: 3px;
-	text-transform: capitalize;
+	font-size: 25px;
+    color: #222;
+    font-weight: 400;
+    margin-bottom: 8px;
+    text-transform: capitalize;
 }
 
 .team .single-team .info-box .designation {
