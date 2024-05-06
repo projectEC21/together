@@ -52,33 +52,180 @@
 	<link rel="stylesheet" th:href="@{/main/css/color/color2.css}">
 
 	<style>
+		.col-lg-3 {
+			max-width: 20%;
+		}
+
+		.end-timing {
+			margin-bottom: 50px;
+		}
 		
+
+		.end-timing1 img, .end-timing2 img{
+			max-width: 40%;
+			margin: 30px;
+			
+		}
+		
+		.end-timing1 .left {
+			background: url(../main/images/endpage_3.webp) fixed;
+			background-size: 50%;
+			width: 90%;
+			min-height: 62vh;
+			background-position-y:center;
+		}
+
+		.end-timing2 .left,
+		.end-timing1 .right {
+			font-family: "IBM Plex Sans KR";
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+		
+		.end-timing2 .right {
+			background: url(../main/images/endpage_4.webp) fixed;
+    background-size: 50%;
+    width: 90%;
+    min-height: 62vh;
+    background-position-y: center;
+		}
+		
+
+
 	</style>
 	
 </head>
 <body class="js">	
-	<!-- Error Page -->
-	<section class="error-page">
-		<div class="table">
-			<div class="table-cell">
-				<div class="container">
-					<div class="row">
-						<div class="col-lg-6 offset-lg-3 col-12">
-							<!-- Error Inner -->
-							<video autoplay muted width="100%">
-								<source th:src="@{/main/images/end_video.mp4}" type="video/mp4">
-							</video>
-									<span>지금까지 EC21 그리고 1조의 발표를 마치겠습니다.</span>
-									<br>
-									<h2> 감사합니다😊</h2>
-							<!--/ End Error Inner -->
-						</div>
-					</div>
+	<section class="end-timing1 section">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-6 left" >
+				</div>
+				<div class="col-lg-6 right">
+					<h4>관리자의 업무 효율성 증가 효과</h4>
 				</div>
 			</div>
 		</div>
 	</section>
-	<!--/ End Error Page -->
+	
+	<section class="end-timing2 section">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-6 left" >
+					<h4>B2B시장 내 경쟁력 강화 효과</h4>
+				</div>
+				<div class="col-lg-6 right">
+				</div>
+			</div>
+		</div>
+	</section>
+			
+	<!-- Start Team -->
+	<section id="team" class="team section">
+		<div class="container">
+			<div class="row">
+				<div class="col-12">
+					<div class="section-title">
+						<h1>들어주셔서 감사합니다.</h1>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<!-- Single Team -->
+				<div class="col-lg-3 col-md-6 col-12">
+					<div class="single-team">
+						<!-- Image -->
+						<div class="image">
+							<img th:src="@{/main/images/ec21logo.png}" alt="" style="height: 200px; width: 180px;">
+						</div>
+						<!-- End Image -->
+						<div class="info-head">
+							<!-- Info Box -->
+							<div class="info-box">
+								<h4 class="name"><a href="#">EC21</a></h4>
+								<span class="designation">협업 기업</span>
+							</div>
+							<!-- End Info Box -->
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-3 col-md-6 col-12">
+					<div class="single-team">
+						<!-- Image -->
+						<div class="image">
+							<img th:src="@{/main/images/kobugi.jpeg}" alt="#">
+						</div>
+						<!-- End Image -->
+						<div class="info-head">
+							<!-- Info Box -->
+							<div class="info-box">
+								<h4 class="name"><a href="#">김인영</a></h4>
+								<span class="designation">1조</span>
+							</div>
+							<!-- End Info Box -->
+						</div>
+					</div>
+				</div>	
+				<!-- End Single Team -->
+				<div class="col-lg-3 col-md-6 col-12">
+					<div class="single-team">
+						<!-- Image -->
+						<div class="image">
+							<img th:src="@{/main/images/pikachu.jpeg}" alt="#">
+						</div>
+						<!-- End Image -->
+						<div class="info-head">
+							<!-- Info Box -->
+							<div class="info-box">
+								<h4 class="name"><a href="#">김희진</a></h4>
+								<span class="designation">1조/반장</span>
+							</div>
+							<!-- End Info Box -->
+						</div>
+					</div>
+				</div>	
+				<!-- End Single Team -->
+				<div class="col-lg-3 col-md-6 col-12">
+					<div class="single-team">
+						<!-- Image -->
+						<div class="image">
+							<img th:src="@{/main/images/pairi.jpeg}" alt="#">
+						</div>
+						<!-- End Image -->
+						<div class="info-head">
+							<!-- Info Box -->
+							<div class="info-box">
+								<h4 class="name"><a href="#">김도연B</a></h4>
+								<span class="designation">1조/막내</span>
+							</div>
+							<!-- End Info Box -->
+						</div>
+					</div>
+				</div>	
+				<!-- End Single Team -->
+				<div class="col-lg-3 col-md-6 col-12">
+					<div class="single-team">
+						<!-- Image -->
+						<div class="image">
+							<img th:src="@{/main/images/isanghae.jpeg}" alt="#">
+						</div>
+						<!-- End Image -->
+						<div class="info-head">
+							<!-- Info Box -->
+							<div class="info-box">
+								<h4 class="name"><a href="#">윤주영</a></h4>
+								<span class="designation">1조</span>
+							</div>
+							<!-- End Info Box -->
+						</div>
+					</div>
+				</div>	
+				<!-- End Single Team -->
+			</div>	
+		</div>
+	</section>
+	<!--/ End Team Area -->
 		
 <!-- Start Footer Area -->
 <footer class="footer">

@@ -19,6 +19,7 @@
 
   <!-- Bootstrap -->
   <link th:href="@{/vendors/bootstrap/dist/css/bootstrap.min.css}" rel="stylesheet">
+
   <!-- Font Awesome -->
   <link th:href="@{/vendors/font-awesome/css/font-awesome.css}" rel="stylesheet">
   <!-- NProgress -->
@@ -328,7 +329,7 @@
         const percentage = ((value / data.reduce((a, b) => a + b, 0)) * 100).toFixed(2) + '%';
         const item = document.createElement('div');
         item.className = 'legend-item';
-        item.innerHTML = `<div class="legend-group"><div class="legend-color-box" style="background-color:${colors[index]} "></div><span>${label}</span></div><span class="legend-value">${value}</span>  `;
+        item.innerHTML = `<div class="legend-group"><div class="legend-color-box" style="background-color:${colors[index]} "></div><span class="label">${label}</span><span class="legend-value">${value}</span></div>  `;
         // (${percentage})
         legend.appendChild(item);
       });
@@ -537,7 +538,7 @@
               <img th:src="@{/production/images/user.jpeg}" alt="..." class="img-circle profile_img">
             </div>
             <div class="profile_info">
-              <h2>관리자</h2>
+              <h2>김도연 님</h2>
             </div>
           </div>
           <!-- /menu profile quick info -->
@@ -727,16 +728,17 @@
           <div class="col-md-5 mb-2 ">
             <div class=" x_panel shadow">
               <div class="x_title">
-                <h2>카테고리별 상품등록</h2>
+                <h2>카테고리별 상품등록 수</h2>
                 <div class="clearfix"></div>
               </div>
               <div class="x_content ">
                 <div class="doughnut-legend">
+                <div class="doughnut" >
                   <canvas id="doughnutChart"></canvas>
                   <div id="chartLegend" class="chart-legend">
                     <div class="legend-row"></div>
-
                   </div>
+                </div>
 
                 </div>
               </div>
@@ -855,6 +857,7 @@
 
   <!-- Bootstrap -->
   <script th:src="@{/vendors/bootstrap/dist/js/bootstrap.bundle.min.js}"></script>
+  <script th:src="@{/vendors/bootstrap/js/dist/toast.js}"></script>
   <!-- FastClick -->
   <script th:src="@{/vendors/fastclick/lib/fastclick.js}"></script>
 

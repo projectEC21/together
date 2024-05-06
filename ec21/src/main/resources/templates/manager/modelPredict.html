@@ -40,7 +40,8 @@
   <!-- 240414 dy : JQuery 파일 추가 및 ajax 추가 -->
   <!-- 240415 dy : 카테고리와 검색어 기능 구현 -->
   <script th:src="@{/script/jquery-3.7.1.min.js}"></script>
-  <script>
+  
+<script>
     function updateProgressBarColors() {
       $('.progress-bar').each(function () {
         var width = parseFloat($(this).attr('data-valuenow'));
@@ -76,7 +77,7 @@
 
     $(document).ready(function () {
       // AJAX 호출 이후 또는 문서가 준비된 후에 progress-bar 요소에 대한 로직을 실행
-
+      init();
       $("#category").on("change", search);
       $("#searchWord").on("keyup", search);
       $(".wordPlusBtn").on("click", wordPlus);
@@ -88,14 +89,6 @@
       // 닫기 버튼 이벤트
       $("#closeBtn").on("click", function (event) {
         modal.hide();
-      });
-
-      // 모달 백그라운드 클릭 이벤트
-      $(window).on("click", function (event) {
-        if ($(event.target).is(modal)) {
-          modal.hide();
-        }
-
       });
 
       // 상품 설명 내의 텍스트에서 유사단어를 찾아 강조 스타일을 적용하는 함수
@@ -158,12 +151,47 @@
             console.log('AJAX call failed: ', textStatus, errorThrown);
           }
         });
+        // 240418 iy: 모달 기능 구현 끝
+
+
+
+
+
       });
 
-      init();
-    });
-    // 240418 iy: 모달 기능 구현 끝
+      // toast 구현 시작
 
+      const toastTrigger = document.getElementById('liveToastBtn');
+      const toastLiveExample = document.getElementById('liveToast');
+
+      if (toastTrigger) {
+        toastTrigger.addEventListener('click', () => {
+          const toast = new bootstrap.Toast(toastLiveExample, {
+            delay: 30000  // 10초 동안 보여줌
+          })
+
+          toast.show();
+        });
+      }
+
+      // Check 버튼에 페이지 새로고침 이벤트 추가
+      document.getElementById('refreshPage').addEventListener('click', function () {
+        window.location.reload();  // 현재 페이지를 새로고침
+      });
+
+      // 닫기버튼 이벤트 추가
+
+      $('#toastClose').click(function () {
+        $('.toast').toast('hide'); // Toast 숨기기
+      });
+
+      // toast 구현 끝
+    });
+
+
+    // $('.toast').toast({
+    //   delay: 2000 // 2초 동안 보여준 후 사라짐
+    // });
 
     // 정상 버튼 클릭 시 judge Y로 변경
     function productNormal() {
@@ -284,6 +312,8 @@
 
 
   </script>
+
+  
 </head>
 
 <body class="nav-md">
@@ -305,7 +335,7 @@
               <img th:src="@{/production/images/user.jpeg}" alt="..." class="img-circle profile_img">
             </div>
             <div class="profile_info">
-              <h2>관리자</h2>
+              <h2>이길아 님</h2>
             </div>
           </div>
           <!-- /menu profile quick info -->
@@ -382,17 +412,16 @@
           <div class="clearfix"></div>
 
           <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-12  col-sm-12">
               <div class="x_panel">
                 <div class="x_title">
                   <h3>모델 결과 조회</h3>
-
                   <div class="clearfix"></div>
                 </div>
 
 
                 <div class="title_right">
-                  <div class="col-md-5 col-sm-5   form-group pull-right top_search">
+                  <div class="col-md-5 col-sm-5 form-group pull-right top_search">
                     <div class="input-group">
                       <select name="category" id="category">
                         <option value="total">전체</option>
@@ -408,27 +437,32 @@
                       </span>
                     </div>
                   </div>
+
                 </div>
 
                 <div class="x_content">
+
+
                   <!-- start project list -->
-                  <table id="" class="table table-striped jambo_table table-bordered " cellspacing="0" width="100%">
+                  <table id="" class="tables table-striped jambo_table table-bordered " cellspacing="0" width="100%">
                     <!-- dt-responsive-->
                     <!-- <table id="datatable" class="table table-striped jambo_table table-bordered dataTable no-footer"> -->
                     <thead>
                       <!-- <button id="modalBtn">모달 열기</button> -->
                       <tr class="headings">
-                        <th class="column-title" style="width: 10%;">no</th>
-                        <th class="column-title" style="width: 10%;">회원 ID</th>
-                        <th class="column-title" style=" width: 20%;">상품 ID</th>
+                        <th class="column-title">no</th>
+                        <th class="column-title">회원 ID</th>
+                        <th class="column-title">상품 ID</th>
                         <!-- <th style="width: 10%">카테고리</th> -->
                         <!-- <th class="column-title" style="width: 20%">상품명</th> -->
                         <!-- <th class="column-title" style="width: 20%">상품설명</th> -->
-                        <th class="column-title" style="width: 30%;">상품내용</th>
-                        <th class="column-title" style="width: 20%;">판별결과</th>
+                        <th class="column-title">상품내용</th>
+                        <th class="column-title">판별결과</th>
                         <!-- <th class="column-title" style="width: 20%;">예측값</th> -->
                         <th class="column-title">금지어</th>
-                        <th class="column-title" style="width: 10%;"></th>
+                        <th class="column-title toastTable">
+                          <button type="button" class="" id="liveToastBtn"></button>
+                        </th>
                       </tr>
                     </thead>
 
@@ -466,12 +500,12 @@
                         </td>
 
                         <td>
-                          <div>
+                          <div class="progress-top">
                             <div class="progress">
                               <div class="progress-bar" role="progressbar"
                                 th:style="'width:' + ${#numbers.formatDecimal(product.lstmPredictProba * 100, 1, 2)} + '%;'"
                                 th:data-valuenow="${#numbers.formatDecimal(product.lstmPredictProba * 100, 1, 2)}"
-                                aria-valuemin="0" aria-valuemax="100" style="width:30px">
+                                aria-valuemin="0" aria-valuemax="100"> <!--style="width:30px"-->
                                 [[${#numbers.formatDecimal(product.lstmPredictProba * 100, 1, 2)} + ' %']]
                               </div>
                             </div>
@@ -582,7 +616,7 @@
                   <th>유사단어</th>
                   <th>금지어리스트 단어 (카테고리)</th>
                   <th>유사도</th>
-                  <th>금지어 사전 추가</th>
+                  <th></th>
                 </tr>
               </thead>
               <tbody>
@@ -590,7 +624,7 @@
                   <td id="similarWord">[[${item.similarWord}]]</td>
                   <td>[[${item.prohibitWord}]] ([[${item.prohibitReason}]])</td>
                   <td>[[${item.similarProba}]]%</td>
-                  <td><input type="button" value="금지어단어추가" class="wordPlusBtn" th:data-word="${item.similarWord}"
+                  <td><input type="button" value="금지어 사전 추가" class="btn btn-info btn-xs similarWordBtn" th:data-word="${item.similarWord}"
                       th:data-reason="${item.prohibitReason}"> </td>
                 </tr>
                 <tr th:unless="${list != null and not #lists.isEmpty(list)}">
@@ -613,10 +647,38 @@
     </div>
   </div>
   <!-- 모달 끝 -->
+
+  <!-- toast start-->
+  <div class="toast-container position-fixed top-0 start-0 p-3">
+    <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="toast-header">
+        <i class="fa-solid fa-bell"></i>
+        <strong class="me-auto">EC21</strong>
+        <small>1 sec ago</small>
+        <!-- <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button> -->
+      </div>
+      <div class="toast-body">
+        <div class="toast-desc">
+          이상으로 판별된 상품이 추가되었습니다. <br>
+          확인하시겠습니까?
+        </div>
+        <div class="mt-2 pt-2 border-top">
+          <button type="button" class="btn btn-primary btn-sm" id="refreshPage">Check</button>
+          <button type="button" id="toastClose" class="btn btn-secondary btn-sm">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- toast end-->
+
+
+
+  <!--fontawesome-->
+  <script src="https://kit.fontawesome.com/6b7fc4123a.js" crossorigin="anonymous"></script
   <!-- jQuery -->
   <script th:src="@{/vendors/jquery/dist/jquery.min.js}"></script>
   <!-- Bootstrap -->
-  <script th:src="@{/vendors/bootstrap/dist/js/bootstrap.bundle.min.js}"></script>
+  <script th:src="@{/vendors/bootstrap/dist/js/bootstrap.bundle.js}"></script>
   <!-- FastClick -->
   <script th:src="@{/vendors/fastclick/lib/fastclick.js}"></script>
   <!-- NProgress -->

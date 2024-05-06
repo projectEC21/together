@@ -80,6 +80,7 @@
 			})
 		}
 
+
 	</script>
 </head>
 
@@ -187,7 +188,7 @@
 								<nav class="navbar navbar-expand-lg">
 									<div class="navbar-collapse">
 										<div class="nav-inner">
-											<ul class="nav main-menu menu navbar-nav" style="margin-left: 3%;">
+											<ul class="nav main-menu menu navbar-nav index" style="margin-left: 60px;">
 												<li><a th:href="@{/main/list(category=total)}">All</a></li>
 												<li><a th:href="@{/main/list(category=FOOD_BEVERAGE)}">Food &
 														Beverage</a></li>
@@ -255,7 +256,7 @@
 														<div class="product-price">
 															<span>$[[${product.price}]]</span>
 														</div>
-														<div class="product-seller" th:data-country="${product.country}">
+														<div class="product-seller" th:data-country="${product.country}" th:data-productid="${product.productId}">
 															<img class="countryFlag" src="" alt="" style="width:20px; height:20px;">
 															<span>[[${product.customerId}]]</span>
 														</div>
