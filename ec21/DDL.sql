@@ -176,6 +176,10 @@ CREATE TABLE inquiry (
 ALTER TABLE inquiry
 ADD (deleted CHAR(2) DEFAULT 'NN' CHECK (deleted IN ('NN', 'NY', 'YN', 'YY')));
 
+-- 2040509 checked : 인콰이어리 조회 여부 컬럼 추가
+ALTER TABLE inquiry
+ADD (checked CHAR(2) DEFAULT 'NN' CHECK (checked IN ('NN', 'NY', 'YN', 'YY')));
+
 create sequence inquiry_seq;
 
 select * from inquiry;

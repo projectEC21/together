@@ -79,6 +79,8 @@ public class InquiryEntity {
     private InquiryEnum spam;
     @Enumerated(EnumType.STRING)
     private InquiryEnum deleted;
+    @Enumerated(EnumType.STRING)
+    private InquiryEnum checked;
 
     public static InquiryEntity toEntity(InquiryDTO dto, CustomerEntity customerEntity, ProductEntity productEntity) {
         return InquiryEntity.builder()
@@ -96,6 +98,7 @@ public class InquiryEntity {
                 .trash(dto.getTrash())
                 .spam(dto.getSpam())
                 .deleted(dto.getDeleted())
+                .checked(dto.getChecked())
                 .build();
     }
 }

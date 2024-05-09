@@ -7,6 +7,7 @@ import net.kdigital.ec21.dto.ProductDTO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -34,6 +35,18 @@ public class MainController {
 		List<ProductDTO> dtoList = mainPageService.getTopProductList();
 		model.addAttribute("list", dtoList);
 		return "main/index";
+	}
+
+	/**
+	 * ajax - 전달받은 사용자ID가 받은 인콰이어리 중에 읽지 않은 인콰이어리 개수 요청
+	 * @param customerId
+	 * @return
+	 */
+	@ResponseBody
+	@GetMapping("/main/index/getInboxCount")
+	public int getInboxCount(@RequestParam(name = "customerId")String customerId){
+		int inboxCount = mainPageService.getInboxNotReadCount(customerId);
+		return inboxCount;
 	}
 
 	/**

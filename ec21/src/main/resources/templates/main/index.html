@@ -67,6 +67,7 @@
 	<script>
 		$(function () {
 			$("#searchBtn").on("click", search);
+			getInboxCount();
 		});
 
 		function search() {
@@ -80,11 +81,16 @@
 			})
 		}
 
+		function getInboxCount() {
+			let customerId = $("#customerId").val();
+		}
+
 
 	</script>
 </head>
 
 <body class="js">
+	<input type="hidden" name="customerId" th:value="${#authentication.name}">
 	<!-- Preloader -->
 	<!-- <div class="preloader">
 		<div class="preloader-inner">
