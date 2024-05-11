@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import net.kdigital.ec21.service.InquiryService;
 import net.kdigital.ec21.service.ProductService;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -21,7 +22,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequiredArgsConstructor
 @Slf4j
 public class MainController {
-	private final ProductService mainPageService;
+	private final ProductService productService;
+	private final InquiryService inquiryService;
 
 	//================= main/index.html =====================
 	/**
@@ -32,7 +34,7 @@ public class MainController {
 	public String index(Model model) {
 		// hitCount기준 DESC, createDate 기준 DESC 순으로 상위 8개를 가져옴
 		// (judge=='Y' && customerId에 해당하는 Customer의 blacklistCheck=='N'인 데이터들 중에서) 
-		List<ProductDTO> dtoList = mainPageService.getTopProductList();
+		List<ProductDTO> dtoList = productService.getTopProductList();
 		model.addAttribute("list", dtoList);
 		return "main/index";
 	}
@@ -45,7 +47,7 @@ public class MainController {
 	@ResponseBody
 	@GetMapping("/main/index/getInboxCount")
 	public int getInboxCount(@RequestParam(name = "customerId")String customerId){
-		int inboxCount = mainPageService.getInboxNotReadCount(customerId);
+		int inboxCount = inquiryService.getInboxNotReadCount(customerId);
 		return inboxCount;
 	}
 
@@ -57,7 +59,7 @@ public class MainController {
 	@ResponseBody
 	@GetMapping("/main/index/getCountry")
 	public String getMethodName(@RequestParam(name = "productId") String productId) {
-		String country = mainPageService.getCustomerCountry(productId);
+		String country = productService.getCustomerCountry(productId);
 		return country;
 	}
 	

@@ -1358,11 +1358,11 @@ html {
 .header.shop .right-bar .sinlge-bar .single-icon .total-count {
 	position: absolute;
 	top: 0px;
-	right: 25px;
+	/* right: 25px;/ */
 	background: #f6931d !important;
-	width: 7px;
-	height: 9px;
-	line-height: 20px;
+	width: 15px;
+	height: 15px;
+	line-height: 15px;
 	color: #fff;
 	border-radius: 100%;
 	font-size: 11px;
@@ -6481,9 +6481,9 @@ start Inquiry CSS
 	left: 229px;
 	color: white;
 	font-family: sans-serif;
-	<<<<<<< HEAD animation: slide 4s;
-	=======animation: slide 3s;
-	>>>>>>>643e32bfad3171b4f27215b61519d4eb0a3aef8d text-align: center;
+	animation: slide 4s;
+	animation: slide 3s;
+	text-align: center;
 	margin: 19px;
 }
 

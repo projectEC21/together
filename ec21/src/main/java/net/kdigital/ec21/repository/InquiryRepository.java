@@ -10,6 +10,10 @@ import net.kdigital.ec21.entity.InquiryEntity;
 
 public interface InquiryRepository extends JpaRepository<InquiryEntity, Long>{
 
+        // 받은 인콰이어리 중 확인하지 않은 인콰이어리 개수 반환
+        @Query("SELECT COUNT(i) FROM InquiryEntity i WHERE i.receiverId = :customerId AND (i.checked = 'NN' OR i.checked = 'YN')")
+        int countByCustomerIdAndChecked(@Param("customerId") String customerId);
+
         // Received : spam과 trash의 값이 NN이거나 YN이고 receiver가 신고한 회원ID에 senderId가 포함되지 않는 데이터만 조회
         @Query("SELECT i FROM InquiryEntity i WHERE i.receiverId = :customerId AND " +
                 "(i.spam = 'NN' OR i.spam = 'YN') AND " +

@@ -40,6 +40,19 @@ public class InquiryService {
     private final ReportCustomerRepository reportCustomerRepository;
     private final ProductRepository productRepository;
     private final CustomerRepository customerRepository;
+
+    // ============================= main/index ==============================
+    
+    /**
+     * 전달받은 사용자ID가 받은 인콰이어리 중에 읽지 않은 인콰이어리 개수 반환하는 함수
+     * @param customerId
+     * @return
+     */
+    public int getInboxNotReadCount(String customerId) {
+        int count =  inquiryRepository.countByCustomerIdAndChecked(customerId);
+        return count;
+    }
+
     
     // ============================= 인콰이어리 등록 ==============================
 
@@ -656,7 +669,6 @@ public class InquiryService {
         
         return true;
     }
-
     
     
 
