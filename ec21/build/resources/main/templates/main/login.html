@@ -52,10 +52,35 @@
 	<link rel="stylesheet" th:href="@{/main/css/color/color2.css}">
 	<link rel="stylesheet" href="" id="colors">
 
+	<!-- 240511 dy : JQuery 파일 추가 및 ajax 작업 -->
+	<script th:src="@{/script/jquery-3.7.1.min.js}"></script>
+
+	<script>
+		$(function () {
+			getInboxCount();
+		});
+
+		function getInboxCount() {
+			let customerId = $("#customerId").val();
+			// customerId가 anonymousUser가 아닌 경우 요청 보냄!! 
+			if (customerId !== "anonymousUser") { 
+				$.ajax({
+					url: "/main/index/getInboxCount",
+					data: { "customerId": customerId },
+					method: "GET",
+					success: function (resp) {
+						console.log(resp);
+						$("#iboxCount").text(resp);
+					}
+				});
+			}
+		}
+
+	</script>
 </head>
 
 <body class="js">
-
+	<input type="hidden" id="customerId" th:value="${#authentication.name}">
 	<!-- Preloader -->
 	<!-- <div class="preloader">
 		<div class="preloader-inner">
@@ -156,8 +181,10 @@
 
 							<!-- 검색창 옆 부분 인콰이어리 new 로만 보이게 하고 인콰이어리 페이지로 넘어가게 하기 -->
 							<div class="sinlge-bar inquiry">
-								<a th:href="@{/main/inbox(customerId=${#authentication.name})}" class="single-icon"><i class="fa fa-envelope-o"></i> <span
-										class="total-count"></span></a>
+								<a th:href="@{/main/inbox(customerId=${#authentication.name})}" class="single-icon">
+									<i class="fa fa-envelope-o"></i>  
+									<span sec:authorize="isAuthenticated()" class="total-count" id="iboxCount"></span>
+								</a>
 							</div>
 						</div>
 					</div>

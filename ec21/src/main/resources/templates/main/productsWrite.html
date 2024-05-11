@@ -149,6 +149,8 @@
 					}
 				});
 
+			// 받은 인콰이어리 개수
+			getInboxCount();
 			// IP 및 국가 정보 초기화
 			init();
 		});
@@ -178,6 +180,23 @@
 			return firstEmpty; // 첫 번째 빈 필드 반환
 		}
 
+		// 받은 인콰이어리 개수
+		function getInboxCount() {
+			let customerId = $("#customerId").val();
+			// customerId가 anonymousUser가 아닌 경우 요청 보냄!! 
+			if (customerId !== "anonymousUser") { 
+				$.ajax({
+					url: "/main/index/getInboxCount",
+					data: { "customerId": customerId },
+					method: "GET",
+					success: function (resp) {
+						console.log(resp);
+						$("#iboxCount").text(resp);
+					}
+				});
+			}
+		}
+
 		// 초기화 함수
 		function init() {
 			$.ajax({
@@ -195,7 +214,7 @@
 </head>
 
 <body class="js">
-
+	<input type="hidden" id="customerId" th:value="${#authentication.name}">
 	<!-- Preloader -->
 	<!-- <div class="preloader">
 		<div class="preloader-inner">
@@ -225,9 +244,14 @@
 							<ul class="list-main">
 								<li sec:authorize="isAnonymous()"><i class="ti-power-off"></i><a th:href="@{/main/login}">Login</a></li>
 								<li sec:authorize="isAnonymous()"><i class="ti-user"></i><a th:href="@{/main/register}">Sign up</a></li>
-								<li sec:authorize="isAuthenticated()"><i class="ti-power-off"></i><a th:href="@{/main/index}">Logout</a></li>
+								<li sec:authorize="isAuthenticated()"><i class="ti-power-off"></i><a th:href="@{/main/logout}">Logout</a></li>
 								<li><a th:href="@{/main/myproducts(customerId=${#authentication.name})}"><i class="fa fa-user-circle-o" aria-hidden="true"></i>
 									<span sec:authorize="isAuthenticated()">[[${#authentication.name}]]</span></a></li>
+								<li><a th:href="@{/main/inbox(customerId=${#authentication.name})}" class="single-icon">
+									<i class="fa fa-envelope-o"></i>
+									<span sec:authorize="isAuthenticated()" class="total-count" id="iboxCount"></span>
+								</a>
+								</li>
 							</ul>
 						</div>
 						<!-- End Top Right -->

@@ -110,6 +110,7 @@
 			}); // End 모달 클릭 이벤트
 
 			$("#searchBtn").on("click", search);
+			getInboxCount();
 		});
 
 		function search() {
@@ -121,6 +122,23 @@
 				data: { "category": category, "searchWord": searchWord },
 				method: "GET"
 			})
+		}
+
+		// 인콰이어리 개수 반환
+		function getInboxCount() {
+			let customerId = $("#customerId").val();
+			// customerId가 anonymousUser가 아닌 경우 요청 보냄!! 
+			if (customerId !== "anonymousUser") { 
+				$.ajax({
+					url: "/main/index/getInboxCount",
+					data: { "customerId": customerId },
+					method: "GET",
+					success: function (resp) {
+						console.log(resp);
+						$("#iboxCount").text(resp);
+					}
+				});
+			}
 		}
 
 
@@ -172,6 +190,7 @@
 
 <body class="js">
 	<input type="hidden" name="" id="loginUser" th:value="${#authentication.name}">
+	<input type="hidden" name="" id="customerId" th:value="${#authentication.name}">
 	<!-- 지우지.. 마시오.. css 다 사라짐요.. -->
 	<!-- Preloader -->
 	<!-- <div class="preloader">
@@ -276,7 +295,8 @@
 							<!-- 검색창 옆 부분 인콰이어리 new 로만 보이게 하고 인콰이어리 페이지로 넘어가게 하기 -->
 							<div class="sinlge-bar inquiry">
 								<a th:href="@{/main/inbox(customerId=${#authentication.name})}" class="single-icon">
-									<i class="fa fa-envelope-o"></i><span class="total-count"></span>
+									<i class="fa fa-envelope-o"></i>
+									<span sec:authorize="isAuthenticated()" class="total-count" id="iboxCount"></span>
 								</a>
 							</div>
 						</div>

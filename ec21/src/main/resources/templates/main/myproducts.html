@@ -54,6 +54,26 @@
 	<!-- 240420 dy : JQuery 파일 추가 및 ajax 작업 -->
 	<script th:src="@{/script/jquery-3.7.1.min.js}"></script>
 	<script>
+		$(function () {
+			getInboxCount();
+		});
+
+		function getInboxCount() {
+			let customerId = $("#customerId").val();
+			// customerId가 anonymousUser가 아닌 경우 요청 보냄!! 
+			if (customerId !== "anonymousUser") { 
+				$.ajax({
+					url: "/main/index/getInboxCount",
+					data: { "customerId": customerId },
+					method: "GET",
+					success: function (resp) {
+						console.log(resp);
+						$("#iboxCount").text(resp);
+					}
+				});
+			}
+		}
+
 		// 삭제 버튼 클릭 시 확인
 		function confirmDelete(element, event) {
 			let productName = element.getAttribute("data-name");
@@ -73,9 +93,7 @@
 </head>
 
 <body class="js">
-
 	<input type="hidden" name="customerId" id="customerId" th:value="${#authentication.name}">
-	
 	<!-- Preloader -->
 	<!-- <div class="preloader">
 		<div class="preloader-inner">
@@ -115,7 +133,10 @@
 								<li><a th:href="@{/main/myproducts(customerId=${#authentication.name})}"><i class="fa fa-user-circle-o" aria-hidden="true"></i>
 									<span sec:authorize="isAuthenticated()">[[${#authentication.name}]]</span></a></li>
 								<li><a th:href="@{/main/inbox(customerId=${#authentication.name})}" class="single-icon">
-										<i class="fa fa-envelope-o"></i><span class="total-count"></span></li>
+										<i class="fa fa-envelope-o"></i>
+										<span sec:authorize="isAuthenticated()" class="total-count" id="iboxCount"></span>
+									</a>
+								</li>
 							</ul>
 						</div>
 						<!-- End Top Right -->
