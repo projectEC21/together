@@ -1355,7 +1355,7 @@ html {
 
 
 .header.shop .topbar .container .row .col-lg-8.col-md-12.col-12 .right-content .list-main .total-count,
-.header.shop .right-bar .sinlge-bar .single-icon .total-count {
+.header.shop .right-bar .sinlge-bar .single-icon .total-count{
 	position: absolute;
 	top: 0px;
 	/* right: 25px;/ */
@@ -1368,6 +1368,14 @@ html {
 	font-size: 11px;
 }
 
+/* 인콰이어리 미조회 표시 */
+.checked-circle {
+    display: inline-block;
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    background-color: #f6931d; /* 배경색은 원하는 색으로 변경하세요 */
+}
 
 .header.shop .right-bar .sinlge-bar {
 	display: inline-block;

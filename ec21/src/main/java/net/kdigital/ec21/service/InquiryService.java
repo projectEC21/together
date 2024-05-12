@@ -92,6 +92,36 @@ public class InquiryService {
     }
 
     
+    //===================================== 수신확인 ===============================
+    /**
+     * 전달받은 inquiryId의 recieverId와 customerId가 일치하는 경우, reciever의 checked 값을 변경하는 함수
+     * @param inquiryId
+     * @param customerId
+     */
+    @Transactional
+    public void updateCheckedYes(String inquiryId, String customerId){
+        Long id = Long.parseLong(inquiryId);
+        Optional<InquiryEntity> inquiryEntity = inquiryRepository.findById(id);
+        
+        if (inquiryEntity.isPresent()) {
+            InquiryEntity entity = inquiryEntity.get();
+            
+            if (!entity.getReceiverId().equals(customerId)) {
+                return; // 로그인한 사용자와 recieverId와 일치하지 않는 경우 return
+            }else{
+                // reciever의 checked 상태 변경 (NN->NY || YN->YY)
+                if (entity.getChecked() == InquiryEnum.NN) {
+                    entity.setChecked(InquiryEnum.NY);
+                } else if (entity.getChecked() == InquiryEnum.YN) {
+                    entity.setChecked(InquiryEnum.YY);
+                } 
+            }
+        }
+
+
+    }
+
+
     //===================================== Received Page ===============================
     
     /**

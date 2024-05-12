@@ -105,7 +105,11 @@ public class InquiryController {
      */
     @RequestMapping(value = "/inbox/getInquiryModalDTO", method = RequestMethod.GET)
     @ResponseBody
-    public InquiryModalDTO getMethodName(@RequestParam(name = "inquiryId") String inquiryId) {
+    public InquiryModalDTO getInquiryModalDTO(@RequestParam(name = "inquiryId") String inquiryId,
+    @RequestParam(name="customerId", defaultValue="")String customerId) {
+        // 받은 인콰이어리의 경우 읽음 표시 
+        inquiryService.updateCheckedYes(inquiryId, customerId);
+        // 모달창에 들어갈 정보 가져오기
         InquiryModalDTO dto = inquiryService.getInquiryModalDTO(inquiryId);
         return dto;
     }

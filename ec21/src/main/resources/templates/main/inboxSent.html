@@ -101,9 +101,10 @@
 			// 모달창 값 채우기 & 모달창 열기
 			$(document).on("click", "a[id^='modalBtn']", function () {
 				let inquiryId = $(this).attr("data-id");
+				let customerId = $(this).attr("data-user");
 				$.ajax({
 					url: "/inbox/getInquiryModalDTO",
-					data: { "inquiryId": inquiryId },
+					data: { "inquiryId": inquiryId, "customerId":customerId},
 					method: "GET",
 					success: function (dto) {
 						// 모달 값 채우기
@@ -270,7 +271,7 @@
 								<td data-title="inquiryTitle" colspan="2">
 									<span>
 										<!-- <a id="inquiryTitle" data-toggle="modal" data-target="#inquiryDetail" th:data-id="${inquiry.inquiryId}">[[${inquiry.inquiryTitle}]]</a> -->
-										<a class="inquiryTitle" th:id="'modalBtn'+${inquiry.inquiryId}"
+										<a class="inquiryTitle" th:id="'modalBtn'+${inquiry.inquiryId}" th:data-user="${#authentication.name}"
 											th:data-id="${inquiry.inquiryId}">[[${inquiry.inquiryTitle}]]</a>
 									</span>
 								</td>
