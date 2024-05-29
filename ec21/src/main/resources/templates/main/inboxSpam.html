@@ -267,6 +267,13 @@
 			})
 		}
 
+		// 모달이 닫힐 때 페이지 새로고침
+        $(document).ready(function () {
+            $('#inquiryDetail').on('hidden.bs.modal', function () {
+                location.reload();
+            });
+        });
+
 	</script>
 </head>
 
@@ -391,6 +398,8 @@
 										<!-- <a id="inquiryTitle" data-toggle="modal" data-target="#inquiryDetail" th:data-id="${inquiry.inquiryId}">[[${inquiry.inquiryTitle}]]</a> -->
 										<a class="inquiryTitle" th:id="'modalBtn'+${inquiry.inquiryId}" th:data-user="${#authentication.name}"
 											th:data-id="${inquiry.inquiryId}">[[${inquiry.inquiryTitle}]]</a>
+										<!-- 읽지 않은 인콰이어리 표시 -->
+										<span th:if="${inquiry.checked.name() == 'NN' or inquiry.checked.name() == 'YN'}" class="checked-circle"></span>
 									</span>
 								</td>
 								<!-- 보낸 날짜 -->

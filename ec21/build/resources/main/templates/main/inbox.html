@@ -61,7 +61,6 @@
 	<!-- 240421 dy : ajax.. -->
 	<script th:src="@{/script/jquery-3.7.1.min.js}"></script>
 	<script>
-
 		// saved 처리
 		$(document).on('click', '.saved-icon', function (event) {
 			event.preventDefault();
@@ -87,14 +86,24 @@
 		// 모달 변수 초기화
 		var modal = $("#inquiryDetail");
 
-		// 닫기 버튼 이벤트
-		$("#closeBtn").on("click", function (event) {
-			modal.hide();
-		});
+		// // 닫기 버튼 이벤트
+        // $("#closeBtn").on("click", function (event) {
+        //  // 모달 닫기
+        //  modal.modal("hide");
+        // });
+
+        // 닫기 버튼 이벤트
+        $("#closeBtn").on("click", function () {
+            // 페이지 새로 고침
+            window.location.reload();
+        });
+
 
 		// 모달 백그라운드 클릭 이벤트
 		$(window).on("click", function (event) {
 			if ($(event.target).is(modal)) {
+				// 페이지 새로 고침
+				window.location.reload();
 				modal.hide();
 			}
 		});
@@ -175,6 +184,13 @@
 				});
 			}
 		}
+
+		// 모달이 닫힐 때 페이지 새로고침
+        $(document).ready(function () {
+            $('#inquiryDetail').on('hidden.bs.modal', function () {
+                location.reload();
+            });
+        });
 
 	</script>
 </head>
@@ -383,6 +399,7 @@
 					<!-- Modal Footer -->
 					<div class="modal-footer">
 						<button type="button" id="closeBtn" class="btn" data-dismiss="modal">Close</button>
+						<button type="button" id="closeModal" class="btn">Close</button>
 					</div>
 				</form>
 			</div>

@@ -71,6 +71,7 @@ public class InquiryService {
         inquiryDTO.setTrash(InquiryEnum.NN);
         inquiryDTO.setSpam(InquiryEnum.NN);
         inquiryDTO.setDeleted(InquiryEnum.NN);
+        inquiryDTO.setChecked(InquiryEnum.NN);
 
         // 대표 이미지 저장을 위한 경로
         String originalFileName = null;

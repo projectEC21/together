@@ -1356,6 +1356,7 @@ html {
 
 .header.shop .topbar .container .row .col-lg-8.col-md-12.col-12 .right-content .list-main .total-count,
 .header.shop .right-bar .sinlge-bar .single-icon .total-count{
+	text-align: center;
 	position: absolute;
 	top: 0px;
 	/* right: 25px;/ */
