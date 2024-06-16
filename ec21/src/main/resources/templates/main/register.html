@@ -114,7 +114,6 @@
 					data: { "customerId": customerId },
 					method: "GET",
 					success: function (resp) {
-						console.log(resp);
 						$("#iboxCount").text(resp);
 					}
 				});
@@ -209,7 +208,7 @@
 </head>
 
 <body class="js">
-	<input type="hidden" id="customerId" th:value="${#authentication.name}">
+	<!-- <input type="hidden" id="customerId" th:value="${#authentication.name}"> -->
 	<!-- Preloader -->
 	<!-- <div class="preloader">
 		<div class="preloader-inner">
