@@ -19,7 +19,7 @@ import net.kdigital.ec21.handler.CustomerSuccessHandler;
 public class SecurityConfig {
     private final CustomerFailureHandler failureHandler;
     private final CustomerSuccessHandler successHandler;
-
+ 
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         // 웹 요청 시 접근 권한 설정
