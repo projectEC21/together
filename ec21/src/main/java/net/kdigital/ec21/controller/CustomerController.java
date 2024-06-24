@@ -1,7 +1,6 @@
 package net.kdigital.ec21.controller;
 
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,7 +23,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 
 @Controller
-@Slf4j
 @RequiredArgsConstructor
 public class CustomerController {
     private final CustomerService customerService;
@@ -95,6 +93,27 @@ public class CustomerController {
         
         return "main/login";
     }
+
+
+    /**
+     * 블랙회원이 로그인한 경우
+     * @return
+     */
+    @GetMapping("blacklist")
+    public String blacklist() {
+        return "blacklist";
+    }
+    
+
+    /**
+     * 탈퇴한 회원이 로그인한 경우
+     * @return
+     */
+    @GetMapping("withdrawalAccount")
+    public String withdrawalAccount() {
+        return "withdrawalAccount";
+    }
+    
 
     // 로그인 처리 & 로그아웃은 Security에서..!!!
     
