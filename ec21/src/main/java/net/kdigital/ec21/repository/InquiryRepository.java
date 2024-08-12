@@ -16,11 +16,11 @@ public interface InquiryRepository extends JpaRepository<InquiryEntity, Long>{
                 "(i.trash = 'NN' OR i.trash = 'YN') AND " +
                 "(i.deleted = 'NN' OR i.deleted = 'YN') AND " +
                 "NOT EXISTS (SELECT b FROM InquiryBlockEntity b WHERE b.customerEntity.customerId = i.receiverId AND b.blockedId = i.customerEntity.customerId) ORDER BY i.sendDate DESC")
-        List<InquiryEntity> findNonBlockedInquiries(String customerId);
+        List<InquiryEntity> findNonBlockedInquiries(@Param("customerId")String customerId);
 
         // Sent : senderId와 전달받은 customerId가 일치하는 데이터들 중 trash값이 NN이거나 NY인 데이터 조회
         @Query("SELECT i FROM InquiryEntity i WHERE i.customerEntity.id = :customerId AND i.trash IN ('NN', 'NY') ORDER BY i.sendDate DESC")
-        List<InquiryEntity> findInquiriesByCustomerIdAndTrashStatus(String customerId);
+        List<InquiryEntity> findInquiriesByCustomerIdAndTrashStatus(@Param("customerId") String customerId);
         
         // Saved 
         // 받은 인콰이어리 중 saved한 인콰이어리들 리스트로 반환

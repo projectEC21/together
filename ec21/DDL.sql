@@ -3,7 +3,7 @@ drop table customer;
 
 create table customer (
     customer_id varchar2(20) primary key,
-    customer_pw varchar2(30) not null,
+    customer_pw varchar2(100) not null,
     customer_name varchar2(100) not null,
     customer_department varchar2(100) not null,
     email varchar2(100) not null,
@@ -27,8 +27,8 @@ create table customer (
 );
 
 --비밀번호 길이 100으로 변경
-ALTER TABLE customer
-MODIFY (customer_pw VARCHAR2(100) not null);
+-- ALTER TABLE customer
+-- MODIFY (customer_pw VARCHAR2(100) not null);
 
 select * from customer;
 
@@ -135,8 +135,8 @@ select * from prohibit_word;
 DROP TABLE prohibit_similar_word;
 drop sequence prohibit_similar_word_seq;
 
+create sequence prohibit_similar_word_seq;
 CREATE TABLE prohibit_similar_word
-
 (
     prohibit_similar_id NUMBER PRIMARY KEY
     , similar_word VARCHAR2(100) NOT NULL
@@ -145,7 +145,7 @@ CREATE TABLE prohibit_similar_word
     , product_id VARCHAR2(50) references product(product_id) on delete CASCADE
 );
 
-create sequence prohibit_similar_word_seq;
+
 select * from prohibit_similar_word;
 
 
@@ -154,6 +154,7 @@ select * from prohibit_similar_word;
 drop table inquiry;
 drop sequence inquiry_seq;
 
+create sequence inquiry_seq;
 CREATE TABLE inquiry (
     inquiry_id NUMBER PRIMARY KEY,
     sender_id VARCHAR2(20) NOT NULL,
@@ -176,7 +177,6 @@ CREATE TABLE inquiry (
 ALTER TABLE inquiry
 ADD (deleted CHAR(2) DEFAULT 'NN' CHECK (deleted IN ('NN', 'NY', 'YN', 'YY')));
 
-create sequence inquiry_seq;
 
 select * from inquiry;
 
